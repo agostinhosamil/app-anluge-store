@@ -1,8 +1,0 @@
-{
-  "/api/users/auth/route": "app/api/users/auth/route.js",
-  "/(dashboard)/dashboard/products/page": "app/(dashboard)/dashboard/products/page.js",
-  "/(dashboard)/dashboard/categories/page": "app/(dashboard)/dashboard/categories/page.js",
-  "/(store)/page": "app/(store)/page.js",
-  "/(dashboard)/dashboard/users/page": "app/(dashboard)/dashboard/users/page.js",
-  "/(authentication)/login/page": "app/(authentication)/login/page.js"
-}

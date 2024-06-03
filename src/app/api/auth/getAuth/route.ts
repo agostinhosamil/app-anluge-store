@@ -1,10 +1,9 @@
-import { NextApiHandler } from 'next'
 import { cookies } from 'next/headers'
 
 import { auth } from '@utils/auth'
 import { NextResponse } from 'next/server'
 
-export const GET: NextApiHandler = async (request, response) => {
+export const GET = async () => {
   const authTokenCookie = cookies().get(
     String(process.env.APP_AUTH_COOKIE_NAME)
   )
