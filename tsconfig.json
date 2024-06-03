@@ -1,0 +1,86 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "dom", 
+      "dom.iterable", 
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "~/*": [
+        "./src/*"
+      ],
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@utils": [
+        "./src/utils"
+      ],
+      "@utils/*": [
+        "./src/utils/*",
+      ],
+      "@schemas/*": [
+        "./prisma/generated/schemas/*",
+      ],
+      "zod@schemas/*": [
+        "./prisma/generated/schemas/*",
+      ],
+      "zod@enums/*": [
+        "./prisma/generated/schemas/enums/*",
+      ],
+      "zod@objects/*": [
+        "./prisma/generated/schemas/objects/*",
+      ],
+      "@services/*": [
+        "./src/services/*"
+      ],
+      "Types/*": [
+        "./src/Types/*"
+      ],
+      "@styles/*": [
+        "./src/styles/*"
+      ],
+      "store@styles/*": [
+        "./src/styles/store/*"
+      ],
+      "authentication@styles/*": [
+        "./src/styles/authentication/*"
+      ],
+      "store@components/*": [
+        "./src/components/store/*"
+      ],
+      "dashboard@components/*": [
+        "./src/components/dashboard/*"
+      ],
+      "blog@components/*": [
+        "./src/components/blog/*"
+      ],
+      "store@utils/*": [
+        "./src/utils/store/*"
+      ],
+      "dashboard@utils/*": [
+        "./src/utils/dashboard/*"
+      ],
+      "blog@utils/*": [
+        "./src/utils/blog/*"
+      ]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}

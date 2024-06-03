@@ -1,0 +1,258 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator zod {
+  provider = "prisma-zod-generator"
+}
+
+generator erd {
+  provider = "prisma-erd-generator"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                 String    @id @default(cuid())
+  userId             String
+  providerType       String
+  providerId         String
+  providerAccountId  String
+  refreshToken       String?
+  accessToken        String?
+  accessTokenExpires DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  user               User      @relation(fields: [userId], references: [id])
+
+  @@unique([providerId, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  expires      DateTime
+  sessionToken String   @unique
+  accessToken  String   @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id])
+}
+
+model AdminInvitation {
+  id        String   @id @default(cuid())
+  userId    String
+  email     String   @unique
+  roleId    Int
+  expires   DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  id            String      @id @default(cuid())
+  name          String
+  email         String      @unique
+  password      String
+  phone         String      @unique
+  username      String?     @unique
+  emailVerified DateTime?
+  image         String?
+  Token         UserToken[]
+  role          Role        @relation(fields: [roleId], references: [id])
+  rates         Rate[]
+  favorites     Favorite[]
+  cart          Cart?
+  roleId        Int
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  Faq           Faq[]
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model VerificationRequest {
+  id         String   @id @default(cuid())
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([identifier, token])
+}
+
+model Favorite {
+  id        Int     @id @default(autoincrement())
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String
+}
+
+model Advertising {
+  id        String   @id @default(cuid())
+  expiresAt DateTime
+  banner    String
+  link      String?
+  title     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Setting {
+  id        Int      @id @default(autoincrement())
+  property  String
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UserToken {
+  id        Int      @id @default(autoincrement())
+  body      String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Role {
+  id          Int          @id @default(autoincrement())
+  key         String       @unique
+  name        String
+  description String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  permissions Permission[]
+  User        User[]
+}
+
+model Permission {
+  id          Int      @id @default(autoincrement())
+  key         String   @unique
+  name        String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  roles       Role[]
+}
+
+model Media {
+  id        String    @id @default(cuid())
+  fileName  String
+  type      MediaType @default(IMAGE)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Product   Product?  @relation(fields: [productId], references: [id])
+  productId String?
+  Rate      Rate?     @relation(fields: [rateId], references: [id])
+  rateId    String?
+}
+
+model Tag {
+  id        String    @id @default(cuid())
+  title     String
+  slag      String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[]
+}
+
+model Category {
+  id          String     @id @default(cuid())
+  title       String
+  description String
+  slag        String     @unique
+  icon        String?    @default("category-icon-placeholder.jpg")
+  products    Product[]
+  parentId    String?
+  parent      Category?  @relation("SubCategory", fields: [parentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  categories  Category[] @relation("SubCategory")
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Faq {
+  id        String   @id @default(cuid())
+  question  String
+  answer    String   @default("")
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+  Product   Product? @relation(fields: [productId], references: [id])
+  productId String?
+  userId    String
+}
+
+model Rate {
+  id        String   @id @default(cuid())
+  title     String
+  message   String
+  value     Int
+  user      User     @relation(fields: [userId], references: [id])
+  medias    Media[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+}
+
+model Product {
+  id          String      @id @default(cuid())
+  code        String?     @unique @default(cuid())
+  name        String
+  summary     String?
+  description String
+  price       Float
+  slag        String      @unique
+  medias      Media[]
+  tags        Tag[]
+  faqs        Faq[]
+  stock       Int?        @default(-1)
+  sku         String?     @unique
+  barCode     String?     @unique
+  type        ProductType @default(PHYSICAL)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  category    Category?   @relation(fields: [categoryId], references: [id])
+  categoryId  String?
+  favorites   Favorite[]
+  Order       Order[]
+}
+
+model Cart {
+  id        String   @id @default(cuid())
+  orders    Order[]
+  user      User?    @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String   @unique
+}
+
+model Order {
+  id        String   @id @default(cuid())
+  product   Product  @relation(fields: [productId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Cart      Cart?    @relation(fields: [cartId], references: [id])
+  cartId    String?
+  productId String
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+  AUDIO
+}
+
+enum ProductType {
+  PHYSICAL
+  DIGITAL
+}

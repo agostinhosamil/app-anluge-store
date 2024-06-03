@@ -1,0 +1,134 @@
+import styled from 'styled-components'
+
+export type HeaderProps = {
+  $colorStyle?: 'light' | 'default'
+}
+
+export type HeaderMenuProps = {
+  $size?: 'large' | 'default'
+}
+
+export const Container = styled.header<HeaderProps>`
+  width: 100%;
+  background-color: ${props =>
+    props.$colorStyle === 'default' ? '#0170bf' : '#ffffff'};
+  color: ${props => (props.$colorStyle === 'default' ? '#ffffff' : '#333333')};
+  padding: 12px 0px;
+
+  * {
+    color: inherit;
+  }
+`
+
+export const HeaderMenu = styled.div<HeaderMenuProps>`
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: ${props => (props.$size === 'large' ? '15px 5px' : '15px 80px')};
+
+  div.header-logo-container {
+    height: 45px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    a {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      div.header-logo-wrapper {
+        width: 45px;
+        height: 45px;
+        overflow: hidden;
+        border-radius: 50%;
+        margin-right: 15px;
+
+        img {
+          width: auto;
+          height: auto;
+        }
+      }
+    }
+
+    @media (max-width: 850px) {
+      h3 {
+        display: none;
+      }
+
+      div.header-logo-wrapper {
+        margin: 0px;
+      }
+    }
+  }
+
+  div.header-search-box-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0px 20px;
+
+    @media (max-width: 600px) {
+      display: none;
+    }
+  }
+
+  ul {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+
+    li {
+      margin: 0px 7px;
+
+      a,
+      button {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border: 0px;
+        background-color: transparent;
+        outline: 0px;
+        position: relative;
+
+        i {
+          margin-right: 12px;
+          font-size: 24px;
+        }
+
+        @media (max-width: 750px) {
+          i {
+            font-size: 24px;
+          }
+
+          span {
+            display: none;
+          }
+        }
+
+        strong {
+          position: absolute;
+          background-color: #0150bf;
+          border-radius: 25px;
+          -webkit-border-radius: 25px;
+          padding: 5px 6px 4px;
+          font-size: 7px;
+          color: #ffffff;
+          top: -6px;
+          right: -6px;
+        }
+      }
+    }
+  }
+`

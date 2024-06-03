@@ -1,0 +1,83 @@
+import { useState } from 'react'
+import { Spinner } from 'react-bootstrap'
+import { FaSearch } from 'react-icons/fa'
+import { FaAngleRight } from 'react-icons/fa6'
+
+import { UserProps } from '~/Types/UserProps'
+import { useUser } from '~/utils/hooks/useUser'
+
+import { noEmpty } from '~/utils'
+import { Body, Container, Header, List, SearchInputContainer } from './styles'
+
+type UserSelectListProps = {
+  onSelect?: (user: UserProps) => void | Promise<void>
+}
+
+type UserSelectListComponent = React.FunctionComponent<UserSelectListProps>
+
+export const UserSelectList: UserSelectListComponent = props => {
+  const [query, setQuery] = useState<string>('')
+
+  const { users, loading } = useUser()
+
+  const inputChangeHandler: React.ChangeEventHandler = event => {
+    const inputElement = event.target as HTMLInputElement
+
+    setQuery(inputElement.value)
+  }
+
+  const userFilter = (user: UserProps) => {
+    if (!noEmpty(query)) {
+      return true
+    }
+
+    return Boolean(user.name.includes(query) || user.email.includes(query))
+  }
+
+  return (
+    <Container>
+      <Header>
+        <SearchInputContainer>
+          <i>
+            <FaSearch />
+          </i>
+          <div>
+            <input value={query} onChange={inputChangeHandler} />
+          </div>
+        </SearchInputContainer>
+      </Header>
+      <Body>
+        <List>
+          {(loading && <Spinner />) ||
+            users.filter(userFilter).map(user => {
+              const buttonClickHandler: React.MouseEventHandler = event => {
+                event.preventDefault()
+
+                if (typeof props.onSelect === 'function') {
+                  props.onSelect(user)
+                }
+              }
+
+              return (
+                <button
+                  key={user.id}
+                  type="button"
+                  onClick={buttonClickHandler}
+                >
+                  <div>
+                    <strong>{user.name}</strong>
+                  </div>
+                  <div>
+                    <span>{user.email}</span>
+                  </div>
+                  <i>
+                    <FaAngleRight />
+                  </i>
+                </button>
+              )
+            })}
+        </List>
+      </Body>
+    </Container>
+  )
+}
