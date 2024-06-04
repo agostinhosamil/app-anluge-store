@@ -1,10 +1,10 @@
-import Image from "next/image";
-import Carousel from "react-bootstrap/Carousel";
+import Image from 'next/image'
+import Carousel from 'react-bootstrap/Carousel'
 
-import { SliderImageWrapper } from "./styles";
+import { SliderImageWrapper } from './styles'
 
 export const HeaderSlider = () => {
-  const sliderImages = ["/image001.png", "/image002.png", "/image003.png"];
+  const sliderImages = ['/image001.png', '/image002.png', '/image003.png']
 
   return (
     <div>
@@ -18,5 +18,5 @@ export const HeaderSlider = () => {
         ))}
       </Carousel>
     </div>
-  );
-};
+  )
+}

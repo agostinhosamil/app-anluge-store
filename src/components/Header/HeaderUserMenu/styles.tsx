@@ -16,10 +16,14 @@ export const Container = styled.div`
   right: 20px;
   z-index: 8;
   color: #333333;
+  border: 0px;
+  outline: 0px;
 
-  @media (max-width: 430px) {
+  @media (max-width: 660px) {
     right: 0px;
     left: 0px;
+    width: 100%;
+    max-width: unset;
   }
 `
 
@@ -57,12 +61,11 @@ export const UserCardImageContainer = styled.div<UserCardImageContainerProps>`
   width: 100%;
   height: ${props => (props.$size === 'small' ? 80 : 120)}px;
   display: flex;
-  background-color: #bdcfdb;
   border-top-right-radius: 8px;
   border-top-left-radius: 8px;
   flex-direction: row;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
 
   div {
     margin-bottom: -${props => (props.$size === 'small' ? 50 : 40)}px;

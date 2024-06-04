@@ -61,6 +61,11 @@ export const Aside = () => {
               icon="FaProductHunt"
               href="/dashboard/products"
             />
+            <AsideLink
+              label="Anúncios"
+              icon="FaAdversal"
+              href="/dashboard/marketing/ads"
+            />
           </AsideSection>
         </Partial>
 

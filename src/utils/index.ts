@@ -127,3 +127,58 @@ export const uploadedImageUrl = (
 
   return `${process.env.NEXT_PUBLIC_ANLUGE_CDN_API_URL}/static/images/${imagePath}`
 }
+
+export const getQueryMatchSearchParam = (params: URLSearchParams) => {
+  const queryParams = Array.from(params.entries())
+
+  const matchQuery = queryParams.find(([query, value]) => {
+    return /^(match)/i.test(query)
+  })
+
+  return matchQuery || ['', '']
+}
+
+export const getSearchParamsQueryArgument = (queryString: URLSearchParams) => {
+  const queryArguments = {}
+
+  const queryLimit = queryString.get('limit')
+  const [queryMatch, queryMatchValue] = getQueryMatchSearchParam(queryString) // queryString.get('query')
+
+  if (noEmpty(queryLimit)) {
+    const queryLimitSlices = queryLimit.split(/\s*,\s*/)
+
+    const [skip, take] =
+      queryLimitSlices.length >= 2
+        ? queryLimitSlices.map(slice => parseInt(slice))
+        : [0, parseInt(queryLimitSlices[0])]
+
+    Object.assign(queryArguments, { skip, take })
+  }
+
+  if (noEmpty(queryMatch) && noEmpty(queryMatchValue)) {
+    const validFunctionNames = ['contains', 'endsWith', 'startsWith', 'equals']
+
+    const queryMatchSplittersRe = /(\.|:)/
+
+    const queryMatchStrSlices = queryMatch
+      .split(queryMatchSplittersRe)
+      .filter(slice => !queryMatchSplittersRe.test(slice))
+
+    const [, fieldName, functionName] = queryMatchStrSlices.concat([
+      'name',
+      'contains'
+    ])
+
+    if (validFunctionNames.includes(functionName)) {
+      Object.assign(queryArguments, {
+        where: {
+          [fieldName]: {
+            [functionName]: queryMatchValue
+          }
+        }
+      })
+    }
+  }
+
+  return queryArguments
+}

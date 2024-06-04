@@ -55,7 +55,7 @@ export const stylusStockMapLoader: StockMapLoader<
 
     response.products.push({
       slag: '',
-      barCode: generateRandomId(),
+      barCode: product.ean,
       categoryId: productSubFamily.id,
       code: response.productExists(product.code)
         ? generateRandomId()

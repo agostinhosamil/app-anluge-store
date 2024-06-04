@@ -4,7 +4,8 @@ import Container from 'react-bootstrap/Container'
 
 import { AdvertisingPanel } from './AdvertisingPanel'
 import { CategoryCard } from './CategoryCard'
-import { ProductCard } from './ProductCard'
+// import { ProductCard } from './ProductCard'
+import { ProductCardPlaceHolder } from './ProductCardPlaceHolder'
 import {
   AdvertisingPanelContainer,
   CategoryList,
@@ -68,7 +69,7 @@ export const NewsFeed: React.FunctionComponent = () => {
       <Title>Populares</Title>
       <ProductsList>
         {range(30).map(i => (
-          <ProductCard
+          <ProductCardPlaceHolder
             key={i}
             name={`Product ${i}`}
             image="/image004.png"

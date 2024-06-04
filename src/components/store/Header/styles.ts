@@ -149,6 +149,14 @@ export const HeaderBodyContainer = styled.div`
   & > div {
     height: 100%;
   }
+
+  @media (max-width: 1000px) {
+    height: 420px;
+  }
+
+  @media (max-width: 650px) {
+    height: 360px;
+  }
 `
 
 export const HeaderBodyRow = styled.div`
@@ -190,6 +198,17 @@ export const HeaderDataWrapper = styled.div`
 
   h1 {
     margin-bottom: 14px;
+  }
+
+  @media (max-width: 1000px) {
+    h1 {
+      font-size: 30px;
+    }
+
+    p {
+      font-size: 12px;
+      margin: 0px;
+    }
   }
 `
 
@@ -315,6 +334,6 @@ export const HeaderMenuFixedWrapper = styled.div`
 
 export const HeaderMenuShadow = styled.div`
   width: 100%;
-  height: 80px;
+  height: 120px;
   background-color: #ffffff;
 `

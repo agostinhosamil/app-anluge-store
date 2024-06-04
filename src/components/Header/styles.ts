@@ -14,6 +14,7 @@ export const Container = styled.header<HeaderProps>`
   background-color: ${props =>
     props.$colorStyle === 'default' ? '#0170bf' : '#ffffff'};
   color: ${props => (props.$colorStyle === 'default' ? '#ffffff' : '#333333')};
+  position: relative;
   padding: 12px 0px;
 
   * {
@@ -80,6 +81,10 @@ export const HeaderMenu = styled.div<HeaderMenuProps>`
     @media (max-width: 600px) {
       display: none;
     }
+  }
+
+  @media (max-width: 1000px) {
+    padding: ${props => (props.$size === 'large' ? '15px 5px' : '15px 30px')};
   }
 `
 

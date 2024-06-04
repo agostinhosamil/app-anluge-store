@@ -12,10 +12,14 @@ export const Container = styled.div`
   right: 20px;
   padding: 20px 0px;
   z-index: 8;
+  border: 0px;
+  outline: 0px;
 
-  @media (max-width: 430px) {
+  @media (max-width: 660px) {
     right: 0px;
     left: 0px;
+    width: 100%;
+    max-width: unset;
   }
 
   ul {

@@ -7,17 +7,19 @@ export const Container = styled.div`
   min-height: 100vh;
   padding: 0px 0px 130px;
 
-  &:before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    width: 100%;
-    height: 65vh;
-    background-color: #0170bf;
-    z-index: -1;
+  @media (min-width: 600px) {
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      width: 100%;
+      height: 65vh;
+      background-color: #0170bf;
+      z-index: -1;
+    }
   }
 `
 
@@ -94,6 +96,10 @@ export const HeaderMenu = styled.div`
       }
     }
   }
+
+  @media (max-width: 1000px) {
+    padding: 35px 30px;
+  }
 `
 export const Content = styled.main`
   width: 100%;
@@ -119,4 +125,8 @@ export const ContentBody = styled.div`
   padding: 35px;
   border-radius: 12px;
   -webkit-border-radius: 12px;
+
+  @media (max-width: 650px) {
+    box-shadow: none;
+  }
 `

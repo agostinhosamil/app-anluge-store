@@ -14,6 +14,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 export const metadata: Metadata = {
   title: 'Anluge',
+  icons: ['/assets/images/logo-primary.svg'],
   description:
     'Seja bem vindo a loja online da Anluge - Comércio e Prestação de Serviços'
 }
@@ -38,6 +39,20 @@ export default async function RootLayout({ children }: RootLayoutProps) {
 
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="icon"
+          type="image/svg"
+          href="/assets/images/svg/anluge-logo-dark.svg"
+          sizes="20x20"
+        />
+        <link
+          rel="apple-touch-icon"
+          href="/assets/images/svg/anluge-logo-dark.svg"
+          type="image/svg"
+          sizes="20x20"
+        />
+      </head>
       <body className={roboto.className}>
         <NextJsTopLoader />
         <StyledComponentsRegistry>

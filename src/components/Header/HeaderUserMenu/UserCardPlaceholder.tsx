@@ -33,6 +33,8 @@ export const UserCardPlaceholder = () => {
     }
 
     alert('Usuário ou senha incorretos')
+
+    setLoading(false)
   }
 
   return (
