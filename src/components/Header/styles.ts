@@ -1,4 +1,5 @@
-import styled from 'styled-components'
+import Link from 'next/link'
+import styled, { css } from 'styled-components'
 
 export type HeaderProps = {
   $colorStyle?: 'light' | 'default'
@@ -80,55 +81,62 @@ export const HeaderMenu = styled.div<HeaderMenuProps>`
       display: none;
     }
   }
+`
 
-  ul {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
+export const HeaderMenuList = styled.ul`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+`
 
-    li {
-      margin: 0px 7px;
+export const HeaderMenuListItem = styled.li`
+  margin: 0px 7px;
+`
 
-      a,
-      button {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        border: 0px;
-        background-color: transparent;
-        outline: 0px;
-        position: relative;
+const headerMenuListItemStyles = css`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: 0px;
+  background-color: transparent;
+  outline: 0px;
+  position: relative;
+`
 
-        i {
-          margin-right: 12px;
-          font-size: 24px;
-        }
+export const HeaderMenuListButton = styled.button`
+  ${headerMenuListItemStyles}
+`
 
-        @media (max-width: 750px) {
-          i {
-            font-size: 24px;
-          }
+export const HeaderMenuListLink = styled(Link)`
+  ${headerMenuListItemStyles}
+`
 
-          span {
-            display: none;
-          }
-        }
+export const HeaderMenuListItemIconWrapper = styled.i`
+  margin-right: 12px;
+  font-size: 24px;
 
-        strong {
-          position: absolute;
-          background-color: #0150bf;
-          border-radius: 25px;
-          -webkit-border-radius: 25px;
-          padding: 5px 6px 4px;
-          font-size: 7px;
-          color: #ffffff;
-          top: -6px;
-          right: -6px;
-        }
-      }
-    }
+  @media (max-width: 750px) {
+    font-size: 24px;
   }
+`
+
+export const HeaderMenuListItemLabel = styled.span`
+  @media (max-width: 750px) {
+    display: none;
+  }
+`
+
+export const HeaderMenuListItemBadge = styled.strong`
+  position: absolute;
+  background-color: #0150bf;
+  border-radius: 25px;
+  -webkit-border-radius: 25px;
+  padding: 5px 6px 4px;
+  font-size: 7px;
+  color: #ffffff;
+  top: -6px;
+  right: -6px;
 `

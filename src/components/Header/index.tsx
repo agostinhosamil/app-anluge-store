@@ -8,7 +8,7 @@ import { useState } from 'react'
 import { HeaderAsideMenu } from './HeaderAsideMenu'
 import { HeaderMenuItem } from './HeaderMenuItem'
 import { HeaderUserMenu } from './HeaderUserMenu'
-import { Container, HeaderMenu } from './styles'
+import { Container, HeaderMenu, HeaderMenuList } from './styles'
 
 type HeaderComponent = React.FunctionComponent<{
   style?: 'light' | 'default'
@@ -47,7 +47,7 @@ export const Header: HeaderComponent = ({ style = 'default', ...props }) => {
           <div className="header-search-box-container">
             <HeaderSearchBox />
           </div>
-          <ul>
+          <HeaderMenuList>
             <HeaderMenuItem href="/" icon="FaHouse" label="Página Inicial" />
             <HeaderMenuItem
               icon="FaUser"
@@ -65,7 +65,7 @@ export const Header: HeaderComponent = ({ style = 'default', ...props }) => {
               as="button"
               onClick={asideMenuButtonClickHandler}
             />
-          </ul>
+          </HeaderMenuList>
           {showAsideMenu && (
             <HeaderAsideMenu onClose={() => setShowAsideMenu(false)} />
           )}

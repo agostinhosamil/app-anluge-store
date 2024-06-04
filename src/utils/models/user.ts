@@ -7,13 +7,15 @@ import { validateAuthGuard } from '../validateAuthGuard'
 export const createUserByFormData = async (
   formData: FormData
 ): Promise<UserProps | null> => {
-  const response = await axios.post<UserProps>('/users', formData)
+  try {
+    const response = await axios.post<UserProps>('/users', formData)
 
-  const createdUser = response.data
+    const createdUser = response.data
 
-  if (response.status === 200) {
-    return createdUser
-  }
+    if (response.status === 200) {
+      return createdUser
+    }
+  } catch (err) {}
 
   return null
 }

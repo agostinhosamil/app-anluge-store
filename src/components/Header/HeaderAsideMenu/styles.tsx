@@ -34,8 +34,11 @@ export const Container = styled.div`
 
       a {
         width: 100%;
-        display: block;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
         padding: 7px 20px 8px;
+        color: #333333;
 
         &:hover {
           background-color: #ebebeb;
@@ -47,10 +50,25 @@ export const Container = styled.div`
 
         i {
           font-size: 16px;
+          display: inline-flex;
+          margin-right: 8px;
         }
 
         span {
           display: inline-flex !important;
+          width: 100%;
+        }
+
+        b {
+          display: inline-flex;
+          background-color: #095cd0;
+          padding: 3px 8px;
+          border-radius: 6px;
+          color: #ffffff;
+          width: unset;
+          height: unset;
+          font-size: 10px;
+          margin: unset;
         }
       }
 

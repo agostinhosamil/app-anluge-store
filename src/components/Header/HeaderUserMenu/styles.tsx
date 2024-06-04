@@ -15,6 +15,7 @@ export const Container = styled.div`
   top: 100%;
   right: 20px;
   z-index: 8;
+  color: #333333;
 
   @media (max-width: 430px) {
     right: 0px;
@@ -140,6 +141,15 @@ export const UserCardPlaceholderSubmitButtonWrapper = styled.div`
     -webkit-border-radius: 8px;
     font-size: 16px;
     padding: 8px 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      display: inline-flex;
+      margin: 2px 8px 0px 0px;
+    }
   }
 `
 
@@ -178,12 +188,18 @@ export const UserCardPlaceholderFooter = styled.div`
     width: auto;
 
     li {
-      margin: 0px 5px;
+      margin: -5px 5px 0px;
 
       button,
       a {
         font-size: 13px;
         transition: transform 0.2s ease-in-out;
+        background-color: transparent;
+        border: 0px;
+        outline: 0px;
+        width: 25px;
+        height: 25px;
+        margin-top: -4px;
 
         &:hover {
           transform: scale(1.123);

@@ -2,8 +2,8 @@
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Button, Col, FloatingLabel, Form, Row } from 'react-bootstrap'
-import { useFormStatus } from 'react-dom'
+import { useState } from 'react'
+import { Button, Col, FloatingLabel, Form, Row, Spinner } from 'react-bootstrap'
 
 import { signIn } from '@utils/auth/client'
 import {
@@ -14,12 +14,14 @@ import {
 import { createUserByFormData } from '~/utils/models/user'
 
 export default function RegisterPage() {
-  const { pending } = useFormStatus()
+  const [loading, setLoading] = useState<boolean>(false)
 
   const router = useRouter()
 
   const formSubmitHandler: React.FormEventHandler = event => {
     event.preventDefault()
+
+    setLoading(true)
 
     if (event.target instanceof HTMLFormElement) {
       const formElement = event.target
@@ -41,6 +43,8 @@ export default function RegisterPage() {
 
           router.replace('/')
         }
+
+        setLoading(false)
       })
     }
   }
@@ -64,6 +68,7 @@ export default function RegisterPage() {
             placeholder="Nome completo"
             name="user[name]"
             autoComplete="off"
+            disabled={loading}
           />
         </FloatingLabel>
 
@@ -79,6 +84,7 @@ export default function RegisterPage() {
                 placeholder="Endereço de email"
                 autoComplete="off"
                 name="user[email]"
+                disabled={loading}
               />
             </FloatingLabel>
           </Col>
@@ -93,6 +99,7 @@ export default function RegisterPage() {
                 placeholder="Número de telefone"
                 autoComplete="off"
                 name="user[phone]"
+                disabled={loading}
               />
             </FloatingLabel>
           </Col>
@@ -110,6 +117,7 @@ export default function RegisterPage() {
                 placeholder="Palavra passe"
                 autoComplete="off"
                 name="user[password]"
+                disabled={loading}
               />
             </FloatingLabel>
           </Col>
@@ -124,13 +132,19 @@ export default function RegisterPage() {
                 placeholder="Reescreva a palavra passe"
                 autoComplete="off"
                 name="user[passwordConfirmation]"
+                disabled={loading}
               />
             </FloatingLabel>
           </Col>
         </Row>
 
         <SubmitWrapper>
-          <Button disabled={pending} type="submit">
+          <Button disabled={loading} type="submit">
+            {loading && (
+              <i>
+                <Spinner size="sm" />
+              </i>
+            )}
             Criar conta
           </Button>
         </SubmitWrapper>

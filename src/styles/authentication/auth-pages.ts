@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const Container = styled.div`
   width: 100%;
@@ -37,14 +37,14 @@ export const Container = styled.div`
       }
     }
   }
-`;
+`
 
 export const Title = styled.h1`
   font-size: 27px;
   font-weight: 300;
   color: #404040;
   padding: 0px 0px 25px;
-`;
+`
 
 export const SubmitWrapper = styled.div`
   width: 100%;
@@ -53,5 +53,14 @@ export const SubmitWrapper = styled.div`
   button {
     width: 100%;
     padding: 15px 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    i {
+      display: inline-flex;
+      margin-right: 8px;
+    }
   }
-`;
+`

@@ -1,8 +1,15 @@
-import Link from 'next/link'
 import React, { ButtonHTMLAttributes } from 'react'
 import * as Icon from 'react-icons/fa6'
 
 import { FontAwesome6IconName } from 'Types/react-icons'
+import {
+  HeaderMenuListButton,
+  HeaderMenuListItem,
+  HeaderMenuListItemBadge,
+  HeaderMenuListItemIconWrapper,
+  HeaderMenuListItemLabel,
+  HeaderMenuListLink
+} from './styles'
 
 type HeaderMenuItemComponent = React.FunctionComponent<
   React.ButtonHTMLAttributes<HTMLElement> & {
@@ -23,10 +30,10 @@ type LinkElementComponent = React.FunctionComponent<React.PropsWithChildren>
 
 export const HeaderMenuItem: HeaderMenuItemComponent = ({
   href = '#',
+  icon,
   ...props
 }) => {
-  const IconElement =
-    typeof props.icon === 'string' ? Icon[props.icon] : React.Fragment
+  const IconElement = typeof icon === 'string' ? Icon[icon] : React.Fragment
 
   // const buttonClickHandler: React.MouseEventHandler = event => {
   //   if (typeof props.onClick === 'function') {
@@ -35,28 +42,30 @@ export const HeaderMenuItem: HeaderMenuItemComponent = ({
   // }
 
   const ButtonElement: ButtonElementComponent = ({ children }) => (
-    <button type="button" role="button" {...props}>
+    <HeaderMenuListButton type="button" role="button" {...props}>
       {children}
-    </button>
+    </HeaderMenuListButton>
   )
 
   const LinkElement: LinkElementComponent = ({ children }) => {
-    return <Link href={href}>{children}</Link>
+    return <HeaderMenuListLink href={href}>{children}</HeaderMenuListLink>
   }
 
   const WrapperElement = props.as === 'button' ? ButtonElement : LinkElement
 
   return (
-    <li>
+    <HeaderMenuListItem>
       <WrapperElement>
-        <i>
+        <HeaderMenuListItemIconWrapper>
           <IconElement />
-        </i>
-        {props.label && <span>{props.label}</span>}
+        </HeaderMenuListItemIconWrapper>
+        {props.label && (
+          <HeaderMenuListItemLabel>{props.label}</HeaderMenuListItemLabel>
+        )}
         {typeof props.count === 'number' && props.count >= 1 && (
-          <strong>{props.count}</strong>
+          <HeaderMenuListItemBadge>{props.count}</HeaderMenuListItemBadge>
         )}
       </WrapperElement>
-    </li>
+    </HeaderMenuListItem>
   )
 }

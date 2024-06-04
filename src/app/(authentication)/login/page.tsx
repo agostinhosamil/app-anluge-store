@@ -2,16 +2,17 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { Button, FloatingLabel, Form } from 'react-bootstrap'
+import { Button, FloatingLabel, Form, Spinner } from 'react-bootstrap'
 
 import {
   Container,
   SubmitWrapper,
   Title
 } from 'authentication@styles/auth-pages'
-import { signIn } from '~/utils/auth/client'
+import { handleSignInFormSubmit } from '~/utils/auth/client'
 
 export default function LoginPage() {
+  const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
 
   // const router = useRouter()
@@ -21,18 +22,22 @@ export default function LoginPage() {
   const formSubmitHandler: React.FormEventHandler = async event => {
     event.preventDefault()
 
+    setLoading(true)
+
     if (event.target instanceof HTMLFormElement) {
       const formElement = event.target
       const formData = new FormData(formElement)
 
-      const userInputUserNamer = formData.get('user[username]')
-      const userInputPassword = formData.get('user[password]')
+      // const userInputUserNamer = formData.get('user[username]')
+      // const userInputPassword = formData.get('user[password]')
 
       try {
-        const signInResponse = await signIn({
-          password: String(userInputPassword),
-          username: String(userInputUserNamer)
-        })
+        const signInResponse = await handleSignInFormSubmit(formData)
+
+        // await signIn({
+        //   password: String(userInputPassword),
+        //   username: String(userInputUserNamer)
+        // })
 
         // const signInResponse = await signIn('credentials', {
         //   redirect: false,
@@ -46,14 +51,11 @@ export default function LoginPage() {
         // }
 
         if (signInResponse) {
-          // authContext.setUser(signInResponse.user)
-
-          window.location.href = '/'
-
-          return // router.replace('/')
+          return window.location.reload()
         }
       } catch (err) {}
 
+      setLoading(false)
       setError('Email ou palavra passe estão incorretos')
     }
   }
@@ -79,6 +81,7 @@ export default function LoginPage() {
             placeholder="Endereço de email ou telefone"
             autoComplete="off"
             name="user[username]"
+            disabled={loading}
           />
         </FloatingLabel>
         <FloatingLabel controlId="floatingPassword" label="Palavra passe">
@@ -87,11 +90,19 @@ export default function LoginPage() {
             placeholder="Password"
             autoComplete="off"
             name="user[password]"
+            disabled={loading}
           />
         </FloatingLabel>
 
         <SubmitWrapper>
-          <Button type="submit">Criar conta</Button>
+          <Button type="submit" disabled={loading}>
+            {loading && (
+              <i>
+                <Spinner size="sm" />
+              </i>
+            )}
+            Criar conta
+          </Button>
         </SubmitWrapper>
 
         <ul>

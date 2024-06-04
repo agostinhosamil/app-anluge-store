@@ -63,6 +63,7 @@ export const HeaderAsideMenu: HeaderAsideMenuComponent = ({
               <Icon name="FaFirstOrder" />
             </i>
             <span>Meus pedidos</span>
+            <b>123</b>
           </Link>
         </li>
         <li>
