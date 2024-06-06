@@ -56,6 +56,10 @@ export const TopHeaderMenu = styled.div`
         @media (min-width: 801px) and (max-width: 1000px) {
           font-size: 7px;
         }
+
+        @media (max-width: 450px) {
+          font-size: 7px;
+        }
       }
 
       &.selected a {

@@ -20,6 +20,10 @@ export const Container = styled.header<HeaderProps>`
   * {
     color: inherit;
   }
+
+  @media (max-width: 750px) {
+    padding: 0px;
+  }
 `
 
 export const HeaderMenu = styled.div<HeaderMenuProps>`
@@ -124,7 +128,11 @@ export const HeaderMenuListItemIconWrapper = styled.i`
   font-size: 24px;
 
   @media (max-width: 750px) {
-    font-size: 24px;
+    font-size: 19px;
+  }
+
+  @media (max-width: 560px) {
+    font-size: 16px;
   }
 `
 
@@ -144,4 +152,12 @@ export const HeaderMenuListItemBadge = styled.strong`
   color: #ffffff;
   top: -6px;
   right: -6px;
+
+  @media (max-width: 750px) {
+    font-size: 4px;
+  }
+
+  @media (max-width: 560px) {
+    font-size: 3px;
+  }
 `

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const Container = styled.footer`
   width: 100%;
@@ -6,6 +6,7 @@ export const Container = styled.footer`
   padding: 60px 80px;
   background-color: #01223a;
   color: #ffffff;
+  transition: all 0.2s ease-in-out;
 
   * {
     color: inherit;
@@ -28,8 +29,16 @@ export const Container = styled.footer`
       width: 100%;
       letter-spacing: 2px;
     }
+
+    @media (max-width: 576px) {
+      margin-top: 26px;
+    }
   }
-`;
+
+  @media (max-width: 991px) {
+    padding: 30px 0px 60px;
+  }
+`
 
 export const ServiceDetails = styled.div`
   width: 100%;
@@ -89,6 +98,9 @@ export const ServiceDetails = styled.div`
   }
 
   @media (max-width: 750px) {
+    padding: 30px;
+    background-color: #f4f4f4;
+
     ul {
       flex-wrap: wrap;
 
@@ -105,7 +117,22 @@ export const ServiceDetails = styled.div`
       padding: 20px 0px;
     }
   }
-`;
+
+  @media (max-width: 330px) {
+    ul li {
+      flex-direction: column;
+
+      div {
+        margin: 0px 0px 24px;
+      }
+
+      data {
+        margin: 0px;
+        text-align: center;
+      }
+    }
+  }
+`
 
 export const NewsletterFormContainer = styled.div`
   width: 100%;
@@ -169,9 +196,21 @@ export const NewsletterFormContainer = styled.div`
           transform: scale(0.9);
         }
       }
+
+      @media (max-width: 481px) {
+        flex-direction: column;
+
+        button {
+          margin: 12px 0px 0px;
+        }
+      }
     }
   }
-`;
+
+  @media (max-width: 1000px) {
+    padding-bottom: 80px;
+  }
+`
 
 export const CompanyDataWrapper = styled.div`
   width: 100%;
@@ -212,8 +251,13 @@ export const CompanyDataWrapper = styled.div`
         }
       }
     }
+
+    @media (max-width: 991px) {
+      padding-bottom: 30px;
+      margin-left: -12px;
+    }
   }
-`;
+`
 
 export const FooterMenuListsWrapper = styled.div`
   width: 100%;
@@ -244,6 +288,17 @@ export const FooterMenuListsWrapper = styled.div`
         }
       }
     }
+
+    @media (max-width: 576px) {
+      flex-direction: row;
+      padding-bottom: 5px;
+      flex-wrap: wrap;
+
+      li {
+        width: unset;
+        margin: 0px 15px 15px 0px;
+      }
+    }
   }
 
   ol {
@@ -253,6 +308,7 @@ export const FooterMenuListsWrapper = styled.div`
     flex-direction: row;
     align-items: center;
     padding: 30px 0px;
+    flex-wrap: wrap;
 
     li {
       display: inline-block;
@@ -260,7 +316,7 @@ export const FooterMenuListsWrapper = styled.div`
       position: relative;
 
       &:before {
-        content: "";
+        content: '';
         display: block;
         width: 1px;
         height: 8px;
@@ -290,4 +346,4 @@ export const FooterMenuListsWrapper = styled.div`
       }
     }
   }
-`;
+`
