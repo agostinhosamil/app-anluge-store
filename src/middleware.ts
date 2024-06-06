@@ -55,8 +55,11 @@ export const middleware = async (request: NextRequest) => {
       )
 
     for (const { handler, match } of middlewares) {
+      const middlewareKeyMatch =
+        match instanceof RegExp ? match.exec(requestUrl) : requestUrl
+
       if (shouldApplyMiddleware(match)) {
-        handler({ request, response: NextResponse })
+        handler({ request, response: NextResponse, match: middlewareKeyMatch })
       }
     }
   }

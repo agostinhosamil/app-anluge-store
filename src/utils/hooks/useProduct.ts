@@ -3,13 +3,13 @@ import { useEffect, useState } from 'react'
 import { getProducts } from '@utils/models/product'
 import { ProductProps } from 'Types/Product'
 
-export const useProduct = () => {
+export const useProduct = (query?: string) => {
   const [loading, setLoading] = useState<boolean>(true)
   const [products, setProducts] = useState<Array<ProductProps>>([])
 
   useEffect(() => {
     const effectHandler = async () => {
-      const products = await getProducts()
+      const products = await getProducts(query)
 
       if (products instanceof Array && products.length >= 1) {
         setProducts(products)
@@ -46,6 +46,15 @@ export const useProduct = () => {
 
     deleteProduct(productId: string) {
       setProducts(products.filter(product => product.id !== productId))
+    },
+
+    reloadProducts() {
+      setLoading(true)
+
+      getProducts().then(products => {
+        setProducts(products)
+        setLoading(false)
+      })
     }
   }
 }

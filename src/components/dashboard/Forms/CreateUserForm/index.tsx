@@ -3,7 +3,7 @@ import { Fragment } from 'react'
 import { Col, FloatingLabel, Form, Row } from 'react-bootstrap'
 
 import { FormSubmit } from 'dashboard@components/FormSubmit'
-import { RoleProps } from 'Types/RoleProps'
+import { RoleProps } from 'Types/Role'
 import { SelectField } from '~/components/Form/SelectField'
 import { Partial } from '~/components/Partial'
 

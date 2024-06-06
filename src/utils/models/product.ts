@@ -1,6 +1,9 @@
+import { AxiosResponse } from 'axios'
+
 import { Product } from '@prisma/client'
 import { axios } from '@services/axios'
 import { ProductProps } from '~/Types/Product'
+import { arrayMerge, arraySplit, noEmpty } from '~/utils'
 
 export const createProductByFormData = async (
   formData: FormData
@@ -20,17 +23,106 @@ export const createProductByFormData = async (
   return null
 }
 
+// export const massStoreProducts = async (
+//   products: Array<Product>
+// ): Promise<Array<Product> | null> => {
+//   try {
+//     const response = await axios.post('/store/products/mass-store', {
+//       products
+//     })
+
+//     if (response.data instanceof Array) {
+//       return response.data
+//     }
+//   } catch (err) {
+//     // pass
+//   }
+
+//   return null
+// }
+
+// export const massStoreProducts = async (
+//   products: Array<Product>
+// ): Promise<Array<Product> | null> => {
+//   try {
+//     const requestPath = '/store/products/mass-store'
+
+//     const productsQues = arraySplit(products, 100)
+
+//     // console.log({ productsQues })
+
+//     const productsMassCreationQueuesResponses = await Promise.all(
+//       productsQues.map(productsQue => {
+//         return axios.post<Array<Product>>(requestPath, {
+//           products: productsQue
+//         })
+//       })
+//     )
+
+//     const productsMassCreationQueuesResponsesData =
+//       productsMassCreationQueuesResponses
+//         .filter(response => response.data instanceof Array)
+//         .map(response => response.data)
+
+//     const createdProducts = arrayMerge<Product>(
+//       ...productsMassCreationQueuesResponsesData
+//     )
+//     // const response = await axios.post(requestPath, {
+//     //   products
+//     // })
+
+//     return createdProducts
+//   } catch (err) {
+//     // pass
+//   }
+
+//   return null
+// }
+
 export const massStoreProducts = async (
   products: Array<Product>
 ): Promise<Array<Product> | null> => {
   try {
-    const response = await axios.post('/store/products/mass-store', {
-      products
+    const requestPath = '/store/products/mass-store'
+
+    const productsQues = arraySplit(products, 100)
+
+    const productsMassCreationQueuesResponses: Array<
+      AxiosResponse<Array<Product>>
+    > = []
+
+    // const productsMassCreationQueuesResponses = await Promise.all(
+
+    // )
+
+    const productsMassCreationPromises = productsQues.map(productsQue => {
+      return axios.post<Array<Product>>(requestPath, {
+        products: productsQue
+      })
     })
 
-    if (response.data instanceof Array) {
-      return response.data
+    for (const productsMassCreationPromise of productsMassCreationPromises) {
+      const productsMassCreationPromiseResult =
+        await productsMassCreationPromise
+
+      productsMassCreationQueuesResponses.push(
+        productsMassCreationPromiseResult
+      )
     }
+
+    const productsMassCreationQueuesResponsesData =
+      productsMassCreationQueuesResponses
+        .filter(response => response.data instanceof Array)
+        .map(response => response.data)
+
+    const createdProducts = arrayMerge<Product>(
+      ...productsMassCreationQueuesResponsesData
+    )
+    // const response = await axios.post(requestPath, {
+    //   products
+    // })
+
+    return createdProducts
   } catch (err) {
     // pass
   }
@@ -82,9 +174,15 @@ export const deleteProduct = async (
   return await deleteProductById(product.id)
 }
 
-export const getProducts = async (): Promise<Array<ProductProps>> => {
+export const getProducts = async (
+  query?: string
+): Promise<Array<ProductProps>> => {
   try {
-    const response = await axios.get<Array<ProductProps>>('/store/products')
+    const response = await axios.get<Array<ProductProps>>(
+      '/store/products'.concat(
+        noEmpty(query) ? `?${query.replace(/\?\s*/, '')}` : ''
+      )
+    )
 
     if (response.data instanceof Array) {
       return response.data

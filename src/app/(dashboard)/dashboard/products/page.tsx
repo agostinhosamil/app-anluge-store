@@ -45,6 +45,8 @@ export default function ProductsPage() {
   const loadStockMapDialogCloseHandler = () => {
     setLoadingStockMap(undefined)
     setShowLoadStockMapDialog(false)
+
+    productState.reloadProducts()
   }
 
   const loadProductStockMapFormImportEndHandler = () => {
@@ -181,16 +183,18 @@ export default function ProductsPage() {
         </EmptyListContainer>
       )}
 
-      <div>
-        {productState.products.map(product => (
-          <EntityCard
-            key={product.id}
-            title={product.name}
-            subTitle={product.category?.title}
-            icons={['Edit', 'Remove']}
-          />
-        ))}
-      </div>
+      {!productState.loading && productState.products.length >= 1 && (
+        <div>
+          {productState.products.map(product => (
+            <EntityCard
+              key={product.id}
+              title={product.name}
+              subTitle={product.category?.title}
+              icons={['Edit', 'Remove']}
+            />
+          ))}
+        </div>
+      )}
     </Fragment>
   )
 }

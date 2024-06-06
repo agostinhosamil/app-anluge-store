@@ -13,7 +13,7 @@ import { DefineUserRoleForm } from 'dashboard@components/Forms/DefineUserRoleFor
 import { RemoveForm } from 'dashboard@components/Forms/RemoveForm'
 import { SendAdminInvitationForm } from 'dashboard@components/Forms/SendAdminInvitationForm'
 import { UserSelectList } from 'dashboard@components/UserSelectList'
-import { RoleProps } from '~/Types/RoleProps'
+import { RoleProps } from '~/Types/Role'
 import { UserProps } from '~/Types/UserProps'
 import { useAdmins } from '~/utils/hooks/useAdmins'
 import {

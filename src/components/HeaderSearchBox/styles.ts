@@ -131,13 +131,13 @@ export const List = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #e1e1e1;
+    background: #b0b0b0;
     border: 0px none #ffffff;
     border-radius: 48px;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: #ffffff;
+    background: #c4c4c4;
   }
 
   &::-webkit-scrollbar-thumb:active {
@@ -145,17 +145,9 @@ export const List = styled.div`
   }
 
   &::-webkit-scrollbar-track {
-    background: #666666;
+    background: #e0e0e0;
     border: 0px none #ffffff;
     border-radius: 50px;
-  }
-
-  &::-webkit-scrollbar-track:hover {
-    background: #666666;
-  }
-
-  &::-webkit-scrollbar-track:active {
-    background: #5e5e5e;
   }
 
   &::-webkit-scrollbar-corner {

@@ -19,7 +19,11 @@ export const GlobalStyles = createGlobalStyle`
   h3,
   h4,
   h5,
-  h6 {
+  h6,
+  p,
+  hr,
+  dd,
+  dl {
     padding: 0px;
     margin: 0px;
   }

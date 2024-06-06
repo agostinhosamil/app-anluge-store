@@ -2,10 +2,13 @@ import React from 'react'
 import Carousel from 'react-bootstrap/Carousel'
 import Container from 'react-bootstrap/Container'
 
+import { range } from '~/utils'
 import { AdvertisingPanel } from './AdvertisingPanel'
 import { CategoryCard } from './CategoryCard'
 // import { ProductCard } from './ProductCard'
-import { ProductCardPlaceHolder } from './ProductCardPlaceHolder'
+import { useProduct } from '~/utils/hooks/useProduct'
+import { ProductCard } from './ProductCard'
+import { ProductCardPlaceholders } from './ProductCardPlaceholders'
 import {
   AdvertisingPanelContainer,
   CategoryList,
@@ -14,19 +17,9 @@ import {
   Title
 } from './styles'
 
-const range = (n: number = 10): number[] => {
-  const arr = []
-
-  let i = 0
-
-  while (i++ < n) {
-    arr.push(i)
-  }
-
-  return arr
-}
-
 export const NewsFeed: React.FunctionComponent = () => {
+  const { products, ...productsState } = useProduct('limit=30')
+
   return (
     <Container>
       <AdvertisingPanelContainer>
@@ -68,14 +61,10 @@ export const NewsFeed: React.FunctionComponent = () => {
       </CategoryListWrapper>
       <Title>Populares</Title>
       <ProductsList>
-        {range(30).map(i => (
-          <ProductCardPlaceHolder
-            key={i}
-            name={`Product ${i}`}
-            image="/image004.png"
-            description={`Lorem product ${i} Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aspernatur dignissimos recusandae earum vel consequatur repellendus, nostrum, vitae mollitia eos maxime inventore assumenda sunt quaerat magni porro alias impedit temporibus placeat.`}
-          />
-        ))}
+        {(productsState.loading && <ProductCardPlaceholders />) ||
+          products.map(product => (
+            <ProductCard key={product.id} {...product} />
+          ))}
       </ProductsList>
     </Container>
   )

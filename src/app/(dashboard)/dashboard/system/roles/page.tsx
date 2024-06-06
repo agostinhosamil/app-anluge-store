@@ -15,12 +15,13 @@ import {
   permissionGratedToRole
 } from '@utils/models/permission'
 
-import { RoleProps } from '~/Types/RoleProps'
+import { RoleProps } from '~/Types/Role'
 import {
   createRoleByFormData,
-  grantRolePermissionsByFormData,
-  useRole
+  grantRolePermissionsByFormData
 } from '~/utils/models/role'
+
+import { useRole } from '@utils/hooks/useRole'
 
 export default function RolesPage() {
   const [showCreateRoleDialog, setShowCreateRoleDialog] =
@@ -28,9 +29,11 @@ export default function RolesPage() {
 
   const [roleToSetPermissions, setRoleToSetPermission] = useState<Role>()
 
+  const [loadingDefaultRoles, setLoadingDefaultRoles] = useState<boolean>(false)
+
   const permissionsState = useRef<Array<Permission>>([])
 
-  const { roles, addRole } = useRole()
+  const { roles, addRole, loadDefaultRoles } = useRole()
 
   const dialogCloseHandler = () => {
     setShowCreateRoleDialog(false)
@@ -44,6 +47,14 @@ export default function RolesPage() {
     permissionsState.current = await getPermissions()
 
     setShowCreateRoleDialog(true)
+  }
+
+  const loadDefaultRolesButtonClickHandler = async () => {
+    setLoadingDefaultRoles(true)
+
+    await loadDefaultRoles()
+
+    setLoadingDefaultRoles(false)
   }
 
   const createRoleFormSubmitHandler: React.FormEventHandler = async event => {
@@ -100,6 +111,15 @@ export default function RolesPage() {
   return (
     <Fragment>
       <ContentHeader title="Roles">
+        <ActionButton
+          label={
+            loadingDefaultRoles
+              ? 'Carregando roles principais...'
+              : 'Carregar roles principais'
+          }
+          disabled={loadingDefaultRoles}
+          onClick={() => loadDefaultRolesButtonClickHandler()}
+        />
         <ActionButton
           label="Criar role"
           onClick={() => createRoleButtonClickHandler()}

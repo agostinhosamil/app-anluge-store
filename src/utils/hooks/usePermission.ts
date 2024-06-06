@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { axios } from '@services/axios'
-import { PermissionProps } from 'Types/PermissionProps'
+import { PermissionProps } from 'Types/Permission'
 
 export type UsePermissionHookDataObject = {
   permissions?: Array<PermissionProps>

@@ -7,18 +7,16 @@ type CategoryCardProps = {
   slug?: string
 }
 
-export const CategoryCard: React.FunctionComponent<CategoryCardProps> = (props) => {
+export const CategoryCard: React.FunctionComponent<
+  CategoryCardProps
+> = props => {
   return (
     <Container>
       <Link href="/catogories/929883">
         <CategoryCardBody>
           <CategoryDataWrapper>
-            <h1>
-              {props.title}
-            </h1>
-            <p>
-              {props.description}
-            </p>
+            <h1>{props.title}</h1>
+            <p>{props.description}</p>
           </CategoryDataWrapper>
         </CategoryCardBody>
       </Link>

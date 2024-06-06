@@ -81,6 +81,7 @@ model User {
   Faq           Faq[]
   accounts      Account[]
   sessions      Session[]
+  posts         Post[]
 
   @@map("user")
 }
@@ -108,13 +109,18 @@ model Favorite {
 }
 
 model Advertising {
-  id        String   @id @default(cuid())
+  id        String              @id @default(cuid())
   expiresAt DateTime
   banner    String
   link      String?
   title     String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  content   String?
+  post      Post?               @relation(fields: [postId], references: [id])
+  style     AdvertisingStyle
+  position  AdvertisingPosition
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
+  postId    Int?
 
   @@map("advertising")
 }
@@ -175,6 +181,8 @@ model Media {
   productId String?
   Rate      Rate?     @relation(fields: [rateId], references: [id])
   rateId    String?
+  Post      Post?     @relation(fields: [postId], references: [id])
+  postId    Int?
 
   @@map("media")
 }
@@ -186,8 +194,25 @@ model Tag {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   products  Product[]
+  posts     Post[]
 
   @@map("tag")
+}
+
+model Post {
+  id            Int           @id @default(autoincrement())
+  title         String
+  slag          String        @unique @default(uuid())
+  body          String
+  author        User          @relation(fields: [userId], references: [id])
+  tags          Tag[]
+  medias        Media[]
+  adevertisings Advertising[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  userId        String
+
+  @@map("post")
 }
 
 model Category {
@@ -248,7 +273,7 @@ model Product {
   faqs        Faq[]
   stock       Int?        @default(-1)
   sku         String?     @unique
-  barCode     String?     @unique
+  barCode     String? // @unique
   type        ProductType @default(PHYSICAL)
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
@@ -292,4 +317,15 @@ enum MediaType {
 enum ProductType {
   PHYSICAL
   DIGITAL
+}
+
+enum AdvertisingStyle {
+  CARD
+  BANNER
+}
+
+enum AdvertisingPosition {
+  TOP
+  BOTTOM
+  FEED
 }

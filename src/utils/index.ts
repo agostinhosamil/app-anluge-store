@@ -1,3 +1,5 @@
+import { compareSync } from 'bcryptjs'
+
 import { LoadingStockMap } from '~/Types/Product'
 
 export const getApiAccessToken = (): string => {
@@ -181,4 +183,61 @@ export const getSearchParamsQueryArgument = (queryString: URLSearchParams) => {
   }
 
   return queryArguments
+}
+
+export const arraySplit = <ArrayItemsType = any>(
+  array: Array<ArrayItemsType>,
+  itemsPerSlice: number = 1
+): Array<Array<ArrayItemsType>> => {
+  const finalArray: Array<Array<ArrayItemsType>> = []
+
+  for (let i = 0; i < array.length; i += itemsPerSlice) {
+    let n = 0
+    const arr = []
+
+    for (; n < itemsPerSlice; n++) {
+      const currentItemIndex = i + n
+
+      if (array.length - 1 >= currentItemIndex) {
+        arr.push(array[currentItemIndex])
+      }
+    }
+
+    finalArray.push(arr)
+  }
+
+  return finalArray
+}
+
+export const arrayMerge = <ArrayItemsType = any>(
+  ...arrays: Array<Array<ArrayItemsType>>
+): Array<ArrayItemsType> => {
+  let finalArray: Array<ArrayItemsType> = []
+
+  arrays.forEach(array => {
+    finalArray = [...finalArray, ...array]
+  })
+
+  return finalArray
+}
+
+export const getAppMasterKeys = (): Array<string> => {
+  const environmentVariableKeys = Object.keys(process.env)
+  const masterKeyRe = /^(APP_MASTER_KEY_(.+))$/
+
+  return environmentVariableKeys
+    .filter(key => masterKeyRe.test(key))
+    .map<string>(key => String(process.env[key]))
+}
+
+export const isMasterKey = (data: string): boolean => {
+  const appMasterKeys = getAppMasterKeys()
+
+  for (const appMasterKey of appMasterKeys) {
+    if (compareSync(data, appMasterKey)) {
+      return true
+    }
+  }
+
+  return false
 }

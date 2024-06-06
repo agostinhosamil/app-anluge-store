@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row'
 import { SelectField } from '@components/Form/SelectField'
 import { FormSubmit } from 'dashboard@components/FormSubmit'
 import { Spinner } from 'react-bootstrap'
-import { useRole } from '~/utils/models/role'
+import { useRole } from '~/utils/hooks/useRole'
 import { Container, Message } from './styles'
 
 type SendAdminInvitationFormProps = {}

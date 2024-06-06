@@ -5,7 +5,7 @@ import { SelectField } from '@components/Form/SelectField'
 import { FormSubmit } from 'dashboard@components/FormSubmit'
 import { Spinner } from 'react-bootstrap'
 import { UserProps } from 'Types/UserProps'
-import { useRole } from '~/utils/models/role'
+import { useRole } from '~/utils/hooks/useRole'
 
 type DefineUserRoleFormProps = {
   user: UserProps

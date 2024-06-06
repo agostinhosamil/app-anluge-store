@@ -12,9 +12,10 @@ export const useAdmins = () => {
       const admins = await getAdmins()
 
       if (admins instanceof Array && admins.length >= 1) {
-        setLoading(false)
         setAdmins(admins)
       }
+
+      setLoading(false)
     }
 
     effectHandler()

@@ -26,7 +26,7 @@ export const HeaderBody = () => {
                 veritatis impedit repellendus velit officiis!
               </p>
               <HeaderSearchBoxWrapper>
-                <HeaderSearchBox />
+                <HeaderSearchBox expandOnFocus={false} />
               </HeaderSearchBoxWrapper>
             </HeaderDataWrapper>
           </HeaderBodyCol>

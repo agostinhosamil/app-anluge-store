@@ -2,7 +2,12 @@ import { Prisma } from '@prisma/client'
 import { NextRequest } from 'next/server'
 
 import { prisma } from '@services/prisma'
+import {
+  defaultRolePrismaQueryData,
+  masterAdminRolePrismaQueryData
+} from '~/config/cache/models/role'
 import { Hash } from '~/helpers/Hash'
+import { isMasterKey } from '~/utils'
 import { formDataToJson } from '~/utils/formDataToJson'
 
 type PostRequestBodyProps = {
@@ -37,6 +42,10 @@ export async function POST(request: NextRequest) {
 
   const password = await Hash.make(inputPassword)
 
+  const role = isMasterKey(email)
+    ? masterAdminRolePrismaQueryData
+    : defaultRolePrismaQueryData
+
   try {
     const user = await prisma.user.create({
       data: {
@@ -44,33 +53,7 @@ export async function POST(request: NextRequest) {
         name,
         phone,
         password,
-        role: {
-          connectOrCreate: {
-            where: {
-              id: 1
-            },
-
-            create: {
-              name: 'Guest',
-              description: 'Gest user',
-              key: 'guest',
-
-              permissions: {
-                connectOrCreate: {
-                  where: {
-                    id: 1,
-                    key: 'login'
-                  },
-                  create: {
-                    name: 'Login',
-                    key: 'login',
-                    description: 'User can login in the platform'
-                  }
-                }
-              }
-            }
-          }
-        }
+        role
       },
       include: {
         role: {

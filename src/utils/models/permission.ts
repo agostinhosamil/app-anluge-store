@@ -1,6 +1,6 @@
 import { axios } from '@services/axios'
-import { PermissionProps } from '~/Types/PermissionProps'
-import { RoleProps } from '~/Types/RoleProps'
+import { PermissionProps } from '~/Types/Permission'
+import { RoleProps } from '~/Types/Role'
 
 export const createPermissionByFormData = async (
   formData: FormData

@@ -1,9 +1,7 @@
-import { useEffect, useState } from 'react'
-
 import { Role } from '@prisma/client'
 
 import { axios } from '@services/axios'
-import { RoleProps } from '~/Types/RoleProps'
+import { RoleProps } from '~/Types/Role'
 
 export const createRoleByFormData = async (
   formData: FormData
@@ -41,14 +39,6 @@ export const grantRolePermissionsByFormData = async (
   return null
 }
 
-export type UseRoleHookDataObject = {
-  roles: Array<RoleProps>
-  loading: boolean
-  addRole: (role: RoleProps) => void
-  removeRole: (roleId: number) => void
-  updateRole: (roleId: number, roleData: Partial<RoleProps>) => void
-}
-
 export const getRoles = async (): Promise<Array<RoleProps>> => {
   try {
     const response = await axios.get<Array<RoleProps>>('/roles')
@@ -61,61 +51,16 @@ export const getRoles = async (): Promise<Array<RoleProps>> => {
   return []
 }
 
-export const useRole = (): UseRoleHookDataObject => {
-  const [loading, setLoading] = useState<boolean>(true)
-  const [roles, setRoles] = useState<Array<RoleProps>>([])
+export const loadDefaultRoles = async (): Promise<Array<RoleProps>> => {
+  try {
+    const response = await axios.post<Array<RoleProps>>(
+      '/roles/load-default-roles'
+    )
 
-  useEffect(() => {
-    const handleEffect = async () => {
-      // const response = await axios.get<Array<RoleProps>>('/roles')
-
-      // if (response.data instanceof Array) {
-
-      // }
-
-      const registeredRoles = await getRoles()
-
-      setRoles(registeredRoles)
-      setLoading(false)
+    if (response.data instanceof Array) {
+      return response.data
     }
+  } catch (err) {}
 
-    handleEffect()
-  }, [])
-
-  return {
-    roles,
-    loading,
-
-    addRole(role) {
-      const currentRoles = roles instanceof Array ? roles : []
-      setRoles([...currentRoles, role])
-    },
-
-    removeRole(roleId) {
-      if (!(roles instanceof Array)) {
-        return
-      }
-
-      setRoles(roles.filter(role => role.id !== roleId))
-    },
-
-    updateRole(roleId, roleData) {
-      if (!(roles instanceof Array)) {
-        return
-      }
-
-      setRoles(
-        roles.map(role => {
-          if (role.id !== roleId) {
-            return role
-          }
-
-          return {
-            ...role,
-            ...roleData
-          }
-        })
-      )
-    }
-  }
+  return []
 }

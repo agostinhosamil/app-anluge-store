@@ -15,13 +15,13 @@ import {
 } from './styles'
 
 type HeaderSearchBoxProps = {
-  expand?: boolean
+  expandOnFocus?: boolean
 }
 
 export type HeaderSearchBoxComponent =
   React.FunctionComponent<HeaderSearchBoxProps>
 
-export const HeaderSearchBox: HeaderSearchBoxComponent = () => {
+export const HeaderSearchBox: HeaderSearchBoxComponent = props => {
   const [fixed, setFixed] = useState<boolean>(false)
 
   const unsetFixedOnInputBlurState = useRef<boolean>(false)
@@ -52,10 +52,18 @@ export const HeaderSearchBox: HeaderSearchBoxComponent = () => {
   }
 
   const inputFocusHandler = () => {
+    if (typeof props.expandOnFocus === 'boolean' && !props.expandOnFocus) {
+      return
+    }
+
     setFixed(true)
   }
 
   const inputBlurHandler = (event: React.BaseSyntheticEvent) => {
+    if (!fixed) {
+      return
+    }
+
     if (unsetFixedOnInputBlurState.current) {
       return setFixed(false)
     }

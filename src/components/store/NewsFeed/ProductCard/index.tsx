@@ -1,26 +1,25 @@
 // import React from 'react'
-import Image from "next/image";
-import Link from "next/link";
-import { FaCartPlus, FaEllipsisV, FaHeart } from "react-icons/fa";
-import { StarRating } from "./StarRating";
-import * as Styled from "./styles";
+import Image from 'next/image'
+import Link from 'next/link'
+import { FaCartPlus, FaEllipsisV, FaHeart } from 'react-icons/fa'
 
-type ProductCardProps = {
-  name: string;
-  image: string;
-  description: string;
-};
+import { Fragment } from 'react'
+import { ProductProps } from '~/Types/Product'
+import { StarRating } from './StarRating'
+import * as Styled from './styles'
 
-export const ProductCard: React.FunctionComponent<ProductCardProps> = (
-  props,
-) => {
+type ProductCardProps = ProductProps
+
+export const ProductCard: React.FunctionComponent<ProductCardProps> = props => {
   return (
     <Styled.Container>
-      <Link href={`/products/{id}`}>
+      <Link href={`/products/${props.slag}`}>
         <Styled.Content>
           <Styled.ImageWrapper>
             <Image
-              src={props.image}
+              src={
+                'http://localhost/anluge-cdn/static/images/product-image-placeholder.png'
+              }
               width={210}
               height={250}
               alt={props.name}
@@ -38,10 +37,14 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = (
           </Styled.StatsData>
           <Styled.MetaData>
             <Styled.Price>
-              <i>US$</i>
-              <h3>1.234.223,00</h3>
+              {(props.price >= 1 && (
+                <Fragment>
+                  <i>AKZ</i>
+                  <h3>{props.price}</h3>
+                </Fragment>
+              )) || <h5>Preço sob consulta</h5>}
             </Styled.Price>
-            <span>Equipamentos informáticos - Computadores - Games</span>
+            <span>{props.category?.title}</span>
           </Styled.MetaData>
         </Styled.Content>
       </Link>
@@ -73,5 +76,5 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = (
         </Styled.AsideBody>
       </Styled.AsideContainer>
     </Styled.Container>
-  );
-};
+  )
+}

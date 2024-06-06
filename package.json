@@ -32,6 +32,7 @@
     "react-dom": "^18",
     "react-dropzone": "^14.2.3",
     "react-icons": "^5.2.1",
+    "react-touch-drag-slider": "^2.2.6",
     "read-excel-file": "^5.8.1",
     "styled-components": "^6.1.11",
     "zod": "^3.23.8"

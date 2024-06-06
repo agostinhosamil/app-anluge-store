@@ -1,8 +1,9 @@
 import { axios } from '@services/axios'
+import { AxiosResponse } from 'axios'
 import { Category } from '~/components/dashboard/Forms/CategoryMassCreationForm/types'
 import { CategoryProps } from '~/Types/Category'
-import { generateRandomId } from '..'
-import { generateSlagByTitle } from '../generateSlagByTitle'
+import { arrayMerge, arraySplit, generateRandomId } from '~/utils'
+import { generateSlagByTitle } from '~/utils/generateSlagByTitle'
 
 export const createCategoryByFormData = async (
   formData: FormData
@@ -29,13 +30,52 @@ export const massStoreCategories = async (
   categories: Array<Category>
 ): Promise<Array<Category> | null> => {
   try {
-    const response = await axios.post('/store/categories/mass-store', {
-      categories
-    })
+    const requestPath = '/store/categories/mass-store'
 
-    if (response.data instanceof Array) {
-      return response.data
+    const categoriesQueues = arraySplit(categories, 100)
+
+    const categoriesMassCreationQueuesResponses: Array<
+      AxiosResponse<Array<Category>>
+    > = []
+
+    // const categoriesMassCreationQueuesResponses = await Promise.all(
+    //
+    // )
+
+    // const categoriesMassCreationPromises = categoriesQueues
+    // .map(
+    //   categoriesQueue => {
+    //     return axios.post<Array<Category>>(requestPath, {
+    //       categories: categoriesQueue
+    //     })
+    //   }
+    // )
+
+    for (const categoriesQueue of categoriesQueues) {
+      const categoriesMassCreationPromiseResult = await axios.post<
+        Array<Category>
+      >(requestPath, {
+        categories: categoriesQueue
+      })
+
+      categoriesMassCreationQueuesResponses.push(
+        categoriesMassCreationPromiseResult
+      )
     }
+
+    const categoriesMassCreationQueuesResponsesData =
+      categoriesMassCreationQueuesResponses
+        .filter(response => response.data instanceof Array)
+        .map(response => response.data)
+
+    const createdCategories = arrayMerge<Category>(
+      ...categoriesMassCreationQueuesResponsesData
+    )
+    // const response = await axios.post(requestPath, {
+    //   categories
+    // })
+
+    return createdCategories
   } catch (err) {
     // pass
   }
