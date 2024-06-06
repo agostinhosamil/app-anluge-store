@@ -5,6 +5,7 @@ import { FaCartPlus, FaEllipsisV, FaHeart } from 'react-icons/fa'
 
 import { Fragment } from 'react'
 import { ProductProps } from '~/Types/Product'
+import { resolveProductImageUrl } from '~/utils'
 import { StarRating } from './StarRating'
 import * as Styled from './styles'
 
@@ -17,9 +18,7 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = props => {
         <Styled.Content>
           <Styled.ImageWrapper>
             <Image
-              src={
-                'http://localhost/anluge-cdn/static/images/product-image-placeholder.png'
-              }
+              src={resolveProductImageUrl(props)}
               width={210}
               height={250}
               alt={props.name}

@@ -1,6 +1,6 @@
 import { compareSync } from 'bcryptjs'
 
-import { LoadingStockMap } from '~/Types/Product'
+import { LoadingStockMap, ProductProps } from '~/Types/Product'
 
 export const getApiAccessToken = (): string => {
   // const authenticationToken = `cookies().get(
@@ -240,4 +240,16 @@ export const isMasterKey = (data: string): boolean => {
   }
 
   return false
+}
+
+export const resolveProductImageUrl = (product: ProductProps): string => {
+  const productMedias = product.medias
+
+  if (productMedias instanceof Array && productMedias.length >= 1) {
+    const productMainMedia = productMedias[0]
+
+    return uploadedImageUrl(productMainMedia.fileName)
+  }
+
+  return uploadedImageUrl('product-image-placeholder.jpg')
 }
