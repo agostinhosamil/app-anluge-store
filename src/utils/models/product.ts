@@ -85,7 +85,7 @@ export const massStoreProducts = async (
   try {
     const requestPath = '/store/products/mass-store'
 
-    const productsQues = arraySplit(products, 100)
+    const productsQues = arraySplit(products, 10)
 
     const productsMassCreationQueuesResponses: Array<
       AxiosResponse<Array<Product>>

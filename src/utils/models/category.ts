@@ -32,7 +32,7 @@ export const massStoreCategories = async (
   try {
     const requestPath = '/store/categories/mass-store'
 
-    const categoriesQueues = arraySplit(categories, 100)
+    const categoriesQueues = arraySplit(categories, 10)
 
     const categoriesMassCreationQueuesResponses: Array<
       AxiosResponse<Array<Category>>
