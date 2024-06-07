@@ -78,13 +78,13 @@ export const Header: React.FunctionComponent = () => {
                 <i>
                   <FaClock />
                 </i>
-                <span>7H-17H</span>
+                <span>8H-17H</span>
               </li>
               <li>
                 <i>
                   <FaPhone />
                 </i>
-                <span>+244 923 456 456</span>
+                <span>+244 928 250 640</span>
               </li>
               <li>
                 <i>
