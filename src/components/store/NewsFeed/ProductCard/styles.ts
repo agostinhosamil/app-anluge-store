@@ -61,13 +61,13 @@ export const Container = styled.div`
 `
 
 export const ImageWrapper = styled.div`
-  background-color: #a7cae9;
+  background-color: rgb(245 245 245);
   border-radius: 8px;
   -webkit-border-radius: 8px;
   width: 100%;
   padding: 60px;
   text-align: center;
-  background-image: linear-gradient(45deg, #0d4b83, transparent);
+  /* background-image: linear-gradient(45deg, #0d4b83, transparent); */
 
   img {
     pointer-events: none;
