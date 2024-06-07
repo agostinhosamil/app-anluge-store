@@ -19,7 +19,7 @@ export const useProduct = (query?: string) => {
     }
 
     effectHandler()
-  }, [])
+  }, [query])
 
   return {
     products,
@@ -48,13 +48,28 @@ export const useProduct = (query?: string) => {
       setProducts(products.filter(product => product.id !== productId))
     },
 
+    reloadProductsByQuery(query?: string) {
+      setLoading(true)
+
+      getProducts(query)
+        .then(products => {
+          setProducts(products)
+        })
+        .finally(() => {
+          setLoading(false)
+        })
+    },
+
     reloadProducts() {
       setLoading(true)
 
-      getProducts().then(products => {
-        setProducts(products)
-        setLoading(false)
-      })
+      getProducts()
+        .then(products => {
+          setProducts(products)
+        })
+        .finally(() => {
+          setLoading(false)
+        })
     }
   }
 }

@@ -3,7 +3,8 @@
 import { Fragment, useRef, useState } from 'react'
 import { FaSistrix } from 'react-icons/fa6'
 
-import { range } from '~/utils'
+import { noEmpty } from '~/utils'
+import { useProduct } from '~/utils/hooks/useProduct'
 import { getElementCoordinates } from '../store/Header/helpers'
 import {
   Container,
@@ -23,9 +24,14 @@ export type HeaderSearchBoxComponent =
 
 export const HeaderSearchBox: HeaderSearchBoxComponent = props => {
   const [fixed, setFixed] = useState<boolean>(false)
+  const [query, setQuery] = useState<string>()
 
   const unsetFixedOnInputBlurState = useRef<boolean>(false)
   const searchBoxContentHeightState = useRef<number | 'unset'>('unset')
+
+  const productsState = useProduct(
+    `match.name:contains=${encodeURIComponent(query || '')}`
+  )
 
   const searchBoxContentRef = (
     searchBoxContentElement: HTMLDivElement | null
@@ -73,6 +79,16 @@ export const HeaderSearchBox: HeaderSearchBoxComponent = props => {
     inputElement.focus()
   }
 
+  const inputFieldChangeHandler: React.ChangeEventHandler = event => {
+    const query = (event.target as HTMLInputElement).value
+
+    // if (query) {
+    setQuery(query)
+    // }
+
+    // productsState.reloadProductsByQuery(query)
+  }
+
   const expandedContainerWrapperMouseEnterHandler = () => {
     unsetFixedOnInputBlurState.current = false
   }
@@ -92,9 +108,11 @@ export const HeaderSearchBox: HeaderSearchBoxComponent = props => {
         autoCapitalize="off"
         autoComplete="off"
         spellCheck="false"
+        value={query}
         ref={inputRef}
         onBlur={inputBlurHandler}
         onFocus={inputFocusHandler}
+        onChange={inputFieldChangeHandler}
       />
     </Fragment>
   )
@@ -112,13 +130,17 @@ export const HeaderSearchBox: HeaderSearchBoxComponent = props => {
           ref={searchBoxContentRef}
           $height={searchBoxContentHeightState.current}
         >
-          <List>
-            {range(200).map(i => (
-              <ListItem key={i} href="#">
-                Search result here {i}
-              </ListItem>
-            ))}
-          </List>
+          {noEmpty(query) && !productsState.loading && (
+            <List>
+              {productsState.products.map(product => (
+                <ListItem key={product.id} href={`/products/${product.slag}`}>
+                  {product.name}
+                </ListItem>
+              ))}
+            </List>
+          )}
+
+          {productsState.loading && <p>Loading...</p>}
         </SearchBoxContent>
       </ExpandedContainerWrapper>
     )
