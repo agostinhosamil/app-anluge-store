@@ -6,14 +6,15 @@ import {
   FaFacebook,
   FaHeadphones,
   FaInstagram,
+  FaLinkedin,
   FaMoneyCheck,
   FaTruck,
-  FaTwitter,
   FaWhatsapp
 } from 'react-icons/fa6'
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { Partial } from '~/components/Partial'
 import { stringifyCompanyTaxData } from '~/utils'
 import {
   CompanyDataWrapper,
@@ -27,11 +28,11 @@ const companyTaxData = [
   'Anluge - Comércio e Prestação de serviços (SU), Lda',
   {
     label: 'nif',
-    value: '5000829938'
+    value: '5001083384'
   },
   {
     label: 'localização',
-    value: 'Luanda - Kinaxixi, Rua comandante Kwenha, Casa Nº 092'
+    value: 'Luanda - Kinaxixi, Rua comandante Kwenha'
   }
 ]
 
@@ -124,31 +125,42 @@ export const Footer: React.FunctionComponent = () => {
                   />
                 </i>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Molestiae tempora pariatur possimus, voluptatem quasi
-                  explicabo recusandae nostrum corporis veritatis.
+                  Somos uma empresa líder em soluções tecnológicas
+                  personalizadas para empresas de todos os tamanhos e setores.
+                  Nossa equipe especializada oferece uma ampla gama de serviços,
+                  incluindo consultoria em TI, desenvolvimento de software sob
+                  medida, integração de sistemas, segurança cibernética e
+                  suporte técnico contínuo.
                 </p>
-                <p>geral@anluge.com</p>
-                <p>+244 923 234 344</p>
-                <p>+244 982 456 556</p>
+                <p>inf.geral@anluge.com</p>
+                <p>+244 928 250 640</p>
                 <ul>
                   <li>
-                    <a href="https://www.facebook.com/anluge.ao">
+                    <a
+                      target="_blank"
+                      href="https://www.facebook.com/solutionstecnology"
+                    >
                       <FaFacebook />
                     </a>
                   </li>
                   <li>
-                    <a href="https://www.facebook.com/anluge.ao">
-                      <FaTwitter />
+                    <a
+                      target="_blank"
+                      href="https://ao.linkedin.com/company/ag-anluge-tech"
+                    >
+                      <FaLinkedin />
                     </a>
                   </li>
                   <li>
-                    <a href="https://www.facebook.com/anluge.ao">
+                    <a target="_blank" href="https://wa.me/+244928250640">
                       <FaWhatsapp />
                     </a>
                   </li>
                   <li>
-                    <a href="https://www.facebook.com/anluge.ao">
+                    <a
+                      target="_blank"
+                      href="https://instagram.com/anlugeempresa"
+                    >
                       <FaInstagram />
                     </a>
                   </li>
@@ -157,9 +169,66 @@ export const Footer: React.FunctionComponent = () => {
             </Column>
             <Column lg={8}>
               <FooterMenuListsWrapper>
-                <Row>
+                <Row style={{ display: 'flex', justifyContent: 'center' }}>
                   <Column sm={3}>
-                    <h4>Empresa</h4>
+                    <h4>Páginas</h4>
+                    <ul>
+                      <li>
+                        <Link href="/">Página inicial</Link>
+                      </li>
+                      <li>
+                        <Link href="/">Produtos</Link>
+                      </li>
+                      <li>
+                        <Link href="/">Categorias</Link>
+                      </li>
+                      <li>
+                        <Link href="/">Sobre</Link>
+                      </li>
+                    </ul>
+                  </Column>
+                  <Column sm={3}>
+                    <h4>Aplicações</h4>
+                    <ul>
+                      <li>
+                        <Link href="/">Marketplace</Link>
+                      </li>
+                      <li>
+                        <Link href="/">Instituição</Link>
+                      </li>
+                      <li>
+                        <Link href="/">Empresas / Parceiros</Link>
+                      </li>
+                      <li>
+                        <Link href="/">Blog</Link>
+                      </li>
+                    </ul>
+                  </Column>
+                  <Column sm={3}>
+                    <h4>Links úteis</h4>
+                    <ul>
+                      <li>
+                        <Link href="/me/cart">Carrinho</Link>
+                      </li>
+                      <li>
+                        <Link href="/me/favorites">Lista de desejos</Link>
+                      </li>
+                      <li>
+                        <Link href="/me/orders">Meus pedidos</Link>
+                      </li>
+                      <Partial
+                        isEither={['admin', 'admin:master', 'seller', 'editor']}
+                      >
+                        <li>
+                          <Link href="/dashboard">
+                            Ir ao painel administrador
+                          </Link>
+                        </li>
+                      </Partial>
+                    </ul>
+                  </Column>
+                  {/* <Column sm={3}>
+                    <h4>Mapa do site</h4>
                     <ul>
                       <li>
                         <Link href="/">Sobre nós</Link>
@@ -174,73 +243,24 @@ export const Footer: React.FunctionComponent = () => {
                         <Link href="/">Sobre nós</Link>
                       </li>
                     </ul>
-                  </Column>
-                  <Column sm={3}>
-                    <h4>Empresa</h4>
-                    <ul>
-                      <li>
-                        <Link href="/">Sobre nós</Link>
-                      </li>
-                      <li>
-                        <Link href="/">Sobre nós</Link>
-                      </li>
-                      <li>
-                        <Link href="/">Sobre nós</Link>
-                      </li>
-                      <li>
-                        <Link href="/">Sobre nós</Link>
-                      </li>
-                    </ul>
-                  </Column>
-                  <Column sm={3}>
-                    <h4>Empresa</h4>
-                    <ul>
-                      <li>
-                        <Link href="/">Sobre nós</Link>
-                      </li>
-                      <li>
-                        <Link href="/">Sobre nós</Link>
-                      </li>
-                      <li>
-                        <Link href="/">Sobre nós</Link>
-                      </li>
-                      <li>
-                        <Link href="/">Sobre nós</Link>
-                      </li>
-                    </ul>
-                  </Column>
-                  <Column sm={3}>
-                    <h4>Empresa</h4>
-                    <ul>
-                      <li>
-                        <Link href="/">Sobre nós</Link>
-                      </li>
-                      <li>
-                        <Link href="/">Sobre nós</Link>
-                      </li>
-                      <li>
-                        <Link href="/">Sobre nós</Link>
-                      </li>
-                      <li>
-                        <Link href="/">Sobre nós</Link>
-                      </li>
-                    </ul>
-                  </Column>
+                  </Column> */}
                 </Row>
                 <Row>
                   <Column sm="12">
                     <ol>
                       <li>
-                        <Link href="/terms">Termos de serviço</Link>
+                        <Link href="/about/terms">Termos de serviço</Link>
                       </li>
                       <li>
-                        <Link href="/terms">Uso de cookies</Link>
+                        <Link href="/about/cookies">Uso de cookies</Link>
                       </li>
                       <li>
-                        <Link href="/terms">Política de privacidade</Link>
+                        <Link href="/about/privacy">
+                          Política de privacidade
+                        </Link>
                       </li>
                       <li>
-                        <Link href="/terms">Pagamentos</Link>
+                        <Link href="/about/payments">Pagamentos</Link>
                       </li>
                     </ol>
                   </Column>
