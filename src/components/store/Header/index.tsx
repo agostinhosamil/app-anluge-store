@@ -6,7 +6,6 @@ import { FaClock, FaLocationArrow, FaPhone } from 'react-icons/fa6'
 import { Header as HeaderMenu } from '@components/Header'
 
 import { HeaderBody } from './HeaderBody'
-import { HeaderCategoryList } from './HeaderCategoryList'
 
 import {
   Container,
@@ -102,7 +101,7 @@ export const Header: React.FunctionComponent = () => {
         <HeaderMenu style="light" size="large" />
       </HeaderMenuWrapper>
       <HeaderBody />
-      <HeaderCategoryList />
+      {/* <HeaderCategoryList /> */}
     </Container>
   )
 }

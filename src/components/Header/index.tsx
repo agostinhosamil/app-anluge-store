@@ -53,7 +53,7 @@ export const Header: HeaderComponent = ({ style = 'default', ...props }) => {
             onClick={userMenuButtonClickHandler}
           />
           <HeaderMenuItem href="/me/favorites" icon="FaHeart" />
-          <HeaderMenuItem href="/me/cart" icon="FaCartShopping" count={12345} />
+          <HeaderMenuItem href="/me/cart" icon="FaCartShopping" />
           <HeaderMenuItem
             icon="FaBarsStaggered"
             as="button"

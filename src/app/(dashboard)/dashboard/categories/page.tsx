@@ -1,7 +1,6 @@
 'use client'
 
 import { Fragment, useRef, useState } from 'react'
-import { Spinner } from 'react-bootstrap'
 
 import { CardButton, CardButtons } from '@components/CardButtons'
 import { Partial } from '@components/Partial'
@@ -13,6 +12,7 @@ import {
 } from 'dashboard@components/Forms/CreateCategoryForm'
 
 import { Dialog } from '@components/Dialog'
+import { FlatList } from '@components/FlatList'
 import { RemoveForm } from 'dashboard@components/Forms/RemoveForm'
 import { EntityCard } from '~/components/dashboard/EntityCard'
 import { EmptyListContainer } from '~/components/dashboard/styles'
@@ -184,7 +184,44 @@ export default function CategoriesPage() {
         </EmptyListContainer>
       )}
 
-      <div>
+      <FlatList
+        data={categoryState.categories}
+        loading={categoryState.loading}
+        paginationStyle="infinite-scroll"
+        renderItem={category => (
+          <EntityCard
+            // avatar={category.icon || 'category-avatar-placeholder.jpg'}
+            avatarSize="large"
+            entity="category"
+            key={category.id}
+            title={category.title}
+            subTitle={category.slag}
+            icons={['Edit', 'Remove', 'Options']}
+            onEdit={() => {
+              categoryToEditState.current = category
+
+              setShowCreateCategoryDialog(true)
+              setShowCategorySimpleCreationForm(true)
+            }}
+            onRemove={() => {
+              categoryToDeleteState.current = category
+              setShowDeleteCategoryDialog(true)
+            }}
+            options={[
+              {
+                label: 'Adicionar subcategoria',
+                can: 'category:edit',
+                icon: 'FaFolderPlus',
+                onClick() {
+                  alert('Adicionar subcategoria')
+                }
+              }
+            ]}
+          />
+        )}
+      />
+
+      {/* <div>
         {(categoryState.loading && <Spinner />) ||
           categoryState.categories.map(category => (
             <EntityCard
@@ -217,7 +254,7 @@ export default function CategoriesPage() {
               ]}
             />
           ))}
-      </div>
+      </div> */}
     </Fragment>
   )
 }
