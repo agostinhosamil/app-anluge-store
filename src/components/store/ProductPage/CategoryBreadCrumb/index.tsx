@@ -5,7 +5,7 @@ import { ProductProps } from '~/Types/Product'
 import { Container } from './styles'
 
 type CategoryBreadCrumbProps = {
-  product: ProductProps
+  product?: ProductProps
 }
 
 type CategoryBreadCrumbComponent =
@@ -14,8 +14,8 @@ type CategoryBreadCrumbComponent =
 export const CategoryBreadCrumb: CategoryBreadCrumbComponent = ({
   product
 }) => {
-  if (!product.category) {
-    return <Fragment />
+  if (!(product && product.category)) {
+    return null
   }
 
   const categoryPath = [product.category.title]
