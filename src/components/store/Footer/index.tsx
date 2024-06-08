@@ -227,23 +227,31 @@ export const Footer: React.FunctionComponent = () => {
                       </Partial>
                     </ul>
                   </Column>
-                  {/* <Column sm={3}>
-                    <h4>Mapa do site</h4>
+                  <Column sm={3}>
+                    <h4>Empresa</h4>
                     <ul>
                       <li>
-                        <Link href="/">Sobre nós</Link>
+                        <Link target="_blank" href="/about">
+                          Sobre nós
+                        </Link>
                       </li>
                       <li>
-                        <Link href="/">Sobre nós</Link>
+                        <Link target="_blank" href="/about/mission">
+                          Nossa missão
+                        </Link>
                       </li>
                       <li>
-                        <Link href="/">Sobre nós</Link>
+                        <Link target="_blank" href="/about/vision">
+                          Nossa visão
+                        </Link>
                       </li>
                       <li>
-                        <Link href="/">Sobre nós</Link>
+                        <Link target="_blank" href="/about/values">
+                          Nossos valores
+                        </Link>
                       </li>
                     </ul>
-                  </Column> */}
+                  </Column>
                 </Row>
                 <Row>
                   <Column sm="12">

@@ -3,7 +3,8 @@
 import { Fragment, useRef, useState } from 'react'
 import { FaSistrix } from 'react-icons/fa6'
 
-import { noEmpty } from '~/utils'
+import { ProductProps } from '~/Types/Product'
+import { empty, noEmpty } from '~/utils'
 import { useProduct } from '~/utils/hooks/useProduct'
 import { getElementCoordinates } from '../store/Header/helpers'
 import {
@@ -29,9 +30,7 @@ export const HeaderSearchBox: HeaderSearchBoxComponent = props => {
   const unsetFixedOnInputBlurState = useRef<boolean>(false)
   const searchBoxContentHeightState = useRef<number | 'unset'>('unset')
 
-  const productsState = useProduct(
-    `match.name:contains=${encodeURIComponent(query || '')}`
-  )
+  const productsState = useProduct()
 
   const searchBoxContentRef = (
     searchBoxContentElement: HTMLDivElement | null
@@ -55,6 +54,22 @@ export const HeaderSearchBox: HeaderSearchBoxComponent = props => {
     if (inputElement && fixed) {
       inputElement.focus()
     }
+  }
+
+  const strMatches = (str1: string, str2: string): boolean => {
+    return str1.toLowerCase().includes(str2.toLowerCase())
+  }
+
+  const productsFilterByQuery = (product: ProductProps) => {
+    if (empty(query) || !query) {
+      return false
+    }
+
+    return Boolean(
+      strMatches(product.name, query) ||
+        strMatches(product.description, query) ||
+        strMatches(String(product.summary), query)
+    )
   }
 
   const inputFocusHandler = () => {
@@ -118,6 +133,10 @@ export const HeaderSearchBox: HeaderSearchBoxComponent = props => {
   )
 
   if (fixed) {
+    const filteredProductList = productsState.products.filter(
+      productsFilterByQuery
+    )
+
     return (
       <ExpandedContainerWrapper
         onMouseEnter={expandedContainerWrapperMouseEnterHandler}
@@ -126,22 +145,24 @@ export const HeaderSearchBox: HeaderSearchBoxComponent = props => {
         <ExpandedContainer>
           <SearchBoxBody />
         </ExpandedContainer>
-        <SearchBoxContent
-          ref={searchBoxContentRef}
-          $height={searchBoxContentHeightState.current}
-        >
-          {noEmpty(query) && !productsState.loading && (
-            <List>
-              {productsState.products.map(product => (
-                <ListItem key={product.id} href={`/products/${product.slag}`}>
-                  {product.name}
-                </ListItem>
-              ))}
-            </List>
-          )}
+        {noEmpty(query) && filteredProductList.length >= 1 && (
+          <SearchBoxContent
+            ref={searchBoxContentRef}
+            $height={searchBoxContentHeightState.current}
+          >
+            {!productsState.loading && (
+              <List>
+                {filteredProductList.map(product => (
+                  <ListItem key={product.id} href={`/products/${product.slag}`}>
+                    {product.name}
+                  </ListItem>
+                ))}
+              </List>
+            )}
 
-          {productsState.loading && <p>Loading...</p>}
-        </SearchBoxContent>
+            {productsState.loading && <p>Loading...</p>}
+          </SearchBoxContent>
+        )}
       </ExpandedContainerWrapper>
     )
   }

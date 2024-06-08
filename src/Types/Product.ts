@@ -7,14 +7,27 @@ export interface ProductInclude extends Prisma.ProductDefaultArgs {
     include: CategoryInclude
   }
   faqs: true
-  favorites: true
+  favorites: {
+    include: {
+      user: true
+    }
+  }
   medias: true
   tags: true
+  rates: {
+    include: {
+      user: true
+      medias: true
+    }
+  }
 }
 
-export type ProductProps = Prisma.ProductGetPayload<{
-  include: ProductInclude
-}>
+export type ProductProps = Omit<
+  Prisma.ProductGetPayload<{
+    include: ProductInclude
+  }>,
+  'include' | 'select'
+>
 
 export enum LoadingStockMap {
   STYLUS = 'product@loadingStockMap/stylus',

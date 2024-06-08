@@ -1,18 +1,24 @@
-import { Fragment } from "react";
-import { FaAngleRight } from "react-icons/fa6";
+import { Fragment } from 'react'
+import { FaAngleRight } from 'react-icons/fa6'
 
-import { Container } from "./styles";
+import { ProductProps } from '~/Types/Product'
+import { Container } from './styles'
 
-export const CategoryBreadCrumb = () => {
-  const categoryPath = [
-    "Category",
-    "Subcategory",
-    "Subcategory",
-    "Subcategory",
-    "Subcategory",
-    "Subcategory",
-    "Subcategory",
-  ];
+type CategoryBreadCrumbProps = {
+  product: ProductProps
+}
+
+type CategoryBreadCrumbComponent =
+  React.FunctionComponent<CategoryBreadCrumbProps>
+
+export const CategoryBreadCrumb: CategoryBreadCrumbComponent = ({
+  product
+}) => {
+  if (!product.category) {
+    return <Fragment />
+  }
+
+  const categoryPath = [product.category.title]
 
   return (
     <Container>
@@ -27,5 +33,5 @@ export const CategoryBreadCrumb = () => {
         ))}
       </span>
     </Container>
-  );
-};
+  )
+}

@@ -64,7 +64,7 @@ export const auth: AuthUtil = async (props = DEFAULT_AUTH_PROPS) => {
       }
     }
   } catch (e) {
-    console.log('\n\n\n\n\nError => ', e)
+    // console.log('\n\n\n\n\nError => ', e)
   }
 }
 

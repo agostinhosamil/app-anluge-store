@@ -71,14 +71,14 @@ export const ExpandedContainer = styled(Container)`
 
 export const ExpandedContainerWrapper = styled.div`
   width: 80%;
-  height: auto;
+  height: 63px;
   top: 0px;
   left: 10%;
   right: 0px;
   z-index: 2;
   position: absolute;
   box-shadow: 0px 18px 20px 9px rgb(0 0 0 / 35%);
-  background-color: transparent;
+  background-color: #ffffff;
   border-radius: 25px;
   -webkit-border-radius: 25px;
 
@@ -100,7 +100,7 @@ export const SearchBoxContent = styled.div<SearchBoxContentProps>`
   max-height: ${props =>
     typeof props.$height === 'number' ? `${props.$height}px` : 'unset'};
   background-color: #ffffff;
-  padding: 30px 0px;
+  padding: 20px 0px 30px;
   border-bottom-left-radius: 25px;
   border-bottom-right-radius: 25px;
   /* border-width: 0px 1px 1px;

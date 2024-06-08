@@ -1,68 +1,48 @@
-import Image from "next/image";
+import Image from 'next/image'
 
+import { ProductProps } from '~/Types/Product'
+import { resolveProductImageUrl, uploadedImageUrl } from '~/utils'
 import {
   Container,
   Content,
   ImageWrapper,
-  ThumbnailsListWrapper,
-} from "./styles";
+  ThumbnailsListWrapper
+} from './styles'
 
-type ProductImageGalleryProps = {};
+type ProductImageGalleryProps = {
+  product: ProductProps
+}
 
 type ProductImageGalleryComponent =
-  React.FunctionComponent<ProductImageGalleryProps>;
+  React.FunctionComponent<ProductImageGalleryProps>
 
-export const ProductImageGallery: ProductImageGalleryComponent = () => {
+export const ProductImageGallery: ProductImageGalleryComponent = ({
+  product
+}) => {
   return (
     <Container>
-      <ThumbnailsListWrapper>
-        <ul>
-          <li>
-            <div>
-              <Image
-                src="/image004.png"
-                alt="Product name here"
-                width={50}
-                height={50}
-              />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Image
-                src="/image004.png"
-                alt="Product name here"
-                width={50}
-                height={50}
-              />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Image
-                src="/image004.png"
-                alt="Product name here"
-                width={50}
-                height={50}
-              />
-            </div>
-          </li>
-          <li>
-            <div>
-              <Image
-                src="/image004.png"
-                alt="Product name here"
-                width={50}
-                height={50}
-              />
-            </div>
-          </li>
-        </ul>
-      </ThumbnailsListWrapper>
+      {product.medias.length >= 2 && (
+        <ThumbnailsListWrapper>
+          <ul>
+            {product.medias.map(media => (
+              <li key={media.id}>
+                <div>
+                  <Image
+                    src={uploadedImageUrl(media.fileName)}
+                    alt={product.name}
+                    width={50}
+                    height={50}
+                  />
+                </div>
+              </li>
+            ))}
+          </ul>
+        </ThumbnailsListWrapper>
+      )}
       <Content>
         <ImageWrapper>
           <Image
-            src="/assets/images/uploads/product-image000.jpg"
+            src={resolveProductImageUrl(product)}
             alt="Product name should be here"
             width={900}
             height={1200}
@@ -70,5 +50,5 @@ export const ProductImageGallery: ProductImageGalleryComponent = () => {
         </ImageWrapper>
       </Content>
     </Container>
-  );
-};
+  )
+}

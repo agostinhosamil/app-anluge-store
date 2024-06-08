@@ -1,8 +1,8 @@
 import React from 'react'
 
-export type LayoutProps = {
+export type LayoutProps<Params = DefaultNextApiParams> = {
   children: React.ReactNode
-  params: any
+  params: Params
 }
 
 export type DefaultNextApiParams = {

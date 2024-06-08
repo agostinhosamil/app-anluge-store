@@ -1,20 +1,22 @@
-"use client";
+'use client'
 
-import Image from "next/image";
-import Column from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import { FaCartPlus, FaEllipsisVertical, FaHeart } from "react-icons/fa6";
+import Image from 'next/image'
+import Column from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
+import { FaCartPlus, FaEllipsisVertical, FaHeart } from 'react-icons/fa6'
 
-import Link from "next/link";
-import { CategoryBreadCrumb } from "store@components/ProductPage/CategoryBreadCrumb";
-import { ProductFAQs } from "store@components/ProductPage/ProductFAQs";
-import { ProductImageGallery } from "store@components/ProductPage/ProductImageGallery";
-import { ProductRates } from "store@components/ProductPage/ProductRates";
+import Link from 'next/link'
+import { useProductPageContext } from 'store@components/pages/products/page/context'
+import { CategoryBreadCrumb } from 'store@components/ProductPage/CategoryBreadCrumb'
+import { ProductFAQs } from 'store@components/ProductPage/ProductFAQs'
+import { ProductImageGallery } from 'store@components/ProductPage/ProductImageGallery'
+import { ProductRates } from 'store@components/ProductPage/ProductRates'
 import {
   ActionButton,
   CategoryBreadCrumbWrapper,
   Container,
-  OldPrice,
+  Content,
+  ContentWrapper,
   Price,
   PriceList,
   PriceListWrapper,
@@ -25,41 +27,46 @@ import {
   ShareOptionsContainer,
   StarRatingElementContainer,
   StatsData,
-} from "store@styles/product-page";
-import { StarRating } from "~/components/store/NewsFeed/ProductCard/StarRating";
+  Summary
+} from 'store@styles/product-page'
+import { StarRating } from '~/components/store/NewsFeed/ProductCard/StarRating'
 
 export default function ProductPage() {
+  const { product } = useProductPageContext()
+
   return (
     <Container>
       <Row>
         <Column md={5}>
           <ProductImageGalleryWrapper>
-            <ProductImageGallery />
+            <ProductImageGallery product={product} />
           </ProductImageGalleryWrapper>
         </Column>
         <Column md={7}>
           <ProductDataWrapper>
-            <h1>Stavigille 100mg Libs 30 Tablets</h1>
+            <h1>{product.name}</h1>
             <StatsData>
               <StarRatingElementContainer>
                 <StarRating value={4} />
               </StarRatingElementContainer>
-              <span>+198 unidades vendidas</span>
+              <span>+198k unidades vendidas</span>
             </StatsData>
             <PriceListWrapper>
-              <PriceList>
-                <OldPrice>
-                  <i>AKZ</i>
-                  <h5>12.982.344,98</h5>
-                </OldPrice>
-                <Price>
-                  <i>AKZ</i>
-                  <h5>9.345.353,09</h5>
-                </Price>
-              </PriceList>
+              {(product.price >= 1 && (
+                <PriceList>
+                  {/* <OldPrice>
+                    <i>AKZ</i>
+                    <h5>12.982.344,98</h5>
+                  </OldPrice> */}
+                  <Price>
+                    <i>AKZ</i>
+                    <h5>{product.price}</h5>
+                  </Price>
+                </PriceList>
+              )) || <h5>Preço sob consulta</h5>}
             </PriceListWrapper>
             <CategoryBreadCrumbWrapper>
-              <CategoryBreadCrumb />
+              <CategoryBreadCrumb product={product} />
             </CategoryBreadCrumbWrapper>
             <ProductActionsListWrapper>
               <ul>
@@ -87,31 +94,19 @@ export default function ProductPage() {
                 </li>
               </ul>
             </ProductActionsListWrapper>
-            <ProductTagListWrapper>
-              <ul>
-                <li>
-                  <Link href="/">Tag 1</Link>
-                </li>
-                <li>
-                  <Link href="/">Tag 1</Link>
-                </li>
-                <li>
-                  <Link href="/">Tag 1</Link>
-                </li>
-                <li>
-                  <Link href="/">Tag 1</Link>
-                </li>
-                <li>
-                  <Link href="/">Tag 1</Link>
-                </li>
-                <li>
-                  <Link href="/">Tag 1</Link>
-                </li>
-                <li>
-                  <Link href="/">Tag 1</Link>
-                </li>
-              </ul>
-            </ProductTagListWrapper>
+            {product.tags.length >= 1 && (
+              <ProductTagListWrapper>
+                <ul>
+                  {product.tags.map(tag => (
+                    <li key={tag.id}>
+                      <Link href={`/products/search/tags/${tag.slag}`}>
+                        {tag.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </ProductTagListWrapper>
+            )}
             <ShareOptionsContainer>
               <strong>Partilhar este produto</strong>
               <ul>
@@ -161,12 +156,19 @@ export default function ProductPage() {
         </Column>
       </Row>
       <Row>
-        <Column md={8}></Column>
+        <Column md={8}>
+          <ContentWrapper>
+            <Summary>
+              <p>{product.summary}</p>
+            </Summary>
+            <Content>{product.description}</Content>
+          </ContentWrapper>
+        </Column>
         <Column md={4}>
-          <ProductRates />
-          <ProductFAQs />
+          <ProductRates product={product} />
+          <ProductFAQs product={product} />
         </Column>
       </Row>
     </Container>
-  );
+  )
 }

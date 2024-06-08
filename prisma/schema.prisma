@@ -256,6 +256,8 @@ model Rate {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   userId    String
+  product   Product? @relation(fields: [productId], references: [id])
+  productId String?
 
   @@map("rate")
 }
@@ -271,6 +273,7 @@ model Product {
   medias      Media[]
   tags        Tag[]
   faqs        Faq[]
+  rates       Rate[]
   stock       Int?        @default(-1)
   sku         String?     @unique
   barCode     String? // @unique

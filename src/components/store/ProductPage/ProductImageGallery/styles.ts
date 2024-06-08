@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const Container = styled.div`
   width: 100%;
@@ -7,11 +7,12 @@ export const Container = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-end;
-`;
+`
 
 export const ThumbnailsListWrapper = styled.div`
   width: 60px;
   height: auto;
+  margin-right: 20px;
 
   ul {
     width: inherit;
@@ -49,19 +50,18 @@ export const ThumbnailsListWrapper = styled.div`
       }
     }
   }
-`;
+`
 
 export const Content = styled.div`
   width: 100%;
   display: block;
   position: relative;
-`;
+`
 
 export const ImageWrapper = styled.div`
   width: 100%;
   height: auto;
   display: block;
-  padding-left: 20px;
 
   img {
     width: 100%;
@@ -69,4 +69,4 @@ export const ImageWrapper = styled.div`
     border-radius: 8px;
     -webkit-border-radius: 8px;
   }
-`;
+`

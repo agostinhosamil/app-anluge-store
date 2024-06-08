@@ -1,20 +1,26 @@
-import { Title } from "store@styles/product-page";
+import { Title } from 'store@styles/product-page'
 
-import { range } from "~/utils";
-import { ProductFAQ } from "./ProductFAQ";
-import { Container, List, ViewListButtonWrapper } from "./styles";
+import { ProductProps } from '~/Types/Product'
+import { ProductFAQ } from './ProductFAQ'
+import { Container, List, ViewListButtonWrapper } from './styles'
 
-type ProductFAQsProps = {};
+type ProductFAQsProps = {
+  product: ProductProps
+}
 
-export const ProductFAQs: React.FunctionComponent<ProductFAQsProps> = () => {
-  const questions = range(8);
+export const ProductFAQs: React.FunctionComponent<ProductFAQsProps> = props => {
+  const faqs = props.product.faqs
+
+  if (faqs && faqs.length < 1) {
+    return null
+  }
 
   return (
     <Container>
       <Title>Perguntas frequentes</Title>
       <List>
-        {questions.map((question, questionIndex) => (
-          <ProductFAQ key={questionIndex} />
+        {faqs.map(faq => (
+          <ProductFAQ key={faq.id} faq={faq} />
         ))}
       </List>
       <ViewListButtonWrapper>
@@ -26,5 +32,5 @@ export const ProductFAQs: React.FunctionComponent<ProductFAQsProps> = () => {
         </li>
       </ViewListButtonWrapper>
     </Container>
-  );
-};
+  )
+}

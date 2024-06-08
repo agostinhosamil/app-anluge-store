@@ -45,16 +45,16 @@ export const createProductByFormData = async (
 //   products: Array<Product>
 // ): Promise<Array<Product> | null> => {
 //   try {
-//     const requestPath = '/store/products/mass-store'
+//     const productMassStoreRequestPath = '/store/products/mass-store'
 
-//     const productsQues = arraySplit(products, 100)
+//     const productsQueues = arraySplit(products, 100)
 
-//     // console.log({ productsQues })
+//     // console.log({ productsQueues })
 
 //     const productsMassCreationQueuesResponses = await Promise.all(
-//       productsQues.map(productsQue => {
-//         return axios.post<Array<Product>>(requestPath, {
-//           products: productsQue
+//       productsQueues.map(productsQueue => {
+//         return axios.post<Array<Product>>(productMassStoreRequestPath, {
+//           products: productsQueue
 //         })
 //       })
 //     )
@@ -67,7 +67,7 @@ export const createProductByFormData = async (
 //     const createdProducts = arrayMerge<Product>(
 //       ...productsMassCreationQueuesResponsesData
 //     )
-//     // const response = await axios.post(requestPath, {
+//     // const response = await axios.post(productMassStoreRequestPath, {
 //     //   products
 //     // })
 
@@ -83,27 +83,26 @@ export const massStoreProducts = async (
   products: Array<Product>
 ): Promise<Array<Product> | null> => {
   try {
-    const requestPath = '/store/products/mass-store'
-
-    const productsQues = arraySplit(products, 10)
+    const productMassStoringConcurrency = 10
+    const productMassStoreRequestPath = '/store/products/mass-store'
+    const productsQueues = arraySplit(products, productMassStoringConcurrency)
 
     const productsMassCreationQueuesResponses: Array<
       AxiosResponse<Array<Product>>
     > = []
 
     // const productsMassCreationQueuesResponses = await Promise.all(
-
     // )
+    // const productsMassCreationPromises = .map( => {
+    //   return
+    // })
 
-    const productsMassCreationPromises = productsQues.map(productsQue => {
-      return axios.post<Array<Product>>(requestPath, {
-        products: productsQue
+    for (const productsQueue of productsQueues) {
+      const productsMassCreationPromiseResult = await axios.post<
+        Array<Product>
+      >(productMassStoreRequestPath, {
+        products: productsQueue
       })
-    })
-
-    for (const productsMassCreationPromise of productsMassCreationPromises) {
-      const productsMassCreationPromiseResult =
-        await productsMassCreationPromise
 
       productsMassCreationQueuesResponses.push(
         productsMassCreationPromiseResult
@@ -118,7 +117,7 @@ export const massStoreProducts = async (
     const createdProducts = arrayMerge<Product>(
       ...productsMassCreationQueuesResponsesData
     )
-    // const response = await axios.post(requestPath, {
+    // const response = await axios.post(productMassStoreRequestPath, {
     //   products
     // })
 

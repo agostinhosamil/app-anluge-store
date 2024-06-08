@@ -1,15 +1,15 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const Container = styled.div`
   width: 100%;
   height: auto;
   position: relative;
   padding: 50px 50px 0px;
-`;
+`
 
 export const ProductImageGalleryWrapper = styled.div`
   width: 100%;
-`;
+`
 
 export const ProductDataWrapper = styled.div`
   width: 100%;
@@ -22,7 +22,7 @@ export const ProductDataWrapper = styled.div`
     display: block;
     padding: 0px 0px 20px;
   }
-`;
+`
 
 export const StatsData = styled.div`
   width: 100%;
@@ -38,19 +38,19 @@ export const StatsData = styled.div`
     margin-left: 15px;
     border-left: 1px solid #cdcdcd;
   }
-`;
+`
 
 export const StarRatingElementContainer = styled.div`
   display: inline-flex;
   align-items: center;
-`;
+`
 
 export const PriceListWrapper = styled.div`
   width: 100%;
   height: auto;
   display: block;
   padding: 0px 0px 20px;
-`;
+`
 
 export const PriceList = styled.div`
   width: 100%;
@@ -58,7 +58,7 @@ export const PriceList = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-`;
+`
 
 export const OldPrice = styled.div`
   display: inline-flex;
@@ -81,7 +81,7 @@ export const OldPrice = styled.div`
     color: #404040;
     text-decoration: line-through;
   }
-`;
+`
 
 export const Price = styled(OldPrice)`
   padding-left: 20px;
@@ -98,13 +98,13 @@ export const Price = styled(OldPrice)`
     color: #111111;
     text-decoration: unset;
   }
-`;
+`
 
 export const CategoryBreadCrumbWrapper = styled.div`
   width: 100%;
   height: auto;
   display: block;
-`;
+`
 
 export const ProductActionsListWrapper = styled.div`
   width: 100%;
@@ -123,11 +123,11 @@ export const ProductActionsListWrapper = styled.div`
       padding: 10px 12px 10px 0px;
     }
   }
-`;
+`
 
 type ActionButtonProps = {
-  $color?: "primary" | "default";
-};
+  $color?: 'primary' | 'default'
+}
 
 export const ActionButton = styled.button<ActionButtonProps>`
   position: relative;
@@ -138,8 +138,8 @@ export const ActionButton = styled.button<ActionButtonProps>`
   border: 0px;
   outline: 0px;
   color: #ffffff;
-  background-color: ${(props) =>
-    props.$color === "primary" ? "#0170bf" : "#2f363b"};
+  background-color: ${props =>
+    props.$color === 'primary' ? '#0170bf' : '#2f363b'};
   align-items: center;
   transition: all 0.3s ease-in-out;
 
@@ -160,7 +160,7 @@ export const ActionButton = styled.button<ActionButtonProps>`
   &:active {
     transform: scale(0.9);
   }
-`;
+`
 
 export const ProductTagListWrapper = styled.div`
   width: 100%;
@@ -199,7 +199,7 @@ export const ProductTagListWrapper = styled.div`
       }
     }
   }
-`;
+`
 
 export const ShareOptionsContainer = styled.div`
   width: 100%;
@@ -249,17 +249,45 @@ export const ShareOptionsContainer = styled.div`
       }
     }
   }
-`;
+`
 
 type TitleProps = {
-  $size?: number;
-};
+  $size?: number
+}
 
 export const Title = styled.h2<TitleProps>`
   display: block;
   width: 100%;
   padding-bottom: 25px;
-  font-size: ${(props) => `${props.$size}px` || "35px"};
+  font-size: ${props => `${props.$size}px` || '35px'};
   font-weight: 600;
   color: #303030;
-`;
+`
+
+export const ContentWrapper = styled.div`
+  width: 100%;
+  display: block;
+`
+
+export const Content = styled.div`
+  width: 100%;
+  display: block;
+`
+
+export const Paragraph = styled.p`
+  width: 100%;
+  display: block;
+  padding: 0px 14px;
+  margin: 0px;
+`
+
+export const Summary = styled.div`
+  width: 100%;
+  height: auto;
+  display: block;
+  background-color: #f2f2f2;
+  padding: 22px;
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
+  margin: 35px 0px;
+`
