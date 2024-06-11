@@ -14,7 +14,6 @@ import {
 import { LoadProductStockMapForm } from 'dashboard@components/Forms/LoadProductStockMapForm'
 
 import { Dialog } from '@components/Dialog'
-import { EmptyListContainer } from '~/components/dashboard/styles'
 // import { AnlugeUploadClient } from '~/services/upload'
 import { FlatList } from '~/components/FlatList'
 import { LoadingStockMap, ProductProps } from '~/Types/Product'
@@ -34,7 +33,7 @@ export default function ProductsPage() {
 
   const productToEdit = useRef<ProductProps>()
 
-  const productState = useProduct()
+  const productState = useProduct('limit=30')
 
   const createProductDialogCloseHandler = () => {
     setShowCreateProductDialog(false)
@@ -183,7 +182,7 @@ export default function ProductsPage() {
         </div>
       )} */}
 
-      {!productState.loading && productState.products.length < 1 && (
+      {/* {!productState.loading && productState.products.length < 1 && (
         <EmptyListContainer>
           <h1>Sem registros para apresentar</h1>
           <h2>
@@ -203,7 +202,7 @@ export default function ProductsPage() {
             </li>
           </ul>
         </EmptyListContainer>
-      )}
+      )} */}
 
       <FlatList
         data={productState.products}
