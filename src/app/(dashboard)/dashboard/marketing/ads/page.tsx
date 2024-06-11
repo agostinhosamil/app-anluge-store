@@ -5,7 +5,8 @@ import { PageContent } from './PageContent'
 export default async function MarketingAdsPage() {
   const advertisingList = await prisma.advertise.findMany({
     include: {
-      post: true
+      post: true,
+      product: true
     }
   })
 
