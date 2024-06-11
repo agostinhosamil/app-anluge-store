@@ -17,6 +17,7 @@ import { RemoveForm } from 'dashboard@components/Forms/RemoveForm'
 import { EntityCard } from '~/components/dashboard/EntityCard'
 import { EmptyListContainer } from '~/components/dashboard/styles'
 import { CategoryProps } from '~/Types/Category'
+import { resolveCategoryImageUrl } from '~/utils'
 import { useCategory } from '~/utils/hooks/useCategory'
 import {
   createCategoryByFormData,
@@ -192,8 +193,8 @@ export default function CategoriesPage() {
         paginationStyle="client-demand"
         renderItem={category => (
           <EntityCard
-            // avatar={category.icon || 'category-avatar-placeholder.jpg'}
-            avatarSize="large"
+            avatar={resolveCategoryImageUrl(category)}
+            avatarSize="xx-large"
             entity="category"
             key={category.id}
             title={category.title}

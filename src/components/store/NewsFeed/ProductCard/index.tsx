@@ -25,7 +25,7 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = props => {
         <Styled.Content>
           <Styled.ImageWrapper>
             <Image
-              src={resolveProductImageUrl(props)}
+              src={resolveProductImageUrl(props, 'normal')}
               width={210}
               height={250}
               alt={props.name}

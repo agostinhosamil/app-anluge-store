@@ -1,6 +1,6 @@
 'use client'
 
-import { Fragment, useState } from 'react'
+import { Fragment, useRef, useState } from 'react'
 
 import { CardButtons } from '@components/CardButtons'
 import { CardButton } from '@components/CardButtons/CardButton'
@@ -17,10 +17,13 @@ import { Dialog } from '@components/Dialog'
 import { EmptyListContainer } from '~/components/dashboard/styles'
 // import { AnlugeUploadClient } from '~/services/upload'
 import { FlatList } from '~/components/FlatList'
-import { LoadingStockMap } from '~/Types/Product'
+import { LoadingStockMap, ProductProps } from '~/Types/Product'
 import { resolveProductImageUrl } from '~/utils'
 import { useProduct } from '~/utils/hooks/useProduct'
-import { createProductByFormData } from '~/utils/models/product'
+import {
+  createProductByFormData,
+  updateProductByFormData
+} from '~/utils/models/product'
 
 export default function ProductsPage() {
   const [loadingStockMap, setLoadingStockMap] = useState<LoadingStockMap>()
@@ -28,6 +31,8 @@ export default function ProductsPage() {
     useState<boolean>(false)
   const [showLoadStockMapDialog, setShowLoadStockMapDialog] =
     useState<boolean>(false)
+
+  const productToEdit = useRef<ProductProps>()
 
   const productState = useProduct()
 
@@ -54,21 +59,34 @@ export default function ProductsPage() {
     loadStockMapDialogCloseHandler()
   }
 
+  const editingProduct = (
+    productDataObject: ProductProps | undefined
+  ): productDataObject is ProductProps => {
+    return typeof productDataObject !== 'undefined'
+  }
+
   const createProductFormSubmitHandler = async ({
     formData
   }: CreateProductOnFormSubmitProps) => {
     // const formElement = event.target as HTMLFormElement
     // const formData = new FormData(formElement)
 
-    const createdProduct = await createProductByFormData(formData)
+    const createdProduct = !editingProduct(productToEdit.current)
+      ? await createProductByFormData(formData)
+      : await updateProductByFormData(productToEdit.current.id, formData)
 
     if (!createdProduct) {
       return alert('Could not create product')
     }
 
-    productState.addProduct(createdProduct)
+    if (editingProduct(productToEdit.current)) {
+      productState.updateProduct(productToEdit.current.id, createdProduct)
+    } else {
+      productState.addProduct(createdProduct)
+    }
 
     setShowCreateProductDialog(false)
+    productToEdit.current = undefined
 
     console.log('Done -> ', createdProduct)
   }
@@ -117,7 +135,10 @@ export default function ProductsPage() {
         onClose={createProductDialogCloseHandler}
         show={showCreateProductDialog}
       >
-        <CreateProductForm onFormSubmit={createProductFormSubmitHandler} />
+        <CreateProductForm
+          onFormSubmit={createProductFormSubmitHandler}
+          data={productToEdit.current}
+        />
       </Dialog>
       <Dialog
         size="medium"
@@ -196,6 +217,11 @@ export default function ProductsPage() {
             title={product.name}
             subTitle={product.category?.title}
             icons={['Edit', 'Remove']}
+            onEdit={() => {
+              productToEdit.current = product
+
+              setShowCreateProductDialog(true)
+            }}
           />
         )}
       />

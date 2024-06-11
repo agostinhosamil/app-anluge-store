@@ -1,4 +1,6 @@
+import { Category } from '@prisma/client'
 import { compareSync } from 'bcryptjs'
+import { CategoryProps } from '~/Types/Category'
 
 import { LoadingStockMap, ProductProps } from '~/Types/Product'
 
@@ -242,16 +244,33 @@ export const isMasterKey = (data: string): boolean => {
   return false
 }
 
-export const resolveProductImageUrl = (product: ProductProps): string => {
+type ProductImageVariant = 'large' | 'medium' | 'normal' | 'small'
+
+export const resolveProductImageUrl = (
+  product: ProductProps,
+  variant?: ProductImageVariant
+): string => {
   const productMedias = product.medias
 
   if (productMedias instanceof Array && productMedias.length >= 1) {
     const productMainMedia = productMedias[0]
 
-    return uploadedImageUrl(productMainMedia.fileName)
+    return uploadedImageUrl(
+      productMainMedia.fileName.concat(variant ? `@${variant}` : '')
+    )
   }
 
   return uploadedImageUrl('product-image-placeholder.jpg')
+}
+
+export const resolveCategoryImageUrl = (
+  category: Category | CategoryProps
+): string => {
+  if (noEmpty(category.icon)) {
+    return uploadedImageUrl(category.icon)
+  }
+
+  return uploadedImageUrl('category-icon-placeholder.jpg')
 }
 
 export const strMatches = (string1: string, string2: string): boolean => {

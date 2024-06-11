@@ -5,6 +5,7 @@ import { prisma } from '@services/prisma'
 import { NextApiProps } from 'Types/next'
 import { getObjectProps } from '~/utils'
 import { formDataToJson } from '~/utils/formDataToJson'
+import { generateSlagByTitle } from '~/utils/generateSlagByTitle'
 import { productIncludeFactory, setProductDefaultProps } from '~/utils/product'
 
 type Params = {
@@ -12,7 +13,10 @@ type Params = {
 }
 
 type PatchRequestBodyProps = {
-  product: Product
+  product: Product & {
+    tags: Array<string>
+    medias: Array<string>
+  }
 }
 
 export const GET = async (
@@ -92,6 +96,8 @@ export const PATCH = async (
   const formData = await request.formData()
   const requestBody = formDataToJson<PatchRequestBodyProps>(formData)
 
+  console.log({ requestBody })
+
   const productData = getObjectProps(requestBody.product, [
     'name',
     'summary',
@@ -105,16 +111,72 @@ export const PATCH = async (
     'code'
   ])
 
-  const product = await prisma.product.update({
-    data: setProductDefaultProps(productData),
+  const include = productIncludeFactory()
 
-    where: {
-      id: params.id
+  requestBody.product.tags =
+    requestBody.product.tags instanceof Array ? requestBody.product.tags : []
+  requestBody.product.medias =
+    requestBody.product.medias instanceof Array &&
+    requestBody.product.medias.length >= 1
+      ? requestBody.product.medias
+      : []
+
+  const productTags = requestBody.product.tags.map(title => {
+    const slag = generateSlagByTitle(title).replace(/(\-[0-9]+)$/, '')
+
+    return {
+      title,
+      slag
     }
   })
 
-  if (product) {
-    return NextResponse.json(product)
+  try {
+    const product = await prisma.product.update({
+      include,
+      data: {
+        ...setProductDefaultProps(productData),
+
+        tags: {
+          connectOrCreate: productTags.map(tag => ({
+            where: {
+              slag: tag.slag,
+
+              OR: [
+                {
+                  id: tag.slag
+                },
+                {
+                  slag: tag.slag
+                }
+              ]
+            },
+
+            create: {
+              ...tag
+            }
+          }))
+        },
+
+        medias: {
+          createMany: {
+            data: requestBody.product.medias.map(fileName => ({
+              fileName
+            }))
+          }
+        }
+      },
+
+      where: {
+        id: params.id
+      }
+    })
+
+    if (product) {
+      return NextResponse.json(product)
+    }
+  } catch (err) {
+    // TODO: handle this
+    // pass
   }
 
   return NextResponse.json(

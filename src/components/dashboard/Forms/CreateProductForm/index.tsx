@@ -160,6 +160,7 @@ export const CreateProductForm: CreateProductFormComponent = ({
               placeholder="Nome do produto"
               autoComplete="off"
               name="product[name]"
+              defaultValue={(data && data.name) || undefined}
             />
           </FloatingLabel>
         </Col>
@@ -182,13 +183,17 @@ export const CreateProductForm: CreateProductFormComponent = ({
             label="Resumo (Breve descrição)"
             rows={3}
             name="product[summary]"
+            defaultValue={(data && data.summary) || undefined}
           />
         </Col>
       </Row>
 
       <Row>
         <Col md={12}>
-          <RichTextField name="product[description]" />
+          <RichTextField
+            name="product[description]"
+            defaultValue={(data && data.description) || undefined}
+          />
         </Col>
       </Row>
 
@@ -205,6 +210,7 @@ export const CreateProductForm: CreateProductFormComponent = ({
               placeholder="Preço"
               autoComplete="off"
               name="product[price]"
+              defaultValue={(data && data.price) || undefined}
             />
           </FloatingLabel>
         </Col>
@@ -221,6 +227,7 @@ export const CreateProductForm: CreateProductFormComponent = ({
               autoComplete="off"
               name="product[code]"
               title="Opcional"
+              defaultValue={(data && data.code) || undefined}
             />
           </FloatingLabel>
         </Col>
@@ -268,6 +275,7 @@ export const CreateProductForm: CreateProductFormComponent = ({
                     placeholder="Quantidade"
                     autoComplete="off"
                     name="product[stock]"
+                    defaultValue={(data && data.stock) || undefined}
                   />
                 </FloatingLabel>
               </Col>
@@ -282,6 +290,7 @@ export const CreateProductForm: CreateProductFormComponent = ({
                     placeholder="SKU"
                     autoComplete="off"
                     name="product[sku]"
+                    defaultValue={(data && data.sku) || undefined}
                   />
                 </FloatingLabel>
               </Col>
@@ -297,6 +306,7 @@ export const CreateProductForm: CreateProductFormComponent = ({
                     placeholder="Código de barras"
                     autoComplete="off"
                     name="product[barCode]"
+                    defaultValue={(data && data.barCode) || undefined}
                   />
                 </FloatingLabel>
               </Col>
