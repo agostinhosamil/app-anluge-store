@@ -33,7 +33,7 @@ export default function ProductsPage() {
 
   const productToEdit = useRef<ProductProps>()
 
-  const productState = useProduct('limit=30')
+  const productState = useProduct()
 
   const createProductDialogCloseHandler = () => {
     setShowCreateProductDialog(false)
