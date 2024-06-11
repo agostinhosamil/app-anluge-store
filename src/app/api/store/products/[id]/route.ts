@@ -171,10 +171,13 @@ export const PATCH = async (
       }
     })
 
+    console.log('Updated => ', { product })
+
     if (product) {
       return NextResponse.json(product)
     }
   } catch (err) {
+    console.log('\n\n\n\n\nFound Error => ', err, '\n\n\n\n\n')
     // TODO: handle this
     // pass
   }
