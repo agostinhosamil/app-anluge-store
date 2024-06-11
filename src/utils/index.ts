@@ -276,3 +276,58 @@ export const resolveCategoryImageUrl = (
 export const strMatches = (string1: string, string2: string): boolean => {
   return string1.toLowerCase().includes(string2.toLowerCase())
 }
+
+export const getUrlQueryParams = <QueryParamsMap = any>(
+  url: string | URL
+): QueryParamsMap => {
+  if (url instanceof URL) {
+    const queryParams: QueryParamsMap = {} as QueryParamsMap
+
+    url.searchParams.forEach((value, key) => {
+      queryParams[key as keyof QueryParamsMap] =
+        value as QueryParamsMap[keyof QueryParamsMap]
+    })
+
+    return queryParams
+  }
+
+  try {
+    const urlDataObject = new URL(url)
+
+    return getUrlQueryParams(urlDataObject)
+  } catch (err) {
+    const queryParams: QueryParamsMap = {} as QueryParamsMap
+    const andRe = /(\s*&\s*)/
+    const equalsRe = /(\s*=\s*)/
+    const queryParamsRe = /\?([^#]+)$/
+    const queryParamsMatch = queryParamsRe.exec(url)
+
+    if (queryParamsMatch) {
+      const [queryParamsList] = queryParamsMatch.slice(1)
+      const queryParamsListKeyValuePairs = queryParamsList
+        .split(andRe)
+        .filter(slice => !andRe.test(slice))
+
+      queryParamsListKeyValuePairs.forEach(queryParamsListKeyValuePair => {
+        const [key, value] = queryParamsListKeyValuePair
+          .split(equalsRe)
+          .filter(slice => !equalsRe.test(slice))
+
+        queryParams[key as keyof QueryParamsMap] =
+          value as QueryParamsMap[keyof QueryParamsMap]
+      })
+    }
+
+    return queryParams
+  }
+}
+
+export const queryParamsObjectToString = (
+  queryParamsObject: object
+): string => {
+  const queryParamsKeyValuePairs = Object.keys(queryParamsObject).map(key => {
+    return `${key}=${queryParamsObject[key as keyof typeof queryParamsObject]}`
+  })
+
+  return queryParamsKeyValuePairs.join('&')
+}
