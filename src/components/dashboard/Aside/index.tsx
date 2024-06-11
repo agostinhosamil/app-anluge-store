@@ -103,10 +103,16 @@ export const Aside = () => {
             <AsideLink label="Artigos" />
           </AsideLink>
           <AsideLink label="Documentos">
-            <AsideLink label="Termos e condições" />
+            <AsideLink label="Termos de serviço" />
             <AsideLink label="Política de privacidade" />
+            <AsideLink label="Política de pagamentos" />
             <AsideLink label="Política de uso de cookies" />
-            <AsideLink label="Sobre a empresa" />
+            <AsideLink label="Sobre a empresa">
+              <AsideLink label="História" />
+              <AsideLink label="Missão" />
+              <AsideLink label="Visão" />
+              <AsideLink label="Valores" />
+            </AsideLink>
           </AsideLink>
           <AsideLink
             icon="FaBusinessTime"

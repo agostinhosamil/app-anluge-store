@@ -1,9 +1,9 @@
-import Link from 'next/link'
+'use client'
+
 import React, { useEffect, useRef, useState } from 'react'
-import BootstrapContainer from 'react-bootstrap/Container'
-import { FaClock, FaLocationArrow, FaPhone } from 'react-icons/fa6'
 
 import { Header as HeaderMenu } from '@components/Header'
+import { TopHeader } from '@components/TopHeader'
 
 import { HeaderBody } from './HeaderBody'
 
@@ -11,10 +11,7 @@ import {
   Container,
   HeaderMenuFixedWrapper,
   HeaderMenuShadow,
-  HeaderMenuStaticWrapper,
-  TopHeaderContainer,
-  TopHeaderData,
-  TopHeaderMenu
+  HeaderMenuStaticWrapper
 } from './styles'
 
 export const Header: React.FunctionComponent = () => {
@@ -51,51 +48,7 @@ export const Header: React.FunctionComponent = () => {
 
   return (
     <Container>
-      <TopHeaderContainer>
-        <BootstrapContainer>
-          <TopHeaderMenu>
-            <ul>
-              <li className="selected">
-                <Link href="/">Marketplace</Link>
-              </li>
-              <li>
-                <Link href="/about">Instituição</Link>
-              </li>
-              <li>
-                <Link href="/blog">Blog</Link>
-              </li>
-              <li>
-                <Link href="/partners">Empresas</Link>
-              </li>
-            </ul>
-          </TopHeaderMenu>
-          <TopHeaderData>
-            <ul>
-              <li>
-                <span>Abertos de SEG-SEX</span>
-              </li>
-              <li>
-                <i>
-                  <FaClock />
-                </i>
-                <span>8H-17H</span>
-              </li>
-              <li>
-                <i>
-                  <FaPhone />
-                </i>
-                <span>+244 928 250 640</span>
-              </li>
-              <li>
-                <i>
-                  <FaLocationArrow />
-                </i>
-                <span>Luanda - Kinaxixi, Rua comandante Kwenha</span>
-              </li>
-            </ul>
-          </TopHeaderData>
-        </BootstrapContainer>
-      </TopHeaderContainer>
+      <TopHeader module="store" />
       {fixed && <HeaderMenuShadow />}
       <HeaderMenuWrapper ref={headerMenuWrapperRef}>
         <HeaderMenu style="light" size="large" />

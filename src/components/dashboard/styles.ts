@@ -4,11 +4,11 @@ export const Container = styled.div`
   width: 100%;
   height: auto;
   display: block;
-  padding: 100px;
+  padding: 100px 100px 0px;
   transition: all 0.3s ease-in-out;
 
   @media (max-width: 1500px) {
-    padding: 50px;
+    padding: 50px 50px 0px;
   }
 `
 
@@ -16,7 +16,7 @@ export const Body = styled.div`
   width: 100%;
   height: auto;
   display: flex;
-  padding: 60px 0px;
+  padding: 60px 0px 0px;
   flex-direction: row;
 `
 

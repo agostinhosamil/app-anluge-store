@@ -1,7 +1,6 @@
 'use client'
 
 import { Fragment, useState } from 'react'
-import { Spinner } from 'react-bootstrap'
 
 import { CardButtons } from '@components/CardButtons'
 import { CardButton } from '@components/CardButtons/CardButton'
@@ -17,7 +16,9 @@ import { LoadProductStockMapForm } from 'dashboard@components/Forms/LoadProductS
 import { Dialog } from '@components/Dialog'
 import { EmptyListContainer } from '~/components/dashboard/styles'
 // import { AnlugeUploadClient } from '~/services/upload'
+import { FlatList } from '~/components/FlatList'
 import { LoadingStockMap } from '~/Types/Product'
+import { resolveProductImageUrl } from '~/utils'
 import { useProduct } from '~/utils/hooks/useProduct'
 import { createProductByFormData } from '~/utils/models/product'
 
@@ -155,11 +156,11 @@ export default function ProductsPage() {
         Test Anluge cdn API
       </button> */}
 
-      {productState.loading && (
+      {/* {productState.loading && (
         <div>
           <Spinner />
         </div>
-      )}
+      )} */}
 
       {!productState.loading && productState.products.length < 1 && (
         <EmptyListContainer>
@@ -183,7 +184,23 @@ export default function ProductsPage() {
         </EmptyListContainer>
       )}
 
-      {!productState.loading && productState.products.length >= 1 && (
+      <FlatList
+        data={productState.products}
+        loading={productState.loading}
+        itemsCountPerIteration={15}
+        renderItem={product => (
+          <EntityCard
+            key={product.id}
+            avatar={resolveProductImageUrl(product)}
+            avatarSize="x-large"
+            title={product.name}
+            subTitle={product.category?.title}
+            icons={['Edit', 'Remove']}
+          />
+        )}
+      />
+
+      {/* {!productState.loading && productState.products.length >= 1 && (
         <div>
           {productState.products.map(product => (
             <EntityCard
@@ -194,7 +211,7 @@ export default function ProductsPage() {
             />
           ))}
         </div>
-      )}
+      )} */}
     </Fragment>
   )
 }

@@ -1,0 +1,26 @@
+{
+  "name": "Anluge",
+  "taxName": "Anluge - Comércio e Prestação de Serviços",
+  "taxId": "500059040",
+  "address": "Luanda - Kinaxixi, Rua Comandante Kwenha",
+  "shortDescription": "Uma empresa de Prestação de serviços diversos na área de Informática",
+  "description": "Uma empresa de Prestação de serviços diversos na área de Informática para empresas",
+  "dayExpedient": {
+    "start": "1",
+    "end": "4"
+  },
+  "workingDays": {
+    "start": "2",
+    "end": "5"
+  },
+  "emailAddresses": [
+    "inf.geral@anluge.com"
+  ],
+  "phoneNumbers": [
+    "923285171"
+  ],
+  "socialMediaFacebook": "anluge.ao",
+  "socialMediaLinkedin": "anluge.ao",
+  "socialMediaInstagram": "anluge.ao",
+  "socialMediaWhatsapp": "anluge.ao"
+}

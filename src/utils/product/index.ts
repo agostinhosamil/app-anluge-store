@@ -19,7 +19,13 @@ export const productIncludeFactory = (): Prisma.ProductInclude => {
       }
     },
     medias: true,
-    tags: true
+    tags: true,
+    rates: {
+      include: {
+        medias: true,
+        user: true
+      }
+    }
   }
 
   // include.products = {

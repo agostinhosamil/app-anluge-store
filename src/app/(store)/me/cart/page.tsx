@@ -1,26 +1,29 @@
-"use client";
+'use client'
 
-import Column from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
+import Column from 'react-bootstrap/Col'
+import Form from 'react-bootstrap/Form'
+import Row from 'react-bootstrap/Row'
 
-import { CartOrder } from "store@components/CartPage/CartOrder";
+import { CartOrder } from 'store@components/CartPage/CartOrder'
+import { useStoreContext } from 'store@components/Context'
 import {
   Container,
   ListWrapper,
   SubmitButton,
   SubmitButtonWrapper,
-  TitleContainer,
-} from "store@styles/cart-page";
-import { range } from "~/utils";
+  TitleContainer
+} from 'store@styles/cart-page'
+import { EmptyListContainer } from '~/components/dashboard/styles'
 
 export default function CartPage() {
+  const { products } = useStoreContext()
+
   return (
     <Container>
       <Row>
         <Column lg={8} md={7}>
           <TitleContainer>
-            <h1>Carrinho de compra ({5})</h1>
+            <h1>Carrinho de compra ({products.length})</h1>
             <ol>
               <li>
                 <Form.Check
@@ -35,8 +38,16 @@ export default function CartPage() {
             </ol>
           </TitleContainer>
           <ListWrapper>
-            {range(16).map((i) => (
-              <CartOrder key={i} />
+            {products.length < 1 && (
+              <EmptyListContainer>
+                <h1>O seu carrinho está vazio</h1>
+                <h2>
+                  Ao adicionar itens ao seu carrinho, os poderá consultar aqui.
+                </h2>
+              </EmptyListContainer>
+            )}
+            {products.map(product => (
+              <CartOrder key={product.id} product={product} />
             ))}
           </ListWrapper>
           <ListWrapper>Pronto para finalizar?</ListWrapper>
@@ -47,5 +58,5 @@ export default function CartPage() {
         <Column lg={4} md={5}></Column>
       </Row>
     </Container>
-  );
+  )
 }

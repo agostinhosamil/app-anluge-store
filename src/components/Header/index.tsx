@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { HeaderSearchBox } from '@components/HeaderSearchBox'
 
 import { useState } from 'react'
+import { useStoreContext } from 'store@components/Context'
 import { HeaderAsideMenu } from './HeaderAsideMenu'
 import { HeaderMenuItem } from './HeaderMenuItem'
 import { HeaderUserMenu } from './HeaderUserMenu'
@@ -17,6 +18,8 @@ type HeaderComponent = React.FunctionComponent<{
 export const Header: HeaderComponent = ({ style = 'default', ...props }) => {
   const [showUserMenu, setShowUserMenu] = useState<boolean>(false)
   const [showAsideMenu, setShowAsideMenu] = useState<boolean>(false)
+
+  const { products } = useStoreContext()
 
   const asideMenuButtonClickHandler: React.MouseEventHandler = () => {
     setShowAsideMenu(!showAsideMenu)
@@ -53,7 +56,11 @@ export const Header: HeaderComponent = ({ style = 'default', ...props }) => {
             onClick={userMenuButtonClickHandler}
           />
           <HeaderMenuItem href="/me/favorites" icon="FaHeart" />
-          <HeaderMenuItem href="/me/cart" icon="FaCartShopping" />
+          <HeaderMenuItem
+            href="/me/cart"
+            icon="FaCartShopping"
+            count={products.length >= 1 ? products.length : undefined}
+          />
           <HeaderMenuItem
             icon="FaBarsStaggered"
             as="button"

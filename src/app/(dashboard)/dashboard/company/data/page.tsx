@@ -12,12 +12,39 @@ import { SelectField } from '@components/Form/SelectField'
 import { ContentHeader } from 'dashboard@components/ContentHeader'
 import { ActionButton } from 'dashboard@components/ContentHeader/ActionButton'
 import { FormSubmit } from 'dashboard@components/FormSubmit'
+import { Spinner } from 'react-bootstrap'
+import { FaX } from 'react-icons/fa6'
 import { SelectFieldData } from '~/components/Form/SelectField/types'
-import { range } from '~/utils'
+import companyData from '~/config/cache/company-data/index.json'
+import { generateRandomId, range } from '~/utils'
+import { formDataToJson } from '~/utils/formDataToJson'
+import {
+  CompanyDataForm,
+  InputButtonWrapper,
+  InputContainer,
+  InputRowWrapper,
+  LoadingScreen
+} from './styles'
+
+type Contact = {
+  id: string
+  value?: string
+}
 
 export default function CompanyDataPage() {
-  const [emailsCount, setEmailsCount] = useState<number>(1)
-  const [phoneNumbersCount, setPhoneNumbersCount] = useState<number>(1)
+  const [loading, setLoading] = useState<boolean>(false)
+  const [emails, setEmails] = useState<Array<Contact>>(
+    companyData.emailAddresses.map(email => ({
+      id: generateRandomId(),
+      value: email
+    }))
+  )
+  const [phones, setPhones] = useState<Array<Contact>>(
+    companyData.phoneNumbers.map(phone => ({
+      id: generateRandomId(),
+      value: phone
+    }))
+  )
 
   const weekDays = [
     'Segunda',
@@ -36,21 +63,50 @@ export default function CompanyDataPage() {
     }))
   }
 
+  const deletePhone = (id: string) => {
+    setPhones(phones.filter(phone => phone.id !== id))
+  }
+
+  const deleteEmail = (id: string) => {
+    setEmails(emails.filter(email => email.id !== id))
+  }
+
+  const formSubmitHandler: React.FormEventHandler<HTMLFormElement> = event => {
+    event.preventDefault()
+
+    setLoading(true)
+
+    const formElement = event.target as HTMLFormElement
+    const formData = new FormData(formElement)
+    const jsonFormData = formDataToJson(formData)
+
+    console.log({ jsonFormData })
+  }
+
   return (
     <Fragment>
-      <ContentHeader title="Editar dados da empresa">
-        <ActionButton
-          icon="FaRegFloppyDisk"
-          label="Salvar alterações"
-          onClick={() => {}}
-        />
-      </ContentHeader>
-
-      <form method="post" action="/api/dashboard/company/data">
+      <CompanyDataForm
+        method="post"
+        action="/api/dashboard/company/data"
+        onSubmit={formSubmitHandler}
+      >
+        <ContentHeader title="Editar dados da empresa">
+          <ActionButton
+            icon="FaRegFloppyDisk"
+            label="Salvar alterações"
+            disabled={loading}
+            type="submit"
+          />
+        </ContentHeader>
+        {loading && (
+          <LoadingScreen>
+            <Spinner />
+          </LoadingScreen>
+        )}
         <Row>
           <Col md={6}>
             <FloatingLabel
-              controlId="floatingInput"
+              controlId="company-name"
               label="Nome da empresa"
               className="mb-3"
             >
@@ -59,12 +115,13 @@ export default function CompanyDataPage() {
                 name="company[name]"
                 placeholder="Nome da empresa"
                 autoComplete="off"
+                defaultValue={companyData.name}
               />
             </FloatingLabel>
           </Col>
           <Col md={6}>
             <FloatingLabel
-              controlId="floatingInput"
+              controlId="company-tax-name"
               label="Nome fiscal da empresa"
               className="mb-3"
             >
@@ -73,15 +130,31 @@ export default function CompanyDataPage() {
                 name="company[taxName]"
                 placeholder="Nome fiscal da empresa"
                 autoComplete="off"
+                defaultValue={companyData.taxName}
               />
             </FloatingLabel>
           </Col>
         </Row>
 
         <Row>
-          <Col md={12}>
+          <Col md={3}>
             <FloatingLabel
-              controlId="floatingInput"
+              controlId="company-tax-id"
+              label="NIF"
+              className="mb-3"
+            >
+              <Form.Control
+                type="text"
+                name="company[taxId]"
+                placeholder="NIF"
+                autoComplete="off"
+                defaultValue={companyData.taxId}
+              />
+            </FloatingLabel>
+          </Col>
+          <Col md={9}>
+            <FloatingLabel
+              controlId="company-address"
               label="Endereço"
               className="mb-3"
             >
@@ -90,6 +163,7 @@ export default function CompanyDataPage() {
                 name="company[address]"
                 placeholder="Endereço"
                 autoComplete="off"
+                defaultValue={companyData.address}
               />
             </FloatingLabel>
           </Col>
@@ -101,6 +175,7 @@ export default function CompanyDataPage() {
               label="Descrição curta"
               title="Breve descrição sobre a empresa"
               name="company[shortDescription]"
+              defaultValue={companyData.shortDescription}
             />
           </Col>
         </Row>
@@ -112,6 +187,7 @@ export default function CompanyDataPage() {
               label="Descrição longa"
               title="Descrição mais abrangente sobre a empresa"
               name="company[description]"
+              defaultValue={companyData.description}
             />
           </Col>
         </Row>
@@ -123,13 +199,17 @@ export default function CompanyDataPage() {
                 <Col md={6}>
                   <SelectField
                     label="Início"
+                    name="company[dayExpedient][start]"
                     data={arrayToSelectFieldData(range(24).slice(5))}
+                    defaultValue={companyData.dayExpedient.start}
                   />
                 </Col>
                 <Col md={6}>
                   <SelectField
                     label="Término"
+                    name="company[dayExpedient][end]"
                     data={arrayToSelectFieldData(range(24).slice(5))}
+                    defaultValue={companyData.dayExpedient.end}
                   />
                 </Col>
               </Row>
@@ -141,13 +221,17 @@ export default function CompanyDataPage() {
                 <Col md={6}>
                   <SelectField
                     label="Dia de início"
+                    name="company[workingDays][start]"
                     data={arrayToSelectFieldData(weekDays)}
+                    defaultValue={companyData.workingDays.start}
                   />
                 </Col>
                 <Col md={6}>
                   <SelectField
                     label="Dia de término"
+                    name="company[workingDays][end]"
                     data={arrayToSelectFieldData(weekDays)}
+                    defaultValue={companyData.workingDays.end}
                   />
                 </Col>
               </Row>
@@ -158,30 +242,43 @@ export default function CompanyDataPage() {
         <Row>
           <Col md={12}>
             <FormGroup title="Endereços de email">
-              {range(emailsCount).map(i => (
-                <Row key={i}>
-                  <Col md={12}>
-                    <FloatingLabel
-                      controlId="floatingInput"
-                      label={`Endereço de email${i === 1 ? ' principal' : ''}`}
-                      className="mb-3"
-                    >
-                      <Form.Control
-                        type="text"
-                        name="company[emailAddress][]"
-                        placeholder={`Endereço de email${i === 1 ? ' principal' : ''}`}
-                        autoComplete="off"
-                      />
-                    </FloatingLabel>
-                  </Col>
-                </Row>
+              {emails.map(({ id, value }, i) => (
+                <InputContainer key={id}>
+                  <InputRowWrapper>
+                    <Row>
+                      <Col md={12}>
+                        <FloatingLabel
+                          controlId="floatingInput"
+                          label={`Endereço de email${i === 0 ? ' principal' : ''}`}
+                          className="mb-3"
+                        >
+                          <Form.Control
+                            type="text"
+                            name="company[emailAddresses][]"
+                            placeholder={`Endereço de email${i === 0 ? ' principal' : ''}`}
+                            autoComplete="off"
+                            defaultValue={value}
+                          />
+                        </FloatingLabel>
+                      </Col>
+                    </Row>
+                  </InputRowWrapper>
+                  <InputButtonWrapper>
+                    <button type="button" onClick={() => deleteEmail(id)}>
+                      <FaX />
+                    </button>
+                  </InputButtonWrapper>
+                </InputContainer>
               ))}
-              <div className="w-100 mt-3">
+              <div className="w-100 mt-1">
                 <button
-                  onClick={() => setEmailsCount(emailsCount + 1)}
+                  onClick={() =>
+                    setEmails([...emails, { id: generateRandomId() }])
+                  }
+                  className="btn btn-primary"
                   type="button"
                 >
-                  Adicionar mais um endereço de email
+                  {`Adicionar${emails.length >= 1 ? ' mais' : ''} um endereço de email`}
                 </button>
               </div>
             </FormGroup>
@@ -191,30 +288,43 @@ export default function CompanyDataPage() {
         <Row>
           <Col md={12}>
             <FormGroup title="Números de telefone">
-              {range(phoneNumbersCount).map(i => (
-                <Row key={i}>
-                  <Col md={12}>
-                    <FloatingLabel
-                      controlId="floatingInput"
-                      label={`Número de telefone${i === 1 ? ' principal' : ''}`}
-                      className="mb-3"
-                    >
-                      <Form.Control
-                        type="text"
-                        name="company[phoneNumber][]"
-                        placeholder={`Número de telefone${i === 1 ? ' principal' : ''}`}
-                        autoComplete="off"
-                      />
-                    </FloatingLabel>
-                  </Col>
-                </Row>
+              {phones.map(({ id, value }, i) => (
+                <InputContainer key={id}>
+                  <InputRowWrapper>
+                    <Row>
+                      <Col md={12}>
+                        <FloatingLabel
+                          controlId={`company-phone-${id}`}
+                          label={`Número de telefone${i === 0 ? ' principal' : ''}`}
+                          className="mb-3"
+                        >
+                          <Form.Control
+                            type="text"
+                            name="company[phoneNumbers][]"
+                            placeholder={`Número de telefone${i === 0 ? ' principal' : ''}`}
+                            autoComplete="off"
+                            defaultValue={value}
+                          />
+                        </FloatingLabel>
+                      </Col>
+                    </Row>
+                  </InputRowWrapper>
+                  <InputButtonWrapper>
+                    <button type="button" onClick={() => deletePhone(id)}>
+                      <FaX />
+                    </button>
+                  </InputButtonWrapper>
+                </InputContainer>
               ))}
-              <div className="w-100 mt-3">
+              <div className="w-100 mt-1">
                 <button
-                  onClick={() => setPhoneNumbersCount(phoneNumbersCount + 1)}
+                  onClick={() =>
+                    setPhones([...phones, { id: generateRandomId() }])
+                  }
+                  className="btn btn-primary"
                   type="button"
                 >
-                  Adicionar mais um número de telefone
+                  {`Adicionar${phones.length >= 1 ? ' mais' : ''} um número de telefone`}
                 </button>
               </div>
             </FormGroup>
@@ -237,23 +347,25 @@ export default function CompanyDataPage() {
                   >
                     <Form.Control
                       type="text"
-                      name="company[socialMedia:facebook]"
+                      name="company[socialMediaFacebook]"
                       placeholder="Facebook"
                       autoComplete="off"
+                      defaultValue={companyData.socialMediaFacebook}
                     />
                   </FloatingLabel>
                 </Col>
                 <Col md={6}>
                   <FloatingLabel
-                    controlId="floatingInput-Twitter"
-                    label="Twitter"
+                    controlId="floatingInput-LinkedIn"
+                    label="LinkedIn"
                     className="mb-3"
                   >
                     <Form.Control
                       type="text"
-                      name="company[socialMedia:twitter]"
-                      placeholder="Twitter"
+                      name="company[socialMediaLinkedin]"
+                      placeholder="LinkedIn"
                       autoComplete="off"
+                      defaultValue={companyData.socialMediaLinkedin}
                     />
                   </FloatingLabel>
                 </Col>
@@ -267,9 +379,10 @@ export default function CompanyDataPage() {
                   >
                     <Form.Control
                       type="text"
-                      name="company[socialMedia:instagram]"
+                      name="company[socialMediaInstagram]"
                       placeholder="Instagram"
                       autoComplete="off"
+                      defaultValue={companyData.socialMediaInstagram}
                     />
                   </FloatingLabel>
                 </Col>
@@ -281,9 +394,10 @@ export default function CompanyDataPage() {
                   >
                     <Form.Control
                       type="text"
-                      name="company[socialMedia:whatsapp]"
+                      name="company[socialMediaWhatsapp]"
                       placeholder="whatsapp"
                       autoComplete="off"
+                      defaultValue={companyData.socialMediaWhatsapp}
                     />
                   </FloatingLabel>
                 </Col>
@@ -294,10 +408,10 @@ export default function CompanyDataPage() {
 
         <Row>
           <Col md={4}>
-            <FormSubmit>Salvar alterações</FormSubmit>
+            <FormSubmit disabled={loading}>Salvar alterações</FormSubmit>
           </Col>
         </Row>
-      </form>
+      </CompanyDataForm>
     </Fragment>
   )
 }

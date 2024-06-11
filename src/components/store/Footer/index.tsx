@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import Column from 'react-bootstrap/Col'
 import BootstrapContainer from 'react-bootstrap/Container'
@@ -215,6 +217,9 @@ export const Footer: React.FunctionComponent = () => {
                       </li>
                       <li>
                         <Link href="/me/orders">Meus pedidos</Link>
+                      </li>
+                      <li>
+                        <Link href="/help">Central de ajuda</Link>
                       </li>
                       <Partial
                         isEither={['admin', 'admin:master', 'seller', 'editor']}

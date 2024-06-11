@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const Container = styled.div`
   width: 100%;
@@ -14,7 +14,7 @@ export const Container = styled.div`
     padding-top: 0px;
     margin-top: 0px;
   }
-`;
+`
 
 export const ImageWrapper = styled.div`
   width: 100px;
@@ -33,7 +33,7 @@ export const ImageWrapper = styled.div`
       -webkit-border-radius: inherit;
     }
   }
-`;
+`
 
 export const DataWrapper = styled.div`
   width: 100%;
@@ -41,7 +41,8 @@ export const DataWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding-left: 20px;
-`;
+  position: relative;
+`
 
 export const HeadingWrapper = styled.div`
   width: 100%;
@@ -53,7 +54,7 @@ export const HeadingWrapper = styled.div`
   h6 {
     width: 100%;
     display: inline-flex;
-    padding: 0px 20px 0px 0px;
+    padding: 0px 20px 50px 0px;
     margin: 0px;
   }
 
@@ -86,15 +87,15 @@ export const HeadingWrapper = styled.div`
       }
     }
   }
-`;
+`
 
 export const BudgetData = styled.div`
-  width: 100%;
-  height: auto;
   display: flex;
   flex-direction: row;
   align-items: center;
-`;
+  position: absolute;
+  bottom: 0px;
+`
 
 export const Price = styled.div`
   display: flex;
@@ -105,11 +106,10 @@ export const Price = styled.div`
     font-size: 23px;
     font-weight: 500;
   }
-`;
+`
 
 export const AmountInputWrapper = styled.div`
   display: inline-flex;
-  padding-left: 20px;
 
   div {
     width: 100%;
@@ -146,4 +146,4 @@ export const AmountInputWrapper = styled.div`
       padding: 9px;
     }
   }
-`;
+`

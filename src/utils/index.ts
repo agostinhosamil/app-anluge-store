@@ -253,3 +253,7 @@ export const resolveProductImageUrl = (product: ProductProps): string => {
 
   return uploadedImageUrl('product-image-placeholder.jpg')
 }
+
+export const strMatches = (string1: string, string2: string): boolean => {
+  return string1.toLowerCase().includes(string2.toLowerCase())
+}

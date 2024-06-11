@@ -187,7 +187,9 @@ export default function CategoriesPage() {
       <FlatList
         data={categoryState.categories}
         loading={categoryState.loading}
-        paginationStyle="infinite-scroll"
+        itemsCountPerIteration={15}
+        placeholderCountOnLoading={15}
+        paginationStyle="client-demand"
         renderItem={category => (
           <EntityCard
             // avatar={category.icon || 'category-avatar-placeholder.jpg'}

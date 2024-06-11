@@ -58,6 +58,9 @@
       "store@styles/*": [
         "./src/styles/store/*"
       ],
+      "institution@styles/*": [
+        "./src/styles/institution/*"
+      ],
       "authentication@styles/*": [
         "./src/styles/authentication/*"
       ],
@@ -67,6 +70,9 @@
       "dashboard@components/*": [
         "./src/components/dashboard/*"
       ],
+      "institution@components/*": [
+        "./src/components/institution/*"
+      ],
       "blog@components/*": [
         "./src/components/blog/*"
       ],
@@ -75,6 +81,9 @@
       ],
       "dashboard@utils/*": [
         "./src/utils/dashboard/*"
+      ],
+      "institution@utils/*": [
+        "./src/utils/institution/*"
       ],
       "blog@utils/*": [
         "./src/utils/blog/*"

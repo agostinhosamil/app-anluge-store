@@ -58,6 +58,7 @@ export const Content = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   padding: 0px 20px;
   margin-top: +3px;
 `

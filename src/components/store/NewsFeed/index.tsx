@@ -24,7 +24,7 @@ export const NewsFeed: React.FunctionComponent = () => {
     <Container>
       <AdvertisingPanelContainer>
         <Carousel controls={false}>
-          {range(40).map(i => (
+          {range(5).map(i => (
             <Carousel.Item key={i}>
               <AdvertisingPanel
                 image="image001.jpg"

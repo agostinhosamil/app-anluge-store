@@ -1,14 +1,16 @@
 import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
-import { cookies } from 'next/headers'
 import NextJsTopLoader from 'nextjs-toploader'
 
 import { GlobalStyles } from '@styles/rootLayout'
 import { auth } from '@utils/auth'
+import { getCartData } from '@utils/cart'
 import { AuthenticationWrapper } from '~/components/AuthenticationWrapper'
 import StyledComponentsRegistry from './lib/registry'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { StoreContextWrapper } from '~/components/store/Context/StoreContextWrapper'
+import { getAuthTokenCookie } from '~/utils/authTokenCookie'
 // import 'slick-carousel/slick/slick-theme.css'
 // import 'slick-carousel/slick/slick.css'
 
@@ -29,17 +31,22 @@ const roboto = Roboto({
 })
 
 export default async function RootLayout({ children }: RootLayoutProps) {
-  const authTokenCookie = cookies().get(
-    String(process.env.APP_AUTH_COOKIE_NAME)
-  )
+  const authTokenCookie = getAuthTokenCookie()
+  const cartData = await getCartData()
 
   const authenticatedUser = await auth({
-    token: (authTokenCookie && authTokenCookie.value) || ''
+    token: (authTokenCookie && authTokenCookie) || ''
   })
 
   return (
     <html lang="en">
       <head>
+        <link
+          rel="shortcut icon"
+          type="image/svg"
+          href="/assets/images/svg/anluge-logo-dark.svg"
+          sizes="20x20"
+        />
         <link
           rel="icon"
           type="image/svg"
@@ -54,11 +61,13 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         />
       </head>
       <body className={roboto.className}>
-        <NextJsTopLoader />
+        <NextJsTopLoader showSpinner={false} />
         <StyledComponentsRegistry>
           <GlobalStyles />
           <AuthenticationWrapper auth={authenticatedUser}>
-            {children}
+            <StoreContextWrapper cart={cartData}>
+              {children}
+            </StoreContextWrapper>
           </AuthenticationWrapper>
         </StyledComponentsRegistry>
       </body>

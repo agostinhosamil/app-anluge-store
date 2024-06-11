@@ -1,19 +1,23 @@
+'use client'
+
 import {
   ActionsList,
   ActionsListWrapper,
   Container,
-  TitleWrapper,
-} from "./styles";
+  TitleWrapper
+} from './styles'
 
 type ContentHeaderProps = {
-  title?: string;
-};
+  title?: string
+}
 
 type ContentHeaderComponent = React.FunctionComponent<
   React.PropsWithChildren & ContentHeaderProps
->;
+>
 
-export const ContentHeader: ContentHeaderComponent = (props) => {
+export * from './ActionButton'
+
+export const ContentHeader: ContentHeaderComponent = props => {
   return (
     <Container>
       {props.title && (
@@ -27,5 +31,5 @@ export const ContentHeader: ContentHeaderComponent = (props) => {
         </ActionsListWrapper>
       )}
     </Container>
-  );
-};
+  )
+}

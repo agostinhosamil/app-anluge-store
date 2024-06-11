@@ -1,9 +1,10 @@
 // import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Fragment } from 'react'
 import { FaCartPlus, FaEllipsisV, FaHeart } from 'react-icons/fa'
 
-import { Fragment } from 'react'
+import { useStoreContext } from 'store@components/Context'
 import { ProductProps } from '~/Types/Product'
 import { resolveProductImageUrl } from '~/utils'
 import { StarRating } from './StarRating'
@@ -12,6 +13,12 @@ import * as Styled from './styles'
 type ProductCardProps = ProductProps
 
 export const ProductCard: React.FunctionComponent<ProductCardProps> = props => {
+  const storeContext = useStoreContext()
+
+  const addToCartButtonClickHandler = () => {
+    storeContext.addOrder(props)
+  }
+
   return (
     <Styled.Container>
       <Link href={`/products/${props.slag}`}>
@@ -51,7 +58,12 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = props => {
         <Styled.AsideBody>
           <ul>
             <li>
-              <button type="button" role="button" className="color-primary">
+              <button
+                type="button"
+                role="button"
+                className="color-primary"
+                onClick={addToCartButtonClickHandler}
+              >
                 <i>
                   <FaCartPlus />
                 </i>

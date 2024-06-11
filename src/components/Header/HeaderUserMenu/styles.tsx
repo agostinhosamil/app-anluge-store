@@ -8,8 +8,8 @@ export const Container = styled.div`
   width: 100%;
   max-width: 430px;
   background-color: #ffffff;
-  border-radius: 8px;
-  -webkit-border-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
   box-shadow: 0px 16px 8px 2px rgb(0 0 0 / 27%);
   position: absolute;
   top: 100%;

@@ -4,11 +4,9 @@ import {
   HeaderBodyCol,
   HeaderBodyContainer,
   HeaderBodyRow,
-  HeaderDataWrapper,
-  HeaderSearchBoxWrapper
+  HeaderDataWrapper
 } from './styles'
 
-import { HeaderSearchBox } from '~/components/HeaderSearchBox'
 import { HeaderSlider } from './HeaderSlider'
 
 export const HeaderBody = () => {
@@ -25,9 +23,6 @@ export const HeaderBody = () => {
                 odit necessitatibus tenetur! At repudiandae magni in aliquid
                 veritatis impedit repellendus velit officiis!
               </p>
-              <HeaderSearchBoxWrapper>
-                <HeaderSearchBox expandOnFocus={false} />
-              </HeaderSearchBoxWrapper>
             </HeaderDataWrapper>
           </HeaderBodyCol>
           <HeaderBodyCol>

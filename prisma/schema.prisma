@@ -108,21 +108,24 @@ model Favorite {
   @@map("favorite")
 }
 
-model Advertising {
-  id        String              @id @default(cuid())
+model Advertise {
+  id        String            @id @default(cuid())
   expiresAt DateTime
   banner    String
   link      String?
   title     String?
   content   String?
-  post      Post?               @relation(fields: [postId], references: [id])
-  style     AdvertisingStyle
-  position  AdvertisingPosition
-  createdAt DateTime            @default(now())
-  updatedAt DateTime            @updatedAt
+  post      Post?             @relation(fields: [postId], references: [id])
+  product   Product?          @relation(fields: [productId], references: [id])
+  style     AdvertiseStyle
+  position  AdvertisePosition
+  popup     Boolean           @default(false)
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
   postId    Int?
+  productId String?
 
-  @@map("advertising")
+  @@map("advertise")
 }
 
 model Setting {
@@ -200,16 +203,16 @@ model Tag {
 }
 
 model Post {
-  id            Int           @id @default(autoincrement())
+  id            Int         @id @default(autoincrement())
   title         String
-  slag          String        @unique @default(uuid())
-  body          String
-  author        User          @relation(fields: [userId], references: [id])
+  slag          String      @unique @default(uuid())
+  body          String      @db.LongText
+  author        User        @relation(fields: [userId], references: [id])
   tags          Tag[]
   medias        Media[]
-  adevertisings Advertising[]
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  adevertisings Advertise[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
   userId        String
 
   @@map("post")
@@ -263,27 +266,28 @@ model Rate {
 }
 
 model Product {
-  id          String      @id @default(cuid())
-  code        String?     @unique @default(cuid())
-  name        String
-  summary     String?
-  description String
-  price       Float
-  slag        String      @unique
-  medias      Media[]
-  tags        Tag[]
-  faqs        Faq[]
-  rates       Rate[]
-  stock       Int?        @default(-1)
-  sku         String?     @unique
-  barCode     String? // @unique
-  type        ProductType @default(PHYSICAL)
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  category    Category?   @relation(fields: [categoryId], references: [id])
-  categoryId  String?
-  favorites   Favorite[]
-  Order       Order[]
+  id           String      @id @default(cuid())
+  code         String?     @unique @default(cuid())
+  name         String
+  summary      String?
+  description  String
+  price        Float
+  slag         String      @unique
+  medias       Media[]
+  tags         Tag[]
+  faqs         Faq[]
+  rates        Rate[]
+  stock        Int?        @default(-1)
+  sku          String?     @unique
+  barCode      String? // @unique
+  type         ProductType @default(PHYSICAL)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  category     Category?   @relation(fields: [categoryId], references: [id])
+  categoryId   String?
+  favorites    Favorite[]
+  orders       Order[]
+  advertisings Advertise[]
 
   @@map("product")
 }
@@ -322,12 +326,12 @@ enum ProductType {
   DIGITAL
 }
 
-enum AdvertisingStyle {
+enum AdvertiseStyle {
   CARD
   BANNER
 }
 
-enum AdvertisingPosition {
+enum AdvertisePosition {
   TOP
   BOTTOM
   FEED

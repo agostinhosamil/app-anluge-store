@@ -1,8 +1,11 @@
-import Image from "next/image";
-import { FaHeart, FaMinus, FaPlus, FaTrash } from "react-icons/fa6";
-import { CategoryBreadCrumb } from "store@components/ProductPage/CategoryBreadCrumb";
+import Image from 'next/image'
+import { useState } from 'react'
+import { FaHeart, FaMinus, FaPlus, FaTrash } from 'react-icons/fa6'
 
-import { useState } from "react";
+import { ProductProps } from 'Types/Product'
+import { useStoreContext } from 'store@components/Context'
+import { CategoryBreadCrumb } from 'store@components/ProductPage/CategoryBreadCrumb'
+import { resolveProductImageUrl } from '~/utils'
 import {
   AmountInputWrapper,
   BudgetData,
@@ -10,27 +13,41 @@ import {
   DataWrapper,
   HeadingWrapper,
   ImageWrapper,
-  Price,
-} from "./styles";
+  Price
+} from './styles'
 
-export const CartOrder = () => {
-  const [amount, setAmount] = useState(1);
+type CartOrderProps = {
+  product: ProductProps
+}
+
+type CartOrderComponent = React.FunctionComponent<CartOrderProps>
+
+export const CartOrder: CartOrderComponent = ({ product }) => {
+  const [amount, setAmount] = useState(1)
+
+  const storeContext = useStoreContext()
 
   const minusButtonClickHandler = () => {
-    setAmount(amount - 1);
-  };
+    if (amount >= 2) {
+      setAmount(amount - 1)
+    }
+  }
 
   const plusButtonClickHandler = () => {
-    setAmount(amount + 1);
-  };
+    setAmount(amount + 1)
+  }
+
+  const removeOrderButtonClickHandler = () => {
+    storeContext.removeOrder(product.id)
+  }
 
   return (
     <Container>
       <ImageWrapper>
         <i>
           <Image
-            src="/assets/images/uploads/image001.jpg"
-            alt="Product Name"
+            src={resolveProductImageUrl(product)}
+            alt={product.name}
             width={100}
             height={120}
           />
@@ -38,7 +55,7 @@ export const CartOrder = () => {
       </ImageWrapper>
       <DataWrapper>
         <HeadingWrapper>
-          <h6>Product Name</h6>
+          <h6>{product.name}</h6>
           <ul>
             <li>
               <button>
@@ -48,7 +65,7 @@ export const CartOrder = () => {
               </button>
             </li>
             <li>
-              <button>
+              <button type="button" onClick={removeOrderButtonClickHandler}>
                 <i>
                   <FaTrash />
                 </i>
@@ -58,9 +75,11 @@ export const CartOrder = () => {
         </HeadingWrapper>
         <CategoryBreadCrumb />
         <BudgetData>
-          <Price>
-            <strong>AKZ 123.092.398,00</strong>
-          </Price>
+          {product.price >= 1 && (
+            <Price>
+              <strong>AKZ {product.price}</strong>
+            </Price>
+          )}
           <AmountInputWrapper>
             <div>
               <i>
@@ -73,7 +92,7 @@ export const CartOrder = () => {
                 autoCapitalize="off"
                 autoComplete="off"
                 spellCheck="false"
-                value={amount}
+                defaultValue={amount}
               />
               <i>
                 <button type="button" onClick={plusButtonClickHandler}>
@@ -85,5 +104,5 @@ export const CartOrder = () => {
         </BudgetData>
       </DataWrapper>
     </Container>
-  );
-};
+  )
+}

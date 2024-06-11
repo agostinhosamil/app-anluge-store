@@ -26,7 +26,8 @@ export const LoadingScreen = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  opacity: 0.9785;
+  opacity: 0.9685;
+  z-index: 3;
 
   * {
     user-select: none;
