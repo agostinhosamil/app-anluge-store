@@ -80,7 +80,8 @@ export const UserSelectList: UserSelectListComponent = props => {
         users.map(user => ({
           id: user.id,
           title: user.name,
-          subTitle: user.email
+          subTitle: user.email,
+          data: user
         }))
       }
     />
