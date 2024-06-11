@@ -22,7 +22,7 @@ export const getCartData = async (): Promise<StoreCartData> => {
         include: productIncludeFactory()
       })
 
-      return products
+      return products as StoreCartData
     }
   } catch (err) {}
 
