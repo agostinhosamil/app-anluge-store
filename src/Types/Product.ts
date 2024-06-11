@@ -1,7 +1,14 @@
 import { Prisma, Product } from '@prisma/client'
 import { Category } from '~/components/dashboard/Forms/CategoryMassCreationForm/types'
 
-export interface ProductInclude extends Prisma.ProductInclude {}
+export interface ProductInclude extends Prisma.ProductInclude {
+  rates: {
+    include: {
+      medias: true
+      user: true
+    }
+  }
+}
 
 // export interface ProductInclude extends Prisma.ProductDefaultArgs {
 //   category: {
