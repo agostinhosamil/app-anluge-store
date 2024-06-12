@@ -1,8 +1,14 @@
+import { ProductProps } from 'Types/Product'
+
 export type ProductImage = {
-  id: number
+  id: number | string
   file: File | null
+  fileUrl?: string
 }
 
 export type ProductImages = Array<ProductImage>
 
-export type ProductImagesFactory = (quantity?: number) => ProductImages
+export type ProductImagesFactory = (
+  quantity?: number,
+  data?: ProductProps
+) => ProductImages

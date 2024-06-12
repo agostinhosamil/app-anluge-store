@@ -1,19 +1,43 @@
-import { range } from '~/utils'
+import { $Enums } from '@prisma/client'
 
 import {
   OptionProps,
   SelectFieldData
 } from '@components/Form/SelectField/types'
-import { $Enums } from '@prisma/client'
 import { CategoryProps } from 'Types/Category'
+import { ProductProps } from '~/Types/Product'
+import { range, uploadedImageUrl } from '~/utils'
 import { categoryListToTree } from '~/utils/models/category'
-import { ProductImagesFactory } from './types'
+import { ProductImages, ProductImagesFactory } from './types'
 
-export const productImagesFactory: ProductImagesFactory = (quantity = 4) =>
-  range(quantity).map(i => ({
-    id: i,
-    file: null
-  }))
+export const productImagesFactory: ProductImagesFactory = (
+  quantity = 4,
+  data = undefined
+) => {
+  let productMediasCount = 0
+  const productImages: ProductImages = []
+
+  if (data && data.medias instanceof Array && data.medias.length >= 1) {
+    productMediasCount = data.medias.length
+
+    data.medias.forEach(media => {
+      productImages.push({
+        file: null,
+        id: media.id,
+        fileUrl: uploadedImageUrl(media.fileName)
+      })
+    })
+  }
+
+  range(quantity - productMediasCount).forEach(i => {
+    productImages.push({
+      id: i,
+      file: null
+    })
+  })
+
+  return productImages
+}
 
 export const resolveProductTypeKey = (
   productType: $Enums.ProductType
@@ -48,4 +72,19 @@ export const categoryListToSelectFieldData = (
   }
 
   return categoriesTree.map(category => categoryObjectFactory(category))
+}
+
+export const registeredProductMedia = (
+  mediaId: string | number,
+  product: ProductProps | undefined
+): mediaId is string => {
+  if (
+    product &&
+    product.medias instanceof Array &&
+    product.medias.length >= 1
+  ) {
+    return product.medias.some(media => media.id === mediaId)
+  }
+
+  return false
 }

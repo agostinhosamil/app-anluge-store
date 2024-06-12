@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import { Col, FloatingLabel, Form, Row, Spinner } from 'react-bootstrap'
 
 import { DropZone } from '@components/DropZone'
@@ -19,6 +19,7 @@ import { ProductImages } from './types'
 import {
   categoryListToSelectFieldData,
   productImagesFactory,
+  registeredProductMedia,
   resolveProductTypeKey
 } from './utils'
 
@@ -46,7 +47,10 @@ export const CreateProductForm: CreateProductFormComponent = ({
   const { categories, loading: categoriesLoading } = useCategory()
 
   const [loading, setLoading] = useState<boolean>(false)
-  const [files, setFiles] = useState<ProductImages>(productImagesFactory(8))
+  const [deletedMediaIds, setDeletedMediaIds] = useState<Array<string>>([])
+  const [files, setFiles] = useState<ProductImages>(
+    productImagesFactory(8, data)
+  )
 
   // if (loading) {
   //   return (
@@ -109,7 +113,7 @@ export const CreateProductForm: CreateProductFormComponent = ({
 
   const updateSelectedFile = (
     selectedFile: File,
-    selectedFileId: number
+    selectedFileId: number | string
   ): void => {
     setFiles(
       files.map(stateFile => {
@@ -256,9 +260,15 @@ export const CreateProductForm: CreateProductFormComponent = ({
                 <Col md={3} key={file.id}>
                   <DropZone
                     accept={acceptedImageFileTypes}
+                    defaultValue={file.fileUrl}
                     onChange={selectedFile =>
                       updateSelectedFile(selectedFile, file.id)
                     }
+                    onDelete={() => {
+                      if (registeredProductMedia(file.id, data)) {
+                        setDeletedMediaIds([...deletedMediaIds, file.id])
+                      }
+                    }}
                   />
                 </Col>
               ))}
@@ -337,6 +347,17 @@ export const CreateProductForm: CreateProductFormComponent = ({
           />
         </Col>
       </Row>
+
+      <Fragment>
+        {deletedMediaIds.map(deletedMediaId => (
+          <input
+            key={deletedMediaId}
+            type="hidden"
+            value={deletedMediaId}
+            name="product[deleted][medias]"
+          />
+        ))}
+      </Fragment>
 
       <FormSubmit disabled={loading}>
         {loading && (
