@@ -18,7 +18,7 @@ import {
 } from './styles'
 
 export const NewsFeed: React.FunctionComponent = () => {
-  const { products, ...productsState } = useProduct('limit=30')
+  const { products, ...productsState } = useProduct()
 
   return (
     <Container>
