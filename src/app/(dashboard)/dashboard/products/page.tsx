@@ -12,6 +12,7 @@ import {
   CreateProductOnFormSubmitProps
 } from 'dashboard@components/Forms/CreateProductForm'
 import { LoadProductStockMapForm } from 'dashboard@components/Forms/LoadProductStockMapForm'
+import { RemoveForm } from 'dashboard@components/Forms/RemoveForm'
 
 import { Dialog } from '@components/Dialog'
 // import { AnlugeUploadClient } from '~/services/upload'
@@ -21,6 +22,7 @@ import { resolveProductImageUrl } from '~/utils'
 import { useProduct } from '~/utils/hooks/useProduct'
 import {
   createProductByFormData,
+  deleteProductById,
   updateProductByFormData
 } from '~/utils/models/product'
 
@@ -30,8 +32,11 @@ export default function ProductsPage() {
     useState<boolean>(false)
   const [showLoadStockMapDialog, setShowLoadStockMapDialog] =
     useState<boolean>(false)
+  const [showDeleteProductDialog, setShowDeleteProductDialog] =
+    useState<boolean>(false)
 
-  const productToEdit = useRef<ProductProps>()
+  const productToEditState = useRef<ProductProps>()
+  const productToDeleteState = useRef<ProductProps>()
 
   const productState = useProduct()
 
@@ -54,6 +59,10 @@ export default function ProductsPage() {
     productState.reloadProducts()
   }
 
+  const deleteProductDialogCloseHandler = () => {
+    setShowDeleteProductDialog(false)
+  }
+
   const loadProductStockMapFormImportEndHandler = () => {
     loadStockMapDialogCloseHandler()
   }
@@ -70,24 +79,43 @@ export default function ProductsPage() {
     // const formElement = event.target as HTMLFormElement
     // const formData = new FormData(formElement)
 
-    const createdProduct = !editingProduct(productToEdit.current)
+    const createdProduct = !editingProduct(productToEditState.current)
       ? await createProductByFormData(formData)
-      : await updateProductByFormData(productToEdit.current.id, formData)
+      : await updateProductByFormData(productToEditState.current.id, formData)
 
     if (!createdProduct) {
       return alert('Could not create product')
     }
 
-    if (editingProduct(productToEdit.current)) {
-      productState.updateProduct(productToEdit.current.id, createdProduct)
+    if (editingProduct(productToEditState.current)) {
+      productState.updateProduct(productToEditState.current.id, createdProduct)
     } else {
       productState.addProduct(createdProduct)
     }
 
     setShowCreateProductDialog(false)
-    productToEdit.current = undefined
+    productToEditState.current = undefined
 
     console.log('Done -> ', createdProduct)
+  }
+
+  const deleteProductFormSubmitHandler = async () => {
+    const product = productToDeleteState.current
+
+    if (!product) {
+      return
+    }
+
+    const deletedProduct = await deleteProductById(product.id)
+
+    if (!deletedProduct) {
+      return alert('Could not delete product')
+    }
+
+    productToDeleteState.current = undefined
+
+    productState.deleteProduct(product.id)
+    setShowDeleteProductDialog(false)
   }
 
   /* const clickHandler: React.ChangeEventHandler = async event => {
@@ -136,7 +164,7 @@ export default function ProductsPage() {
       >
         <CreateProductForm
           onFormSubmit={createProductFormSubmitHandler}
-          data={productToEdit.current}
+          data={productToEditState.current}
         />
       </Dialog>
       <Dialog
@@ -169,6 +197,22 @@ export default function ProductsPage() {
             </CardButton>
           </CardButtons>
         )}
+      </Dialog>
+
+      <Dialog
+        show={showDeleteProductDialog}
+        size="medium"
+        title="Remover produto"
+        onClose={deleteProductDialogCloseHandler}
+      >
+        <RemoveForm onSubmit={deleteProductFormSubmitHandler}>
+          <h5>Tem certeza?</h5>
+          <p>
+            O produto {`'${productToDeleteState.current?.name}'`} será
+            permanentemente removido do sistema e os pedidos para este serão
+            cancelados.
+          </p>
+        </RemoveForm>
       </Dialog>
 
       {/* <input type="file" onChange={clickHandler} /> */}
@@ -217,9 +261,14 @@ export default function ProductsPage() {
             subTitle={product.category?.title}
             icons={['Edit', 'Remove']}
             onEdit={() => {
-              productToEdit.current = product
+              productToEditState.current = product
 
               setShowCreateProductDialog(true)
+            }}
+            onRemove={() => {
+              productToDeleteState.current = product
+
+              setShowDeleteProductDialog(true)
             }}
           />
         )}
