@@ -1,23 +1,23 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 type SelectFieldContainerProps = {
-  $highlightOnMouseIn?: boolean;
-};
+  $highlightOnMouseIn?: boolean
+}
 
 type ListProps = {
-  $maxHeight?: "unset" | number;
-};
+  $maxHeight?: 'unset' | number
+}
 
 const resolveHighlightColor = (
   highlightOnMouseIn: boolean | undefined,
-  highlightColor: string,
+  highlightColor: string
 ): string => {
-  if (typeof highlightOnMouseIn === "boolean") {
-    return highlightOnMouseIn ? highlightColor : "#ffffff";
+  if (typeof highlightOnMouseIn === 'boolean') {
+    return highlightOnMouseIn ? highlightColor : '#ffffff'
   }
 
-  return highlightColor;
-};
+  return highlightColor
+}
 
 export const Container = styled.div`
   width: 100%;
@@ -25,7 +25,7 @@ export const Container = styled.div`
   margin-bottom: 1rem;
   display: block;
   position: relative;
-`;
+`
 
 export const SelectFieldContainer = styled.div<SelectFieldContainerProps>`
   width: 100%;
@@ -40,6 +40,7 @@ export const SelectFieldContainer = styled.div<SelectFieldContainerProps>`
   cursor: pointer;
   user-select: none;
   -webkit-user-select: none;
+  outline: 0px;
 
   * {
     user-select: none;
@@ -48,21 +49,21 @@ export const SelectFieldContainer = styled.div<SelectFieldContainerProps>`
   }
 
   &:hover {
-    background-color: ${(props) =>
-      resolveHighlightColor(props.$highlightOnMouseIn, "#f8f8f8")};
+    background-color: ${props =>
+      resolveHighlightColor(props.$highlightOnMouseIn, '#f8f8f8')};
   }
 
   &:active {
-    background-color: ${(props) =>
-      resolveHighlightColor(props.$highlightOnMouseIn, "#ebebeb")};
+    background-color: ${props =>
+      resolveHighlightColor(props.$highlightOnMouseIn, '#ebebeb')};
   }
-`;
+`
 
 export const Body = styled.div`
   width: 100%;
   height: auto;
   display: block;
-`;
+`
 
 export const LabelContainer = styled.div`
   width: 100%;
@@ -70,14 +71,14 @@ export const LabelContainer = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-`;
+`
 
 export const LabelWrapper = styled.div`
   width: 100%;
   display: inline-flex;
   flex-direction: row;
   align-items: center;
-`;
+`
 
 export const Label = styled.span`
   width: 100%;
@@ -85,14 +86,23 @@ export const Label = styled.span`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-`;
+`
+
+export const FilterInput = styled.input`
+  width: 100%;
+  padding: 4px 0px;
+  border: 0px;
+  outline: 0px;
+  background-color: transparent;
+  cursor: text;
+`
 
 export const IconWrapper = styled.div`
   padding-left: 15px;
   display: inline-flex;
   align-items: center;
   color: #999999;
-`;
+`
 
 export const ListWrapper = styled.div`
   width: 100%;
@@ -110,23 +120,23 @@ export const ListWrapper = styled.div`
   border-bottom-left-radius: 0.375rem;
   z-index: 12;
   box-shadow: 0px 20px 20px 2px rgb(0 0 0 / 30%);
-`;
+`
 
 export const List = styled.ul<ListProps>`
   width: 100%;
   height: auto;
-  max-height: ${(props) =>
-    props.$maxHeight ? `${props.$maxHeight}px` : "unset"};
+  max-height: ${props =>
+    props.$maxHeight ? `${props.$maxHeight}px` : 'unset'};
   overflow-y: auto;
   padding: 0px 0px 15px;
-`;
+`
 
 export const OptionContainer = styled.div`
   width: 100%;
   height: auto;
   display: block;
   position: relative;
-`;
+`
 
 export const OptionButton = styled.button`
   width: 100%;
@@ -144,34 +154,34 @@ export const OptionButton = styled.button`
   &:active {
     background-color: #ebebeb;
   }
-`;
+`
 
 export const OptionElementBody = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
-`;
+`
 
 export const OptionIconWrapper = styled.div`
   display: inline-flex;
-`;
+`
 
 export const OptionLabelWrapper = styled.div`
   width: 100%;
   padding-left: 8px;
-`;
+`
 
 export const OptionLabel = styled.span`
   display: inline-flex;
   width: 100%;
-`;
+`
 
 export const OptionScreenButtonWrapper = styled.div`
   display: inline-flex;
   align-items: center;
   justify-content: flex-end;
-`;
+`
 
 export const OptionScreenButton = styled.button`
   display: flex;
@@ -191,17 +201,17 @@ export const OptionScreenButton = styled.button`
   &:hover {
     background-color: #f0f0f0;
   }
-`;
+`
 
 export const OptionScreenButtonLabel = styled.div`
   display: inline-flex;
   padding-right: 8px;
-`;
+`
 
 export const OptionScreenButtonIcon = styled.div`
   display: inline-flex;
   align-items: center;
-`;
+`
 
 export const ListBackButtonWrapper = styled.div`
   width: 100%;
@@ -210,9 +220,9 @@ export const ListBackButtonWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   padding: 7px 12px;
-`;
+`
 
-export const ListBackButton = styled.button.attrs({ type: "button" })`
+export const ListBackButton = styled.button.attrs({ type: 'button' })`
   background-color: transparent;
   border: 0px;
   outline: 0px;
@@ -240,4 +250,20 @@ export const ListBackButton = styled.button.attrs({ type: "button" })`
     width: 100%;
     margin-left: 8px;
   }
-`;
+`
+
+export const EmptyListItem = styled.li`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 20px 30px;
+  text-align: center;
+
+  p {
+    font-size: 16px;
+    font-weight: 300;
+    color: #999999;
+    display: inline-flex;
+  }
+`

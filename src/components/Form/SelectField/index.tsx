@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { FaAngleDown, FaAngleLeft, FaAngleUp } from 'react-icons/fa6'
 
-import { noEmpty } from '~/utils'
+import { noEmpty, strMatches } from '~/utils'
 import { Option } from './Option'
 import {
   Body,
   Container,
+  EmptyListItem,
+  FilterInput,
   IconWrapper,
   Label,
   LabelContainer,
@@ -41,6 +43,8 @@ export const SelectField: SelectFieldComponent<OptionProps> = ({
   defaultValue,
   ...props
 }) => {
+  const [query, setQuery] = useState<string>('')
+  const [typing, setTyping] = useState<boolean>(false)
   const [opened, setOpened] = useState<boolean>(false)
   const [listHeight, setListHeight] = useState<ListHeight>('unset')
   const [selectedOption, setSelectedOption] = useState<OptionProps>()
@@ -67,6 +71,10 @@ export const SelectField: SelectFieldComponent<OptionProps> = ({
   }
 
   const selectFieldContainerClickHandler: React.MouseEventHandler = event => {
+    if (typing) {
+      return
+    }
+
     const listData = listDataStack[-1 + listDataStack.length]
 
     if (listData.length < 1 && !opened) {
@@ -91,6 +99,10 @@ export const SelectField: SelectFieldComponent<OptionProps> = ({
   }
 
   const selectFieldContainerBlurHandler = () => {
+    if (typing) {
+      return
+    }
+
     if (closeOnSelectFieldContainerBlur) {
       return setOpened(false)
     }
@@ -116,14 +128,42 @@ export const SelectField: SelectFieldComponent<OptionProps> = ({
     setListDataStack([...listDataStack, options])
   }
 
+  const resetState = () => {
+    setOpened(false)
+    setQuery('')
+    setTyping(false)
+  }
+
   const optionSelectHandler: SelectEventHandler = option => {
     setSelectedOption(option)
-    setOpened(false)
   }
 
   const listBackButtonClickHandler = () => {
     setListDataStack(listDataStack.slice(0, -1))
   }
+
+  const filterInputBlurHandler = (event: React.BaseSyntheticEvent) => {
+    if (closeOnSelectFieldContainerBlur) {
+      resetState()
+    }
+  }
+
+  const filterInputChangeHandler: React.ChangeEventHandler = event => {
+    const inputElement = event.target as HTMLInputElement
+
+    setQuery(inputElement.value)
+  }
+
+  const selectFieldContainerKeyDownHandler: React.KeyboardEventHandler =
+    event => {
+      if (event.key.length < 2) {
+        setTyping(true)
+      }
+
+      if (event.key.toLowerCase() === 'escape') {
+        resetState()
+      }
+    }
 
   const resolveFieldLabel = (): string => {
     if (selectedOption) {
@@ -151,7 +191,17 @@ export const SelectField: SelectFieldComponent<OptionProps> = ({
     return ''
   }
 
+  const listDataFilter = (listData: OptionProps): boolean => {
+    if (!noEmpty(query)) {
+      return true
+    }
+
+    return strMatches(listData.label, query)
+  }
+
   const listData = listDataStack[-1 + listDataStack.length]
+
+  const filteredListData = listData.filter(listDataFilter)
 
   return (
     <Container>
@@ -164,13 +214,21 @@ export const SelectField: SelectFieldComponent<OptionProps> = ({
       <SelectFieldContainer
         $highlightOnMouseIn={!opened}
         ref={selectFieldContainerRef}
+        onKeyDown={selectFieldContainerKeyDownHandler}
         onBlur={selectFieldContainerBlurHandler}
         onClick={selectFieldContainerClickHandler}
       >
         <Body>
           <LabelContainer>
             <LabelWrapper>
-              <Label>{resolveFieldLabel()}</Label>
+              {(typing && (
+                <FilterInput
+                  value={query}
+                  onBlur={filterInputBlurHandler}
+                  onChange={filterInputChangeHandler}
+                  ref={inputElement => inputElement?.focus()}
+                />
+              )) || <Label>{resolveFieldLabel()}</Label>}
             </LabelWrapper>
             <IconWrapper>
               <Icon />
@@ -196,7 +254,7 @@ export const SelectField: SelectFieldComponent<OptionProps> = ({
                 </ListBackButton>
               </ListBackButtonWrapper>
             )}
-            {listData.map((option, optionIndex) => (
+            {filteredListData.map((option, optionIndex) => (
               <Option
                 {...option}
                 key={optionIndex}
@@ -204,6 +262,12 @@ export const SelectField: SelectFieldComponent<OptionProps> = ({
                 onOpen={optionOpenHandler}
               />
             ))}
+
+            {filteredListData.length < 1 && (
+              <EmptyListItem>
+                <p>Sem registros a apresentar</p>
+              </EmptyListItem>
+            )}
           </List>
         </ListWrapper>
       )}
