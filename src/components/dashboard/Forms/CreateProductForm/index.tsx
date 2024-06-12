@@ -1,11 +1,22 @@
+import { useState } from 'react'
 import { Col, FloatingLabel, Form, Row, Spinner } from 'react-bootstrap'
 
 import { DropZone } from '@components/DropZone'
+import { FormGroup } from '@components/Form/FormGroup'
 import { LongTextField } from '@components/Form/LongTextField'
 import { RichTextField } from '@components/Form/RichTextField'
 import { SelectField } from '@components/Form/SelectField'
+import { SelectFieldData } from '@components/Form/SelectField/types'
 import { TagsField } from '@components/Form/TagsField'
+import { AnlugeUploadClient } from '@services/upload'
+import { useCategory } from '@utils/hooks/useCategory'
 import { FormSubmit } from 'dashboard@components/FormSubmit'
+import { ProductProps } from 'Types/Product'
+
+import { acceptedImageFileTypes } from './acceptedImageFileTypes'
+import { productTypes } from './productTypes'
+import { ProductImages } from './types'
+import { productImagesFactory, resolveProductTypeKey } from './utils'
 
 export type CreateProductOnFormSubmitProps = {
   event: React.FormEvent<HTMLFormElement>
@@ -21,17 +32,6 @@ type CreateProductFormProps = {
 type CreateProductFormComponent = React.FunctionComponent<
   React.FormHTMLAttributes<HTMLFormElement> & CreateProductFormProps
 >
-
-import { SelectFieldData } from '@components/Form/SelectField/types'
-import { useState } from 'react'
-import { FormGroup } from '~/components/Form/FormGroup'
-import { AnlugeUploadClient } from '~/services/upload'
-import { ProductProps } from '~/Types/Product'
-import { useCategory } from '~/utils/hooks/useCategory'
-import { acceptedImageFileTypes } from './acceptedImageFileTypes'
-import { productTypes } from './productTypes'
-import { ProductImages } from './types'
-import { productImagesFactory } from './utils'
 
 export const CreateProductForm: CreateProductFormComponent = ({
   data,
@@ -144,6 +144,7 @@ export const CreateProductForm: CreateProductFormComponent = ({
             }
             data={categoryDataList}
             name="product[categoryId]"
+            defaultValue={(data && data.categoryId) || undefined}
           />
         </Col>
       </Row>
@@ -173,6 +174,9 @@ export const CreateProductForm: CreateProductFormComponent = ({
             name="product[type]"
             id="product-id"
             data={productTypes}
+            defaultValue={
+              (data && resolveProductTypeKey(data.type)) || undefined
+            }
           />
         </Col>
       </Row>

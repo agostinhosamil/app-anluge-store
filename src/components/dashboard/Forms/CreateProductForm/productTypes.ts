@@ -4,12 +4,12 @@ export const productTypes: SelectFieldData = [
   {
     label: `Produto digital`,
     icon: 'FaCarBurst',
-    value: 1
+    value: '1'
   },
   {
     label: `Produto físico`,
     icon: 'FaCarBurst',
-    value: 2,
+    value: '2',
     options: []
   }
 ]
