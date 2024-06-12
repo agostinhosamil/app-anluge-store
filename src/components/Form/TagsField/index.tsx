@@ -7,7 +7,7 @@ import { sanitizeTagSlag } from '~/utils/sanitizeTagSlag'
 import { Body, Container, Label, LabelWrapper, TagInput } from './styles'
 import { TagPreview } from './TagPreview'
 import { TagProps } from './types'
-import { resolveFieldName } from './utils'
+import { fieldNameSplit, resolveFieldName } from './utils'
 
 type TagsFieldProps = {
   label?: string
@@ -64,8 +64,10 @@ export const TagsField: TagsFieldComponent = ({
     }
   }
 
+  const [fieldNameHead, fieldNameTail] = fieldNameSplit(props.name || 'slag')
+
   const fieldName = resolveFieldName(
-    (noEmpty(props.name) ? props.name : 'slag').concat('[deleted]')
+    `${fieldNameHead}[deleted]${fieldNameTail}`
   )
 
   return (
