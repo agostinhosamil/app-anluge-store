@@ -1,4 +1,3 @@
-import { Product } from '@prisma/client'
 import { Col, FloatingLabel, Form, Row, Spinner } from 'react-bootstrap'
 
 import { DropZone } from '@components/DropZone'
@@ -14,7 +13,7 @@ export type CreateProductOnFormSubmitProps = {
 }
 
 type CreateProductFormProps = {
-  data?: Product
+  data?: ProductProps
   actionLabel?: string
   onFormSubmit?: (props: CreateProductOnFormSubmitProps) => void
 }
@@ -27,6 +26,7 @@ import { SelectFieldData } from '@components/Form/SelectField/types'
 import { useState } from 'react'
 import { FormGroup } from '~/components/Form/FormGroup'
 import { AnlugeUploadClient } from '~/services/upload'
+import { ProductProps } from '~/Types/Product'
 import { useCategory } from '~/utils/hooks/useCategory'
 import { acceptedImageFileTypes } from './acceptedImageFileTypes'
 import { productTypes } from './productTypes'
@@ -317,7 +317,13 @@ export const CreateProductForm: CreateProductFormComponent = ({
 
       <Row>
         <Col md={12}>
-          <TagsField name="product[tags]" />
+          <TagsField
+            name="product[tags]"
+            initialData={
+              (data && data.tags.map(({ id, slag }) => ({ id, slag }))) ||
+              undefined
+            }
+          />
         </Col>
       </Row>
 
