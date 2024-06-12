@@ -4,7 +4,10 @@ import { Product } from '@prisma/client'
 import { axios } from '@services/axios'
 import { ProductProps } from '~/Types/Product'
 import { arrayMerge, arraySplit, noEmpty } from '~/utils'
-import { lazilyGetAll } from '~/utils/lazilyGetAll'
+import {
+  lazilyGetAll,
+  LazilyGetAllUtilEachLoadCallback
+} from '~/utils/lazilyGetAll'
 
 export const createProductByFormData = async (
   formData: FormData
@@ -175,7 +178,8 @@ export const deleteProduct = async (
 }
 
 export const getProducts = async (
-  query?: string
+  query?: string,
+  onEachLoadEndCallback?: LazilyGetAllUtilEachLoadCallback<ProductProps>
 ): Promise<Array<ProductProps>> => {
   try {
     // const response = await axios.get<Array<ProductProps>>(
@@ -186,10 +190,12 @@ export const getProducts = async (
     const products = await lazilyGetAll<ProductProps>(
       '/store/products'.concat(
         noEmpty(query) ? `?${query.replace(/\?\s*/, '')}` : ''
-      )
+      ),
+
+      onEachLoadEndCallback
     )
 
-    console.log('products => ', products)
+    // console.log('products => ', products)
 
     if (products instanceof Array) {
       return products
