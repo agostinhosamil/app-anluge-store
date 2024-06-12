@@ -1,3 +1,4 @@
+import { Tag } from '@prisma/client'
 import { useId, useState } from 'react'
 
 import { generateRandomId, noEmpty } from '~/utils'
@@ -9,6 +10,7 @@ import { TagProps } from './types'
 
 type TagsFieldProps = {
   label?: string
+  initialData?: Array<Tag | TagProps>
   onTagAdded?: (tagSlag: string) => void
   onTagRemoved?: (tagSlag: string) => void
   onTagUpdated?: (newTagSlag: string, oldTagSlag: string) => void
@@ -18,8 +20,14 @@ type TagsFieldComponent = React.FunctionComponent<
   React.InputHTMLAttributes<HTMLInputElement> & TagsFieldProps
 >
 
-export const TagsField: TagsFieldComponent = ({ label, ...props }) => {
-  const [tags, setTags] = useState<Array<TagProps>>([])
+export const TagsField: TagsFieldComponent = ({
+  label,
+  initialData,
+  ...props
+}) => {
+  const initialTags = initialData instanceof Array ? initialData : []
+
+  const [tags, setTags] = useState<Array<TagProps>>(initialTags)
 
   const fieldId = useId()
 
