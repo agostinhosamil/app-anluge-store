@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { FaAngleDown, FaAngleLeft, FaAngleUp } from 'react-icons/fa6'
 
+import { noEmpty } from '~/utils'
 import { Option } from './Option'
 import {
   Body,
@@ -37,6 +38,7 @@ type ListDataStack = Array<SelectFieldData>
 
 export const SelectField: SelectFieldComponent<OptionProps> = ({
   data,
+  defaultValue,
   ...props
 }) => {
   const [opened, setOpened] = useState<boolean>(false)
@@ -53,6 +55,16 @@ export const SelectField: SelectFieldComponent<OptionProps> = ({
   useEffect(() => {
     setListDataStack([data])
   }, [data])
+
+  const defaultOption = resolveDefaultValue(defaultValue)
+
+  function resolveDefaultValue(defaultValue: any): OptionProps | undefined {
+    if (!noEmpty(defaultValue)) {
+      return undefined
+    }
+
+    return data.find(({ value }) => value === defaultValue)
+  }
 
   const selectFieldContainerClickHandler: React.MouseEventHandler = event => {
     const listData = listDataStack[-1 + listDataStack.length]
@@ -118,9 +130,25 @@ export const SelectField: SelectFieldComponent<OptionProps> = ({
       return selectedOption.label
     }
 
+    if (defaultOption) {
+      return defaultOption.label
+    }
+
     return typeof props.label === 'string' && /\S/.test(props.label)
       ? props.label
       : 'Selecionar'
+  }
+
+  const resolveFieldValue = (): string => {
+    if (selectedOption) {
+      return selectedOption.value
+    }
+
+    if (defaultOption) {
+      return defaultOption.value
+    }
+
+    return ''
   }
 
   const listData = listDataStack[-1 + listDataStack.length]
@@ -129,7 +157,7 @@ export const SelectField: SelectFieldComponent<OptionProps> = ({
     <Container>
       <input
         {...props}
-        value={(selectedOption && selectedOption.value) || ''}
+        value={resolveFieldValue()}
         type="hidden"
         onChange={() => {}}
       />
