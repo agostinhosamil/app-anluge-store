@@ -269,8 +269,8 @@ model Product {
   id           String      @id @default(cuid())
   code         String?     @unique @default(cuid())
   name         String
-  summary      String?
-  description  String
+  summary      String?     @db.TinyText
+  description  String      @db.LongText
   price        Float
   slag         String      @unique
   medias       Media[]
