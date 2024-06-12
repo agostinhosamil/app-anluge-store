@@ -16,7 +16,11 @@ import { ProductProps } from 'Types/Product'
 import { acceptedImageFileTypes } from './acceptedImageFileTypes'
 import { productTypes } from './productTypes'
 import { ProductImages } from './types'
-import { productImagesFactory, resolveProductTypeKey } from './utils'
+import {
+  categoryListToSelectFieldData,
+  productImagesFactory,
+  resolveProductTypeKey
+} from './utils'
 
 export type CreateProductOnFormSubmitProps = {
   event: React.FormEvent<HTMLFormElement>
@@ -121,11 +125,16 @@ export const CreateProductForm: CreateProductFormComponent = ({
     )
   }
 
-  const categoryDataList: SelectFieldData = categories.map(category => ({
-    label: category.title,
-    icon: 'FaStoreSlash',
-    value: category.id
-  }))
+  // const categoryDataList: SelectFieldData = categories.map(category => ({
+  //   label: category.title,
+  //   icon: 'FaStoreSlash',
+  //   value: category.id
+  // }))
+
+  const categoryDataList: SelectFieldData =
+    categoryListToSelectFieldData(categories)
+
+  console.log('categoryDataList => ', categoryDataList)
 
   return (
     <form

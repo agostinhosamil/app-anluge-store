@@ -156,6 +156,12 @@ export const categoryFactoryByTitle = (
 export const getCategoriesTree = async (): Promise<Array<CategoryProps>> => {
   const categories = await getCategories()
 
+  return categoryListToTree(categories)
+}
+
+export const categoryListToTree = (
+  categories: Array<CategoryProps>
+): Array<CategoryProps> => {
   const categoriesTree: Array<CategoryProps> = []
   const loadedCategories: Array<CategoryProps> = []
 
