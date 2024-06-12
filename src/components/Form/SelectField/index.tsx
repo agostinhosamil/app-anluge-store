@@ -136,6 +136,8 @@ export const SelectField: SelectFieldComponent<OptionProps> = ({
 
   const optionSelectHandler: SelectEventHandler = option => {
     setSelectedOption(option)
+
+    resetState()
   }
 
   const listBackButtonClickHandler = () => {
