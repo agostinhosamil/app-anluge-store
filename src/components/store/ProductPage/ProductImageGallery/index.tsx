@@ -42,7 +42,7 @@ export const ProductImageGallery: ProductImageGalleryComponent = ({
       <Content>
         <ImageWrapper>
           <Image
-            src={resolveProductImageUrl(product)}
+            src={resolveProductImageUrl(product, 'large')}
             alt="Product name should be here"
             width={900}
             height={1200}
