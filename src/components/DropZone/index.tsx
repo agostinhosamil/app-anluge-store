@@ -3,7 +3,8 @@ import ReactDropZone, {
 } from 'react-dropzone'
 import { FaEye, FaPlus, FaTrash } from 'react-icons/fa6'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import { noEmpty } from '~/utils'
 import {
   DropZoneBody,
   DropZoneContainer,
@@ -14,16 +15,20 @@ import {
 
 type DropZoneProps = {
   height?: number
+  defaultValue?: string
   onChange?: (selectedFile: File) => void
+  onDelete?: () => void
 }
 
 type DropZoneComponent = React.FunctionComponent<
   ReactDropZoneProps & DropZoneProps
 >
 
-export const DropZone: DropZoneComponent = ({ ...props }) => {
+export const DropZone: DropZoneComponent = ({ defaultValue, ...props }) => {
   const [file, setFile] = useState<File | null>(null)
   const [dropError, setDropError] = useState<boolean>(false)
+
+  const defaultValueState = useRef<string | undefined>(defaultValue)
 
   const reactDropZoneDropHandler = (files: Array<File>) => {
     // console.log('reactDropZoneDropHandler >>> ', files)
@@ -46,7 +51,25 @@ export const DropZone: DropZoneComponent = ({ ...props }) => {
   }
 
   const deleteButtonClickHandler = () => {
+    defaultValueState.current = undefined
+
     setFile(null)
+
+    if (typeof props.onDelete === 'function') {
+      props.onDelete()
+    }
+  }
+
+  const couldShowFilePreview = (): boolean => {
+    return Boolean(file instanceof File || noEmpty(defaultValueState.current))
+  }
+
+  const resolveFilePreviewUrl = (): string => {
+    if (file instanceof File) {
+      return URL.createObjectURL(file)
+    }
+
+    return noEmpty(defaultValueState.current) ? defaultValueState.current : ''
   }
 
   return (
@@ -61,7 +84,15 @@ export const DropZone: DropZoneComponent = ({ ...props }) => {
         {({ getRootProps, getInputProps, isDragActive }) => (
           <DropZoneElement $error={dropError}>
             <DropZoneBody $height={props.height} {...getRootProps()}>
-              {file && <DropZoneFilePreview $src={URL.createObjectURL(file)} />}
+              {/* {(file && (
+                <DropZoneFilePreview $src={} />
+              )) ||
+                (noEmpty(defaultValue) && (
+                  <DropZoneFilePreview $src={defaultValue} />
+                ))} */}
+              {couldShowFilePreview() && (
+                <DropZoneFilePreview $src={resolveFilePreviewUrl()} />
+              )}
               <input {...getInputProps()} />
               <i>
                 <FaPlus />
@@ -77,7 +108,7 @@ export const DropZone: DropZoneComponent = ({ ...props }) => {
           </DropZoneElement>
         )}
       </ReactDropZone>
-      {file && (
+      {couldShowFilePreview() && (
         <DropZoneFooter>
           <ul>
             <li>
