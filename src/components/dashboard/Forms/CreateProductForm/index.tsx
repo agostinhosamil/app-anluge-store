@@ -354,7 +354,7 @@ export const CreateProductForm: CreateProductFormComponent = ({
             key={deletedMediaId}
             type="hidden"
             value={deletedMediaId}
-            name="product[deleted][medias]"
+            name="product[deleted][medias][]"
           />
         ))}
       </Fragment>
