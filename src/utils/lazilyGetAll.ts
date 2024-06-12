@@ -1,8 +1,19 @@
 import { axios } from '@services/axios'
 import { getUrlQueryParams, queryParamsObjectToString } from '.'
 
+export type LazilyGetAllUtilEachLoadCallbackProps<RecordType> = {
+  data: Array<RecordType>
+  allLoadedRecords: Array<RecordType>
+  finished: boolean
+}
+
+export type LazilyGetAllUtilEachLoadCallback<RecordType> = (
+  props: LazilyGetAllUtilEachLoadCallbackProps<RecordType>
+) => void
+
 export const lazilyGetAll = async <RecordType = any>(
-  requestPath: string
+  requestPath: string,
+  onEachLoadEndCallback?: LazilyGetAllUtilEachLoadCallback<RecordType>
 ): Promise<Array<RecordType>> => {
   let allRecords: Array<RecordType> = []
 
@@ -50,8 +61,26 @@ export const lazilyGetAll = async <RecordType = any>(
 
         recordLoadCursor += RECORD_LOAD_CONCURRENCY
 
+        const onEachLoadEndCallbackProps: LazilyGetAllUtilEachLoadCallbackProps<RecordType> =
+          {
+            allLoadedRecords: allRecords,
+            data: response.data,
+            finished: false
+          }
+
         if (response.data.length < 1) {
+          if (typeof onEachLoadEndCallback === 'function') {
+            onEachLoadEndCallback({
+              ...onEachLoadEndCallbackProps,
+              finished: true
+            })
+          }
+
           break
+        }
+
+        if (typeof onEachLoadEndCallback === 'function') {
+          onEachLoadEndCallback(onEachLoadEndCallbackProps)
         }
 
         continue
