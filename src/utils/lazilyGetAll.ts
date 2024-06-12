@@ -1,4 +1,5 @@
 import { axios } from '@services/axios'
+import { getUrlQueryParams, queryParamsObjectToString } from '.'
 
 export const lazilyGetAll = async <RecordType = any>(
   requestPath: string
@@ -12,18 +13,40 @@ export const lazilyGetAll = async <RecordType = any>(
 
   while (true) {
     try {
-      const queryStringParameterPrefix = requestPathQueryStringRe.test(
-        requestPath
-      )
-        ? '&'
-        : '?'
-      const requestPathWithQueryString = `${queryStringParameterPrefix}limit=${recordLoadCursor},${RECORD_LOAD_CONCURRENCY}`
+      const requestPathQueryParams = getUrlQueryParams(requestPath)
+
+      requestPathQueryParams['limit'] = [
+        recordLoadCursor,
+        RECORD_LOAD_CONCURRENCY
+      ].join(',')
+
+      requestPath = requestPath.replace(requestPathQueryStringRe, '')
+
+      // console.log(
+      //   'Updated Request Path => ',
+      //   requestPath.concat(
+      //     '?',
+      //     queryParamsObjectToString(requestPathQueryParams)
+      //   )
+      // )
+
+      // const queryStringParameterPrefix = requestPathQueryStringRe.test(
+      //   requestPath
+      // )
+      //   ? '&'
+      //   : '?'
+      // const requestPathWithQueryString = `${queryStringParameterPrefix}limit=${recordLoadCursor},${RECORD_LOAD_CONCURRENCY}`
       const response = await axios.get<Array<RecordType>>(
-        requestPath.concat(requestPathWithQueryString)
+        requestPath.concat(
+          '?',
+          queryParamsObjectToString(requestPathQueryParams)
+        )
       )
 
       if (response.data instanceof Array) {
         allRecords = [...allRecords, ...response.data]
+
+        // console.log(`Got ${response.data.length} records: `, response.data)
 
         recordLoadCursor += RECORD_LOAD_CONCURRENCY
 

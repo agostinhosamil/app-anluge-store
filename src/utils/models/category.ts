@@ -2,7 +2,7 @@ import { axios } from '@services/axios'
 import { AxiosResponse } from 'axios'
 import { Category } from '~/components/dashboard/Forms/CategoryMassCreationForm/types'
 import { CategoryProps } from '~/Types/Category'
-import { arrayMerge, arraySplit, generateRandomId } from '~/utils'
+import { arrayMerge, arraySplit, generateRandomId, noEmpty } from '~/utils'
 import { generateSlagByTitle } from '~/utils/generateSlagByTitle'
 
 export const createCategoryByFormData = async (
@@ -152,3 +152,77 @@ export const categoryFactoryByTitle = (
   title: categoryTitle,
   parentId: (props && props.parentId) || null
 })
+
+export const getCategoriesTree = async (): Promise<Array<CategoryProps>> => {
+  const categories = await getCategories()
+
+  const categoriesTree: Array<CategoryProps> = []
+  const loadedCategories: Array<CategoryProps> = []
+
+  // const getCategoryIndex = (categoryId: string): number => {
+  //   let i = 0
+
+  //   for (; i < categories.length; i++) {
+  //     const category = categories[i]
+
+  //     if (category.id === categoryId) {
+  //       return i
+  //     }
+  //   }
+
+  //   return -1
+  // }
+
+  const getCategoryChildren = (categoryId: string): Array<CategoryProps> => {
+    return categories
+      .filter(category => category.parentId === categoryId)
+      .map(category => {
+        // const categoryIndex = getCategoryIndex(category.id)
+
+        // categories.splice(categoryIndex, 1)
+        loadedCategories.push(category)
+
+        return {
+          ...category,
+          categories: getCategoryChildren(category.id)
+        }
+      })
+  }
+
+  for (let i = 0; i < categories.length; i++) {
+    const category = categories[i]
+
+    if (
+      loadedCategories.some(({ id }) => id === category.id) ||
+      noEmpty(category.parentId)
+    ) {
+      continue
+    }
+
+    // console.log(
+    //   'getCategoryChildren(category.id) => ',
+    //   getCategoryChildren(category.id)
+    // )
+
+    categoriesTree.push({
+      ...category,
+      categories: getCategoryChildren(category.id)
+    })
+  }
+
+  // categories.forEach((category, categoryIndex) => {
+
+  // })
+
+  // return categories
+  //   .filter(category => !loadedCategories.some(({ id }) => id === category.id))
+  //   .map(category => ({
+  //     ...category,
+  //     categories: [
+  //       ...(category.categories instanceof Array ? category.categories : []),
+  //       ...getCategoryChildren(category.id)
+  //     ]
+  //   }))
+
+  return categoriesTree
+}
