@@ -1,5 +1,5 @@
 import { Tag } from '@prisma/client'
-import { useId, useState } from 'react'
+import { Fragment, useId, useState } from 'react'
 
 import { generateRandomId, noEmpty } from '~/utils'
 
@@ -7,6 +7,7 @@ import { sanitizeTagSlag } from '~/utils/sanitizeTagSlag'
 import { Body, Container, Label, LabelWrapper, TagInput } from './styles'
 import { TagPreview } from './TagPreview'
 import { TagProps } from './types'
+import { resolveFieldName } from './utils'
 
 type TagsFieldProps = {
   label?: string
@@ -28,6 +29,7 @@ export const TagsField: TagsFieldComponent = ({
   const initialTags = initialData instanceof Array ? initialData : []
 
   const [tags, setTags] = useState<Array<TagProps>>(initialTags)
+  const [deletedTags, setDeletedTags] = useState<Array<TagProps>>([])
 
   const fieldId = useId()
 
@@ -56,7 +58,15 @@ export const TagsField: TagsFieldComponent = ({
 
   const tagDeleteHandler = (deletedTag: TagProps) => {
     setTags(tags.filter(currentTag => currentTag.id !== deletedTag.id))
+
+    if (initialTags.some(({ id }) => deletedTag.id === id)) {
+      setDeletedTags([...deletedTags, deletedTag])
+    }
   }
+
+  const fieldName = resolveFieldName(
+    (noEmpty(props.name) ? props.name : 'slag').concat('[deleted]')
+  )
 
   return (
     <Container htmlFor={fieldId}>
@@ -90,6 +100,16 @@ export const TagsField: TagsFieldComponent = ({
           </li>
         </ul>
       </Body>
+      <Fragment>
+        {deletedTags.map(deletedTag => (
+          <input
+            key={deletedTag.id}
+            type="hidden"
+            name={`${fieldName}`}
+            value={deletedTag.slag}
+          />
+        ))}
+      </Fragment>
     </Container>
   )
 }

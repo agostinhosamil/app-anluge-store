@@ -5,6 +5,7 @@ import { noEmpty } from '~/utils'
 import { sanitizeTagSlag } from '~/utils/sanitizeTagSlag'
 
 import { TagProps } from './types'
+import { resolveFieldName } from './utils'
 
 type TagPreviewProps = TagProps & {
   name?: string
@@ -52,12 +53,6 @@ export const TagPreview: TagPreviewComponent = props => {
     if (typeof props.onDelete === 'function') {
       props.onDelete(props)
     }
-  }
-
-  const resolveFieldName = (name: string): string => {
-    const re = /(\[\])$/
-
-    return re.test(name) ? name : `${name}[]`
   }
 
   const fieldName = resolveFieldName(noEmpty(props.name) ? props.name : 'tags')
