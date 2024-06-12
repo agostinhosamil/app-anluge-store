@@ -1,6 +1,9 @@
 import { range } from '~/utils'
 
-import { SelectFieldData } from '@components/Form/SelectField/types'
+import {
+  OptionProps,
+  SelectFieldData
+} from '@components/Form/SelectField/types'
 import { $Enums } from '@prisma/client'
 import { CategoryProps } from 'Types/Category'
 import { categoryListToTree } from '~/utils/models/category'
@@ -31,21 +34,18 @@ export const categoryListToSelectFieldData = (
 ): SelectFieldData => {
   const categoriesTree = categoryListToTree(categories)
 
-  const categoryChildrenToSelectFieldData = (
-    categoryChildren: Array<CategoryProps>
-  ): SelectFieldData => {
-    return categoryChildren.map(category => ({
-      label: category.title,
-      icon: 'FaObjectGroup',
-      value: category.id,
-      options: categoryChildrenToSelectFieldData(category.categories)
-    }))
-  }
-
-  return categoriesTree.map(category => ({
+  const categoryObjectFactory = (category: CategoryProps): OptionProps => ({
     label: category.title,
     icon: 'FaObjectGroup',
     value: category.id,
     options: categoryChildrenToSelectFieldData(category.categories)
-  }))
+  })
+
+  const categoryChildrenToSelectFieldData = (
+    categoryChildren: Array<CategoryProps>
+  ): SelectFieldData => {
+    return categoryChildren.map(category => categoryObjectFactory(category))
+  }
+
+  return categoriesTree.map(category => categoryObjectFactory(category))
 }
