@@ -16,6 +16,10 @@ type PatchRequestBodyProps = {
   product: Product & {
     tags: Array<string>
     medias: Array<string>
+    deleted?: Partial<{
+      tags: Array<string>
+      medias: Array<string>
+    }>
   }
 }
 
@@ -121,6 +125,18 @@ export const PATCH = async (
       ? requestBody.product.medias
       : []
 
+  const deletedProductTags =
+    requestBody.product.deleted &&
+    requestBody.product.deleted.tags instanceof Array
+      ? requestBody.product.deleted.tags
+      : []
+
+  const deletedProductMediaIds =
+    requestBody.product.deleted &&
+    requestBody.product.deleted.medias instanceof Array
+      ? requestBody.product.deleted.medias
+      : []
+
   const productTags = requestBody.product.tags.map(title => {
     const slag = generateSlagByTitle(title).replace(/(\-[0-9]+)$/, '')
 
@@ -154,7 +170,15 @@ export const PATCH = async (
             create: {
               ...tag
             }
-          }))
+          })),
+
+          disconnect: deletedProductTags.map(tag => {
+            const tagSlag = generateSlagByTitle(tag).replace(/(\-[0-9]+)$/, '')
+
+            return {
+              slag: tagSlag
+            }
+          })
         },
 
         medias: {
@@ -162,7 +186,11 @@ export const PATCH = async (
             data: requestBody.product.medias.map(fileName => ({
               fileName
             }))
-          }
+          },
+
+          deleteMany: deletedProductMediaIds.map(deletedProductMediaId => ({
+            id: deletedProductMediaId
+          }))
         }
       },
 
