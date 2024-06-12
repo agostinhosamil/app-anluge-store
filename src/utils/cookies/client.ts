@@ -78,7 +78,7 @@ export const setCookie: SetCookieUtil = (
 
   const cookieData = `${cookieName}=${encodeURIComponent(value)};${cookieOptions.join(';')}`
 
-  console.log({ cookieData })
+  // console.log({ cookieData })
 
   document.cookie = cookieData
 }
