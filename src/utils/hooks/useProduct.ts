@@ -9,13 +9,32 @@ export const useProduct = (query?: string) => {
 
   useEffect(() => {
     const effectHandler = async () => {
-      const products = await getProducts(query)
+      const products = await getProducts(query, ({ allLoadedRecords }) => {
+        // console.log(
+        //   `\n\n\n\n\nAlready got ${allLoadedRecords.length} records: `,
+        //   allLoadedRecords,
+        //   '\n\n\n'
+        // )
 
-      if (products instanceof Array && products.length >= 1) {
-        setProducts(products)
+        setProducts(allLoadedRecords)
+
+        if (loading) {
+          setLoading(false)
+        }
+
+        // if (products.length < 1) {
+        // }
+      })
+
+      // console.log('Total posts count => ', products.length)
+
+      // if (products instanceof Array && products.length >= 1) {
+      //   setProducts(products)
+      // }
+
+      if (loading) {
+        setLoading(false)
       }
-
-      setLoading(false)
     }
 
     effectHandler()
