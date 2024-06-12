@@ -134,8 +134,6 @@ export const CreateProductForm: CreateProductFormComponent = ({
   const categoryDataList: SelectFieldData =
     categoryListToSelectFieldData(categories)
 
-  console.log('categoryDataList => ', categoryDataList)
-
   return (
     <form
       method="post"
