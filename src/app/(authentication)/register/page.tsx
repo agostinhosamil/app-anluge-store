@@ -12,6 +12,7 @@ import {
   Title
 } from 'authentication@styles/auth-pages'
 import { createUserByFormData } from '~/utils/models/user'
+import { Paragraph, StyledLink } from './styles'
 
 export default function RegisterPage() {
   const [loading, setLoading] = useState<boolean>(false)
@@ -41,7 +42,7 @@ export default function RegisterPage() {
             return alert('Ba!!!!')
           }
 
-          router.replace('/')
+          window.location.reload()
         }
 
         setLoading(false)
@@ -135,6 +136,27 @@ export default function RegisterPage() {
                 disabled={loading}
               />
             </FloatingLabel>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col md={12}>
+            <Paragraph>
+              Ao criar a sua conta, estas ciente de que leste e concordas com os
+              nossos{' '}
+              <StyledLink href="/about/terms" target="_blank">
+                termos de serviços
+              </StyledLink>
+              , a nossa{' '}
+              <StyledLink href="/about/privacy" target="_blank">
+                política de privacidade e uso de dados
+              </StyledLink>{' '}
+              bem como a nossa{' '}
+              <StyledLink href="/about/cookies" target="_blank">
+                política de uso de cookies
+              </StyledLink>
+              .
+            </Paragraph>
           </Col>
         </Row>
 
