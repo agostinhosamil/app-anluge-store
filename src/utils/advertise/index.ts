@@ -10,6 +10,12 @@ export const advertiseIncludeFactory = (): Prisma.AdvertiseInclude => {
 }
 
 export const setAdvertiseDefaultProps = (advertise: Advertise): Advertise => {
+  // advertise.popup = String(advertise.popup) === 'on'
+
+  if (typeof advertise.popup === 'string') {
+    advertise.popup = advertise.popup === 'on'
+  }
+
   return advertise
 }
 
