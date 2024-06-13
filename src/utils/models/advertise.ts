@@ -5,10 +5,16 @@ import { noEmpty } from '~/utils'
 export const createAdvertiseByFormData = async (
   formData: FormData
 ): Promise<AdvertiseProps | null> => {
+  return await createAdvertise(formData)
+}
+
+export const createAdvertise = async (
+  advertiseData: any
+): Promise<AdvertiseProps | null> => {
   try {
     const response = await axios.post<AdvertiseProps>(
       '/store/advertises',
-      formData
+      advertiseData
     )
 
     const createdAdvertise = response.data
