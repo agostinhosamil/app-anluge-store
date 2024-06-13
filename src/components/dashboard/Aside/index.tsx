@@ -114,11 +114,13 @@ export const Aside = () => {
               <AsideLink label="Valores" />
             </AsideLink>
           </AsideLink>
-          <AsideLink
-            icon="FaBusinessTime"
-            href="/dashboard/company/data"
-            label="Dados da empresa"
-          />
+          <Partial isEither={['editor', 'admin', 'admin:master']}>
+            <AsideLink
+              icon="FaBusinessTime"
+              href="/dashboard/company/data"
+              label="Dados da empresa"
+            />
+          </Partial>
         </AsideSection>
       </Body>
     </Container>
