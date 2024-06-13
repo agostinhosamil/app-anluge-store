@@ -12,11 +12,8 @@ import { uploadedImageUrl } from '~/utils'
 
 import { useState } from 'react'
 import { AdvertiseProps } from '~/Types/Advertise'
-import {
-  AdvertisingListItem,
-  AdvertisingListWrapper,
-  Container
-} from './styles'
+import { createAdvertise } from '~/utils/models/advertise'
+import { AdvertisingListWrapper, Container } from './styles'
 
 type PageContentProps = {
   advertisingList: Array<AdvertiseProps>
@@ -25,6 +22,8 @@ type PageContentProps = {
 type PageContentComponent = React.FunctionComponent<PageContentProps>
 
 export const PageContent: PageContentComponent = ({ advertisingList }) => {
+  const [createAdvertiseFormLoading, setCreateAdvertiseFormLoading] =
+    useState<boolean>(false)
   const [showCreateAdvertiseDialog, setShowCreateAdvertiseDialog] =
     useState<boolean>(false)
 
@@ -36,11 +35,21 @@ export const PageContent: PageContentComponent = ({ advertisingList }) => {
     setShowCreateAdvertiseDialog(true)
   }
 
-  const createAdvertiseFormSubmitHandler: CreateAdvertiseFormSubmitHandler = ({
-    data
-  }) => {
-    console.log('Form Data => ', data)
-  }
+  const createAdvertiseFormSubmitHandler: CreateAdvertiseFormSubmitHandler =
+    async ({ data }) => {
+      // console.log('>>> Advertise data: ', data)
+
+      const createdAdvertise = await createAdvertise(data)
+
+      if (!createdAdvertise) {
+        setCreateAdvertiseFormLoading(false)
+        return alert('Could not create advertise')
+      }
+
+      // console.log('>>> createdAdvertise: ', createdAdvertise)
+
+      setShowCreateAdvertiseDialog(false)
+    }
 
   return (
     <Container>
@@ -55,15 +64,17 @@ export const PageContent: PageContentComponent = ({ advertisingList }) => {
         <FlatList
           data={advertisingList}
           renderItem={advertising => (
-            <AdvertisingListItem>
-              <EntityCard
-                title={advertising.title || 'Untitled'}
-                avatar={uploadedImageUrl(advertising.banner)}
-                avatarSize="xx-large"
-                entity="advertising"
-                icons={['View', 'Edit', 'Options']}
-              />
-            </AdvertisingListItem>
+            // <AdvertisingListItem>
+            <EntityCard
+              title={advertising.title || 'Untitled'}
+              avatar={uploadedImageUrl(advertising.banner)}
+              avatarSize="normal"
+              entity="advertising"
+              icons={['View', 'Edit', 'Options']}
+            >
+              <span>{advertising.content}</span>
+            </EntityCard>
+            // {/* </AdvertisingListItem> */}
           )}
         />
       </AdvertisingListWrapper>
