@@ -6,8 +6,8 @@ import {
   advertiseIncludeFactory,
   setAdvertiseDefaultProps
 } from '@utils/advertise'
-import { formDataToJson } from '@utils/formDataToJson'
 import { getObjectProps, getSearchParamsQueryArgument } from '~/utils'
+import { getRequestBody } from '~/utils/server/getRequestBody'
 
 type PostRequestBodyProps = {
   advertise: Advertise
@@ -34,9 +34,10 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const formData = await request.formData()
+  // const formData = await request.formData()
 
-  const requestBody = formDataToJson<PostRequestBodyProps>(formData)
+  // const requestBody = formDataToJson<PostRequestBodyProps>(formData)
+  const requestBody = await getRequestBody<PostRequestBodyProps>(request)
 
   // console.log('requestBody -> ', requestBody)
 
