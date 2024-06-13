@@ -9,7 +9,7 @@ export const useProduct = (query?: string) => {
 
   useEffect(() => {
     const effectHandler = async () => {
-      const products = await getProducts(query, ({ allLoadedRecords }) => {
+      await getProducts(query, ({ allLoadedRecords }) => {
         // console.log(
         //   `\n\n\n\n\nAlready got ${allLoadedRecords.length} records: `,
         //   allLoadedRecords,
