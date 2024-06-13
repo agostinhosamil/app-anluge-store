@@ -5,9 +5,9 @@ export * from './masterAdminRolePrismaQueryData'
 
 export const roles: Array<Role> = [
   {
-    key: 'guest',
-    name: 'Guest (Client)',
-    description: 'Guest user, such as clients and blog readers'
+    key: 'admin:master',
+    name: 'Master admin',
+    description: 'An admin with absolute privileges in the system'
   },
   {
     key: 'admin',
@@ -25,8 +25,8 @@ export const roles: Array<Role> = [
     description: 'Seller for the marketplace'
   },
   {
-    key: 'admin:master',
-    name: 'Master admin',
-    description: 'An admin with absolute privileges in the system'
+    key: 'guest',
+    name: 'Guest (Client)',
+    description: 'Guest user, such as clients and blog readers'
   }
 ]
