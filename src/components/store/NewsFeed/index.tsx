@@ -2,7 +2,9 @@ import React from 'react'
 import Carousel from 'react-bootstrap/Carousel'
 import Container from 'react-bootstrap/Container'
 
+import { FlatList } from '@components/FlatList'
 import { range } from '~/utils'
+
 import { AdvertisingPanel } from './AdvertisingPanel'
 import { CategoryCard } from './CategoryCard'
 // import { ProductCard } from './ProductCard'
@@ -34,7 +36,7 @@ export const NewsFeed: React.FunctionComponent = () => {
           ))}
         </Carousel>
       </AdvertisingPanelContainer>
-      <Title>Categorias recomendads</Title>
+      <Title>Categorias recomendadas</Title>
       <CategoryListWrapper>
         <CategoryList>
           <CategoryCard
@@ -61,10 +63,18 @@ export const NewsFeed: React.FunctionComponent = () => {
       </CategoryListWrapper>
       <Title>Populares</Title>
       <ProductsList>
-        {(productsState.loading && <ProductCardPlaceholders />) ||
+        {/* {(productsState.loading && <ProductCardPlaceholders />) ||
           products.map(product => (
             <ProductCard key={product.id} {...product} />
-          ))}
+          ))} */}
+        <FlatList
+          data={products}
+          loading={productsState.loading}
+          renderItemPlaceholder={() => <ProductCardPlaceholders />}
+          paginationStyle="standard"
+          showSearchBox={false}
+          renderItem={product => <ProductCard {...product} />}
+        />
       </ProductsList>
     </Container>
   )
