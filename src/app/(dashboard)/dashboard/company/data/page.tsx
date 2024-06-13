@@ -59,7 +59,7 @@ export default function CompanyDataPage() {
   function arrayToSelectFieldData<T = any>(arr: Array<T>): SelectFieldData {
     return arr.map((arrayItem, index) => ({
       label: String(arrayItem),
-      value: index
+      value: String(index)
     }))
   }
 
@@ -263,11 +263,13 @@ export default function CompanyDataPage() {
                       </Col>
                     </Row>
                   </InputRowWrapper>
-                  <InputButtonWrapper>
-                    <button type="button" onClick={() => deleteEmail(id)}>
-                      <FaX />
-                    </button>
-                  </InputButtonWrapper>
+                  {emails.length >= 2 && (
+                    <InputButtonWrapper>
+                      <button type="button" onClick={() => deleteEmail(id)}>
+                        <FaX />
+                      </button>
+                    </InputButtonWrapper>
+                  )}
                 </InputContainer>
               ))}
               <div className="w-100 mt-1">
@@ -309,11 +311,13 @@ export default function CompanyDataPage() {
                       </Col>
                     </Row>
                   </InputRowWrapper>
-                  <InputButtonWrapper>
-                    <button type="button" onClick={() => deletePhone(id)}>
-                      <FaX />
-                    </button>
-                  </InputButtonWrapper>
+                  {phones.length >= 2 && (
+                    <InputButtonWrapper>
+                      <button type="button" onClick={() => deletePhone(id)}>
+                        <FaX />
+                      </button>
+                    </InputButtonWrapper>
+                  )}
                 </InputContainer>
               ))}
               <div className="w-100 mt-1">
