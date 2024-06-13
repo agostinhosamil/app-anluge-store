@@ -3,6 +3,7 @@
 import Column from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
+import { FaHeart, FaTrash } from 'react-icons/fa6'
 
 import { CartOrder } from 'store@components/CartPage/CartOrder'
 import { useStoreContext } from 'store@components/Context'
@@ -24,18 +25,33 @@ export default function CartPage() {
         <Column lg={8} md={7}>
           <TitleContainer>
             <h1>Carrinho de compra ({products.length})</h1>
-            <ol>
-              <li>
-                <Form.Check
-                  label="Selecionar todos os itens"
-                  type="checkbox"
-                  id="mans"
-                />
-              </li>
-              <li>
-                <button type="button">Excluir itens selecionados</button>
-              </li>
-            </ol>
+            {products.length >= 1 && (
+              <ol>
+                <li>
+                  <Form.Check
+                    label="Selecionar todos os itens"
+                    type="checkbox"
+                    id="mans"
+                  />
+                </li>
+                <li>
+                  <button type="button">
+                    <i>
+                      <FaTrash />
+                    </i>
+                    <span>Excluir itens selecionados</span>
+                  </button>
+                </li>
+                <li>
+                  <button type="button">
+                    <i>
+                      <FaHeart />
+                    </i>
+                    <span>Salvar itens selecionados</span>
+                  </button>
+                </li>
+              </ol>
+            )}
           </TitleContainer>
           <ListWrapper>
             {products.length < 1 && (
@@ -52,7 +68,9 @@ export default function CartPage() {
           </ListWrapper>
           <ListWrapper>Pronto para finalizar?</ListWrapper>
           <SubmitButtonWrapper>
-            <SubmitButton type="button">Finalizar compra</SubmitButton>
+            <SubmitButton type="button" disabled={products.length < 1}>
+              Finalizar compra
+            </SubmitButton>
           </SubmitButtonWrapper>
         </Column>
         <Column lg={4} md={5}></Column>
