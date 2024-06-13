@@ -1,5 +1,5 @@
 import { Advertise } from '@prisma/client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Col, FloatingLabel, Form, Row } from 'react-bootstrap'
 import { FaCheck, FaPlus } from 'react-icons/fa6'
 
@@ -59,6 +59,7 @@ export type CreateAdvertiseFormSubmitHandler = (
 
 type CreateAdvertiseFormProps = {
   data?: Advertise
+  pending?: boolean
   onFormSubmit?: (props: CreateAdvertiseFormSubmitProps) => void
   onBannerChange?: (file: File) => void
 }
@@ -73,6 +74,7 @@ type CreateAdvertiseFormComponent = React.FunctionComponent<
 
 export const CreateAdvertiseForm: CreateAdvertiseFormComponent = ({
   data,
+  pending,
   onBannerChange,
   onFormSubmit,
   ...props
@@ -80,13 +82,17 @@ export const CreateAdvertiseForm: CreateAdvertiseFormComponent = ({
   const [file, setFile] = useState<File>()
   const [post, setPost] = useState<PostProps>()
   const [product, setProduct] = useState<ProductProps>()
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(Boolean(pending))
   const [selectProductDialogTitle, setSelectProductDialogTitle] =
     useState<string>('Carregando produtos...')
   const [source, setSource] = useState<AdvertiseSource>({
     label: 'Produto',
     type: 'product'
   })
+
+  useEffect(() => {
+    setLoading(Boolean(pending))
+  }, [pending])
 
   const [showSelectProductDialog, setShowSelectProductDialog] =
     useState<boolean>(false)
@@ -153,11 +159,11 @@ export const CreateAdvertiseForm: CreateAdvertiseFormComponent = ({
 
       currentDate.setDate(currentDate.getDate() + advertiseDuration)
 
-      formData.append('advertise[expiresAt]', currentDate.toUTCString())
+      formData.append('advertise[expiresAt]', currentDate.toISOString())
 
       const jsonFormData = formDataToJson<CreateAdvertiseFormData>(formData)
 
-      setLoading(false)
+      // setLoading(false)
 
       return onFormSubmit({
         event,
@@ -330,7 +336,7 @@ export const CreateAdvertiseForm: CreateAdvertiseFormComponent = ({
               <CheckOptionsGroup $height={193}>
                 <CheckOptionWrapper $width="30%">
                   <CheckOption
-                    name="advertise[size]"
+                    name="advertise[style]"
                     value="CARD"
                     type="radio"
                     label="Pequeno"
@@ -338,7 +344,7 @@ export const CreateAdvertiseForm: CreateAdvertiseFormComponent = ({
                 </CheckOptionWrapper>
                 <CheckOptionWrapper>
                   <CheckOption
-                    name="advertise[size]"
+                    name="advertise[style]"
                     value="BANNER"
                     type="radio"
                     label="Grande"
