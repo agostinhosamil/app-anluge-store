@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row'
 import { FaCartPlus, FaEllipsisVertical, FaHeart } from 'react-icons/fa6'
 
 import Link from 'next/link'
+import { useStoreContext } from 'store@components/Context'
 import { useProductPageContext } from 'store@components/pages/products/page/context'
 import { CategoryBreadCrumb } from 'store@components/ProductPage/CategoryBreadCrumb'
 import { ProductFAQs } from 'store@components/ProductPage/ProductFAQs'
@@ -29,10 +30,17 @@ import {
   StatsData,
   Summary
 } from 'store@styles/product-page'
+import { RichText } from '~/components/RichText'
 import { StarRating } from '~/components/store/NewsFeed/ProductCard/StarRating'
 
 export default function ProductPage() {
   const { product } = useProductPageContext()
+
+  const storeContext = useStoreContext()
+
+  const addToCartButtonClickHandler = () => {
+    storeContext.addOrder(product)
+  }
 
   return (
     <Container>
@@ -71,7 +79,12 @@ export default function ProductPage() {
             <ProductActionsListWrapper>
               <ul>
                 <li>
-                  <ActionButton type="button" role="button" $color="primary">
+                  <ActionButton
+                    type="button"
+                    role="button"
+                    $color="primary"
+                    onClick={addToCartButtonClickHandler}
+                  >
                     <i>
                       <FaCartPlus />
                     </i>
@@ -159,9 +172,11 @@ export default function ProductPage() {
         <Column md={8}>
           <ContentWrapper>
             <Summary>
-              <p>{product.summary}</p>
+              <RichText>{product.summary}</RichText>
             </Summary>
-            <Content>{product.description}</Content>
+            <Content>
+              <RichText>{product.description}</RichText>
+            </Content>
           </ContentWrapper>
         </Column>
         <Column md={4}>
