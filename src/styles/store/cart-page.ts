@@ -1,11 +1,11 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const Container = styled.div`
   width: 100%;
   height: auto;
   position: relative;
   padding: 50px 50px 0px;
-`;
+`
 
 export const TitleContainer = styled.div`
   width: 100%;
@@ -17,7 +17,6 @@ export const TitleContainer = styled.div`
 
   h1 {
     display: block;
-    padding: 0px 0px 20px;
     font-size: 22px;
     font-weight: 500;
     color: #404040;
@@ -28,6 +27,7 @@ export const TitleContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+    padding-top: 20px;
 
     * {
       user-select: none;
@@ -45,6 +45,17 @@ export const TitleContainer = styled.div`
         outline: 0px;
         font-weight: 400;
         color: #0160bf;
+        display: flex;
+
+        i {
+          display: inline-flex;
+          margin-right: 8px;
+        }
+
+        span {
+          display: inline-flex;
+          margin-top: -3px;
+        }
 
         &:hover {
           text-decoration: underline;
@@ -52,7 +63,7 @@ export const TitleContainer = styled.div`
       }
     }
   }
-`;
+`
 
 export const ListWrapper = styled.div`
   width: 100%;
@@ -62,12 +73,12 @@ export const ListWrapper = styled.div`
   -webkit-border-radius: 8px;
   background-color: #ebebeb;
   margin-top: 20px;
-`;
+`
 
 export const SubmitButtonWrapper = styled.div`
   width: 100%;
   padding: 20px 0px 0px;
-`;
+`
 
 export const SubmitButton = styled.button`
   width: 100%;
@@ -76,4 +87,4 @@ export const SubmitButton = styled.button`
   border-radius: 35px;
   background-color: #0160bf;
   color: #ffffff;
-`;
+`
