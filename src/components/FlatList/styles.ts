@@ -91,7 +91,9 @@ export const ListLoaderButton = styled.button`
 export const List = styled.div`
   width: 100%;
   height: auto;
-  display: block;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 `
 
 export const SpinnerWrapper = styled.div`
