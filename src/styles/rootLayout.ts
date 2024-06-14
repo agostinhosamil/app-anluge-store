@@ -54,4 +54,8 @@ export const GlobalStyles = createGlobalStyle`
     cursor: not-allowed;
     opacity: 0.6;
   }
+  
+  .overflow-y-hidden {
+    overflow-y: hidden;
+  }
 `
