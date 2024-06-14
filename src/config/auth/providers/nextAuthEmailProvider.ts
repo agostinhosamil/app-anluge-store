@@ -1,5 +1,5 @@
-import NextAuthEmailProvider from 'next-auth/providers/email'
+// import NextAuthEmailProvider from 'next-auth/providers/email'
 
-export const nextAuthEmailProvider = NextAuthEmailProvider({
-  server: '//'
-})
+// export const nextAuthEmailProvider = NextAuthEmailProvider({
+//   server: '//'
+// })
