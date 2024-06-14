@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import styled from 'styled-components'
 
 export const Container = styled.div`
@@ -87,4 +88,80 @@ export const SubmitButton = styled.button`
   border-radius: 35px;
   background-color: #0160bf;
   color: #ffffff;
+`
+
+export const CheckoutForm = styled.form`
+  width: 100%;
+  height: auto;
+  display: block;
+
+  h1 {
+    font-size: 25px;
+    color: #444444;
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  p {
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  h1,
+  p {
+    user-select: none;
+    -webkit-user-select: none;
+    pointer-events: none;
+  }
+`
+
+export const StaticCheckoutFormWrapper = styled.div`
+  width: 100%;
+  height: auto;
+  display: block;
+`
+
+export const FixedCheckoutFormWrapper = styled.div`
+  width: 100%;
+
+  @media (min-width: 768px) {
+    width: 41.66666667%;
+    height: 100vh;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 100px 30px 0px 0px;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+  }
+
+  @media (min-width: 992px) {
+    width: 33.33333333%;
+  }
+`
+
+export const CheckOutFormWrapper = styled(ListWrapper)`
+  margin-top: unset;
+`
+
+export const CheckoutMessageWrapper = styled.div`
+  width: 100%;
+  padding: 20px 0px 0px;
+
+  p {
+    display: block;
+    font-size: 14px;
+    color: #888888;
+  }
+`
+
+export const StyledLink = styled(Link)`
+  font-size: inherit;
+  color: #0450bf;
+
+  &:hover {
+    text-decoration: underline;
+  }
 `
