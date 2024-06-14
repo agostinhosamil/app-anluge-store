@@ -59,6 +59,12 @@ export const StoreContextProvider: StoreContextProviderComponent = props => {
       const updatedCartData = cart.filter(product => product.id !== productId)
 
       updateCart(updatedCartData)
+    },
+
+    clearCart() {
+      setCart([])
+
+      return cart
     }
   }
 

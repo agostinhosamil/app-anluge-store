@@ -9,4 +9,5 @@ export type StoreContextProps = {
   productOrdered: (product: ProductProps) => boolean
   addOrder: (product: ProductProps) => void
   removeOrder: (productId: string) => void
+  clearCart: () => StoreCartData
 }
