@@ -4,6 +4,7 @@ import { CategoryProps } from '~/Types/Category'
 
 import { LoadingStockMap, ProductProps } from '~/Types/Product'
 
+export * from './getProductsImagesFromZipFile'
 export * from './getZipFileContent'
 
 export const getApiAccessToken = (): string => {
