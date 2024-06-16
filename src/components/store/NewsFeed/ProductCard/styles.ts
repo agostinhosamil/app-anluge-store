@@ -65,8 +65,9 @@ export const ImageWrapper = styled.div`
   border-radius: 8px;
   -webkit-border-radius: 8px;
   width: 100%;
-  padding: 60px;
+  /* padding: 60px; */
   text-align: center;
+  box-shadow: 0px 3px 5px 0px rgb(0 0 0 / 10%);
   /* background-image: linear-gradient(45deg, #0d4b83, transparent); */
 
   img {
@@ -75,10 +76,6 @@ export const ImageWrapper = styled.div`
     -webkit-user-select: none;
     width: 100%;
     height: unset;
-  }
-
-  @media (max-width: 500px) {
-    padding: 25px;
   }
 `
 
@@ -171,6 +168,10 @@ export const AsideContainer = styled.div`
 
   @media (max-width: 760px) {
     width: 35px;
+  }
+
+  @media (min-width: 3500px) {
+    margin-left: -35px;
   }
 `
 
