@@ -34,6 +34,8 @@ export default function ProductsPage() {
     useState<boolean>(false)
   const [showDeleteProductDialog, setShowDeleteProductDialog] =
     useState<boolean>(false)
+  const [showMenuOptionsDialog, setShowMenuOptionsDialog] =
+    useState<boolean>(false)
 
   const productToEditState = useRef<ProductProps>()
   const productToDeleteState = useRef<ProductProps>()
@@ -118,6 +120,14 @@ export default function ProductsPage() {
     setShowDeleteProductDialog(false)
   }
 
+  const menuOptionsButtonClickHandler = () => {
+    setShowMenuOptionsDialog(true)
+  }
+
+  const menuOptionsDialogCloseHandler = () => {
+    setShowMenuOptionsDialog(false)
+  }
+
   /* const clickHandler: React.ChangeEventHandler = async event => {
     const inputField = event.target as HTMLInputElement
 
@@ -154,7 +164,27 @@ export default function ProductsPage() {
           label="Registar produto"
           onClick={createProductButtonClickHandler}
         />
+        <ActionButton
+          icon="FaEllipsisVertical"
+          onClick={menuOptionsButtonClickHandler}
+        />
       </ContentHeader>
+
+      <Dialog
+        show={showMenuOptionsDialog}
+        closeButtonLabel="Fechar"
+        onClose={menuOptionsDialogCloseHandler}
+        size="medium"
+      >
+        <CardButtons>
+          <CardButton href="/dashboard/products/image-mass-update">
+            Editar imagens de produtos em massa
+          </CardButton>
+          <CardButton onClick={loadStockMapButtonClickHandler}>
+            Carregar mapa de stock
+          </CardButton>
+        </CardButtons>
+      </Dialog>
 
       <Dialog
         size="x-large"
