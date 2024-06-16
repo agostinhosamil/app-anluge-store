@@ -13,10 +13,17 @@ import {
   DropZoneFooter
 } from './styles'
 
+export type DropZoneChangeHandlerProps = {
+  file: File
+  files: Array<File>
+}
+
+export type DropZoneChangeHandler = (props: DropZoneChangeHandlerProps) => void
+
 type DropZoneProps = {
   height?: number
   defaultValue?: string
-  onChange?: (props: { file: File; files: Array<File> }) => void
+  onChange?: DropZoneChangeHandler
   onDelete?: () => void
 }
 
