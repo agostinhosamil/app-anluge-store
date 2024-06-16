@@ -16,7 +16,7 @@ import {
 type DropZoneProps = {
   height?: number
   defaultValue?: string
-  onChange?: (selectedFile: File) => void
+  onChange?: (props: { file: File; files: Array<File> }) => void
   onDelete?: () => void
 }
 
@@ -26,6 +26,7 @@ type DropZoneComponent = React.FunctionComponent<
 
 export const DropZone: DropZoneComponent = ({ defaultValue, ...props }) => {
   const [file, setFile] = useState<File | null>(null)
+  const [files, setFiles] = useState<Array<File>>([])
   const [dropError, setDropError] = useState<boolean>(false)
 
   const defaultValueState = useRef<string | undefined>(defaultValue)
@@ -34,10 +35,11 @@ export const DropZone: DropZoneComponent = ({ defaultValue, ...props }) => {
     // console.log('reactDropZoneDropHandler >>> ', files)
 
     if (files.length >= 1) {
+      setFiles(files)
       setFile(files[0])
 
       if (typeof props.onChange === 'function') {
-        props.onChange(files[0])
+        props.onChange({ file: files[0], files })
       }
     }
   }
