@@ -106,7 +106,7 @@ export const LoadProductStockMapForm: LoadProductStockMapFormComponent =
               <DropZone
                 height={80}
                 maxFiles={1}
-                onChange={selectedFile => setFile(selectedFile)}
+                onChange={({ file: selectedFile }) => setFile(selectedFile)}
               />
             </Col>
           </Row>
