@@ -18,7 +18,9 @@ export type DropZoneChangeHandlerProps = {
   files: Array<File>
 }
 
-export type DropZoneChangeHandler = (props: DropZoneChangeHandlerProps) => void
+export type DropZoneChangeHandler = (
+  props: DropZoneChangeHandlerProps
+) => void | Promise<void>
 
 type DropZoneProps = {
   height?: number
