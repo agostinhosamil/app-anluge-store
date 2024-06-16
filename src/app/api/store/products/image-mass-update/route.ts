@@ -41,7 +41,9 @@ export const POST = async (request: NextRequest) => {
     }
   })
 
-  const existingProductsCodes = products.map(product => product.code)
+  const existingProductsCodes = products
+    .filter(product => Boolean(product.code))
+    .map(product => product.code)
 
   if (ProductImageMassUpdateRequestBodySchema.safeParse(requestBody)) {
     const updatedProducts = await prisma.$transaction(
