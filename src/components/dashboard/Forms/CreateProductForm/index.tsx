@@ -8,8 +8,8 @@ import { RichTextField } from '@components/Form/RichTextField'
 import { SelectField } from '@components/Form/SelectField'
 import { SelectFieldData } from '@components/Form/SelectField/types'
 import { TagsField } from '@components/Form/TagsField'
-import { AnlugeUploadClient } from '@services/upload'
 import { useCategory } from '@utils/hooks/useCategory'
+import { productImageUploadClient } from '@utils/product/imageUploadClient'
 import { FormSubmit } from 'dashboard@components/FormSubmit'
 import { ProductProps } from 'Types/Product'
 
@@ -65,19 +65,9 @@ export const CreateProductForm: CreateProductFormComponent = ({
     formData: FormData,
     productImageFiles: Array<File | null>
   ) => {
-    const uploadClient = new AnlugeUploadClient({
-      imageSet: 'products',
-      uploadedImageSizes: {
-        large: '1200x1600',
-        medium: '800x1200',
-        normal: '540x800',
-        small: '360x540'
-      }
-    })
-
     const productUploadedImages = await Promise.all(
       productImageFiles.map(productImageFile => {
-        return uploadClient.uploadFile(productImageFile as File)
+        return productImageUploadClient.uploadFile(productImageFile as File)
       })
     )
 
