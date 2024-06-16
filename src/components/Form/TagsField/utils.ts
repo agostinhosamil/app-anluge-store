@@ -10,8 +10,6 @@ export const fieldNameSplit = (fieldName: string): FieldNameSplitArray => {
   const fieldNameHeadRe = /^(.[^\[]+)/
   const fieldNameHeadMatch = fieldName.match(fieldNameHeadRe)
 
-  console.log({ fieldNameHeadMatch })
-
   if (fieldNameHeadMatch) {
     return [fieldNameHeadMatch[0], fieldName.replace(fieldNameHeadRe, '')]
   }
