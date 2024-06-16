@@ -22,7 +22,9 @@ export const RichText: RichTextComponent = ({ content, ...props }) => {
         .filter(child => Boolean(child))
         .map((child, index) => {
           if (typeof child === 'string') {
-            return renderRichTextContent(child)
+            return (
+              <Fragment key={index}>{renderRichTextContent(child)}</Fragment>
+            )
           }
 
           return <Fragment key={index}>{child}</Fragment>
