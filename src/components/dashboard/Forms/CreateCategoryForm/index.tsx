@@ -122,7 +122,7 @@ export const CreateCategoryForm: CreateCategoryFormComponent = ({
               height={80}
               maxFiles={1}
               accept={{ 'image/jpg': ['.jpg'], 'image/png': ['.png'] }}
-              onChange={file => setFile(file)}
+              onChange={({ file }) => setFile(file)}
             />
           </Col>
         </Row>
