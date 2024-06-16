@@ -1,3 +1,4 @@
+import { noEmpty } from '.'
 import {
   ProductImagesData,
   ProductsImagesData
@@ -14,6 +15,11 @@ const getProductCodeFromImageName = (imageName: string): string => {
   }
 
   return imageName
+    .split('.')
+    .filter(slice => noEmpty(slice))
+    .slice(0, -1)
+    .join('.')
+    .trim()
 }
 
 export type GetProductsImagesFromFileListUtil = (
