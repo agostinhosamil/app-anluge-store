@@ -251,7 +251,7 @@ export const CreateProductForm: CreateProductFormComponent = ({
                   <DropZone
                     accept={acceptedImageFileTypes}
                     defaultValue={file.fileUrl}
-                    onChange={selectedFile =>
+                    onChange={({ file: selectedFile }) =>
                       updateSelectedFile(selectedFile, file.id)
                     }
                     onDelete={() => {
