@@ -2,6 +2,7 @@ import { AxiosResponse } from 'axios'
 
 import { Product } from '@prisma/client'
 import { axios } from '@services/axios'
+import { ProductsImagesData } from '@utils/getProductsImagesFromZipFile'
 import { ProductProps } from '~/Types/Product'
 import { arrayMerge, arraySplit, noEmpty } from '~/utils'
 import {
@@ -126,6 +127,49 @@ export const massStoreProducts = async (
     // })
 
     return createdProducts
+  } catch (err) {
+    // pass
+  }
+
+  return null
+}
+
+export const massUpdateProductsImages = async (
+  products: ProductsImagesData
+): Promise<Array<Product> | null> => {
+  try {
+    const productMassUpdateConcurrency = 10
+    const productMassStoreRequestPath = '/store/products/image-mass-update'
+    const productsQueues = arraySplit(products, productMassUpdateConcurrency)
+
+    const productsMassUpdateQueuesResponses: Array<
+      AxiosResponse<Array<Product>>
+    > = []
+
+    for (const productsQueue of productsQueues) {
+      const productsMassUpdatePromiseResult = await axios.post<Array<Product>>(
+        productMassStoreRequestPath,
+        {
+          products: productsQueue
+        }
+      )
+
+      productsMassUpdateQueuesResponses.push(productsMassUpdatePromiseResult)
+    }
+
+    const productsMassUpdateQueuesResponsesData =
+      productsMassUpdateQueuesResponses
+        .filter(response => response.data instanceof Array)
+        .map(response => response.data)
+
+    const updatedProducts = arrayMerge<Product>(
+      ...productsMassUpdateQueuesResponsesData
+    )
+    // const response = await axios.post(productMassStoreRequestPath, {
+    //   products
+    // })
+
+    return updatedProducts
   } catch (err) {
     // pass
   }
