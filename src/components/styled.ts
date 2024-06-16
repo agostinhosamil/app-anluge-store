@@ -18,3 +18,10 @@ export const LoadingScreen = styled.div`
   z-index: 3;
   cursor: not-allowed;
 `
+
+export const Container = styled.div`
+  width: 100%;
+  height: auto;
+  display: block;
+  position: relative;
+`
