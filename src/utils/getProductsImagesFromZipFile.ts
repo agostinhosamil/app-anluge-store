@@ -1,18 +1,5 @@
-import { productImageUploadClient } from '@utils/product/imageUploadClient'
-
+import { getProductsImagesFromFileList } from './getProductsImagesFromFileList'
 import { getZipFileContent } from './getZipFileContent'
-
-const productCodeRegEx = /\s*-?\s*?(\(([a-zA-Z0-9_-]+)\)\s*\.(jpe?g|png|gif))$/
-
-const getProductCodeFromImageName = (imageName: string): string => {
-  const productCodeMatch = productCodeRegEx.exec(imageName)
-
-  if (productCodeMatch) {
-    return String(productCodeMatch[2])
-  }
-
-  return imageName
-}
 
 export type ProductImagesData = {
   product: {
@@ -34,48 +21,7 @@ export const getProductsImagesFromZipFile: GetProductsImagesFromZipFileUtil =
   async zipFile => {
     const imageFiles = await getZipFileContent(zipFile)
 
-    const productsImagesData: Array<null | ProductImagesData> =
-      await Promise.all(
-        imageFiles.map((imageFile): Promise<null | ProductImagesData> => {
-          const imageProductCode = getProductCodeFromImageName(imageFile.name)
+    const productsImages = await getProductsImagesFromFileList(imageFiles)
 
-          return new Promise(resolve => {
-            const tmpImage = new Image()
-
-            const imageLoadHandler = async () => {
-              const uploadedImage =
-                await productImageUploadClient.uploadFile(imageFile)
-
-              resolve({
-                medias: [
-                  {
-                    fileName: uploadedImage.name
-                  }
-                ],
-                product: {
-                  code: imageProductCode
-                }
-              })
-            }
-
-            try {
-              tmpImage.onload = () => {
-                imageLoadHandler()
-              }
-
-              tmpImage.onerror = () => resolve(null)
-
-              tmpImage.src = URL.createObjectURL(imageFile)
-            } catch (err) {
-              resolve(null)
-            }
-          })
-        })
-      )
-
-    const filteredProductImagesData = productsImagesData.filter(
-      productImagesData => Boolean(productImagesData)
-    )
-
-    return filteredProductImagesData as ProductsImagesData
+    return productsImages
   }
