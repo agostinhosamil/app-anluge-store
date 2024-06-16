@@ -1,12 +1,12 @@
-import { useSession } from 'next-auth/react'
+// import { useSession } from 'next-auth/react'
 
-export const useAuth = () => {
-  const session = useSession()
+// export const useAuth = () => {
+//   const session = useSession()
 
-  return {
-    session: session.data,
-    status: session.status,
-    user: session.data,
-    authenticated: Boolean(session.status === 'authenticated')
-  }
-}
+//   return {
+//     session: session.data,
+//     status: session.status,
+//     user: session.data,
+//     authenticated: Boolean(session.status === 'authenticated')
+//   }
+// }
