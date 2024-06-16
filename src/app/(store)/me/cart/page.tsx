@@ -233,81 +233,83 @@ export default function CartPage() {
             </SubmitButton>
           </SubmitButtonWrapper> */}
         </Column>
-        <Column lg={4} md={5}>
-          <CheckoutFormContainer>
-            <CheckOutFormWrapper ref={checkOutFormWrapperRef}>
-              <CheckoutForm
-                method="post"
-                action="/api/cart/checkout"
-                onSubmit={checkoutFormSubmitHandler}
-              >
-                <Fragment>
-                  <h1>Já tem tudo o o que precisava?</h1>
-                  <p>Hora de finalizar.</p>
-                  <Row>
-                    <Col md={12}>
-                      <FloatingLabel
-                        controlId="user-name"
-                        label="Nome completo"
-                        className="mb-3"
-                      >
-                        <Form.Control
-                          type="text"
-                          placeholder="Nome completo"
-                          autoComplete="off"
-                          name="user[name]"
-                          value={formData.name}
-                          onChange={inputChangeHandler}
-                        />
-                      </FloatingLabel>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col md={12}>
-                      <FloatingLabel
-                        controlId="user-email"
-                        label="Endereço de email"
-                        className="mb-3"
-                      >
-                        <Form.Control
-                          type="text"
-                          placeholder="Endereço de email"
-                          autoComplete="off"
-                          name="user[email]"
-                          value={formData.email}
-                          onChange={inputChangeHandler}
-                        />
-                      </FloatingLabel>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col md={12}>
-                      <FloatingLabel
-                        controlId="user-phone"
-                        label="Número de telefone (Whatsapp)"
-                        className="mb-3"
-                      >
-                        <Form.Control
-                          type="text"
-                          placeholder="Número de telefone (Whatsapp)"
-                          autoComplete="off"
-                          name="user[phone]"
-                          value={formData.phone}
-                          onChange={inputChangeHandler}
-                        />
-                      </FloatingLabel>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col md={12}>
-                      <FormSubmit>Solicitar orçamento</FormSubmit>
-                    </Col>
-                  </Row>
-                </Fragment>
-              </CheckoutForm>
-            </CheckOutFormWrapper>
-          </CheckoutFormContainer>
-        </Column>
+        {products.length >= 1 && (
+          <Column lg={4} md={5}>
+            <CheckoutFormContainer>
+              <CheckOutFormWrapper ref={checkOutFormWrapperRef}>
+                <CheckoutForm
+                  method="post"
+                  action="/api/cart/checkout"
+                  onSubmit={checkoutFormSubmitHandler}
+                >
+                  <Fragment>
+                    <h1>Já tem tudo o o que precisava?</h1>
+                    <p>Hora de finalizar.</p>
+                    <Row>
+                      <Col md={12}>
+                        <FloatingLabel
+                          controlId="user-name"
+                          label="Nome completo"
+                          className="mb-3"
+                        >
+                          <Form.Control
+                            type="text"
+                            placeholder="Nome completo"
+                            autoComplete="off"
+                            name="user[name]"
+                            value={formData.name}
+                            onChange={inputChangeHandler}
+                          />
+                        </FloatingLabel>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col md={12}>
+                        <FloatingLabel
+                          controlId="user-email"
+                          label="Endereço de email"
+                          className="mb-3"
+                        >
+                          <Form.Control
+                            type="text"
+                            placeholder="Endereço de email"
+                            autoComplete="off"
+                            name="user[email]"
+                            value={formData.email}
+                            onChange={inputChangeHandler}
+                          />
+                        </FloatingLabel>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col md={12}>
+                        <FloatingLabel
+                          controlId="user-phone"
+                          label="Número de telefone (Whatsapp)"
+                          className="mb-3"
+                        >
+                          <Form.Control
+                            type="text"
+                            placeholder="Número de telefone (Whatsapp)"
+                            autoComplete="off"
+                            name="user[phone]"
+                            value={formData.phone}
+                            onChange={inputChangeHandler}
+                          />
+                        </FloatingLabel>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col md={12}>
+                        <FormSubmit>Solicitar orçamento</FormSubmit>
+                      </Col>
+                    </Row>
+                  </Fragment>
+                </CheckoutForm>
+              </CheckOutFormWrapper>
+            </CheckoutFormContainer>
+          </Column>
+        )}
       </Row>
     </Container>
   )
