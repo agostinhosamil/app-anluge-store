@@ -4,6 +4,8 @@ import { CategoryProps } from '~/Types/Category'
 
 import { LoadingStockMap, ProductProps } from '~/Types/Product'
 
+export * from './getZipFileContent'
+
 export const getApiAccessToken = (): string => {
   // const authenticationToken = `cookies().get(
   //   String(process.env.APP_AUTH_COOKIE_NAME)
@@ -330,4 +332,12 @@ export const queryParamsObjectToString = (
   })
 
   return queryParamsKeyValuePairs.join('&')
+}
+
+export const convertBlobToFile = (
+  blobObject: Blob,
+  fileName: string,
+  options?: FilePropertyBag
+): File => {
+  return new File([blobObject], fileName, options)
 }
