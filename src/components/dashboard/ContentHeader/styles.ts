@@ -50,6 +50,7 @@ export const ActionButtonElement = styled.button`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  min-height: 36px;
 
   &:hover {
     background-color: #075baf;
@@ -77,4 +78,5 @@ export const IconWrapper = styled.div`
 export const LabelWrapper = styled.div`
   display: inline-flex;
   padding: 0px 4px;
+  white-space: nowrap;
 `
