@@ -136,23 +136,22 @@ export const massStoreProducts = async (
 
 export const massUpdateProductsImages = async (
   products: ProductsImagesData
-): Promise<Array<Product> | null> => {
+): Promise<Array<ProductProps> | null> => {
   try {
     const productMassUpdateConcurrency = 10
     const productMassStoreRequestPath = '/store/products/image-mass-update'
     const productsQueues = arraySplit(products, productMassUpdateConcurrency)
 
     const productsMassUpdateQueuesResponses: Array<
-      AxiosResponse<Array<Product>>
+      AxiosResponse<Array<ProductProps>>
     > = []
 
     for (const productsQueue of productsQueues) {
-      const productsMassUpdatePromiseResult = await axios.post<Array<Product>>(
-        productMassStoreRequestPath,
-        {
-          products: productsQueue
-        }
-      )
+      const productsMassUpdatePromiseResult = await axios.post<
+        Array<ProductProps>
+      >(productMassStoreRequestPath, {
+        products: productsQueue
+      })
 
       productsMassUpdateQueuesResponses.push(productsMassUpdatePromiseResult)
     }
@@ -162,7 +161,7 @@ export const massUpdateProductsImages = async (
         .filter(response => response.data instanceof Array)
         .map(response => response.data)
 
-    const updatedProducts = arrayMerge<Product>(
+    const updatedProducts = arrayMerge<ProductProps>(
       ...productsMassUpdateQueuesResponsesData
     )
     // const response = await axios.post(productMassStoreRequestPath, {
