@@ -103,15 +103,39 @@ export const Aside = () => {
             <AsideLink label="Artigos" />
           </AsideLink>
           <AsideLink label="Documentos">
-            <AsideLink label="Termos de serviço" />
-            <AsideLink label="Política de privacidade" />
-            <AsideLink label="Política de pagamentos" />
-            <AsideLink label="Política de uso de cookies" />
+            <AsideLink
+              href="/dashboard/institution/documents/terms"
+              label="Termos de serviço"
+            />
+            <AsideLink
+              href="/dashboard/institution/documents/privacy"
+              label="Política de privacidade"
+            />
+            <AsideLink
+              href="/dashboard/institution/documents/payments"
+              label="Política de pagamentos"
+            />
+            <AsideLink
+              href="/dashboard/institution/documents/cookies"
+              label="Política de uso de cookies"
+            />
             <AsideLink label="Sobre a empresa">
-              <AsideLink label="História" />
-              <AsideLink label="Missão" />
-              <AsideLink label="Visão" />
-              <AsideLink label="Valores" />
+              <AsideLink
+                href="/dashboard/institution/documents/story"
+                label="História"
+              />
+              <AsideLink
+                href="/dashboard/institution/documents/mission"
+                label="Missão"
+              />
+              <AsideLink
+                href="/dashboard/institution/documents/vision"
+                label="Visão"
+              />
+              <AsideLink
+                href="/dashboard/institution/documents/values"
+                label="Valores"
+              />
             </AsideLink>
           </AsideLink>
           <Partial isEither={['editor', 'admin', 'admin:master']}>
