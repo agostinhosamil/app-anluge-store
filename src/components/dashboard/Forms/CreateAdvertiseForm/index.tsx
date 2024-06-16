@@ -4,7 +4,7 @@ import { Col, FloatingLabel, Form, Row } from 'react-bootstrap'
 import { FaCheck, FaPlus } from 'react-icons/fa6'
 
 import { Dialog } from '@components/Dialog'
-import { DropZone } from '@components/DropZone'
+import { DropZone, DropZoneChangeHandlerProps } from '@components/DropZone'
 import { CheckButton } from '@components/Form/CheckButton'
 import { FormGroup } from '@components/Form/FormGroup'
 import { LongTextField } from '@components/Form/LongTextField'
@@ -109,7 +109,7 @@ export const CreateAdvertiseForm: CreateAdvertiseFormComponent = ({
     )
   }
 
-  const dropZoneChangeHandler = (file: File) => {
+  const dropZoneChangeHandler = ({ file }: DropZoneChangeHandlerProps) => {
     if (typeof onBannerChange === 'function') {
       onBannerChange(file)
     }
