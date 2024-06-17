@@ -33,10 +33,16 @@ export const getProductsImagesFromFileList: GetProductsImagesFromFileListUtil =
         imageFiles.map((imageFile): Promise<null | ProductImagesData> => {
           const imageProductCode = getProductCodeFromImageName(imageFile.name)
 
+          console.log(`>>> [${imageProductCode}] getting image product data`)
+
           return new Promise(resolve => {
             const tmpImage = new Image()
 
+            console.log(`>>> [${imageProductCode}] start resolving promise`)
+
             const imageLoadHandler = async () => {
+              console.log('>>> Start image upload to cdn')
+
               const uploadedImage =
                 await productImageUploadClient.uploadFile(imageFile)
 
