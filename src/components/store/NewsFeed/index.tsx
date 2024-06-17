@@ -6,18 +6,11 @@ import { FlatList } from '@components/FlatList'
 import { range } from '~/utils'
 
 import { AdvertisingPanel } from './AdvertisingPanel'
-import { CategoryCard } from './CategoryCard'
 // import { ProductCard } from './ProductCard'
 import { useProduct } from '~/utils/hooks/useProduct'
 import { ProductCard } from './ProductCard'
 import { ProductCardPlaceholders } from './ProductCardPlaceholders'
-import {
-  AdvertisingPanelContainer,
-  CategoryList,
-  CategoryListWrapper,
-  ProductsList,
-  Title
-} from './styles'
+import { AdvertisingPanelContainer, ProductsList, Title } from './styles'
 
 export const NewsFeed: React.FunctionComponent = () => {
   const { products, ...productsState } = useProduct()
@@ -26,7 +19,7 @@ export const NewsFeed: React.FunctionComponent = () => {
     <Container>
       <AdvertisingPanelContainer>
         <Carousel controls={false}>
-          {range(5).map(i => (
+          {range(1).map(i => (
             <Carousel.Item key={i}>
               <AdvertisingPanel
                 image="image001.jpg"
@@ -36,7 +29,7 @@ export const NewsFeed: React.FunctionComponent = () => {
           ))}
         </Carousel>
       </AdvertisingPanelContainer>
-      <Title>Categorias recomendadas</Title>
+      {/* <Title>Categorias recomendadas</Title>
       <CategoryListWrapper>
         <CategoryList>
           <CategoryCard
@@ -60,7 +53,7 @@ export const NewsFeed: React.FunctionComponent = () => {
             description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque non voluptatibus suscipit sint, sed similique dicta sapiente harum nesciunt libero blanditiis pariatur eos odio et praesentium dolores ullam beatae facere?"
           />
         </CategoryList>
-      </CategoryListWrapper>
+      </CategoryListWrapper> */}
       <Title>Populares</Title>
       <ProductsList>
         {/* {(productsState.loading && <ProductCardPlaceholders />) ||
