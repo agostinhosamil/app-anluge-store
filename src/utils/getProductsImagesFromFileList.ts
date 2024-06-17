@@ -58,6 +58,7 @@ export const getProductsImagesFromFileList: GetProductsImagesFromFileListUtil =
               }
 
               tmpImage.onerror = () => resolve(null)
+              tmpImage.onabort = () => resolve(null)
 
               tmpImage.src = URL.createObjectURL(imageFile)
             } catch (err) {
