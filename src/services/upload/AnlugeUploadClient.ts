@@ -67,20 +67,16 @@ export class AnlugeUploadClient {
     //   document.body.appendChild(img)
     // })
 
-    console.log('>>> [lstep] Send file to CDN')
-
     const response = await axios.post<UploadedImage>(
       `${process.env.NEXT_PUBLIC_ANLUGE_CDN_API_URL}/static/files/store`,
       // `http://localhost/anluge-cdn/static/files/store`,
       formData,
       {
         onUploadProgress(progressEvent) {
-          console.log('>>> uploading ', progressEvent)
+          // console.log('>>> uploading ', progressEvent)
         }
       }
     )
-
-    console.log('>>> cdn image upload response => ', response)
 
     return response.data
   }

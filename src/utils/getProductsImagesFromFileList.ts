@@ -26,62 +26,116 @@ export type GetProductsImagesFromFileListUtil = (
   imageFiles: Array<File>
 ) => Promise<ProductsImagesData>
 
+const filterValidImageFiles = async (
+  imageFiles: Array<File>
+): Promise<Array<File>> => {
+  const productsImagesData: Array<null | File> = await Promise.all(
+    imageFiles.map((imageFile): Promise<null | File> => {
+      return new Promise(resolve => {
+        const tmpImage = new Image()
+
+        const imageLoadHandler = async () => {
+          resolve(imageFile)
+        }
+
+        try {
+          tmpImage.onload = () => {
+            imageLoadHandler()
+          }
+
+          tmpImage.onerror = () => resolve(null)
+          tmpImage.onabort = () => resolve(null)
+
+          tmpImage.src = URL.createObjectURL(imageFile)
+        } catch (err) {
+          resolve(null)
+        }
+      })
+    })
+  )
+
+  const validImageFiles: Array<File> = []
+
+  for (const imageFile of productsImagesData) {
+    if (imageFile) {
+      validImageFiles.push(imageFile)
+    }
+  }
+
+  return validImageFiles
+}
+
 export const getProductsImagesFromFileList: GetProductsImagesFromFileListUtil =
   async imageFiles => {
-    const productsImagesData: Array<null | ProductImagesData> =
-      await Promise.all(
-        imageFiles.map((imageFile): Promise<null | ProductImagesData> => {
-          const imageProductCode = getProductCodeFromImageName(imageFile.name)
+    const validImageFiles = await filterValidImageFiles(imageFiles)
 
-          console.log(`>>> [${imageProductCode}] getting image product data`)
+    const productsImagesData: Array<ProductImagesData> = []
 
-          return new Promise(resolve => {
-            const tmpImage = new Image()
+    for (const imageFile of validImageFiles) {
+      const imageProductCode = getProductCodeFromImageName(imageFile.name)
 
-            console.log(`>>> [${imageProductCode}] start resolving promise`)
+      try {
+        const uploadedImage =
+          await productImageUploadClient.uploadFile(imageFile)
 
-            const imageLoadHandler = async () => {
-              console.log(`>>> [${imageProductCode}] Start image upload to cdn`)
-
-              const uploadedImage =
-                await productImageUploadClient.uploadFile(imageFile)
-
-              console.log(
-                `>>> [${imageProductCode}] uploaded image to cdn -> `,
-                uploadedImage
-              )
-
-              resolve({
-                medias: [
-                  {
-                    fileName: uploadedImage.name
-                  }
-                ],
-                product: {
-                  code: imageProductCode
-                }
-              })
+        productsImagesData.push({
+          medias: [
+            {
+              fileName: uploadedImage.name
             }
-
-            try {
-              tmpImage.onload = () => {
-                imageLoadHandler()
-              }
-
-              tmpImage.onerror = () => resolve(null)
-              tmpImage.onabort = () => resolve(null)
-
-              tmpImage.src = URL.createObjectURL(imageFile)
-            } catch (err) {
-              resolve(null)
-            }
-          })
+          ],
+          product: {
+            code: imageProductCode
+          }
         })
-      )
+      } catch (err) {
+        continue
+      }
+    }
 
-    const filteredProductImagesData = productsImagesData.filter(
-      productImagesData => Boolean(productImagesData)
-    )
+    // const productsImagesData2: Array<null | ProductImagesData> =
+    //   await Promise.all(
+    //     imageFiles.map((imageFile): Promise<null | ProductImagesData> => {
+    //       const imageProductCode = getProductCodeFromImageName(imageFile.name)
 
-    return filteredProductImagesData as ProductsImagesData
+    //       return new Promise(resolve => {
+    //         const tmpImage = new Image()
+
+    //         const imageLoadHandler = async () => {
+    //           const uploadedImage =
+    //             await productImageUploadClient.uploadFile(imageFile)
+
+    //           resolve({
+    //             medias: [
+    //               {
+    //                 fileName: uploadedImage.name
+    //               }
+    //             ],
+    //             product: {
+    //               code: imageProductCode
+    //             }
+    //           })
+    //         }
+
+    //         try {
+    //           tmpImage.onload = () => {
+    //             imageLoadHandler()
+    //           }
+
+    //           tmpImage.onerror = () => resolve(null)
+    //           tmpImage.onabort = () => resolve(null)
+
+    //           tmpImage.src = URL.createObjectURL(imageFile)
+    //         } catch (err) {
+    //           resolve(null)
+    //         }
+    //       })
+    //     })
+    //   )
+
+    // const filteredProductImagesData = productsImagesData.filter(
+    //   productImagesData => Boolean(productImagesData)
+    // ) as ProductsImagesData
+
+    return productsImagesData
   }
