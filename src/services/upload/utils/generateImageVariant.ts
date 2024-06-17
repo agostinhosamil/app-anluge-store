@@ -43,5 +43,9 @@ export const generateImageVariant = (
         })
       }, 'image/jpeg')
     }
+
+    imageElement.onerror = () => {
+      reject('invalid image file')
+    }
   })
 }
