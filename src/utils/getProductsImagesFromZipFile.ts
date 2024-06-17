@@ -21,6 +21,8 @@ export const getProductsImagesFromZipFile: GetProductsImagesFromZipFileUtil =
   async zipFile => {
     const imageFiles = await getZipFileContent(zipFile)
 
+    console.log('>>> imageFiles => ', imageFiles)
+
     const productsImages = await getProductsImagesFromFileList(imageFiles)
 
     return productsImages
