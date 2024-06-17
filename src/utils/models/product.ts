@@ -138,7 +138,7 @@ export const massUpdateProductsImages = async (
   products: ProductsImagesData
 ): Promise<Array<ProductProps> | null> => {
   try {
-    const productMassUpdateConcurrency = 10
+    const productMassUpdateConcurrency = 5
     const productMassStoreRequestPath = '/store/products/image-mass-update'
     const productsQueues = arraySplit(products, productMassUpdateConcurrency)
 
