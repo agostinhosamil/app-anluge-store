@@ -41,10 +41,15 @@ export const getProductsImagesFromFileList: GetProductsImagesFromFileListUtil =
             console.log(`>>> [${imageProductCode}] start resolving promise`)
 
             const imageLoadHandler = async () => {
-              console.log('>>> Start image upload to cdn')
+              console.log(`>>> [${imageProductCode}] Start image upload to cdn`)
 
               const uploadedImage =
                 await productImageUploadClient.uploadFile(imageFile)
+
+              console.log(
+                `>>> [${imageProductCode}] uploaded image to cdn -> `,
+                uploadedImage
+              )
 
               resolve({
                 medias: [
