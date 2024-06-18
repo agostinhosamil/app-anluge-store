@@ -74,7 +74,7 @@ model User {
   role          Role        @relation(fields: [roleId], references: [id])
   rates         Rate[]
   favorites     Favorite[]
-  cart          Cart?
+  carts         Cart[]
   roleId        Int
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
@@ -298,7 +298,7 @@ model Cart {
   user      User?    @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  userId    String   @unique
+  userId    String
 
   @@map("cart")
 }
