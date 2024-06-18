@@ -342,3 +342,12 @@ export const convertBlobToFile = (
 ): File => {
   return new File([blobObject], fileName, options)
 }
+
+export const formatAmount = (
+  amount: number,
+  currency: string = 'AKZ'
+): string =>
+  new Intl.NumberFormat('pt-PT', {
+    style: 'currency',
+    currency: currency
+  }).format(amount)
