@@ -1,14 +1,16 @@
-import { $Enums, Prisma, Product } from '@prisma/client'
+import { $Enums, Product } from '@prisma/client'
 
 import { generateSlagByTitle } from '@utils/generateSlagByTitle'
 import { empty, generateRandomId } from '~/utils'
 import { categoryIncludeFactory } from '../category'
 
+import { ProductInclude } from 'Types/Product'
+
 // import { empty } from '~/utils'
 // import { generateSlagByTitle } from '~/utils/generateSlagByTitle'
 
-export const productIncludeFactory = (): Prisma.ProductInclude => {
-  const include: Prisma.ProductInclude = {
+export const productIncludeFactory = (): ProductInclude => {
+  const include: ProductInclude = {
     category: {
       include: categoryIncludeFactory()
     },

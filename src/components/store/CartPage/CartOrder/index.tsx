@@ -2,8 +2,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { FaHeart, FaMinus, FaPlus, FaTrash } from 'react-icons/fa6'
 
-import { ProductProps } from 'Types/Product'
-import { useStoreContext } from 'store@components/Context'
+import { StoreCartItem, useStoreContext } from 'store@components/Context'
 import { CategoryBreadCrumb } from 'store@components/ProductPage/CategoryBreadCrumb'
 import { resolveProductImageUrl } from '~/utils'
 import {
@@ -13,36 +12,66 @@ import {
   DataWrapper,
   HeadingWrapper,
   ImageWrapper,
-  Price
+  Price,
+  SelectedContainer
 } from './styles'
 
 type CartOrderProps = {
-  product: ProductProps
+  product: StoreCartItem
 }
 
 type CartOrderComponent = React.FunctionComponent<CartOrderProps>
 
 export const CartOrder: CartOrderComponent = ({ product }) => {
-  const [amount, setAmount] = useState(1)
+  const [selected, setSelected] = useState<boolean>(false)
+  const [amount, setAmount] = useState(product.quantity || 1)
 
   const storeContext = useStoreContext()
 
+  // useEffect(() => () => {
+  //   if (amount < 2) {
+  //     return
+  //   }
+
+  // })
+
+  const updateAmount = (amount: number = 1) => {
+    if (amount >= 1) {
+      setAmount(amount)
+
+      storeContext.updateOrder(product.id, {
+        quantity: amount
+      })
+    }
+  }
+
   const minusButtonClickHandler = () => {
     if (amount >= 2) {
-      setAmount(amount - 1)
+      updateAmount(amount - 1)
     }
   }
 
   const plusButtonClickHandler = () => {
-    setAmount(amount + 1)
+    updateAmount(amount + 1)
   }
 
   const removeOrderButtonClickHandler = () => {
     storeContext.removeOrder(product.id)
   }
 
+  const amountInputChangeHandler: React.ChangeEventHandler = event => {
+    const inputElement = event.target as HTMLInputElement
+    const inputElementValue = parseInt(inputElement.value)
+
+    if (!isNaN(inputElementValue) && inputElementValue >= 1) {
+      updateAmount(inputElementValue)
+    }
+  }
+
+  const ContainerElement = selected ? SelectedContainer : Container
+
   return (
-    <Container>
+    <ContainerElement>
       <ImageWrapper>
         <i>
           <Image
@@ -83,7 +112,11 @@ export const CartOrder: CartOrderComponent = ({ product }) => {
           <AmountInputWrapper>
             <div>
               <i>
-                <button type="button" onClick={minusButtonClickHandler}>
+                <button
+                  type="button"
+                  onClick={minusButtonClickHandler}
+                  disabled={amount < 2}
+                >
                   <FaMinus />
                 </button>
               </i>
@@ -92,7 +125,8 @@ export const CartOrder: CartOrderComponent = ({ product }) => {
                 autoCapitalize="off"
                 autoComplete="off"
                 spellCheck="false"
-                defaultValue={amount}
+                onChange={amountInputChangeHandler}
+                value={amount}
               />
               <i>
                 <button type="button" onClick={plusButtonClickHandler}>
@@ -103,6 +137,6 @@ export const CartOrder: CartOrderComponent = ({ product }) => {
           </AmountInputWrapper>
         </BudgetData>
       </DataWrapper>
-    </Container>
+    </ContainerElement>
   )
 }

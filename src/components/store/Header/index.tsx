@@ -35,6 +35,8 @@ export const Header: React.FunctionComponent = () => {
       fixed && setFixed(false)
     }
 
+    windowScrollHandler()
+
     window.addEventListener('scroll', windowScrollHandler)
 
     return () => {

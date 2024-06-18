@@ -30,7 +30,10 @@ export const StoreContextProvider: StoreContextProviderComponent = props => {
   const updateCart = (updatedCartData: StoreCartData): void => {
     cookie.setCookie(
       APP_CART_DATA_COOKIE_NAME_KEY,
-      updatedCartData.map(product => product.id),
+      updatedCartData.map(product => ({
+        quantity: product.quantity || 1,
+        id: product.id
+      })),
       {
         'Max-Age': '1M',
         Path: '/'
@@ -52,6 +55,27 @@ export const StoreContextProvider: StoreContextProviderComponent = props => {
         const updatedCartData = [...cart, product]
 
         updateCart(updatedCartData)
+      }
+    },
+
+    updateOrder(productId, product) {
+      let foundProduct = false
+
+      const updatedOrders = cart.map(order => {
+        if (order.id !== productId) {
+          return order
+        }
+
+        foundProduct = true
+
+        return {
+          ...order,
+          ...product
+        }
+      })
+
+      if (foundProduct) {
+        updateCart(updatedOrders)
       }
     },
 

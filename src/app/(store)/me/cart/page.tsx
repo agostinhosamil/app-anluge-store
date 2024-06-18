@@ -19,6 +19,7 @@ import {
   Container,
   FixedCheckoutFormWrapper,
   ListWrapper,
+  MainListWrapper,
   StaticCheckoutFormWrapper,
   StyledLink,
   TitleContainer
@@ -123,7 +124,10 @@ export default function CartPage() {
 
       orders: products.map(product => ({
         productId: product.id,
-        quantity: 1, // TODO: use the true value,
+        quantity:
+          typeof product.quantity === 'number'
+            ? Math.floor(product.quantity)
+            : 1,
         productName: product.name,
         productCode: product.code
       }))
@@ -194,7 +198,7 @@ export default function CartPage() {
               </ol>
             )}
           </TitleContainer>
-          <ListWrapper>
+          <MainListWrapper>
             {products.length < 1 && (
               <EmptyListContainer>
                 <h1>O seu carrinho está vazio</h1>
@@ -206,7 +210,7 @@ export default function CartPage() {
             {products.map(product => (
               <CartOrder key={product.id} product={product} />
             ))}
-          </ListWrapper>
+          </MainListWrapper>
           <ListWrapper>Pronto para finalizar?</ListWrapper>
           <CheckoutMessageWrapper>
             <p>

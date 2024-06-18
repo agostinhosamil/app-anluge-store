@@ -76,6 +76,10 @@ export const ListWrapper = styled.div`
   margin-top: 20px;
 `
 
+export const MainListWrapper = styled(ListWrapper)`
+  padding: 0px;
+`
+
 export const SubmitButtonWrapper = styled.div`
   width: 100%;
   padding: 20px 0px 0px;

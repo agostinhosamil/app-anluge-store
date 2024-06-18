@@ -1,8 +1,8 @@
 import React from 'react'
 import Carousel from 'react-bootstrap/Carousel'
-import Container from 'react-bootstrap/Container'
 
 import { FlatList } from '@components/FlatList'
+import { Container } from '@components/styled'
 import { range } from '~/utils'
 
 import { AdvertisingPanel } from './AdvertisingPanel'

@@ -7,13 +7,16 @@ export const Container = styled.div`
   flex-direction: row;
   border-top: 1px solid #bfbfbf;
   padding-top: 19px;
-  margin-top: 19px;
+  padding: 30px 35px;
 
   &:nth-child(1) {
     border-top: 0px;
-    padding-top: 0px;
     margin-top: 0px;
   }
+`
+
+export const SelectedContainer = styled(Container)`
+  background-color: red;
 `
 
 export const ImageWrapper = styled.div`
@@ -120,7 +123,7 @@ export const AmountInputWrapper = styled.div`
       padding: 0px 7px;
 
       button {
-        background-color: #9f9f9f;
+        background-color: rgb(144 144 144 / 65%);
         border-radius: 50%;
         width: 20px;
         border: 0px;
@@ -129,7 +132,7 @@ export const AmountInputWrapper = styled.div`
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 17px;
+        font-size: 10px;
       }
     }
 

@@ -7,14 +7,14 @@ type StarWrapperProps = {
 }
 
 const starRatingSizes = {
-  default: 24,
-  small: 15,
-  large: 35,
-  'x-large': 47
+  default: 18,
+  small: 12,
+  large: 25,
+  'x-large': 35
 }
 
 export const Container = styled.div`
-  width: calc(100% / 3);
+  width: calc(100% / 5);
   height: auto;
   padding: 12px;
   display: flex;
@@ -46,10 +46,18 @@ export const Container = styled.div`
   }
 
   @media (max-width: 1100px) {
-    width: 50%;
+    width: 25%;
   }
 
   @media (max-width: 690px) {
+    width: calc(100% / 3);
+  }
+
+  @media (max-width: 570px) {
+    width: 50%;
+  }
+
+  @media (max-width: 410px) {
     width: 100%;
   }
 
@@ -76,6 +84,8 @@ export const ImageWrapper = styled.div`
     -webkit-user-select: none;
     width: 100%;
     height: unset;
+    border-radius: inherit;
+    -webkit-border-radius: inherit;
   }
 `
 
@@ -113,8 +123,9 @@ export const Name = styled.h5`
   width: 100%;
   margin: 0px;
   padding: 25px 0px 0px;
-  font-weight: 800;
-  color: #000000;
+  font-weight: 400;
+  font-size: 15px;
+  color: #1e486d;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
@@ -130,11 +141,12 @@ export const Description = styled.p`
   padding: 15px 0px;
   max-height: 85px;
   overflow: hidden;
-  color: #b4b4b4;
+  color: #605d5d;
+  font-weight: 300;
 `
 
 export const AsideContainer = styled.div`
-  width: 50px;
+  width: 35px;
   height: auto;
   padding: 40px 0px;
 
@@ -145,7 +157,7 @@ export const AsideContainer = styled.div`
   @media (max-width: 1400px) {
     position: absolute;
     right: 5px;
-    top: 40px;
+    top: 20px;
   }
 
   @media (max-width: 1100px) and (min-width: 1000px) {
@@ -157,12 +169,12 @@ export const AsideContainer = styled.div`
   @media (max-width: 870px) {
     position: absolute;
     right: 5px;
-    top: 40px;
+    top: 20px;
   }
 
   @media (max-width: 690px) {
-    position: unset;
-    right: unset;
+    position: absolute;
+    right: 10px;
     top: unset;
   }
 
@@ -172,6 +184,10 @@ export const AsideContainer = styled.div`
 
   @media (min-width: 3500px) {
     margin-left: -35px;
+  }
+
+  @media (max-width: 410px) {
+    width: 50px;
   }
 `
 
@@ -184,7 +200,7 @@ export const AsideBody = styled.div`
 
     li {
       width: 100%;
-      margin: 0px 0px 20px;
+      margin: 0px 0px 10px;
       list-style-type: none;
 
       @media (max-width: 760px) {
@@ -192,8 +208,8 @@ export const AsideBody = styled.div`
       }
 
       button {
-        width: 50px;
-        height: 50px;
+        width: 40px;
+        height: 40px;
         border: 0px;
         border-radius: 50%;
         -webkit-border-radius: 50%;
@@ -210,7 +226,7 @@ export const AsideBody = styled.div`
           justify-content: center;
           align-items: center;
           color: #101010;
-          font-size: 21px;
+          font-size: 15px;
         }
 
         &.color-primary {
@@ -241,6 +257,11 @@ export const AsideBody = styled.div`
           i {
             font-size: 17px;
           }
+        }
+
+        @media (max-width: 410px) {
+          width: 50px;
+          height: 50px;
         }
       }
     }
@@ -281,6 +302,13 @@ export const Price = styled.div`
     font-size: 17px;
     font-weight: 800;
     color: #464646;
+  }
+
+  h5 {
+    color: #b97777;
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
   }
 
   @media (max-width: 1199px) and (min-width: 1101px) {

@@ -36,7 +36,7 @@ const animatedBackground = css`
 `
 
 export const Container = styled.div`
-  width: calc(100% / 3);
+  width: calc(100% / 5);
   height: auto;
   padding: 12px;
   display: flex;
@@ -68,10 +68,18 @@ export const Container = styled.div`
   }
 
   @media (max-width: 1100px) {
-    width: 50%;
+    width: 25%;
   }
 
   @media (max-width: 690px) {
+    width: calc(100% / 3);
+  }
+
+  @media (max-width: 570px) {
+    width: 50%;
+  }
+
+  @media (max-width: 410px) {
     width: 100%;
   }
 `
