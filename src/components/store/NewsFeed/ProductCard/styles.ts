@@ -292,7 +292,7 @@ export const Price = styled.div`
   padding: 20px 0px;
 
   h3 {
-    font-size: 40px;
+    font-size: 21px;
     margin-top: -16px;
     color: #111111;
   }
@@ -313,21 +313,21 @@ export const Price = styled.div`
 
   @media (max-width: 1199px) and (min-width: 1101px) {
     h3 {
-      font-size: 30px;
+      font-size: 17px;
       margin: -8px 0px 0px 5px;
     }
   }
 
   @media (max-width: 767px) and (min-width: 691px) {
     h3 {
-      font-size: 21px;
+      font-size: 16px;
       margin: 0px 0px 0px 8px;
     }
   }
 
   @media (max-width: 420px) {
     h3 {
-      font-size: 21px;
+      font-size: 13px;
       margin: 0px 0px 0px 8px;
     }
   }

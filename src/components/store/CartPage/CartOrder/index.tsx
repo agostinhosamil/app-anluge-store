@@ -4,7 +4,7 @@ import { FaHeart, FaMinus, FaPlus, FaTrash } from 'react-icons/fa6'
 
 import { StoreCartItem, useStoreContext } from 'store@components/Context'
 import { CategoryBreadCrumb } from 'store@components/ProductPage/CategoryBreadCrumb'
-import { resolveProductImageUrl } from '~/utils'
+import { formatAmount, resolveProductImageUrl } from '~/utils'
 import {
   AmountInputWrapper,
   BudgetData,
@@ -106,7 +106,7 @@ export const CartOrder: CartOrderComponent = ({ product }) => {
         <BudgetData>
           {product.price >= 1 && (
             <Price>
-              <strong>AKZ {product.price}</strong>
+              <strong>{formatAmount(product.price)}</strong>
             </Price>
           )}
           <AmountInputWrapper>

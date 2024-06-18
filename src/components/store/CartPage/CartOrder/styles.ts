@@ -5,7 +5,7 @@ export const Container = styled.div`
   height: auto;
   display: flex;
   flex-direction: row;
-  border-top: 1px solid #bfbfbf;
+  border-top: 5px solid #ffffff;
   padding-top: 19px;
   padding: 30px 35px;
 
@@ -104,6 +104,7 @@ export const Price = styled.div`
   display: flex;
   flex-direction: row;
   padding: 10px 0px;
+  margin-right: 20px;
 
   strong {
     font-size: 23px;

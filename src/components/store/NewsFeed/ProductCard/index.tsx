@@ -6,7 +6,7 @@ import { FaCartPlus, FaEllipsisV, FaHeart } from 'react-icons/fa'
 
 import { useStoreContext } from 'store@components/Context'
 import { ProductProps } from '~/Types/Product'
-import { resolveProductImageUrl } from '~/utils'
+import { formatAmount, resolveProductImageUrl } from '~/utils'
 import { StarRating } from './StarRating'
 import * as Styled from './styles'
 
@@ -45,8 +45,7 @@ export const ProductCard: React.FunctionComponent<ProductCardProps> = props => {
             <Styled.Price>
               {(props.price >= 1 && (
                 <Fragment>
-                  <i>AKZ</i>
-                  <h3>{props.price}</h3>
+                  <h3>{formatAmount(props.price)}</h3>
                 </Fragment>
               )) || <h5>Preço sob consulta</h5>}
             </Styled.Price>

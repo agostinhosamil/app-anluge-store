@@ -24,6 +24,7 @@ import {
   StyledLink,
   TitleContainer
 } from 'store@styles/cart-page'
+import { Partial } from '~/components/Partial'
 import { getElementCoordinates } from '~/components/store/Header/helpers'
 import { generateRandomId } from '~/utils'
 import { formDataToJson } from '~/utils/formDataToJson'
@@ -249,60 +250,62 @@ export default function CartPage() {
                   <Fragment>
                     <h1>Já tem tudo o o que precisava?</h1>
                     <p>Hora de finalizar.</p>
-                    <Row>
-                      <Col md={12}>
-                        <FloatingLabel
-                          controlId="user-name"
-                          label="Nome completo"
-                          className="mb-3"
-                        >
-                          <Form.Control
-                            type="text"
-                            placeholder="Nome completo"
-                            autoComplete="off"
-                            name="user[name]"
-                            value={formData.name}
-                            onChange={inputChangeHandler}
-                          />
-                        </FloatingLabel>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col md={12}>
-                        <FloatingLabel
-                          controlId="user-email"
-                          label="Endereço de email"
-                          className="mb-3"
-                        >
-                          <Form.Control
-                            type="text"
-                            placeholder="Endereço de email"
-                            autoComplete="off"
-                            name="user[email]"
-                            value={formData.email}
-                            onChange={inputChangeHandler}
-                          />
-                        </FloatingLabel>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col md={12}>
-                        <FloatingLabel
-                          controlId="user-phone"
-                          label="Número de telefone (Whatsapp)"
-                          className="mb-3"
-                        >
-                          <Form.Control
-                            type="text"
-                            placeholder="Número de telefone (Whatsapp)"
-                            autoComplete="off"
-                            name="user[phone]"
-                            value={formData.phone}
-                            onChange={inputChangeHandler}
-                          />
-                        </FloatingLabel>
-                      </Col>
-                    </Row>
+                    <Partial unAuth>
+                      <Row>
+                        <Col md={12}>
+                          <FloatingLabel
+                            controlId="user-name"
+                            label="Nome completo"
+                            className="mb-3"
+                          >
+                            <Form.Control
+                              type="text"
+                              placeholder="Nome completo"
+                              autoComplete="off"
+                              name="user[name]"
+                              value={formData.name}
+                              onChange={inputChangeHandler}
+                            />
+                          </FloatingLabel>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col md={12}>
+                          <FloatingLabel
+                            controlId="user-email"
+                            label="Endereço de email"
+                            className="mb-3"
+                          >
+                            <Form.Control
+                              type="text"
+                              placeholder="Endereço de email"
+                              autoComplete="off"
+                              name="user[email]"
+                              value={formData.email}
+                              onChange={inputChangeHandler}
+                            />
+                          </FloatingLabel>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col md={12}>
+                          <FloatingLabel
+                            controlId="user-phone"
+                            label="Número de telefone (Whatsapp)"
+                            className="mb-3"
+                          >
+                            <Form.Control
+                              type="text"
+                              placeholder="Número de telefone (Whatsapp)"
+                              autoComplete="off"
+                              name="user[phone]"
+                              value={formData.phone}
+                              onChange={inputChangeHandler}
+                            />
+                          </FloatingLabel>
+                        </Col>
+                      </Row>
+                    </Partial>
                     <Row>
                       <Col md={12}>
                         <FormSubmit>Solicitar orçamento</FormSubmit>
