@@ -10,6 +10,7 @@ import StyledComponentsRegistry from './lib/registry'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { StoreContextWrapper } from '~/components/store/Context/StoreContextWrapper'
+import { UnderConstructionFallback } from '~/components/UnderConstructionFallback'
 import { getAuthTokenCookie } from '~/utils/authTokenCookie'
 // import 'slick-carousel/slick/slick-theme.css'
 // import 'slick-carousel/slick/slick.css'
@@ -21,16 +22,16 @@ export const metadata: Metadata = {
     'Seja bem vindo a loja online da Anluge - Comércio e Prestação de Serviços'
 }
 
-type RootLayoutProps = Readonly<{
-  children: React.ReactNode
-}>
+// type RootLayoutProps = Readonly<{
+//   children: React.ReactNode
+// }>
 
 const roboto = Roboto({
   weight: ['100', '300', '500', '700', '900'],
   subsets: ['latin', 'cyrillic']
 })
 
-export default async function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout() {
   const authTokenCookie = getAuthTokenCookie()
   const cartData = await getCartData()
 
@@ -66,7 +67,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           <GlobalStyles />
           <AuthenticationWrapper auth={authenticatedUser}>
             <StoreContextWrapper cart={cartData}>
-              {children}
+              <UnderConstructionFallback />
             </StoreContextWrapper>
           </AuthenticationWrapper>
         </StyledComponentsRegistry>
