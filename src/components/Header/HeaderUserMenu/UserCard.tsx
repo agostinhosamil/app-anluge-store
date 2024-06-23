@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Icon } from '@components/Icon'
 import { UserProps } from 'Types/UserProps'
 
+import { resolveUserAvatarUrl } from '~/utils'
 import {
   UserCardButtons,
   UserCardContainer,
@@ -22,7 +23,7 @@ export const UserCard: UserCardComponent = ({ user }) => {
       <UserCardImageContainer>
         <div>
           <Image
-            src="/assets/images/uploads/user-avatar.jpg"
+            src={resolveUserAvatarUrl(user.image)}
             alt="User name"
             width={110}
             height={110}
@@ -33,7 +34,7 @@ export const UserCard: UserCardComponent = ({ user }) => {
       <h5>{user.email}</h5>
       <UserCardButtons>
         <div>
-          <Link href="/">
+          <Link href="/me/cart">
             <i>
               <Icon name="FaCartShopping" />
             </i>
