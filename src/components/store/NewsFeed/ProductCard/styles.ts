@@ -139,10 +139,11 @@ export const Description = styled.p`
   -webkit-line-clamp: 3;
   margin: 0px 0px 25px;
   padding: 15px 0px;
-  max-height: 85px;
+  max-height: 72px;
   overflow: hidden;
   color: #605d5d;
   font-weight: 300;
+  font-size: 12px;
 `
 
 export const AsideContainer = styled.div`
