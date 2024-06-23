@@ -1,6 +1,7 @@
 import { prisma } from '~/services/prisma'
 import { CategoryProps } from '~/Types/Category'
 import { categoryIncludeFactory } from '~/utils/category'
+import { categoryListToTree } from '~/utils/models/category'
 import { productIncludeFactory } from '~/utils/product'
 import { HomePage } from './HomePage'
 
@@ -13,12 +14,6 @@ export default async function Home() {
   ]
 
   const categories: Array<CategoryProps> = await prisma.category.findMany({
-    where: {
-      id: {
-        in: categoriesIds
-      }
-    },
-
     include: {
       categories: {
         include: categoryIncludeFactory()
@@ -29,5 +24,13 @@ export default async function Home() {
     }
   })
 
-  return <HomePage categories={categories} />
+  const categoriesTree = categoryListToTree(categories)
+
+  return (
+    <HomePage
+      categories={categoriesTree.filter(category =>
+        categoriesIds.includes(category.id)
+      )}
+    />
+  )
 }
