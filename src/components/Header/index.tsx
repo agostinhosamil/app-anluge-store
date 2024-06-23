@@ -1,9 +1,10 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { useState } from 'react'
 
 import { HeaderSearchBox } from '@components/HeaderSearchBox'
+import { Partial } from '@components/Partial'
 
-import { useState } from 'react'
 import { useStoreContext } from 'store@components/Context'
 import { HeaderAsideMenu } from './HeaderAsideMenu'
 import { HeaderMenuItem } from './HeaderMenuItem'
@@ -55,7 +56,9 @@ export const Header: HeaderComponent = ({ style = 'default', ...props }) => {
             as="button"
             onClick={userMenuButtonClickHandler}
           />
-          <HeaderMenuItem href="/me/favorites" icon="FaHeart" />
+          <Partial auth>
+            <HeaderMenuItem href="/me/favorites" icon="FaHeart" />
+          </Partial>
           <HeaderMenuItem
             href="/me/cart"
             icon="FaCartShopping"
