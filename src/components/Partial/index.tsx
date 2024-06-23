@@ -15,8 +15,8 @@ export type PartialProps = {
   isNot?: RoleKey
   isNeither?: Array<RoleKey>
   isAtLeast?: RoleKey
-  auth?: true
-  unAuth?: true
+  auth?: any
+  unAuth?: any
   canEither?: PermissionKey | Array<PermissionKey>
   isEither?: RoleKey | Array<RoleKey>
   refine?: (user: UserProps) => boolean
