@@ -86,7 +86,7 @@ export const StoreContextProvider: StoreContextProviderComponent = props => {
     },
 
     clearCart() {
-      setCart([])
+      updateCart([])
 
       return cart
     }
