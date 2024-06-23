@@ -188,7 +188,11 @@ export default function ProductsPage() {
 
       <Dialog
         size="x-large"
-        title="Registrar produto"
+        title={
+          productToEditState.current
+            ? `Editar produto (${productToEditState.current.name})`
+            : 'Registrar produto'
+        }
         onClose={createProductDialogCloseHandler}
         show={showCreateProductDialog}
       >
