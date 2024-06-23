@@ -6,13 +6,19 @@ export interface CategoryInclude extends Prisma.CategoryDefaultArgs {
     include: ProductInclude
   }
   categories: {
-    include: CategoryInclude
+    include: {
+      products: true
+      categories: true
+    }
   }
 }
 
-export type CategoryProps = Prisma.CategoryGetPayload<{
-  include: CategoryInclude
-}>
+export type CategoryProps = Omit<
+  Prisma.CategoryGetPayload<{
+    include: CategoryInclude
+  }>,
+  'include' | 'select'
+>
 
 export interface CategoryFormPropsInclude extends Prisma.CategoryDefaultArgs {
   categories: {
