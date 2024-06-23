@@ -69,7 +69,7 @@ model User {
   phone         String      @unique
   username      String?     @unique
   emailVerified DateTime?
-  image         String?
+  image         String?     @default("user-avatar-placeholder.jpg")
   Token         UserToken[]
   role          Role        @relation(fields: [roleId], references: [id])
   rates         Rate[]
@@ -82,8 +82,35 @@ model User {
   accounts      Account[]
   sessions      Session[]
   posts         Post[]
+  passwords     Password[]
+  addresses     Address[]
 
   @@map("user")
+}
+
+model Password {
+  id      Int    @id @default(autoincrement())
+  content String
+  user    User   @relation(fields: [userId], references: [id])
+  userId  String
+
+  @@map("password")
+}
+
+model Address {
+  id         Int      @id @default(autoincrement())
+  alias      String?
+  street     String
+  city       String
+  postalCode String
+  country    String
+  state      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+
+  @@map("address")
 }
 
 model VerificationRequest {
@@ -293,12 +320,14 @@ model Product {
 }
 
 model Cart {
-  id        String   @id @default(cuid())
+  id        String     @id @default(cuid())
   orders    Order[]
-  user      User?    @relation(fields: [userId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  user      User?      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
   userId    String
+  code      String     @default(cuid())
+  status    CartStatus @default(PENDING)
 
   @@map("cart")
 }
@@ -308,7 +337,7 @@ model Order {
   product   Product  @relation(fields: [productId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  cart      Cart?    @relation(fields: [cartId], references: [id])
+  cart      Cart?    @relation(fields: [cartId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   cartId    String?
   productId String
   quantity  Int      @default(1)
@@ -336,4 +365,18 @@ enum AdvertisePosition {
   TOP
   BOTTOM
   FEED
+}
+
+enum CartStatus {
+  // awaiting payment
+  PENDING
+  // client has been done the payment and it's awaiting
+  // the store/s to deliver the request
+  PROGRESS
+  // payment has been done a the request has been delivered 
+  // to the client, and the client has already done or not
+  // a rate for the store
+  DELIVERED
+  // payment returned to the client 
+  RETURN
 }
