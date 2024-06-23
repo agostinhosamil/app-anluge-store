@@ -23,7 +23,7 @@ type CartOrderProps = {
 type CartOrderComponent = React.FunctionComponent<CartOrderProps>
 
 export const CartOrder: CartOrderComponent = ({ product }) => {
-  const [selected, setSelected] = useState<boolean>(false)
+  const [selected] = useState<boolean>(false)
   const [amount, setAmount] = useState(product.quantity || 1)
 
   const storeContext = useStoreContext()
