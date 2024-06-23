@@ -5,13 +5,14 @@ import {
 } from './getProductsImagesFromZipFile'
 import { productImageUploadClient } from './product/imageUploadClient'
 
-const productCodeRegEx = /\s*-?\s*?(\(([a-zA-Z0-9_-]+)\)\s*\.(jpe?g|png|gif))$/
+const productCodeRegEx =
+  /\s*-?\s*?(\(([a-zA-Z0-9%_s]+)\)\s*(\.(jpe?g|png|gif))?)$/
 
 const getProductCodeFromImageName = (imageName: string): string => {
   const productCodeMatch = productCodeRegEx.exec(imageName)
 
   if (productCodeMatch) {
-    return String(productCodeMatch[2])
+    return decodeURIComponent(String(productCodeMatch[2]))
   }
 
   return imageName
