@@ -11,7 +11,6 @@ type HomePageProps = {
 type HomePageComponent = React.FunctionComponent<HomePageProps>
 
 export const HomePage: HomePageComponent = ({ categories }) => {
-  console.log(categories)
   return (
     <PageContainer>
       <NewsFeed categories={categories} />
