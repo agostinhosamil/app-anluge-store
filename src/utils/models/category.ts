@@ -232,3 +232,28 @@ export const categoryListToTree = (
 
   return categoriesTree
 }
+
+export const getCategoryFromList = (
+  categoryId: string,
+  categoryList: Array<CategoryProps | any>
+): CategoryProps | null => {
+  for (const category of categoryList) {
+    if (category.id !== categoryId) {
+      const categorySubcategories = category.categories
+      const innerCategory = getCategoryFromList(
+        categoryId,
+        categorySubcategories
+      )
+
+      if (innerCategory) {
+        return innerCategory
+      }
+
+      continue
+    }
+
+    return category
+  }
+
+  return null
+}
