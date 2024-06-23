@@ -7,7 +7,7 @@ import {
   masterAdminRolePrismaQueryData
 } from '~/config/cache/models/role'
 import { Hash } from '~/helpers/Hash'
-import { isMasterKey } from '~/utils'
+import { getSearchParamsQueryArgument, isMasterKey } from '~/utils'
 import { formDataToJson } from '~/utils/formDataToJson'
 
 type PostRequestBodyProps = {
@@ -20,8 +20,12 @@ type PostRequestBodyProps = {
   }
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const queryString = request.nextUrl.searchParams
+  const productsQueryArguments = getSearchParamsQueryArgument(queryString)
+
   const users = await prisma.user.findMany({
+    ...productsQueryArguments,
     include: {
       role: {
         include: {
