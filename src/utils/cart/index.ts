@@ -43,3 +43,30 @@ export const getCartData = async (): Promise<StoreCartData> => {
 
   return []
 }
+
+export const cartIncludeFactory = () => ({
+  include: {
+    orders: {
+      include: {
+        product: {
+          include: {
+            medias: true,
+            category: true
+          }
+        }
+      }
+    }
+  }
+})
+
+export const generateCartCode = (): string => {
+  const cartCodeTemplate = 'ANL-$0U'
+
+  const cartCodeToken = String(Math.round(Math.random() * Date.now()))
+  const cartCodeTokenPrefix = '0'.repeat(13 - cartCodeToken.length)
+
+  return cartCodeTemplate.replace(
+    '$0',
+    cartCodeTokenPrefix.concat(cartCodeToken)
+  )
+}
