@@ -1,4 +1,5 @@
 import Link from 'next/link'
+
 import { CategoryProps } from '~/Types/Category'
 import { resolveCategoryImageUrl } from '~/utils'
 import { CategoryCardBody, CategoryDataWrapper, Container } from './styles'
@@ -10,7 +11,7 @@ export const CategoryCard: React.FunctionComponent<
 > = props => {
   return (
     <Container>
-      <Link href="/catogories/929883">
+      <Link href={`/categories/${props.slag}?ref=news-feed`}>
         <CategoryCardBody>
           <CategoryDataWrapper>
             <div
