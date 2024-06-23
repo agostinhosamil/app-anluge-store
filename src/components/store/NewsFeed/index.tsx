@@ -3,18 +3,11 @@ import Carousel from 'react-bootstrap/Carousel'
 import { Container } from '@components/styled'
 import { range } from '~/utils'
 
-import { AdvertisingPanel } from './AdvertisingPanel'
-// import { ProductCard } from './ProductCard'
-import { Slide, TouchSlider } from '~/components/TouchSlider'
 import { CategoryProps } from '~/Types/Category'
-import { CategoryCard } from './CategoryCard'
+import { AdvertisingPanel } from './AdvertisingPanel'
+import { CategoryListSlider } from './CategoryListSlider'
 import { CategoryProductsList } from './CategoryProductsList'
-import {
-  AdvertisingPanelContainer,
-  CategoryList,
-  CategoryListWrapper,
-  Title
-} from './styles'
+import { AdvertisingPanelContainer } from './styles'
 
 type NewsFeedProps = {
   categories: Array<CategoryProps>
@@ -37,18 +30,7 @@ export const NewsFeed: React.FunctionComponent<NewsFeedProps> = props => {
           ))}
         </Carousel>
       </AdvertisingPanelContainer>
-      <Title>Categorias recomendadas</Title>
-      <CategoryListWrapper>
-        <CategoryList>
-          <TouchSlider>
-            {categories.map(category => (
-              <Slide key={category.id}>
-                <CategoryCard {...category} />
-              </Slide>
-            ))}
-          </TouchSlider>
-        </CategoryList>
-      </CategoryListWrapper>
+      <CategoryListSlider categories={categories} />
       {categories.map(category => (
         <CategoryProductsList key={category.id} category={category} />
       ))}
