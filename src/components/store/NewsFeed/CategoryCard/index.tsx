@@ -1,11 +1,9 @@
 import Link from 'next/link'
+import { CategoryProps } from '~/Types/Category'
+import { resolveCategoryImageUrl } from '~/utils'
 import { CategoryCardBody, CategoryDataWrapper, Container } from './styles'
 
-type CategoryCardProps = {
-  title: string
-  description: string
-  slug?: string
-}
+type CategoryCardProps = CategoryProps
 
 export const CategoryCard: React.FunctionComponent<
   CategoryCardProps
@@ -15,8 +13,15 @@ export const CategoryCard: React.FunctionComponent<
       <Link href="/catogories/929883">
         <CategoryCardBody>
           <CategoryDataWrapper>
-            <h1>{props.title}</h1>
-            <p>{props.description}</p>
+            <div
+              style={{
+                backgroundImage: `url("${resolveCategoryImageUrl(props)}")`
+              }}
+            />
+            <data>
+              <h1>{props.title}</h1>
+              <p>{props.description}</p>
+            </data>
           </CategoryDataWrapper>
         </CategoryCardBody>
       </Link>
