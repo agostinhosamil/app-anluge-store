@@ -3,10 +3,29 @@ import { SignInRequestProps, SignInResponse } from './types'
 import { axios } from '@services/axios'
 
 export const signIn = async (credentials: SignInRequestProps) => {
-  const response = await axios.post<SignInResponse>('/users/auth', credentials)
+  try {
+    const response = await axios.post<SignInResponse>(
+      '/users/auth',
+      credentials
+    )
 
-  if (response.status === 200 && response.data.user) {
-    return response.data
+    if (response.status === 200 && response.data.user) {
+      return response.data
+    }
+  } catch (err) {
+    return
+  }
+}
+
+export const signInById = async (userId: string) => {
+  try {
+    const response = await axios.post<SignInResponse>(`/users/auth/${userId}`)
+
+    if (response.status === 200 && response.data.user) {
+      return response.data
+    }
+  } catch (err) {
+    // pass
   }
 }
 
