@@ -10,8 +10,8 @@ import { getAllCategoryProducts } from './utils'
 type CategoryProductsListProps = {
   category: CategoryProps
   title?: string
-  productCardProps?: ProductCardProps
-  flatListProps?: FlatListProps
+  productCardProps?: Partial<ProductCardProps>
+  flatListProps?: Partial<FlatListProps>
 }
 
 type CategoryProductsListComponent =
