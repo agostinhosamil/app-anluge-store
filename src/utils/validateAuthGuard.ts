@@ -120,7 +120,9 @@ const guardsValidators = {
 
   isNeither: (user: UserProps, roleKeys: ValidateGuardUtilProp): boolean => {
     return !guardsValidators.isEither(user, roleKeys)
-  }
+  },
+
+  auth: (user: UserProps): boolean => Boolean(user)
 }
 
 export type ValidateGuardUtilProp = string | Array<string>
