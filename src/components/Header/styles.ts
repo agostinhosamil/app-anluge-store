@@ -6,19 +6,21 @@ export type HeaderProps = {
 }
 
 export type HeaderMenuProps = {
-  $size?: 'large' | 'default'
+  $size?: 'large' | 'default' | undefined
 }
 
-export const Container = styled.header<HeaderProps>`
+export const Container = styled.div<HeaderProps>`
   width: 100%;
   background-color: ${props =>
     props.$colorStyle === 'default' ? '#0170bf' : '#ffffff'};
   color: ${props => (props.$colorStyle === 'default' ? '#ffffff' : '#333333')};
   position: relative;
-  padding: 12px 0px;
+  padding: 12px 40px;
+  transition: all 0.3s ease-in-out;
 
   * {
     color: inherit;
+    transition: inherit;
   }
 
   @media (max-width: 750px) {
@@ -124,8 +126,8 @@ export const HeaderMenuListLink = styled(Link)`
 `
 
 export const HeaderMenuListItemIconWrapper = styled.i`
-  margin-right: 12px;
-  font-size: 24px;
+  margin-right: 6px;
+  font-size: 18px;
 
   @media (max-width: 750px) {
     font-size: 19px;
@@ -137,6 +139,10 @@ export const HeaderMenuListItemIconWrapper = styled.i`
 `
 
 export const HeaderMenuListItemLabel = styled.span`
+  font-size: 11px;
+  display: inline-flex;
+  margin-top: 4px;
+
   @media (max-width: 750px) {
     display: none;
   }
