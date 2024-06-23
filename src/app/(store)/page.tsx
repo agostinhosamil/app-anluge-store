@@ -1,12 +1,33 @@
-'use client'
+import { prisma } from '~/services/prisma'
+import { CategoryProps } from '~/Types/Category'
+import { categoryIncludeFactory } from '~/utils/category'
+import { productIncludeFactory } from '~/utils/product'
+import { HomePage } from './HomePage'
 
-import { NewsFeed } from 'store@components/NewsFeed'
-import { PageContainer } from 'store@components/styles'
+export default async function Home() {
+  const categoriesIds = [
+    '10098327474662369821717853708516578325759404',
+    '10085482758819828541717853708535895519846167',
+    '10080304913879131371717853708572590950098600',
+    '100934909248215462217178537085271083968355101'
+  ]
 
-export default function Home() {
-  return (
-    <PageContainer>
-      <NewsFeed />
-    </PageContainer>
-  )
+  const categories: Array<CategoryProps> = await prisma.category.findMany({
+    where: {
+      id: {
+        in: categoriesIds
+      }
+    },
+
+    include: {
+      categories: {
+        include: categoryIncludeFactory()
+      },
+      products: {
+        include: productIncludeFactory()
+      }
+    }
+  })
+
+  return <HomePage categories={categories} />
 }

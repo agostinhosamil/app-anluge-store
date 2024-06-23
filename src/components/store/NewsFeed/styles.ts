@@ -46,11 +46,6 @@ export const CategoryList = styled.ul`
   justify-content: flex-start;
   flex-wrap: nowrap;
   overflow-x: auto;
-
-  &::-webkit-scrollbar {
-    width: 0px;
-    height: 0px;
-  }
 `
 
 export const ProductsList = styled.div`

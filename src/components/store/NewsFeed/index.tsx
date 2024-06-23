@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import Carousel from 'react-bootstrap/Carousel'
 
 import { FlatList } from '@components/FlatList'
@@ -7,13 +7,44 @@ import { range } from '~/utils'
 
 import { AdvertisingPanel } from './AdvertisingPanel'
 // import { ProductCard } from './ProductCard'
-import { useProduct } from '~/utils/hooks/useProduct'
+import { Slide, TouchSlider } from '~/components/TouchSlider'
+import { CategoryProps } from '~/Types/Category'
+import { ProductProps } from '~/Types/Product'
+import { CategoryCard } from './CategoryCard'
 import { ProductCard } from './ProductCard'
 import { ProductCardPlaceholders } from './ProductCardPlaceholders'
-import { AdvertisingPanelContainer, ProductsList, Title } from './styles'
+import {
+  AdvertisingPanelContainer,
+  CategoryList,
+  CategoryListWrapper,
+  ProductsList,
+  Title
+} from './styles'
 
-export const NewsFeed: React.FunctionComponent = () => {
-  const { products, ...productsState } = useProduct()
+type NewsFeedProps = {
+  categories: Array<CategoryProps>
+}
+
+function getAllCategoryProducts(
+  category: CategoryProps | any
+): Array<ProductProps> {
+  const products: Array<ProductProps> = [
+    ...(category.products instanceof Array ? category.products : [])
+  ]
+
+  if (category.categories instanceof Array) {
+    for (const subCategory of category.categories) {
+      products.push(...getAllCategoryProducts(subCategory))
+    }
+  }
+
+  return products
+}
+
+export const NewsFeed: React.FunctionComponent<NewsFeedProps> = props => {
+  // const { products, ...productsState } = useProduct()
+
+  const { categories } = props
 
   return (
     <Container>
@@ -29,46 +60,45 @@ export const NewsFeed: React.FunctionComponent = () => {
           ))}
         </Carousel>
       </AdvertisingPanelContainer>
-      {/* <Title>Categorias recomendadas</Title>
+      <Title>Categorias recomendadas</Title>
       <CategoryListWrapper>
         <CategoryList>
-          <CategoryCard
-            title="Equipamentos de escrtório"
-            description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque non voluptatibus suscipit sint, sed similique dicta sapiente harum nesciunt libero blanditiis pariatur eos odio et praesentium dolores ullam beatae facere?"
-          />
-          <CategoryCard
-            title="Equipamentos de escrtório"
-            description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque non voluptatibus suscipit sint, sed similique dicta sapiente harum nesciunt libero blanditiis pariatur eos odio et praesentium dolores ullam beatae facere?"
-          />
-          <CategoryCard
-            title="Equipamentos de escrtório"
-            description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque non voluptatibus suscipit sint, sed similique dicta sapiente harum nesciunt libero blanditiis pariatur eos odio et praesentium dolores ullam beatae facere?"
-          />
-          <CategoryCard
-            title="Equipamentos de escrtório"
-            description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque non voluptatibus suscipit sint, sed similique dicta sapiente harum nesciunt libero blanditiis pariatur eos odio et praesentium dolores ullam beatae facere?"
-          />
-          <CategoryCard
-            title="Equipamentos de escrtório"
-            description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque non voluptatibus suscipit sint, sed similique dicta sapiente harum nesciunt libero blanditiis pariatur eos odio et praesentium dolores ullam beatae facere?"
-          />
+          <TouchSlider>
+            {categories.map(category => (
+              <Slide key={category.id}>
+                <CategoryCard {...category} />
+              </Slide>
+            ))}
+          </TouchSlider>
         </CategoryList>
-      </CategoryListWrapper> */}
-      <Title>Populares</Title>
-      <ProductsList>
-        {/* {(productsState.loading && <ProductCardPlaceholders />) ||
-          products.map(product => (
-            <ProductCard key={product.id} {...product} />
-          ))} */}
-        <FlatList
-          data={products}
-          loading={productsState.loading}
-          renderItemPlaceholder={() => <ProductCardPlaceholders />}
-          paginationStyle="standard"
-          showSearchBox={false}
-          renderItem={product => <ProductCard {...product} />}
-        />
-      </ProductsList>
+      </CategoryListWrapper>
+      {categories.map(category => {
+        const products = getAllCategoryProducts(category)
+
+        if (products.length < 1) {
+          return <Fragment key={category.id} />
+        }
+
+        return (
+          <Fragment key={category.id}>
+            <Title>{category.title}</Title>
+            <ProductsList>
+              {/* {(productsState.loading && <ProductCardPlaceholders />) ||
+                  products.map(product => (
+                    <ProductCard key={product.id} {...product} />
+                  ))} */}
+              <FlatList
+                data={products}
+                loading={false}
+                renderItemPlaceholder={() => <ProductCardPlaceholders />}
+                paginationStyle="standard"
+                showSearchBox={false}
+                renderItem={product => <ProductCard product={product} />}
+              />
+            </ProductsList>
+          </Fragment>
+        )
+      })}
     </Container>
   )
 }
