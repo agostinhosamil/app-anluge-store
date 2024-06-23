@@ -57,15 +57,17 @@ export const HeaderAsideMenu: HeaderAsideMenuComponent = ({
             <span>Página inicial</span>
           </Link>
         </li>
-        <li>
-          <Link href="/me/orders">
-            <i>
-              <Icon name="FaFirstOrder" />
-            </i>
-            <span>Meus pedidos</span>
-            {/* <b>123</b> */}
-          </Link>
-        </li>
+        <Partial auth>
+          <li>
+            <Link href="/me/orders">
+              <i>
+                <Icon name="FaFirstOrder" />
+              </i>
+              <span>Meus pedidos</span>
+              {/* <b>123</b> */}
+            </Link>
+          </li>
+        </Partial>
         <li>
           <Link href="/me/cart">
             <i>
@@ -74,43 +76,47 @@ export const HeaderAsideMenu: HeaderAsideMenuComponent = ({
             <span>Meu carrinho</span>
           </Link>
         </li>
-        <li>
-          <Link href="/me/favorites">
-            <i>
-              <Icon name="FaHeart" />
-            </i>
-            <span>Lista de desejo</span>
-          </Link>
-        </li>
-        <li>
-          <b></b>
-        </li>
-        <Partial isEither={['admin', 'admin:master']}>
+        <Partial auth>
           <li>
-            <Link href="/dashboard">
+            <Link href="/me/favorites">
               <i>
-                <Icon name="FaDashcube" />
+                <Icon name="FaHeart" />
               </i>
-              <span>Ir ao painel administrador</span>
+              <span>Lista de desejo</span>
             </Link>
           </li>
         </Partial>
-        <li>
-          <Link href="">
-            <i>
-              <Icon name="FaWhmcs" />
-            </i>
-            <span>Definições conta</span>
-          </Link>
-        </li>
-        <li>
-          <Link href="">
-            <i>
-              <Icon name="FaPowerOff" />
-            </i>
-            <span>Terminar sessão</span>
-          </Link>
-        </li>
+        <Partial auth>
+          <li>
+            <b></b>
+          </li>
+          <Partial isNeither={['client', 'guest']}>
+            <li>
+              <Link href="/dashboard">
+                <i>
+                  <Icon name="FaDashcube" />
+                </i>
+                <span>Ir ao painel administrador</span>
+              </Link>
+            </li>
+          </Partial>
+          <li>
+            <Link href="">
+              <i>
+                <Icon name="FaWhmcs" />
+              </i>
+              <span>Definições conta</span>
+            </Link>
+          </li>
+          <li>
+            <Link href="">
+              <i>
+                <Icon name="FaPowerOff" />
+              </i>
+              <span>Terminar sessão</span>
+            </Link>
+          </li>
+        </Partial>
       </ul>
     </Container>
   )
