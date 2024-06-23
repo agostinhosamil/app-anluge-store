@@ -1,5 +1,6 @@
 import { Category } from '@prisma/client'
 import { compareSync } from 'bcryptjs'
+import deepmerge from 'deepmerge'
 import { CategoryProps } from '~/Types/Category'
 
 import { LoadingStockMap, ProductProps } from '~/Types/Product'
@@ -113,7 +114,7 @@ export const getObjectProps = <ObjectType = any>(
 export const resolvePartnerCompanyNameByLoadingStockMapFormat = (
   loadingStockMap?: LoadingStockMap
 ): string => {
-  const re = /\/([a-zA-Z0-9_\-\.]+)$/
+  const re = /\/([a-zA-Z0-9_\-.]+)$/
 
   const companyNameMatch = re.exec(String(loadingStockMap))
 
@@ -135,21 +136,41 @@ export const uploadedImageUrl = (
   return `${process.env.NEXT_PUBLIC_ANLUGE_CDN_API_URL}/static/images/${imagePath}`
 }
 
-export const getQueryMatchSearchParam = (params: URLSearchParams) => {
+export const getQueryMatchSearchParams = (params: URLSearchParams) => {
   const queryParams = Array.from(params.entries())
 
-  const matchQuery = queryParams.find(([query, value]) => {
-    return /^(match)/i.test(query)
+  const matchSearchParams: Array<[string, string, boolean]> = []
+
+  queryParams.forEach(matchSearchParam => {
+    const [query] = matchSearchParam
+
+    const matchRe = /^(((or)\.)?match)/i
+    const matchReMatch = matchRe.exec(query)
+
+    if (matchReMatch) {
+      const [matchFunctionName, ...rest] = [
+        ...matchSearchParam,
+        noEmpty(matchReMatch[3])
+      ]
+
+      matchSearchParams.push([matchFunctionName.replace(/^or\./i, ''), ...rest])
+    }
   })
 
-  return matchQuery || ['', '']
+  return matchSearchParams
 }
 
-export const getSearchParamsQueryArgument = (queryString: URLSearchParams) => {
-  const queryArguments = {}
+type SearchParamsQueryArgument = { where: object }
+
+export const getSearchParamsQueryArgument = (
+  queryString: URLSearchParams
+): SearchParamsQueryArgument => {
+  const queryArguments = {} as SearchParamsQueryArgument
+
+  const validFunctionNames = ['contains', 'endsWith', 'startsWith', 'equals']
 
   const queryLimit = queryString.get('limit')
-  const [queryMatch, queryMatchValue] = getQueryMatchSearchParam(queryString) // queryString.get('query')
+  const queryMatchSearchParams = getQueryMatchSearchParams(queryString) // queryString.get('query')
 
   if (noEmpty(queryLimit)) {
     const queryLimitSlices = queryLimit.split(/\s*,\s*/)
@@ -162,32 +183,58 @@ export const getSearchParamsQueryArgument = (queryString: URLSearchParams) => {
     Object.assign(queryArguments, { skip, take })
   }
 
-  if (noEmpty(queryMatch) && noEmpty(queryMatchValue)) {
-    const validFunctionNames = ['contains', 'endsWith', 'startsWith', 'equals']
+  let whereStatement = {}
 
-    const queryMatchSplittersRe = /(\.|:)/
+  for (const queryMatchSearchParam of queryMatchSearchParams) {
+    const [queryMatch, queryMatchValue, isOr] = queryMatchSearchParam
 
-    const queryMatchStrSlices = queryMatch
-      .split(queryMatchSplittersRe)
-      .filter(slice => !queryMatchSplittersRe.test(slice))
+    if (noEmpty(queryMatch) && noEmpty(queryMatchValue)) {
+      const queryMatchSplittersRe = /(\.|:)/
 
-    const [, fieldName, functionName] = queryMatchStrSlices.concat([
-      'name',
-      'contains'
-    ])
+      const queryMatchStrSlices = queryMatch
+        .split(queryMatchSplittersRe)
+        .filter(slice => !queryMatchSplittersRe.test(slice))
 
-    if (validFunctionNames.includes(functionName)) {
-      Object.assign(queryArguments, {
-        where: {
-          [fieldName]: {
-            [functionName]: queryMatchValue
-          }
-        }
-      })
+      const [, fieldName, functionName] = queryMatchStrSlices.concat([
+        'id',
+        'equals'
+      ])
+
+      if (validFunctionNames.includes(functionName)) {
+        // Object.assign(queryArguments, {
+        //   where: {
+        //     [fieldName]: {
+        //       [functionName]: queryMatchValue
+        //     }
+        //   }
+        // })
+
+        const statement = isOr
+          ? {
+              OR: [
+                {
+                  [fieldName]: {
+                    [functionName]: queryMatchValue
+                  }
+                }
+              ]
+            }
+          : {
+              [fieldName]: {
+                [functionName]: queryMatchValue
+              }
+            }
+
+        whereStatement = deepmerge(whereStatement, statement)
+      }
     }
   }
 
-  return queryArguments
+  // console.log('whereStatement => ', whereStatement)
+
+  return deepmerge<SearchParamsQueryArgument>(queryArguments, {
+    where: whereStatement
+  })
 }
 
 export const arraySplit = <ArrayItemsType = any>(
@@ -250,7 +297,7 @@ export const isMasterKey = (data: string): boolean => {
 type ProductImageVariant = 'large' | 'medium' | 'normal' | 'small'
 
 export const resolveProductImageUrl = (
-  product: ProductProps,
+  product: Partial<ProductProps>,
   variant?: ProductImageVariant
 ): string => {
   const productMedias = product.medias
@@ -264,6 +311,10 @@ export const resolveProductImageUrl = (
   }
 
   return uploadedImageUrl('product-image-placeholder.jpg')
+}
+
+export const resolveUserAvatarUrl = (userAvatarUrl?: string | null): string => {
+  return uploadedImageUrl(userAvatarUrl || 'user-avatar-placeholder.jpg')
 }
 
 export const resolveCategoryImageUrl = (
@@ -351,3 +402,32 @@ export const formatAmount = (
     style: 'currency',
     currency: currency
   }).format(amount)
+
+export const validPhoneNumber = (phoneNumber: string): boolean => {
+  const re = /^((\+?244)?9[12345]([0-9]{7}))$/
+
+  return re.test(phoneNumber)
+}
+
+export const validCardNumber = (cardNumber: string) => {
+  const numberRe = /^([0-9]+)$/
+
+  const cardTypesRegExes = [
+    /^4[0-9]{12}(?:[0-9]{3})?$/,
+    /^5[1-5][0-9]{14}$/,
+    /^3[47][0-9]{13}$/,
+    /^6(?:011|5[0-9]{2})[0-9]{12}$/
+  ]
+
+  if (!numberRe.test(cardNumber)) {
+    return false
+  }
+
+  for (const cardTypesRegEx of cardTypesRegExes) {
+    if (cardTypesRegEx.test(cardNumber)) {
+      return true
+    }
+  }
+
+  return false
+}
