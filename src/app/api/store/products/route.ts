@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
       : []
 
   const productTags = requestBody.product.tags.map(title => {
-    const slag = generateSlagByTitle(title).replace(/(\-[0-9]+)$/, '')
+    const slag = generateSlagByTitle(title).replace(/(-[0-9]+)$/, '')
 
     return {
       title,
