@@ -124,7 +124,7 @@ export default function ProductPage() {
               <strong>Partilhar este produto</strong>
               <ul>
                 <li>
-                  <a target="_blank" href="//www.facebook.com">
+                  <a target="_blank" href="//www.facebook.com" rel="noreferrer">
                     <Image
                       src="/assets/images/social-media-icon-facebook.png"
                       alt="Partilhar no Facebook"
@@ -134,7 +134,11 @@ export default function ProductPage() {
                   </a>
                 </li>
                 <li>
-                  <a target="_blank" href="//www.instagram.com">
+                  <a
+                    target="_blank"
+                    href="//www.instagram.com"
+                    rel="noreferrer"
+                  >
                     <Image
                       src="/assets/images/social-media-icon-instagram.png"
                       alt="Partilhar no Instagram"
@@ -144,7 +148,7 @@ export default function ProductPage() {
                   </a>
                 </li>
                 <li>
-                  <a target="_blank" href="//www.whatsapp.com">
+                  <a target="_blank" href="//www.whatsapp.com" rel="noreferrer">
                     <Image
                       src="/assets/images/social-media-icon-whatsapp.png"
                       alt="Partilhar pelo Whatsapp"
@@ -154,7 +158,7 @@ export default function ProductPage() {
                   </a>
                 </li>
                 <li>
-                  <a target="_blank" href="//www.twitter.com">
+                  <a target="_blank" href="//www.twitter.com" rel="noreferrer">
                     <Image
                       src="/assets/images/social-media-icon-twitter.png"
                       alt="Partilhar no Twitter"
