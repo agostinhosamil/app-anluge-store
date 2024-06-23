@@ -10,13 +10,15 @@ import { formatAmount, resolveProductImageUrl } from '~/utils'
 import { StarRating } from './StarRating'
 import * as Styled from './styles'
 
-type ProductCardProps = {
+export type ProductCardProps = {
   product: ProductProps
   showAside?: boolean
   showProductAdditionalData?: boolean
 }
 
-export const ProductCard: React.FunctionComponent<ProductCardProps> = props => {
+type ProductCardComponent = React.FunctionComponent<ProductCardProps>
+
+export const ProductCard: ProductCardComponent = props => {
   const storeContext = useStoreContext()
 
   const { product } = props
