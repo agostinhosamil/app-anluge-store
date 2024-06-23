@@ -10,6 +10,10 @@ export interface ProductInclude extends Prisma.ProductInclude {
   }
 }
 
+export type ProductWithRates = Prisma.ProductGetPayload<{
+  include: { rates: true }
+}>
+
 // export interface ProductInclude extends Prisma.ProductDefaultArgs {
 //   category: {
 //     include: CategoryInclude
