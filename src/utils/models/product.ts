@@ -3,7 +3,7 @@ import { AxiosResponse } from 'axios'
 import { Product } from '@prisma/client'
 import { axios } from '@services/axios'
 import { ProductsImagesData } from '@utils/getProductsImagesFromZipFile'
-import { ProductProps } from '~/Types/Product'
+import { ProductProps, ProductWithRates } from '~/Types/Product'
 import { arrayMerge, arraySplit, noEmpty } from '~/utils'
 import {
   lazilyGetAll,
@@ -248,4 +248,22 @@ export const getProducts = async (
   }
 
   return []
+}
+
+export const getProductRatesAverage = (
+  product: ProductWithRates | ProductProps
+): number => {
+  const productRatesValues = product.rates.map(rate => rate.value)
+
+  if (productRatesValues.length <= 1) {
+    return productRatesValues.length > 0 ? productRatesValues[0] : 0
+  }
+
+  const productTotalRatesValue = productRatesValues.reduce(
+    (currentValue, nextValue) => {
+      return currentValue + nextValue
+    }
+  )
+
+  return Math.round(productTotalRatesValue / productRatesValues.length)
 }
