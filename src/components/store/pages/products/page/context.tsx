@@ -10,9 +10,9 @@ export const ProductPageContext = createContext<ProductPageContextProps>(
 )
 
 export const ProductPageContextProvider: ProductPageContextProviderComponent =
-  ({ product, children }) => {
+  ({ product, children, category }) => {
     return (
-      <ProductPageContext.Provider value={{ product }}>
+      <ProductPageContext.Provider value={{ product, category }}>
         {children}
       </ProductPageContext.Provider>
     )
