@@ -62,7 +62,6 @@ export const HeaderDataWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
   flex-direction: column;
   padding-right: 55px;
 
@@ -196,7 +195,9 @@ export const HeaderMenuStaticWrapper = styled.div`
   height: auto;
 `
 
-export const HeaderMenuFixedWrapper = styled.div`
+export const HeaderMenuFixedWrapper = styled.div.attrs({
+  id: 'data-page-main-header-menu-fixed-wrapper'
+})`
   width: 100%;
   height: auto;
   position: fixed;
@@ -205,6 +206,10 @@ export const HeaderMenuFixedWrapper = styled.div`
   right: 0px;
   box-shadow: 0px 10px 15px rgb(0 0 0 / 24%);
   z-index: 4;
+
+  & > div {
+    padding: 0px;
+  }
 `
 
 export const HeaderMenuShadow = styled.div`
