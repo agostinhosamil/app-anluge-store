@@ -7,6 +7,7 @@ import { FaCartPlus, FaEllipsisVertical, FaHeart } from 'react-icons/fa6'
 
 import Link from 'next/link'
 import { useStoreContext } from 'store@components/Context'
+import { CategoryProductsList } from 'store@components/NewsFeed/CategoryProductsList'
 import { useProductPageContext } from 'store@components/pages/products/page/context'
 import { CategoryBreadCrumb } from 'store@components/ProductPage/CategoryBreadCrumb'
 import { ProductFAQs } from 'store@components/ProductPage/ProductFAQs'
@@ -34,7 +35,7 @@ import { RichText } from '~/components/RichText'
 import { StarRating } from '~/components/store/NewsFeed/ProductCard/StarRating'
 
 export default function ProductPage() {
-  const { product } = useProductPageContext()
+  const { product, category } = useProductPageContext()
 
   const storeContext = useStoreContext()
 
@@ -188,6 +189,20 @@ export default function ProductPage() {
           <ProductFAQs product={product} />
         </Column>
       </Row>
+      {category && (
+        <Row>
+          <Column md={12}>
+            <CategoryProductsList
+              flatListProps={{
+                itemsCountPerIteration: 15,
+                placeholderCountOnLoading: 15
+              }}
+              category={category}
+              title="Mais produtos da categoria $0"
+            />
+          </Column>
+        </Row>
+      )}
     </Container>
   )
 }

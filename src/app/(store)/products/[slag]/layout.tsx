@@ -1,8 +1,15 @@
-import { prisma } from '@services/prisma'
 import { Fragment } from 'react'
+
+import { prisma } from '@services/prisma'
 import { NotFoundPageContent } from 'store@components/NotFoundPageContent'
 import { ProductPageWrapper } from 'store@components/pages/products/page'
+import { CategoryProps } from '~/Types/Category'
 import { LayoutProps } from '~/Types/next'
+import { categoryIncludeFactory } from '~/utils/category'
+import {
+  categoryListToTree,
+  getCategoryFromList
+} from '~/utils/models/category'
 import { productIncludeFactory } from '~/utils/product'
 
 type ProductPageParams = {
@@ -30,8 +37,6 @@ export default async function ProductPageTemplate({
   })
 
   if (!product) {
-    // notFound()
-
     return (
       <Fragment>
         <NotFoundPageContent />
@@ -39,5 +44,40 @@ export default async function ProductPageTemplate({
     )
   }
 
-  return <ProductPageWrapper product={product}>{children}</ProductPageWrapper>
+  const categories: Array<CategoryProps> = await prisma.category.findMany({
+    include: {
+      categories: {
+        include: categoryIncludeFactory()
+      },
+
+      products: {
+        include: productIncludeFactory()
+      }
+    }
+  })
+
+  const productCategory = getCategoryFromList(
+    product.categoryId || '<<non-existing-category>>',
+    categoryListToTree(categories)
+  )
+  // await prisma.category.findUnique({
+  //   where: {
+  //     id: product.categoryId || '<<non-existing-category>>'
+  //   },
+
+  //   include: {
+  //     categories: {
+  //       include: categoryIncludeFactory()
+  //     },
+  //     products: {
+  //       include: productIncludeFactory()
+  //     }
+  //   }
+  // })
+
+  return (
+    <ProductPageWrapper product={product} category={productCategory}>
+      {children}
+    </ProductPageWrapper>
+  )
 }
