@@ -2,7 +2,11 @@ import { User } from '@prisma/client'
 
 import { axios } from '@services/axios'
 import { UserProps } from '~/Types/UserProps'
-import { validateAuthGuard } from '../validateAuthGuard'
+import { formDataToJson } from '~/utils/formDataToJson'
+import { validateAuthGuard } from '~/utils/validateAuthGuard'
+
+import { noEmpty } from '..'
+import { DefineUserPasswordFormDataObject } from './validation/schemas/DefineUserPasswordFormDataObjectSchema'
 
 export const createUserByFormData = async (
   formData: FormData
@@ -49,6 +53,40 @@ export const updateUserByFormData = async (
   return null
 }
 
+type DefineUserPasswordRequestResponseData = {
+  success: boolean
+}
+
+export const defineUserPassword = async (
+  userId: string,
+  formData: FormData | DefineUserPasswordFormDataObject
+): Promise<boolean> => {
+  formData =
+    formData instanceof FormData
+      ? formDataToJson<DefineUserPasswordFormDataObject>(formData)
+      : formData
+
+  // console.log('[defineUserPassword] formData: ', formData)
+
+  try {
+    const response = await axios.patch<DefineUserPasswordRequestResponseData>(
+      `/users/${userId}/define-password`,
+      formData
+    )
+
+    return Boolean(
+      typeof response.data === 'object' &&
+        response.data &&
+        response.data.success
+    )
+  } catch (err) {
+    console.log('Error defining user password => ', err)
+    // pass
+  }
+
+  return false
+}
+
 export const deleteUserById = async (userId: string): Promise<boolean> => {
   const response = await axios.delete(`/users/${userId}`)
 
@@ -75,8 +113,12 @@ export const userIs = (
   roleKey: string | Array<string>
 ): boolean => validateAuthGuard('is', roleKey, user)
 
-export const getUsers = async (): Promise<Array<UserProps>> => {
-  const response = await axios.get<Array<UserProps>>('/users')
+export const getUsers = async (
+  query: string = ''
+): Promise<Array<UserProps>> => {
+  const response = await axios.get<Array<UserProps>>(
+    `/users/${noEmpty(query) ? `?${query}` : ''}`
+  )
 
   if (response.data instanceof Array) {
     return response.data
