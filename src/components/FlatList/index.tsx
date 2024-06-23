@@ -91,7 +91,7 @@ export function FlatList<Data = any>(
     ))
   }
 
-  const listItemDataFilter = (data: Data): boolean => {
+  const listItemDataFilter = (): boolean => {
     return true
   }
 
@@ -130,6 +130,32 @@ export function FlatList<Data = any>(
   const paginationStyle = props.paginationStyle || 'standard'
 
   const PaginationElement = () => {
+    const maxPaginationButtons = 7
+    const paginationButtonsCountDivisor =
+      itemsCountPerIteration >= 1 ? itemsCountPerIteration : 1
+    const paginationButtonsCount = Math.ceil(
+      props.data.length / paginationButtonsCountDivisor
+    )
+
+    const finalPaginationButtonsCount =
+      paginationButtonsCount >= maxPaginationButtons
+        ? maxPaginationButtons
+        : paginationButtonsCount
+
+    const paginationButtonsCountPerSide = Math.floor(
+      finalPaginationButtonsCount / 2
+    )
+
+    const currentPaginationIteration = resolveCurrentPaginationIteration()
+
+    const paginationButtonsSliceStart =
+      currentPaginationIteration >= paginationButtonsCountPerSide + 1
+        ? currentPaginationIteration - (paginationButtonsCountPerSide + 1)
+        : 0
+    const paginationButtonsSliceEnd =
+      currentPaginationIteration +
+      paginationButtonsCountPerSide * (currentPaginationIteration <= 1 ? 2 : 1)
+
     switch (paginationStyle) {
       case 'client-demand':
         return (
@@ -146,33 +172,6 @@ export function FlatList<Data = any>(
         )
 
       case 'standard':
-        const maxPaginationButtons = 7
-        const paginationButtonsCountDivisor =
-          itemsCountPerIteration >= 1 ? itemsCountPerIteration : 1
-        const paginationButtonsCount = Math.ceil(
-          props.data.length / paginationButtonsCountDivisor
-        )
-
-        const finalPaginationButtonsCount =
-          paginationButtonsCount >= maxPaginationButtons
-            ? maxPaginationButtons
-            : paginationButtonsCount
-
-        const paginationButtonsCountPerSide = Math.floor(
-          finalPaginationButtonsCount / 2
-        )
-
-        const currentPaginationIteration = resolveCurrentPaginationIteration()
-
-        const paginationButtonsSliceStart =
-          currentPaginationIteration >= paginationButtonsCountPerSide + 1
-            ? currentPaginationIteration - (paginationButtonsCountPerSide + 1)
-            : 0
-        const paginationButtonsSliceEnd =
-          currentPaginationIteration +
-          paginationButtonsCountPerSide *
-            (currentPaginationIteration <= 1 ? 2 : 1)
-
         return (
           <ListPaginationButtonsList>
             <ListPaginationButtonsListItem>
