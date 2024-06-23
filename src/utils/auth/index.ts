@@ -2,11 +2,13 @@ import { User } from '@prisma/client'
 import { jwtVerify } from 'jose'
 import { sign } from 'jsonwebtoken'
 
+import { getAuthTokenCookie } from '@utils/authTokenCookie'
+import { userIncludeFactory } from '@utils/user'
 import { Hash } from '~/helpers/Hash'
-
 import { prisma } from '~/services/prisma'
-
 import { UserProps } from '~/Types/UserProps'
+import { noEmpty } from '~/utils'
+
 import { AuthUtil, SignInRequestProps, SignInResponse } from './types'
 
 const DEFAULT_AUTH_PROPS = {
@@ -24,7 +26,9 @@ export const auth: AuthUtil = async (props = DEFAULT_AUTH_PROPS) => {
   //   return session.user as User
   // }
 
-  const authenticationToken = props.token
+  const authenticationToken = noEmpty(props.token)
+    ? props.token
+    : getAuthTokenCookie()
 
   try {
     const textEncode = new TextEncoder()
@@ -45,13 +49,7 @@ export const auth: AuthUtil = async (props = DEFAULT_AUTH_PROPS) => {
         id: String(jwtPayloadData.user.id)
       },
 
-      include: {
-        role: {
-          include: {
-            permissions: true
-          }
-        }
-      }
+      include: userIncludeFactory()
     })
 
     if (authenticatedUser) {
@@ -91,13 +89,7 @@ export const authenticateUser = async (
         }
       ]
     },
-    include: {
-      role: {
-        include: {
-          permissions: true
-        }
-      }
-    }
+    include: userIncludeFactory()
   })
 
   if (registeredUser) {
@@ -119,36 +111,55 @@ export const authenticateUser = async (
   return null
 }
 
+export const generateUserAuthenticationToken = (user: UserProps): string => {
+  const jwtPayload = {
+    user: {
+      id: user.id
+    }
+  }
+
+  // const textEncoder = new TextEncoder()
+  // const jwtSecret = textEncoder.encode(
+  //   String(process.env.JSON_WEB_TOKEN_SECRET)
+  // )
+
+  const token = sign(jwtPayload, String(process.env.JSON_WEB_TOKEN_SECRET), {
+    expiresIn: '5h'
+  })
+
+  // const token = await new EncryptJWT(jwtPayload)
+  //   .setExpirationTime('5h')
+  //   .setIssuedAt(new Date(Date.now()))
+  //   .setProtectedHeader({ alg: 'HS256', enc: 'A128CBC-HS256' })
+  //   .encrypt(jwtSecret)
+  return token
+}
+
 export const signIn = async (
   props: SignInRequestProps
 ): Promise<SignInResponse | undefined> => {
   const user = await authenticateUser(props)
 
   if (user) {
-    const jwtPayload = {
-      user: {
-        id: user.id
-      }
-    }
-
-    // const textEncoder = new TextEncoder()
-    // const jwtSecret = textEncoder.encode(
-    //   String(process.env.JSON_WEB_TOKEN_SECRET)
-    // )
-
-    const token = sign(jwtPayload, String(process.env.JSON_WEB_TOKEN_SECRET), {
-      expiresIn: '5h'
-    })
-
-    // const token = await new EncryptJWT(jwtPayload)
-    //   .setExpirationTime('5h')
-    //   .setIssuedAt(new Date(Date.now()))
-    //   .setProtectedHeader({ alg: 'HS256', enc: 'A128CBC-HS256' })
-    //   .encrypt(jwtSecret)
+    const token = generateUserAuthenticationToken(user)
 
     return {
       user,
       token
     }
+  }
+}
+
+export const isUserAuthenticated = async (): Promise<boolean> => {
+  const authTokenCookie = getAuthTokenCookie()
+
+  try {
+    const authenticatedUser = await auth({
+      token: authTokenCookie
+    })
+
+    return Boolean(authenticatedUser)
+  } catch (err) {
+    return false
   }
 }
