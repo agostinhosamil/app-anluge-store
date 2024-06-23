@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 
-import { Container, Wrapper } from './styles'
+import { NavigationButton } from './NavigationButton'
+import { Container, Root, Wrapper } from './styles'
 
 export * from './Slide'
 
@@ -27,13 +28,15 @@ export const TouchSlider: TouchSliderComponent = props => {
   const [index, setIndex] = useState<number>(0)
   const [sliderX, setSliderX] = useState<number>(0)
 
+  const grabbingState = useRef<boolean>(false)
   const wrapperRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const grabbingState = useRef<boolean>(false)
   const mouseXValuesState = useRef<MouseXValues>({
     old: -1,
     current: -1
   })
+
+  const wrapperElementGrabbingClassName = 'x-grabbing-wrapper-element'
 
   const resolveMouseDirection = (): MouseDirection | null => {
     const { current, old } = mouseXValuesState.current
@@ -66,30 +69,13 @@ export const TouchSlider: TouchSliderComponent = props => {
       : sliderWrapperElement.offsetWidth / sliderWrapperElement.children.length
   }
 
-  const sliderWrapperMouseDownHandler: React.MouseEventHandler = event => {
-    grabbingState.current = true
-
-    mouseXValuesState.current = {
-      ...mouseXValuesState.current,
-      old: event.clientX
+  const toggleGrabWrapperElement = () => {
+    if (wrapperRef.current) {
+      wrapperRef.current.classList.toggle(wrapperElementGrabbingClassName)
     }
   }
 
-  const sliderWrapperMouseUpHandler: React.MouseEventHandler = event => {
-    grabbingState.current = false
-
-    mouseXValuesState.current = {
-      ...mouseXValuesState.current,
-      current: event.clientX
-    }
-
-    let velocity = resolveSliderVelocity()
-    const direction = resolveMouseDirection()
-
-    if (!direction) {
-      return
-    }
-
+  const swipeLeft = (velocity: number): void => {
     if (
       !(
         wrapperRef.current &&
@@ -111,26 +97,61 @@ export const TouchSlider: TouchSliderComponent = props => {
     const containerElementXw =
       containerElementCoordinates.x + containerElementCoordinates.width
 
+    if (containerElementXw >= wrapperElementXw) {
+      const containerElementXwDiffToWrapperIs =
+        containerElementXw - wrapperElementXw
+
+      velocity -= containerElementXwDiffToWrapperIs
+    }
+
+    setSliderX(sliderX - velocity)
+
+    setIndex(index + 1)
+  }
+
+  const swipeRight = (velocity: number): void => {
+    setSliderX(sliderX + velocity)
+
+    if (index >= 1) {
+      setIndex(index - 1)
+    }
+  }
+
+  const sliderWrapperMouseDownHandler: React.MouseEventHandler = event => {
+    toggleGrabWrapperElement()
+
+    grabbingState.current = true
+
+    mouseXValuesState.current = {
+      ...mouseXValuesState.current,
+      old: event.clientX
+    }
+  }
+
+  const sliderWrapperMouseUpHandler: React.MouseEventHandler = event => {
+    toggleGrabWrapperElement()
+
+    grabbingState.current = false
+
+    mouseXValuesState.current = {
+      ...mouseXValuesState.current,
+      current: event.clientX
+    }
+
+    const velocity = resolveSliderVelocity()
+    const direction = resolveMouseDirection()
+
+    if (!direction) {
+      return
+    }
+
     switch (direction) {
       case MouseDirection.LEFT:
-        if (containerElementXw >= wrapperElementXw) {
-          const containerElementXwDiffToWrapperIs =
-            containerElementXw - wrapperElementXw
-
-          velocity -= containerElementXwDiffToWrapperIs
-        }
-
-        setSliderX(sliderX - velocity)
-
-        setIndex(index + 1)
+        swipeLeft(velocity)
         break
 
       case MouseDirection.RIGHT:
-        setSliderX(sliderX + velocity)
-
-        if (index >= 1) {
-          setIndex(index - 1)
-        }
+        swipeRight(velocity)
         break
     }
   }
@@ -143,6 +164,14 @@ export const TouchSlider: TouchSliderComponent = props => {
 
   const sliderWrapperMouseMoveHandler = () => {}
 
+  const leftNavigationButtonClickHandler = () => {
+    swipeRight(resolveSliderVelocity())
+  }
+
+  const rightNavigationButtonClickHandler = () => {
+    swipeLeft(resolveSliderVelocity())
+  }
+
   useEffect(() => {
     if (sliderX > 0) {
       setSliderX(0)
@@ -150,18 +179,31 @@ export const TouchSlider: TouchSliderComponent = props => {
   }, [sliderX])
 
   return (
-    <Container ref={containerRef}>
-      <Wrapper
-        ref={wrapperRef}
-        $x={sliderX}
-        $grabbing={grabbingState.current}
-        onMouseDown={sliderWrapperMouseDownHandler}
-        onMouseUp={sliderWrapperMouseUpHandler}
-        onMouseMove={sliderWrapperMouseMoveHandler}
-        onMouseLeave={sliderWrapperMouseLeaveHandler}
-      >
-        {props.children}
-      </Wrapper>
-    </Container>
+    <Root>
+      {typeof props.showButtons === 'boolean' && props.showButtons && (
+        <Fragment>
+          <NavigationButton
+            icon="FaAngleLeft"
+            onClick={leftNavigationButtonClickHandler}
+          />
+          <NavigationButton
+            icon="FaAngleRight"
+            onClick={rightNavigationButtonClickHandler}
+          />
+        </Fragment>
+      )}
+      <Container ref={containerRef}>
+        <Wrapper
+          ref={wrapperRef}
+          $x={sliderX}
+          onMouseDown={sliderWrapperMouseDownHandler}
+          onMouseUp={sliderWrapperMouseUpHandler}
+          onMouseMove={sliderWrapperMouseMoveHandler}
+          onMouseLeave={sliderWrapperMouseLeaveHandler}
+        >
+          {props.children}
+        </Wrapper>
+      </Container>
+    </Root>
   )
 }
