@@ -122,36 +122,6 @@ export default function ProductImageMassUpdatePage() {
         />
       </ContentHeader>
 
-      {updatedProducts.length >= 1 && (
-        <Row>
-          <Col md={8}>
-            <SubTitle>Produtos atualizados:</SubTitle>
-          </Col>
-          <Col md={4}>
-            <HidePreviewListButtonWrapper>
-              <button type="button" onClick={hidePreviewListButtonClickHandler}>
-                Ocultar resultados
-              </button>
-            </HidePreviewListButtonWrapper>
-          </Col>
-          <Col md={12}>
-            <FlatList
-              data={updatedProducts}
-              itemsCountPerIteration={10}
-              showSearchBox={false}
-              renderItem={product => (
-                <EntityCard
-                  title={product.name}
-                  subTitle={product.category?.title}
-                  avatar={resolveProductImageUrl(product)}
-                  avatarSize="x-large"
-                />
-              )}
-            />
-          </Col>
-        </Row>
-      )}
-
       <Form
         method="post"
         action="/api/store/products/image-mass-update"
@@ -185,6 +155,36 @@ export default function ProductImageMassUpdatePage() {
           </Col>
         </Row>
       </Form>
+
+      {updatedProducts.length >= 1 && (
+        <Row>
+          <Col md={8}>
+            <SubTitle>Produtos atualizados:</SubTitle>
+          </Col>
+          <Col md={4}>
+            <HidePreviewListButtonWrapper>
+              <button type="button" onClick={hidePreviewListButtonClickHandler}>
+                Ocultar resultados
+              </button>
+            </HidePreviewListButtonWrapper>
+          </Col>
+          <Col md={12}>
+            <FlatList
+              data={updatedProducts}
+              itemsCountPerIteration={10}
+              showSearchBox={false}
+              renderItem={product => (
+                <EntityCard
+                  title={product.name}
+                  subTitle={product.category?.title}
+                  avatar={resolveProductImageUrl(product)}
+                  avatarSize="x-large"
+                />
+              )}
+            />
+          </Col>
+        </Row>
+      )}
 
       <Dialog
         show={showLoadImagesDialog}
