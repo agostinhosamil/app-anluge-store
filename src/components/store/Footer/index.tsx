@@ -18,11 +18,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Partial } from '~/components/Partial'
 import { stringifyCompanyTaxData } from '~/utils'
+import { NewsletterForm } from './NewsletterForm'
 import {
   CompanyDataWrapper,
   Container,
   FooterMenuListsWrapper,
-  NewsletterFormContainer,
   ServiceDetails
 } from './styles'
 
@@ -94,30 +94,7 @@ export const Footer: React.FunctionComponent = () => {
       </ServiceDetails>
       <Container>
         <BootstrapContainer>
-          <NewsletterFormContainer>
-            <h1>Receba nossa promoções em primeira mão</h1>
-            <p>
-              Gostaria de ser um dos primeiros a saber os produtos em promoção
-              ou em alta na nossa loja? Então, considere se inscrever na nossa
-              newsletter para estar a frente e sempre se manter atualizado.
-            </p>
-            <form method="post" action="/api/newsletter/subscribe">
-              <div>
-                <input
-                  type="text"
-                  placeholder="Seu melhor endereço de email"
-                  name="newsletter[email]"
-                  id="newsletter-user-email"
-                  autoCapitalize="off"
-                  autoComplete="off"
-                  spellCheck="false"
-                />
-                <button type="submit" role="button">
-                  Inscrever-se
-                </button>
-              </div>
-            </form>
-          </NewsletterFormContainer>
+          <NewsletterForm />
           <Row>
             <Column lg={4}>
               <CompanyDataWrapper>
