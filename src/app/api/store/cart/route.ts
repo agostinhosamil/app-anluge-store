@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+import { Prisma } from '@prisma/client'
 import { prisma } from '@services/prisma'
 import {
   OrderFormDataObject,
@@ -12,6 +13,7 @@ import {
 } from '~/config/cache/models/role'
 import { Hash } from '~/helpers/Hash'
 import { isMasterKey } from '~/utils'
+import { generateCartCode } from '~/utils/cart'
 
 export const POST = async (request: NextRequest) => {
   const requestBody = await getRequestBody<OrderFormDataObject>(request)
@@ -29,9 +31,11 @@ export const POST = async (request: NextRequest) => {
     ? masterAdminRolePrismaQueryData
     : defaultRolePrismaQueryData
 
+  const code = generateCartCode()
   const password = await Hash.make(user.password)
 
-  const cartData = {
+  const cartData: Prisma.CartCreateInput = {
+    code,
     orders: {
       createMany: {
         data: orders.map(order => ({
