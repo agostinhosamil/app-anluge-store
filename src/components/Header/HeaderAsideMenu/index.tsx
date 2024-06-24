@@ -1,7 +1,9 @@
 import { Partial } from '@components/Partial'
 import Link from 'next/link'
 import { useEffect, useRef } from 'react'
+import { useAuthenticationContext } from '~/components/AuthenticationWrapper'
 import { Icon } from '~/components/Icon'
+import { getUserOpenedCarts, userHasOpenedCarts } from '~/utils/models/user'
 import { Container } from './styles'
 
 type HeaderAsideMenuProps = {
@@ -18,6 +20,8 @@ export const HeaderAsideMenu: HeaderAsideMenuComponent = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const closeMenuOnBlurState = useRef<boolean>(true)
+
+  const { auth } = useAuthenticationContext()
 
   useEffect(() => {
     if (containerRef.current) {
@@ -64,6 +68,9 @@ export const HeaderAsideMenu: HeaderAsideMenuComponent = ({
                 <Icon name="FaFirstOrder" />
               </i>
               <span>Meus pedidos</span>
+              {auth.user && userHasOpenedCarts(auth.user) && (
+                <b>{getUserOpenedCarts(auth.user).length}</b>
+              )}
               {/* <b>123</b> */}
             </Link>
           </li>
