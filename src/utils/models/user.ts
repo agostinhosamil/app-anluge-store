@@ -1,10 +1,11 @@
-import { User } from '@prisma/client'
+import { $Enums, User } from '@prisma/client'
 
 import { axios } from '@services/axios'
 import { UserProps } from '~/Types/UserProps'
 import { formDataToJson } from '~/utils/formDataToJson'
 import { validateAuthGuard } from '~/utils/validateAuthGuard'
 
+import { CartProps } from '~/Types/Cart'
 import { noEmpty } from '..'
 import { DefineUserPasswordFormDataObject } from './validation/schemas/DefineUserPasswordFormDataObjectSchema'
 
@@ -125,4 +126,19 @@ export const getUsers = async (
   }
 
   return []
+}
+
+export const getUserOpenedCarts = (user: UserProps): Array<CartProps> => {
+  const openCartStatus: Array<$Enums.CartStatus> = [
+    $Enums.CartStatus.PENDING,
+    $Enums.CartStatus.PROGRESS
+  ]
+
+  return user.carts.filter(cart =>
+    Boolean(openCartStatus.includes(cart.status))
+  )
+}
+
+export const userHasOpenedCarts = (user: UserProps): boolean => {
+  return getUserOpenedCarts(user).length >= 1
 }
