@@ -101,7 +101,7 @@ export const Footer: React.FunctionComponent = () => {
               ou em alta na nossa loja? Então, considere se inscrever na nossa
               newsletter para estar a frente e sempre se manter atualizado.
             </p>
-            <form method="post" action="/">
+            <form method="post" action="/api/newsletter/subscribe">
               <div>
                 <input
                   type="text"
