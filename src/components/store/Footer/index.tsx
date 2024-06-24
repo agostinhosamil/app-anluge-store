@@ -141,6 +141,7 @@ export const Footer: React.FunctionComponent = () => {
                     <a
                       target="_blank"
                       href="https://www.facebook.com/solutionstecnology"
+                      rel="noreferrer"
                     >
                       <FaFacebook />
                     </a>
@@ -149,12 +150,17 @@ export const Footer: React.FunctionComponent = () => {
                     <a
                       target="_blank"
                       href="https://ao.linkedin.com/company/ag-anluge-tech"
+                      rel="noreferrer"
                     >
                       <FaLinkedin />
                     </a>
                   </li>
                   <li>
-                    <a target="_blank" href="https://wa.me/+244928250640">
+                    <a
+                      target="_blank"
+                      href="https://wa.me/+244928250640"
+                      rel="noreferrer"
+                    >
                       <FaWhatsapp />
                     </a>
                   </li>
@@ -162,6 +168,7 @@ export const Footer: React.FunctionComponent = () => {
                     <a
                       target="_blank"
                       href="https://instagram.com/anlugeempresa"
+                      rel="noreferrer"
                     >
                       <FaInstagram />
                     </a>
