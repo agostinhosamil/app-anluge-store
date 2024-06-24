@@ -53,8 +53,9 @@ export const Footer: React.FunctionComponent = () => {
               <data>
                 <strong>Entregas rápidas</strong>
                 <span>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Deleniti itaque odio soluta.
+                  Nossas entregas rápidas garantem que você receba seus pedidos
+                  no menor tempo possível, sem abrir mão da qualidade e cuidado
+                  no serviço
                 </span>
               </data>
             </li>
@@ -67,8 +68,9 @@ export const Footer: React.FunctionComponent = () => {
               <data>
                 <strong>Atendimento 24/24</strong>
                 <span>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Deleniti itaque odio soluta.
+                  Estamos aqui para você a qualquer hora do dia ou da noite.
+                  Nosso atendimento 24/24 garante suporte contínuo para resolver
+                  suas dúvidas e oferecer assistência quando você mais precisa.
                 </span>
               </data>
             </li>
@@ -81,8 +83,9 @@ export const Footer: React.FunctionComponent = () => {
               <data>
                 <strong>Garantias de devolução</strong>
                 <span>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Deleniti itaque odio soluta.
+                  Oferecemos garantias sólidas de devolução para garantir sua
+                  total satisfação. Se não estiver completamente feliz com seu
+                  pedido, estamos aqui para fazer tudo certo.
                 </span>
               </data>
             </li>
