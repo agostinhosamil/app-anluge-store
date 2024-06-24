@@ -160,10 +160,7 @@ export const HeaderMenuListItemBadge = styled.strong`
   right: -6px;
 
   @media (max-width: 750px) {
-    font-size: 4px;
-  }
-
-  @media (max-width: 560px) {
-    font-size: 3px;
+    font-size: 7px;
+    padding: 2px 5px;
   }
 `
