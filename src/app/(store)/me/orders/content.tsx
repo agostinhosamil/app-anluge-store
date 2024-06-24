@@ -81,7 +81,7 @@ export const Content: ContentComponent = ({ user }) => {
             {carts.map(cart => (
               <OrderContainer key={cart.id}>
                 <data>
-                  <h5>{cart.id}</h5>
+                  <h5>{cart.code}</h5>
                   <strong>{cart.status}</strong>
                 </data>
                 <ul>
