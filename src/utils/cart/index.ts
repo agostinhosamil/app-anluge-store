@@ -64,10 +64,6 @@ export const generateCartCode = (): string => {
   const cartCodeTemplate = 'ANL-$0U'
 
   const cartCodeToken = generateRandomAlphaNumericId(6)
-  const cartCodeTokenPrefix = '0'.repeat(13 - cartCodeToken.length)
 
-  return cartCodeTemplate.replace(
-    '$0',
-    cartCodeTokenPrefix.concat(cartCodeToken)
-  )
+  return cartCodeTemplate.replace('$0', cartCodeToken)
 }
