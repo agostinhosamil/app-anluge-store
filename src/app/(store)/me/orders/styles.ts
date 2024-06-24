@@ -17,6 +17,32 @@ export const OrderContainer = styled.div`
     justify-content: center;
     flex-direction: column;
 
+    h5 {
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+
+      i {
+        display: block;
+        margin-top: -3px;
+
+        button {
+          background-color: transparent;
+          border: 0px;
+          outline: 0px;
+          color: #4c5156;
+
+          &:hover {
+            color: #656d74;
+          }
+
+          &:active {
+            color: #393e44;
+          }
+        }
+      }
+    }
+
     strong {
       display: inline-block;
       padding: 4px 14px 2px;

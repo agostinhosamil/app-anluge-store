@@ -1,11 +1,11 @@
 'use client'
 
+import { $Enums } from '@prisma/client'
 import { default as Column } from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
-import { FaEye, FaHeart, FaTrash } from 'react-icons/fa6'
+import { FaCopy, FaEye, FaHeart, FaTrash } from 'react-icons/fa6'
 
-import { $Enums } from '@prisma/client'
 import { EmptyListContainer } from '~/components/dashboard/styles'
 import { UserProps } from '~/Types/UserProps'
 import {
@@ -78,30 +78,51 @@ export const Content: ContentComponent = ({ user }) => {
                 </h2>
               </EmptyListContainer>
             )}
-            {carts.map(cart => (
-              <OrderContainer key={cart.id}>
-                <data>
-                  <h5>{cart.code}</h5>
-                  <strong>{cart.status}</strong>
-                </data>
-                <ul>
-                  <Partial refine={() => cart.status !== 'PROGRESS'}>
-                    <li>
-                      <Link href={`/me/cart/checkout/${cart.id}?ref=orders`}>
-                        Finalizar pedido
-                      </Link>
-                    </li>
-                  </Partial>
-                  <li>
-                    <button>
+            {carts.map(cart => {
+              const copyCartTrackingCodeButtonClickHandler = () => {
+                if (
+                  navigator.clipboard &&
+                  typeof navigator.clipboard.writeText === 'function'
+                ) {
+                  navigator.clipboard.writeText(cart.code)
+                }
+              }
+
+              return (
+                <OrderContainer key={cart.id}>
+                  <data>
+                    <h5>
+                      {cart.code}
                       <i>
-                        <FaEye />
+                        <button
+                          type="button"
+                          onClick={copyCartTrackingCodeButtonClickHandler}
+                        >
+                          <FaCopy />
+                        </button>
                       </i>
-                    </button>
-                  </li>
-                </ul>
-              </OrderContainer>
-            ))}
+                    </h5>
+                    <strong>{cart.status}</strong>
+                  </data>
+                  <ul>
+                    <Partial refine={() => cart.status !== 'PROGRESS'}>
+                      <li>
+                        <Link href={`/me/cart/checkout/${cart.id}?ref=orders`}>
+                          Finalizar pedido
+                        </Link>
+                      </li>
+                    </Partial>
+                    <li>
+                      <button>
+                        <i>
+                          <FaEye />
+                        </i>
+                      </button>
+                    </li>
+                  </ul>
+                </OrderContainer>
+              )
+            })}
           </MainListWrapper>
           <ListWrapper>
             <ol>
