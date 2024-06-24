@@ -4,7 +4,7 @@ import { $Enums } from '@prisma/client'
 import { default as Column } from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
-import { FaCopy, FaEye, FaHeart, FaTrash } from 'react-icons/fa6'
+import { FaHeart, FaTrash } from 'react-icons/fa6'
 
 import { EmptyListContainer } from '~/components/dashboard/styles'
 import { UserProps } from '~/Types/UserProps'
@@ -15,9 +15,7 @@ import {
   TitleContainer
 } from '../cart/styles'
 
-import Link from 'next/link'
-import { Partial } from '~/components/Partial'
-import { OrderContainer } from './styles'
+import { Order } from './Order'
 
 type ContentProps = {
   user: UserProps
@@ -78,51 +76,9 @@ export const Content: ContentComponent = ({ user }) => {
                 </h2>
               </EmptyListContainer>
             )}
-            {carts.map(cart => {
-              const copyCartTrackingCodeButtonClickHandler = () => {
-                if (
-                  navigator.clipboard &&
-                  typeof navigator.clipboard.writeText === 'function'
-                ) {
-                  navigator.clipboard.writeText(cart.code)
-                }
-              }
-
-              return (
-                <OrderContainer key={cart.id}>
-                  <data>
-                    <h5>
-                      {cart.code}
-                      <i>
-                        <button
-                          type="button"
-                          onClick={copyCartTrackingCodeButtonClickHandler}
-                        >
-                          <FaCopy />
-                        </button>
-                      </i>
-                    </h5>
-                    <strong>{cart.status}</strong>
-                  </data>
-                  <ul>
-                    <Partial refine={() => cart.status !== 'PROGRESS'}>
-                      <li>
-                        <Link href={`/me/cart/checkout/${cart.id}?ref=orders`}>
-                          Finalizar pedido
-                        </Link>
-                      </li>
-                    </Partial>
-                    <li>
-                      <button>
-                        <i>
-                          <FaEye />
-                        </i>
-                      </button>
-                    </li>
-                  </ul>
-                </OrderContainer>
-              )
-            })}
+            {carts.map(cart => (
+              <Order key={cart.id} cart={cart} />
+            ))}
           </MainListWrapper>
           <ListWrapper>
             <ol>
