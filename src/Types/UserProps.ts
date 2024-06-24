@@ -9,7 +9,15 @@ export type UserProps = Prisma.UserGetPayload<{
             product: {
               include: {
                 medias: true
-                category: true
+              }
+            }
+          }
+        }
+        user: {
+          include: {
+            role: {
+              include: {
+                permissions: true
               }
             }
           }
