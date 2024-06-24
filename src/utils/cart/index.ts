@@ -5,6 +5,7 @@ import { productIncludeFactory } from '@utils/product'
 import { StoreCartData } from 'store@components/Context'
 import { APP_CART_DATA_COOKIE_NAME_KEY } from '~/config'
 import { ProductProps } from '~/Types/Product'
+import { generateRandomAlphaNumericId } from '~/utils'
 
 export const getCartData = async (): Promise<StoreCartData> => {
   const cartDataCookie = getCookie(APP_CART_DATA_COOKIE_NAME_KEY, '[]')
@@ -62,7 +63,7 @@ export const cartIncludeFactory = () => ({
 export const generateCartCode = (): string => {
   const cartCodeTemplate = 'ANL-$0U'
 
-  const cartCodeToken = String(Math.round(Math.random() * Date.now()))
+  const cartCodeToken = generateRandomAlphaNumericId(6)
   const cartCodeTokenPrefix = '0'.repeat(13 - cartCodeToken.length)
 
   return cartCodeTemplate.replace(
