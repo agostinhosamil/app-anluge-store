@@ -431,3 +431,20 @@ export const validCardNumber = (cardNumber: string) => {
 
   return false
 }
+
+export const generateRandomAlphaNumericId = (length: number = 12): string => {
+  const charset =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  const charsetLength = charset.length
+  const randomValues = new Uint32Array(length)
+
+  crypto.getRandomValues(randomValues)
+
+  let result = ''
+
+  for (let i = 0; i < length; i++) {
+    result += charset[randomValues[i] % charsetLength]
+  }
+
+  return result
+}
