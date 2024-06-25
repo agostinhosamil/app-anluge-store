@@ -1,3 +1,4 @@
+import { NextRequest, NextResponse } from 'next/server'
 import React from 'react'
 
 export type LayoutProps<Params = DefaultNextApiParams> = {
@@ -12,3 +13,10 @@ export type DefaultNextApiParams = {
 export type NextApiProps<Params = DefaultNextApiParams> = {
   params: Params
 }
+
+export type NextApiResponse = NextResponse | Promise<NextResponse>
+
+export type NextApiHandler<Params = DefaultNextApiParams> = (
+  request: NextRequest,
+  props: NextApiProps<Params>
+) => NextApiResponse
