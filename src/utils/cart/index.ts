@@ -4,6 +4,7 @@ import { getCookie } from '@utils/cookies'
 import { productIncludeFactory } from '@utils/product'
 import { StoreCartData } from 'store@components/Context'
 import { APP_CART_DATA_COOKIE_NAME_KEY } from '~/config'
+import { CartInclude } from '~/Types/Cart'
 import { ProductProps } from '~/Types/Product'
 import { generateRandomAlphaNumericId } from '~/utils'
 
@@ -45,15 +46,22 @@ export const getCartData = async (): Promise<StoreCartData> => {
   return []
 }
 
-export const cartIncludeFactory = () => ({
-  include: {
-    orders: {
-      include: {
-        product: {
-          include: {
-            medias: true,
-            category: true
-          }
+export const cartIncludeFactory = (): CartInclude => ({
+  orders: {
+    include: {
+      product: {
+        include: {
+          medias: true,
+          category: true
+        }
+      }
+    }
+  },
+  user: {
+    include: {
+      role: {
+        include: {
+          permissions: true
         }
       }
     }

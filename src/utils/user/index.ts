@@ -1,7 +1,9 @@
 import { cartIncludeFactory } from '@utils/cart'
 
 export const userIncludeFactory = () => ({
-  carts: cartIncludeFactory(),
+  carts: {
+    include: cartIncludeFactory()
+  },
   role: {
     include: {
       permissions: true
