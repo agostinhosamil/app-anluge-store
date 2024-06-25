@@ -6,6 +6,13 @@ export type LayoutProps<Params = DefaultNextApiParams> = {
   params: Params
 }
 
+export type PageProps<Params = DefaultNextApiParams> = {
+  params: Params
+  searchParams: {
+    [key: string]: string | string[] | undefined
+  }
+}
+
 export type DefaultNextApiParams = {
   [key: string]: string
 }
