@@ -10,6 +10,8 @@ type PostRequestBody = {
   products: Array<Product>
 }
 
+export const maxDuration = 60
+
 /**
  * Create products from the mass creation form
  *

@@ -29,6 +29,8 @@ type ProductImageMassUpdateRequestBody = z.infer<
   typeof ProductImageMassUpdateRequestBodySchema
 >
 
+export const maxDuration = 60
+
 export const POST = async (request: NextRequest) => {
   const requestBody =
     await getRequestBody<ProductImageMassUpdateRequestBody>(request)
