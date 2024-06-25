@@ -10,8 +10,10 @@ import { getCartData } from '@utils/cart'
 import { AuthenticationWrapper } from '~/components/AuthenticationWrapper'
 import StyledComponentsRegistry from './lib/registry'
 
+import { ApplicationContextProvider } from '~/components/ApplicationContext'
 import { StoreContextWrapper } from '~/components/store/Context/StoreContextWrapper'
 import { getAuthTokenCookie } from '~/utils/authTokenCookie'
+import { getServerHeaders } from '~/utils/server'
 
 export const metadata: Metadata = {
   title: 'Anluge',
@@ -32,6 +34,7 @@ const roboto = Roboto({
 export default async function RootLayout({ children }: RootLayoutProps) {
   const authTokenCookie = getAuthTokenCookie()
   const cartData = await getCartData()
+  const headers = getServerHeaders()
 
   const authenticatedUser = await auth({
     token: (authTokenCookie && authTokenCookie) || ''
@@ -63,11 +66,13 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         <NextJsTopLoader showSpinner={false} />
         <StyledComponentsRegistry>
           <GlobalStyles />
-          <AuthenticationWrapper auth={authenticatedUser}>
-            <StoreContextWrapper cart={cartData}>
-              {children}
-            </StoreContextWrapper>
-          </AuthenticationWrapper>
+          <ApplicationContextProvider headers={headers}>
+            <AuthenticationWrapper auth={authenticatedUser}>
+              <StoreContextWrapper cart={cartData}>
+                {children}
+              </StoreContextWrapper>
+            </AuthenticationWrapper>
+          </ApplicationContextProvider>
         </StyledComponentsRegistry>
       </body>
     </html>
