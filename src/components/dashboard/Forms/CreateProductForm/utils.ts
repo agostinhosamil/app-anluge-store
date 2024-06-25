@@ -58,12 +58,20 @@ export const categoryListToSelectFieldData = (
 ): SelectFieldData => {
   const categoriesTree = categoryListToTree(categories)
 
-  const categoryObjectFactory = (category: CategoryProps): OptionProps => ({
-    label: category.title,
-    icon: 'FaObjectGroup',
-    value: category.id,
-    options: categoryChildrenToSelectFieldData(category.categories)
-  })
+  const categoryObjectFactory = (category: CategoryProps): OptionProps => {
+    const subCategories: Array<CategoryProps> = category.categories.map(
+      (subCategory): CategoryProps => {
+        return subCategory as CategoryProps
+      }
+    )
+
+    return {
+      label: category.title,
+      icon: 'FaObjectGroup',
+      value: category.id,
+      options: categoryChildrenToSelectFieldData(subCategories)
+    }
+  }
 
   const categoryChildrenToSelectFieldData = (
     categoryChildren: Array<CategoryProps>

@@ -6,14 +6,11 @@ export interface CategoryInclude extends Prisma.CategoryDefaultArgs {
     include: ProductInclude
   }
   categories: {
-    include: CategoryInclude
+    include: {
+      products: true
+      categories: true
+    }
   }
-  // {
-  //   include: {
-  //     products: true
-  //     categories: true
-  //   }
-  // }
 }
 
 export type CategoryProps = Omit<
