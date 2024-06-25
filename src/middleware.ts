@@ -28,6 +28,7 @@ export const middleware = async (request: NextRequest) => {
   if (isPreflight) {
     const preflightHeaders = {
       'x-current-page-url': request.nextUrl.toString(),
+      'x-app-origin': request.nextUrl.origin.toString(),
       ...(isAllowedOrigin && { 'Access-Control-Allow-Origin': origin }),
       ...corsOptions
     }
@@ -38,6 +39,7 @@ export const middleware = async (request: NextRequest) => {
   const response = NextResponse.next()
 
   response.headers.set('x-current-page-url', request.nextUrl.toString())
+  response.headers.set('x-app-origin', request.nextUrl.origin.toString())
 
   if (isAllowedOrigin) {
     response.headers.set('Access-Control-Allow-Origin', origin)
