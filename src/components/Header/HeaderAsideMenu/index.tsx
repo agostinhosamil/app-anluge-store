@@ -121,7 +121,7 @@ export const HeaderAsideMenu: HeaderAsideMenuComponent = ({
             </Link>
           </li>
           <li>
-            <Link href="">
+            <Link href="/api/auth/logout">
               <i>
                 <Icon name="FaPowerOff" />
               </i>
