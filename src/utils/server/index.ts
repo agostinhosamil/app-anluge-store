@@ -35,3 +35,19 @@ export const redirectToLoginIfUnAuthenticated = async () => {
     redirectToLogin()
   }
 }
+
+type ServerHeadersObject = {
+  [key: string]: string
+}
+
+export const getServerHeaders = (): ServerHeadersObject => {
+  const serverHeaders: ServerHeadersObject = {}
+
+  const clientHeaders = headers()
+
+  clientHeaders.forEach((value, key) => {
+    serverHeaders[key] = value
+  })
+
+  return serverHeaders
+}
