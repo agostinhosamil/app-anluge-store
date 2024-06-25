@@ -72,3 +72,35 @@ export const createOrder = async (
     success: false
   }
 }
+
+type CancelOrderSuccessResponse = {
+  success: true
+  error: false
+}
+
+type CancelOrderFailureResponse = {
+  success: false
+  error: true
+}
+
+type CancelOrderResponse =
+  | CancelOrderSuccessResponse
+  | CancelOrderFailureResponse
+
+export const cancelOrder = async (cartId: string): Promise<boolean> => {
+  try {
+    const response = await axios.delete<CancelOrderResponse>(
+      `/store/orders/${cartId}/cancel`
+    )
+
+    if (typeof response.data === 'object' && response.data.success) {
+      response.data
+
+      return true
+    }
+  } catch (err) {
+    // pass
+  }
+
+  return false
+}
