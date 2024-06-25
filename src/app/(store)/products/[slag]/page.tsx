@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Column from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import { FaCartPlus, FaEllipsisVertical, FaHeart } from 'react-icons/fa6'
+import { FacebookShareButton } from 'react-share'
 
 import Link from 'next/link'
 import { useStoreContext } from 'store@components/Context'
@@ -31,6 +32,7 @@ import {
   StatsData,
   Summary
 } from 'store@styles/product-page'
+import { useApp } from '~/components/ApplicationContext'
 import { RichText } from '~/components/RichText'
 import { StarRating } from '~/components/store/NewsFeed/ProductCard/StarRating'
 
@@ -38,6 +40,7 @@ export default function ProductPage() {
   const { product, category } = useProductPageContext()
 
   const storeContext = useStoreContext()
+  const app = useApp()
 
   const addToCartButtonClickHandler = () => {
     storeContext.addOrder(product)
@@ -125,14 +128,16 @@ export default function ProductPage() {
               <strong>Partilhar este produto</strong>
               <ul>
                 <li>
-                  <a target="_blank" href="//www.facebook.com" rel="noreferrer">
+                  <FacebookShareButton
+                    url={`${app.origin}/products/${product.slag}`}
+                  >
                     <Image
                       src="/assets/images/social-media-icon-facebook.png"
                       alt="Partilhar no Facebook"
                       width={30}
                       height={30}
                     />
-                  </a>
+                  </FacebookShareButton>
                 </li>
                 <li>
                   <a
