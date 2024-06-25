@@ -17,6 +17,20 @@ export const signIn = async (credentials: SignInRequestProps) => {
   }
 }
 
+export const signOut = async () => {
+  try {
+    const response = await axios.post('/auth/signout')
+
+    if (response.status === 200) {
+      return true
+    }
+  } catch (err) {
+    // pass
+  }
+
+  return false
+}
+
 export const signInById = async (userId: string) => {
   try {
     const response = await axios.post<SignInResponse>(`/users/auth/${userId}`)
