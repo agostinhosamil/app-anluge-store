@@ -1,6 +1,7 @@
 import { User } from '@prisma/client'
 import { jwtVerify } from 'jose'
 import { sign } from 'jsonwebtoken'
+import { cookies } from 'next/headers'
 
 import { getAuthTokenCookie } from '@utils/authTokenCookie'
 import { userIncludeFactory } from '@utils/user'
@@ -148,6 +149,14 @@ export const signIn = async (
       token
     }
   }
+}
+
+export const signOut = async (): Promise<void> => {
+  cookies().set({
+    name: String(process.env.APP_AUTH_COOKIE_NAME),
+    value: 'null',
+    path: '/'
+  })
 }
 
 export const isUserAuthenticated = async (): Promise<boolean> => {
