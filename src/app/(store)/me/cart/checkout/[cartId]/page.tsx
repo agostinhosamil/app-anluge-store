@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation'
 
 import { NotFoundPageContent } from '~/components/store/NotFoundPageContent'
 import { prisma } from '~/services/prisma'
-import { LayoutProps } from '~/Types/next'
+import { PageProps } from '~/Types/next'
 import { auth } from '~/utils/auth'
 
 import { Content } from './content'
@@ -11,9 +11,7 @@ type Params = {
   cartId: string
 }
 
-export default async function CartCheckoutPage({
-  params
-}: LayoutProps<Params>) {
+export default async function CartCheckoutPage({ params }: PageProps<Params>) {
   const userSignInData = await auth()
 
   if (!userSignInData) {

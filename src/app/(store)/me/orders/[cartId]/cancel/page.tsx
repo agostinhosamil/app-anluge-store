@@ -1,6 +1,6 @@
 import { NotFoundPageContent } from '~/components/store/NotFoundPageContent'
 import { prisma } from '~/services/prisma'
-import { LayoutProps } from '~/Types/next'
+import { PageProps } from '~/Types/next'
 import { auth } from '~/utils/auth'
 import { redirectToLoginIfUnAuthenticated } from '~/utils/server'
 import { Content } from './content'
@@ -9,7 +9,7 @@ type Params = {
   cartId: string
 }
 
-export default async function CancelCartPage(props: LayoutProps<Params>) {
+export default async function CancelCartPage(props: PageProps<Params>) {
   await redirectToLoginIfUnAuthenticated()
 
   const userSignInData = await auth()
