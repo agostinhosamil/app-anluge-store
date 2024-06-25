@@ -1,17 +1,22 @@
 import { prisma } from '~/services/prisma'
 import { CategoryProps } from '~/Types/Category'
 import { categoryIncludeFactory } from '~/utils/category'
+import { generateSlagByTitleWithoutSignature } from '~/utils/generateSlagByTitle'
 import { categoryListToTree } from '~/utils/models/category'
 import { productIncludeFactory } from '~/utils/product'
 import { HomePage } from './HomePage'
 
 export default async function Home() {
-  const categoriesIds = [
-    '10098327474662369821717853708516578325759404',
-    '10085482758819828541717853708535895519846167',
-    '10080304913879131371717853708572590950098600',
-    '100934909248215462217178537085271083968355101'
+  const categoriesNames = [
+    'Servidores e Storage',
+    'Impressão e Digitalização',
+    'Equipamentos Energia',
+    'Computadores, Monitor e POS'
   ]
+
+  const categoriesSlagsPrefixes = categoriesNames.map(categoryName =>
+    generateSlagByTitleWithoutSignature(categoryName)
+  )
 
   const categories: Array<CategoryProps> = await prisma.category.findMany({
     include: {
@@ -29,7 +34,9 @@ export default async function Home() {
   return (
     <HomePage
       categories={categoriesTree.filter(category =>
-        categoriesIds.includes(category.id)
+        categoriesSlagsPrefixes.includes(
+          generateSlagByTitleWithoutSignature(category.title)
+        )
       )}
     />
   )
