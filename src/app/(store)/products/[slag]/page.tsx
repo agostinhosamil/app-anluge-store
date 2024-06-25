@@ -4,7 +4,12 @@ import Image from 'next/image'
 import Column from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import { FaCartPlus, FaEllipsisVertical, FaHeart } from 'react-icons/fa6'
-import { FacebookShareButton } from 'react-share'
+import {
+  FacebookShareButton,
+  LinkedinShareButton,
+  TwitterShareButton,
+  WhatsappShareButton
+} from 'react-share'
 
 import Link from 'next/link'
 import { useStoreContext } from 'store@components/Context'
@@ -130,6 +135,7 @@ export default function ProductPage() {
                 <li>
                   <FacebookShareButton
                     url={`${app.origin}/products/${product.slag}`}
+                    title="Partilhar no Facebook"
                   >
                     <Image
                       src="/assets/images/social-media-icon-facebook.png"
@@ -140,38 +146,41 @@ export default function ProductPage() {
                   </FacebookShareButton>
                 </li>
                 <li>
-                  <a
-                    target="_blank"
-                    href="//www.instagram.com"
-                    rel="noreferrer"
+                  <TwitterShareButton
+                    url={`${app.origin}/products/${product.slag}`}
+                    title="Partilhar no Twitter"
                   >
-                    <Image
-                      src="/assets/images/social-media-icon-instagram.png"
-                      alt="Partilhar no Instagram"
-                      width={30}
-                      height={30}
-                    />
-                  </a>
-                </li>
-                <li>
-                  <a target="_blank" href="//www.whatsapp.com" rel="noreferrer">
-                    <Image
-                      src="/assets/images/social-media-icon-whatsapp.png"
-                      alt="Partilhar pelo Whatsapp"
-                      width={30}
-                      height={30}
-                    />
-                  </a>
-                </li>
-                <li>
-                  <a target="_blank" href="//www.twitter.com" rel="noreferrer">
                     <Image
                       src="/assets/images/social-media-icon-twitter.png"
                       alt="Partilhar no Twitter"
                       width={30}
                       height={30}
                     />
-                  </a>
+                  </TwitterShareButton>
+                </li>
+                <li>
+                  <LinkedinShareButton
+                    url={`${app.origin}/products/${product.slag}`}
+                  >
+                    <Image
+                      src="/assets/images/social-media-icon-linkedin.png"
+                      alt="Partilhar pelo Whatsapp"
+                      width={30}
+                      height={30}
+                    />
+                  </LinkedinShareButton>
+                </li>
+                <li>
+                  <WhatsappShareButton
+                    url={`${app.origin}/products/${product.slag}`}
+                  >
+                    <Image
+                      src="/assets/images/social-media-icon-whatsapp.png"
+                      alt="Partilhar pelo Whatsapp"
+                      width={30}
+                      height={30}
+                    />
+                  </WhatsappShareButton>
                 </li>
               </ul>
             </ShareOptionsContainer>
