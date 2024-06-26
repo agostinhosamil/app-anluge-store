@@ -41,7 +41,7 @@ export const getAllCategories = async (): Promise<Array<CategoryProps>> => {
   return categories
 }
 
-const getCategoryChildren = (
+export const getCategoryChildren = (
   category: CategoryProps
 ): Promise<CategoryProps> => {
   return new Promise(resolve => {
