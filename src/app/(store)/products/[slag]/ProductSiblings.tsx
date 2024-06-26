@@ -17,7 +17,7 @@ export const maxDuration = 60
 export const ProductSiblings = async (props: ProductSiblingsProps) => {
   const category: CategoryProps | null = await prisma.category.findUnique({
     where: {
-      id: props.product.id
+      id: String(props.product.category?.id)
     },
     include: {
       categories: {
@@ -33,8 +33,6 @@ export const ProductSiblings = async (props: ProductSiblingsProps) => {
   if (!category) {
     return null
   }
-
-  console.log('---> DONE')
 
   const productCategory = await getCategoryChildren(category)
 
