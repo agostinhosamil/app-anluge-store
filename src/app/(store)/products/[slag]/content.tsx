@@ -42,7 +42,7 @@ import { StarRating } from '~/components/store/NewsFeed/ProductCard/StarRating'
 
 type ContentComponent = React.FunctionComponent<React.PropsWithChildren>
 
-export const Content: ContentComponent = async props => {
+export const Content: ContentComponent = props => {
   const { product } = useProductPageContext()
 
   const storeContext = useStoreContext()
