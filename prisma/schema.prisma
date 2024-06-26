@@ -5,6 +5,12 @@ generator client {
   provider = "prisma-client-js"
 }
 
+datasource db {
+  provider  = "postgresql"
+  url       = env("ANLUGE_STORE_POSTGRES_DATABASE_PRISMA_URL") // uses connection pooling
+  directUrl = env("ANLUGE_STORE_POSTGRES_DATABASE_URL_NON_POOLING") // uses a direct connection
+}
+
 // generator zod {
 //   provider = "prisma-zod-generator"
 // }
@@ -13,11 +19,11 @@ generator erd {
   provider = "prisma-erd-generator"
 }
 
-datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
-  // shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
-}
+// datasource db {
+//   provider = "mysql"
+//   url      = env("DATABASE_URL")
+//   // shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+// }
 
 model Account {
   id                 String    @id @default(cuid())
@@ -233,7 +239,7 @@ model Post {
   id            Int         @id @default(autoincrement())
   title         String
   slag          String      @unique @default(uuid())
-  body          String      @db.LongText
+  body          String      @db.Text
   author        User        @relation(fields: [userId], references: [id])
   tags          Tag[]
   medias        Media[]
@@ -296,8 +302,8 @@ model Product {
   id           String      @id @default(cuid())
   code         String?     @unique @default(cuid())
   name         String
-  summary      String?     @db.TinyText
-  description  String      @db.LongText
+  summary      String?     @db.Text
+  description  String      @db.Text
   price        Float
   slag         String      @unique
   medias       Media[]
