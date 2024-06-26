@@ -1,7 +1,9 @@
+import { prisma } from '~/services/prisma'
 import { CategoryProps } from '~/Types/Category'
+import { categoryIncludeFactory } from '~/utils/category'
 import { generateSlagByTitleWithoutSignature } from '~/utils/generateSlagByTitle'
-import { categoryListToTree } from '~/utils/models/category'
-import { getAllCategories } from '~/utils/newsFeed'
+import { getAllCategoriesChildren } from '~/utils/newsFeed'
+import { productIncludeFactory } from '~/utils/product'
 import { HomePage } from './HomePage'
 
 export default async function Home() {
@@ -16,44 +18,37 @@ export default async function Home() {
     generateSlagByTitleWithoutSignature(categoryName)
   )
 
-  // console.log(
-  //   'OR => ',
-  //   categoriesSlagsPrefixes.map(categoriesSlagsPrefix => ({
-  //     slag: {
-  //       startsWith: categoriesSlagsPrefix
-  //     }
-  //   }))
+  const categories: Array<CategoryProps> = await getAllCategoriesChildren(
+    await prisma.category.findMany({
+      where: {
+        OR: categoriesSlagsPrefixes.map(categoriesSlagsPrefix => ({
+          slag: {
+            startsWith: categoriesSlagsPrefix
+          }
+        }))
+      },
+      include: {
+        categories: {
+          include: categoryIncludeFactory()
+        },
+        products: {
+          include: productIncludeFactory()
+        }
+      }
+    })
+  )
+
+  // const categoriesTree = categoryListToTree(
+  //   await getAllCategoriesChildren(categories)
   // )
 
-  const categories: Array<CategoryProps> = await getAllCategories()
+  // categoriesTree.filter(category =>
+  //   categoriesSlagsPrefixes.includes(
+  //     generateSlagByTitleWithoutSignature(category.title)
+  //   )
+  // )
 
-  // await prisma.category.findMany({
-  //   where: {
-  //     OR: categoriesSlagsPrefixes.map(categoriesSlagsPrefix => ({
-  //       slag: {
-  //         startsWith: categoriesSlagsPrefix
-  //       }
-  //     }))
-  //   },
-  //   include: {
-  //     categories: {
-  //       include: categoryIncludeFactory()
-  //     },
-  //     products: {
-  //       include: productIncludeFactory()
-  //     }
-  //   }
-  // })
+  console.log('>>> categories: ', categories)
 
-  const categoriesTree = categoryListToTree(categories)
-
-  return (
-    <HomePage
-      categories={categoriesTree.filter(category =>
-        categoriesSlagsPrefixes.includes(
-          generateSlagByTitleWithoutSignature(category.title)
-        )
-      )}
-    />
-  )
+  return <HomePage categories={categories} />
 }

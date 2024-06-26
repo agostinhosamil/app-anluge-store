@@ -40,3 +40,44 @@ export const getAllCategories = async (): Promise<Array<CategoryProps>> => {
 
   return categories
 }
+
+const getCategoryChildren = (
+  category: CategoryProps
+): Promise<CategoryProps> => {
+  return new Promise(resolve => {
+    const promiseResolver = async () => {
+      const categorySubcategories = await prisma.category.findMany({
+        where: {
+          parentId: category.id
+        },
+        include: {
+          categories: {
+            include: categoryIncludeFactory()
+          },
+          products: {
+            include: productIncludeFactory()
+          }
+        }
+      })
+
+      console.log('>>> categorySubcategories: ', categorySubcategories)
+
+      resolve({
+        ...category,
+        categories: await getAllCategoriesChildren(categorySubcategories)
+      })
+    }
+
+    promiseResolver()
+  })
+}
+
+export const getAllCategoriesChildren = async (
+  categories: Array<CategoryProps>
+): Promise<Array<CategoryProps>> => {
+  const data = await Promise.all(
+    categories.map(category => getCategoryChildren(category))
+  )
+
+  return data
+}
