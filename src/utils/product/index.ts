@@ -4,7 +4,8 @@ import { generateSlagByTitle } from '@utils/generateSlagByTitle'
 import { empty, generateRandomId } from '~/utils'
 import { categoryIncludeFactory } from '../category'
 
-import { ProductInclude } from 'Types/Product'
+import { ProductInclude, ProductProps } from 'Types/Product'
+import { prisma } from '~/services/prisma'
 
 // import { empty } from '~/utils'
 // import { generateSlagByTitle } from '~/utils/generateSlagByTitle'
@@ -66,4 +67,28 @@ export const resolveProductType = (type: string): $Enums.ProductType => {
   const typeId = parseInt(type) - 1
 
   return productTypesMap[typeId] || 'PHYSICAL'
+}
+
+export const getProductDataBySlag = async (
+  slag: string
+): Promise<ProductProps | null> => {
+  try {
+    const product = await prisma.product.findFirst({
+      where: {
+        OR: [
+          {
+            id: slag
+          },
+          {
+            slag
+          }
+        ]
+      },
+      include: productIncludeFactory()
+    })
+
+    return product
+  } catch (err) {
+    return null
+  }
 }

@@ -15,11 +15,21 @@ import { StoreContextWrapper } from '~/components/store/Context/StoreContextWrap
 import { getAuthTokenCookie } from '~/utils/authTokenCookie'
 import { getServerHeaders } from '~/utils/server'
 
-export const metadata: Metadata = {
-  title: 'Anluge',
-  icons: ['/assets/images/logo-primary.svg'],
-  description:
-    'Seja bem vindo a loja online da Anluge - Comércio e Prestação de Serviços'
+export const generateMetadata = (): Metadata => {
+  const serverHeaders = getServerHeaders()
+
+  const origin = String(serverHeaders['x-app-origin'])
+
+  return {
+    metadataBase: URL.canParse(origin) ? new URL(origin) : undefined,
+    title: {
+      default: 'Anluge',
+      template: '%s | Anluge'
+    },
+    icons: ['/assets/images/logo-primary.svg'],
+    description:
+      'Seja bem vindo a loja online da Anluge - Comércio e Prestação de Serviços'
+  }
 }
 
 type RootLayoutProps = Readonly<{

@@ -448,3 +448,7 @@ export const generateRandomAlphaNumericId = (length: number = 12): string => {
 
   return result
 }
+
+export const sanitizeSlagTitle = (slag: string) => {
+  return String(slag).toLowerCase().split(/\s+/).join('')
+}

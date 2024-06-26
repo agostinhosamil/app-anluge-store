@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import Column from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import { FaCartPlus, FaEllipsisVertical, FaHeart } from 'react-icons/fa6'
@@ -11,7 +12,6 @@ import {
   WhatsappShareButton
 } from 'react-share'
 
-import Link from 'next/link'
 import { useStoreContext } from 'store@components/Context'
 import { CategoryProductsList } from 'store@components/NewsFeed/CategoryProductsList'
 import { useProductPageContext } from 'store@components/pages/products/page/context'
