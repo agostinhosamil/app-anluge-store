@@ -12,6 +12,8 @@ type ProductSiblingsProps = {
   product: ProductProps
 }
 
+export const maxDuration = 60
+
 export const ProductSiblings = async (props: ProductSiblingsProps) => {
   const category: CategoryProps | null = await prisma.category.findUnique({
     where: {

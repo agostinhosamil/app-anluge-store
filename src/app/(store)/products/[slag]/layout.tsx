@@ -63,6 +63,8 @@ export const generateMetadata = async (
   return metaData
 }
 
+export const maxDuration = 60
+
 export default async function ProductPageTemplate({
   params,
   children
