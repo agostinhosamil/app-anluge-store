@@ -5,10 +5,7 @@ import { prisma } from '~/services/prisma'
 import { CategoryProps } from '~/Types/Category'
 import { ProductProps } from '~/Types/Product'
 import { categoryIncludeFactory } from '~/utils/category'
-import {
-  categoryListToTree,
-  getCategoryFromList
-} from '~/utils/models/category'
+import { getCategoryChildren } from '~/utils/newsFeed'
 import { productIncludeFactory } from '~/utils/product'
 
 type ProductSiblingsProps = {
@@ -16,7 +13,10 @@ type ProductSiblingsProps = {
 }
 
 export const ProductSiblings = async (props: ProductSiblingsProps) => {
-  const categories: Array<CategoryProps> = await prisma.category.findMany({
+  const category: CategoryProps | null = await prisma.category.findUnique({
+    where: {
+      id: props.product.id
+    },
     include: {
       categories: {
         include: categoryIncludeFactory()
@@ -28,14 +28,16 @@ export const ProductSiblings = async (props: ProductSiblingsProps) => {
     }
   })
 
-  const productCategory = getCategoryFromList(
-    props.product.categoryId || '<<non-existing-category>>',
-    categoryListToTree(categories)
-  )
-
-  if (!productCategory) {
+  if (!category) {
     return null
   }
+
+  const productCategory = await getCategoryChildren(category)
+
+  // getCategoryFromList(
+  //   props.product.categoryId || '<<non-existing-category>>',
+  //   categoryListToTree(categories)
+  // )
 
   return (
     <Row>
