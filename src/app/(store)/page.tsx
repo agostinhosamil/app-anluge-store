@@ -1,9 +1,7 @@
-import { prisma } from '~/services/prisma'
 import { CategoryProps } from '~/Types/Category'
-import { categoryIncludeFactory } from '~/utils/category'
 import { generateSlagByTitleWithoutSignature } from '~/utils/generateSlagByTitle'
 import { categoryListToTree } from '~/utils/models/category'
-import { productIncludeFactory } from '~/utils/product'
+import { getAllCategories } from '~/utils/newsFeed'
 import { HomePage } from './HomePage'
 
 export default async function Home() {
@@ -18,16 +16,34 @@ export default async function Home() {
     generateSlagByTitleWithoutSignature(categoryName)
   )
 
-  const categories: Array<CategoryProps> = await prisma.category.findMany({
-    include: {
-      categories: {
-        include: categoryIncludeFactory()
-      },
-      products: {
-        include: productIncludeFactory()
-      }
-    }
-  })
+  // console.log(
+  //   'OR => ',
+  //   categoriesSlagsPrefixes.map(categoriesSlagsPrefix => ({
+  //     slag: {
+  //       startsWith: categoriesSlagsPrefix
+  //     }
+  //   }))
+  // )
+
+  const categories: Array<CategoryProps> = await getAllCategories()
+
+  // await prisma.category.findMany({
+  //   where: {
+  //     OR: categoriesSlagsPrefixes.map(categoriesSlagsPrefix => ({
+  //       slag: {
+  //         startsWith: categoriesSlagsPrefix
+  //       }
+  //     }))
+  //   },
+  //   include: {
+  //     categories: {
+  //       include: categoryIncludeFactory()
+  //     },
+  //     products: {
+  //       include: productIncludeFactory()
+  //     }
+  //   }
+  // })
 
   const categoriesTree = categoryListToTree(categories)
 
