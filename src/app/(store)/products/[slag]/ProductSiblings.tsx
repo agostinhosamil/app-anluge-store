@@ -34,6 +34,8 @@ export const ProductSiblings = async (props: ProductSiblingsProps) => {
     return null
   }
 
+  console.log('---> DONE')
+
   const productCategory = await getCategoryChildren(category)
 
   // getCategoryFromList(

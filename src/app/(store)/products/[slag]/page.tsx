@@ -1,14 +1,30 @@
-'use client'
-
-import { Suspense } from 'react'
+import { Fragment, Suspense } from 'react'
 import { Spinner } from 'react-bootstrap'
-
-import { useProductPageContext } from '~/components/store/pages/products/page/context'
+import { NotFoundPageContent } from '~/components/store/NotFoundPageContent'
+import { ProductPageWrapper } from '~/components/store/pages/products/page'
+import { PageProps } from '~/Types/next'
+import { sanitizeSlagTitle } from '~/utils'
+import { getProductDataBySlag } from '~/utils/product'
 import { Content } from './content'
 import { ProductSiblings } from './ProductSiblings'
 
-export default async function ProductPage() {
-  const { product } = useProductPageContext()
+type Params = {
+  slag: string
+}
+
+export default async function ProductPage({ params }: PageProps<Params>) {
+  const productSlag = sanitizeSlagTitle(params.slag)
+
+  const product = await getProductDataBySlag(productSlag)
+
+  if (!product) {
+    return (
+      <Fragment>
+        <NotFoundPageContent />
+      </Fragment>
+    )
+  }
+  // const { product } = useProductPageContext()
 
   const loadingData = (
     <div>
@@ -20,10 +36,12 @@ export default async function ProductPage() {
   )
 
   return (
-    <Content>
-      <Suspense fallback={loadingData}>
-        <ProductSiblings product={product} />
-      </Suspense>
-    </Content>
+    <ProductPageWrapper product={product}>
+      <Content>
+        <Suspense fallback={loadingData}>
+          <ProductSiblings product={product} />
+        </Suspense>
+      </Content>
+    </ProductPageWrapper>
   )
 }
