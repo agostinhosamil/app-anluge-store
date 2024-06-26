@@ -1,3 +1,5 @@
+'use client'
+
 import { Fragment } from 'react'
 import { FlatList, FlatListProps } from '~/components/FlatList'
 import { CategoryProps } from '~/Types/Category'
