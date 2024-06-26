@@ -30,7 +30,6 @@ export const Wrapper = styled.div<WrapperProps>`
 
     * {
       cursor: inherit;
-      pointer-events: none;
     }
   }
 

@@ -2,6 +2,7 @@
 
 import { Fragment } from 'react'
 
+import { Category } from '@prisma/client'
 import { Slide, TouchSlider } from '~/components/TouchSlider'
 import { CategoryProps } from '~/Types/Category'
 import { noEmpty } from '~/utils'
@@ -9,7 +10,7 @@ import { CategoryCard } from './CategoryCard'
 import { CategoryList, CategoryListWrapper, Title } from './styles'
 
 type CategoryListSliderProps = {
-  categories: Array<CategoryProps>
+  categories: Array<CategoryProps | Category>
   title?: string
 }
 
@@ -24,7 +25,7 @@ export const CategoryListSlider: CategoryListSliderComponent = props => {
       </Title>
       <CategoryListWrapper>
         <CategoryList>
-          <TouchSlider>
+          <TouchSlider showButtons showIndicators>
             {props.categories.map(category => (
               <Slide key={category.id}>
                 <CategoryCard {...category} />

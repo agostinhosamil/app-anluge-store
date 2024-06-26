@@ -1,10 +1,11 @@
 import Link from 'next/link'
 
+import { Category } from '@prisma/client'
 import { CategoryProps } from '~/Types/Category'
 import { resolveCategoryImageUrl } from '~/utils'
 import { CategoryCardBody, CategoryDataWrapper, Container } from './styles'
 
-type CategoryCardProps = CategoryProps
+type CategoryCardProps = CategoryProps | Category
 
 export const CategoryCard: React.FunctionComponent<
   CategoryCardProps

@@ -3,10 +3,7 @@ import { NotFoundPageContent } from 'store@components/NotFoundPageContent'
 import { CategoryListSlider } from '~/components/store/NewsFeed/CategoryListSlider'
 import { CategoryProps } from '~/Types/Category'
 import { categoryIncludeFactory } from '~/utils/category'
-import {
-  categoryListToTree,
-  getCategoryFromList
-} from '~/utils/models/category'
+import { getCategoryChildren } from '~/utils/newsFeed'
 import { productIncludeFactory } from '~/utils/product'
 import { Content } from './content'
 
@@ -32,7 +29,17 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   //   }
   // })
 
-  const categories: Array<CategoryProps> = await prisma.category.findMany({
+  const category: CategoryProps | null = await prisma.category.findFirst({
+    where: {
+      OR: [
+        {
+          slag: params.categoryRef
+        },
+        {
+          id: params.categoryRef
+        }
+      ]
+    },
     include: {
       categories: {
         include: categoryIncludeFactory()
@@ -44,27 +51,40 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     }
   })
 
-  const foundCategory = categories.find(category => {
-    return Boolean(
-      category.id === params.categoryRef || category.slag === params.categoryRef
-    )
-  })
-
-  if (!foundCategory) {
+  if (!category) {
     return <NotFoundPageContent />
   }
+  // const foundCategory = categories.find(category => {
+  //   return Boolean(
+  //     category.id === params.categoryRef || category.slag === params.categoryRef
+  //   )
+  // })
 
-  const category = getCategoryFromList(
-    foundCategory.id,
-    categoryListToTree(categories)
-  )
+  // if (!foundCategory) {
+  //   return <NotFoundPageContent />
+  // }
 
-  const otherCategories = categories.filter(({ id }) => id !== foundCategory.id)
+  // const category = getCategoryFromList(
+  //   foundCategory.id,
+  //   categoryListToTree(categories)
+  // )
 
-  return !category ? (
-    <NotFoundPageContent />
-  ) : (
-    <Content category={category}>
+  // const otherCategories = categories.filter(
+  //   ({ id }) => id !== foundCategory.id
+  // )
+
+  const categoryData = await getCategoryChildren(category)
+
+  const otherCategories = await prisma.category.findMany({
+    where: {
+      id: {
+        not: category.id
+      }
+    }
+  })
+
+  return (
+    <Content category={categoryData}>
       <CategoryListSlider
         categories={otherCategories}
         title="Outras categorias"
