@@ -22,6 +22,8 @@ export const Content: ContentComponent = async () => {
     'Computadores, Monitor e POS'
   ]
 
+  await new Promise(resolve => setTimeout(resolve, 10000))
+
   const categoriesSlagsPrefixes = categoriesNames.map(categoryName =>
     generateSlagByTitleWithoutSignature(categoryName)
   )

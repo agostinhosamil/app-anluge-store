@@ -1,4 +1,7 @@
 import { Suspense } from 'react'
+
+import { HomePagePlaceholder } from '~/components/store/HomePagePlaceholder'
+
 import { Content } from './content'
 
 export default async function Home() {
@@ -15,7 +18,7 @@ export default async function Home() {
   // console.log('>>> categories: ', categories)
 
   return (
-    <Suspense fallback={<h1>Loading...</h1>}>
+    <Suspense fallback={<HomePagePlaceholder />}>
       <Content />
     </Suspense>
   )
