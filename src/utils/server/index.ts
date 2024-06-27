@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 
 import { auth } from '@utils/auth'
 import { noEmpty } from '~/utils'
+import { SignInResponse } from '../auth/types'
 
 export const getCurrentPageUrlObject = (): URL | null => {
   const currentPageUrl = headers().get('x-current-page-url')
@@ -28,13 +29,16 @@ export const redirectToLogin = () => {
   redirect(`/login?next=${encodeURIComponent(getCurrentPagePath())}`)
 }
 
-export const redirectToLoginIfUnAuthenticated = async () => {
-  const userSignInData = await auth()
+export const redirectToLoginIfUnAuthenticated =
+  async (): Promise<SignInResponse> => {
+    const userSignInData = await auth()
 
-  if (!userSignInData) {
-    redirectToLogin()
+    if (!userSignInData) {
+      redirectToLogin()
+    }
+
+    return userSignInData as SignInResponse
   }
-}
 
 type ServerHeadersObject = {
   [key: string]: string
