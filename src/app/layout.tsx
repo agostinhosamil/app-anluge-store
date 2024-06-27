@@ -15,6 +15,8 @@ import { StoreContextWrapper } from '~/components/store/Context/StoreContextWrap
 import { getAuthTokenCookie } from '~/utils/authTokenCookie'
 import { getServerHeaders } from '~/utils/server'
 
+import companyData from '~/config/cache/company-data/index.json'
+
 export const generateMetadata = (): Metadata => {
   const serverHeaders = getServerHeaders()
 
@@ -28,7 +30,21 @@ export const generateMetadata = (): Metadata => {
     },
     icons: ['/assets/images/logo-primary.svg'],
     description:
-      'Seja bem vindo a loja online da Anluge - Comércio e Prestação de Serviços'
+      'A Anluge, uma empresa angolana de destaque, é a sua parceira ideal para soluções tecnológicas personalizadas. Na Anluge, oferecemos uma vasta gama de serviços que atendem empresas de todos os tamanhos e setores. Nossa equipe especializada está pronta para oferecer consultoria em TI, desenvolvimento de software sob medida, integração de sistemas, segurança cibernética e suporte técnico contínuo. Conte com a Anluge para levar sua empresa ao próximo nível com inovação e excelência.',
+    openGraph: {
+      type: 'website',
+      alternateLocale: 'pt-PT',
+      siteName: 'Anluge',
+      title: 'Anluge - Comércio e Prestação de Serviços',
+      description:
+        'A Anluge, uma empresa angolana de destaque, é a sua parceira ideal para soluções tecnológicas personalizadas. Na Anluge, oferecemos uma vasta gama de serviços que atendem empresas de todos os tamanhos e setores. Nossa equipe especializada está pronta para oferecer consultoria em TI, desenvolvimento de software sob medida, integração de sistemas, segurança cibernética e suporte técnico contínuo. Conte com a Anluge para levar sua empresa ao próximo nível com inovação e excelência.',
+      countryName: 'Angola',
+      emails: companyData.emailAddresses,
+      url: origin,
+      locale: 'pt-PT',
+      phoneNumbers: companyData.phoneNumbers,
+      images: [`/anluge-logo.png`]
+    }
   }
 }
 
