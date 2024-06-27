@@ -6,6 +6,7 @@ import { formDataToJson } from '~/utils/formDataToJson'
 import { validateAuthGuard } from '~/utils/validateAuthGuard'
 
 import { CartProps } from '~/Types/Cart'
+import { ProductProps } from '~/Types/Product'
 import { noEmpty } from '..'
 import { DefineUserPasswordFormDataObject } from './validation/schemas/DefineUserPasswordFormDataObjectSchema'
 
@@ -141,4 +142,64 @@ export const getUserOpenedCarts = (user: UserProps): Array<CartProps> => {
 
 export const userHasOpenedCarts = (user: UserProps): boolean => {
   return getUserOpenedCarts(user).length >= 1
+}
+
+type FavoritesRequestData = {
+  products: Array<{
+    id: string
+  }>
+}
+
+export const addUserFavorites = async (
+  requestData: FavoritesRequestData
+): Promise<Array<ProductProps>> => {
+  try {
+    const response = await axios.post<Array<ProductProps>>(
+      '/users/favorites',
+      requestData
+    )
+
+    if (response.data instanceof Array) {
+      return response.data
+    }
+
+    return []
+  } catch (err) {
+    return []
+  }
+}
+
+export const removeUserFavorites = async (
+  requestData: FavoritesRequestData
+): Promise<Array<ProductProps>> => {
+  try {
+    const response = await axios.delete<Array<ProductProps>>(
+      '/users/favorites',
+      {
+        data: requestData
+      }
+    )
+
+    if (response.data instanceof Array) {
+      return response.data
+    }
+
+    return []
+  } catch (err) {
+    return []
+  }
+}
+
+export const getFavorites = async (): Promise<Array<ProductProps>> => {
+  try {
+    const response = await axios.post<Array<ProductProps>>('/users/favorites')
+
+    if (response.data instanceof Array) {
+      return response.data
+    }
+
+    return []
+  } catch (err) {
+    return []
+  }
 }
