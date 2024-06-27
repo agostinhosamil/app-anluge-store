@@ -2,15 +2,7 @@
 import { Fragment } from 'react'
 import * as Styled from './styles'
 
-type ProductCardPlaceHolderProps = {
-  name: string
-  image: string
-  description: string
-}
-
-export const ProductCardPlaceHolder: React.FunctionComponent<
-  ProductCardPlaceHolderProps
-> = props => {
+export const ProductCardPlaceHolder: React.FunctionComponent = () => {
   return (
     <Styled.Container>
       <Fragment>
