@@ -1,0 +1,388 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("ANLUGE_STORE_POSTGRES_DATABASE_PRISMA_URL") // uses connection pooling
+  directUrl = env("ANLUGE_STORE_POSTGRES_DATABASE_URL_NON_POOLING") // uses a direct connection
+}
+
+// generator zod {
+//   provider = "prisma-zod-generator"
+// }
+
+generator erd {
+  provider = "prisma-erd-generator"
+}
+
+// datasource db {
+//   provider = "mysql"
+//   url      = env("DATABASE_URL")
+//   // shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+// }
+
+model Account {
+  id                 String    @id @default(cuid())
+  userId             String
+  providerType       String
+  providerId         String
+  providerAccountId  String
+  refreshToken       String?
+  accessToken        String?
+  accessTokenExpires DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  user               User      @relation(fields: [userId], references: [id])
+
+  @@unique([providerId, providerAccountId])
+  @@map("account")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  expires      DateTime
+  sessionToken String   @unique
+  accessToken  String   @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id])
+
+  @@map("session")
+}
+
+model AdminInvitation {
+  id        String   @id @default(cuid())
+  userId    String
+  email     String   @unique
+  roleId    Int
+  expires   DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("adminInvitation")
+}
+
+model User {
+  id            String      @id @default(cuid())
+  name          String
+  email         String      @unique
+  password      String
+  phone         String      @unique
+  username      String?     @unique
+  emailVerified DateTime?
+  image         String?     @default("user-avatar-placeholder.jpg")
+  Token         UserToken[]
+  role          Role        @relation(fields: [roleId], references: [id])
+  rates         Rate[]
+  favorites     Favorite[]
+  carts         Cart[]
+  roleId        Int
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  Faq           Faq[]
+  accounts      Account[]
+  sessions      Session[]
+  posts         Post[]
+  passwords     Password[]
+  addresses     Address[]
+
+  @@map("user")
+}
+
+model Password {
+  id      Int    @id @default(autoincrement())
+  content String
+  user    User   @relation(fields: [userId], references: [id])
+  userId  String
+
+  @@map("password")
+}
+
+model Address {
+  id         Int      @id @default(autoincrement())
+  alias      String?
+  street     String
+  city       String
+  postalCode String
+  country    String
+  state      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+
+  @@map("address")
+}
+
+model VerificationRequest {
+  id         String   @id @default(cuid())
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([identifier, token])
+  @@map("verificationrequest")
+}
+
+model Favorite {
+  id        Int     @id @default(autoincrement())
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String
+
+  @@map("favorite")
+}
+
+model Advertise {
+  id        String            @id @default(cuid())
+  expiresAt DateTime
+  banner    String
+  link      String?
+  title     String?
+  content   String?
+  post      Post?             @relation(fields: [postId], references: [id])
+  product   Product?          @relation(fields: [productId], references: [id])
+  style     AdvertiseStyle
+  position  AdvertisePosition
+  popup     Boolean           @default(false)
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  postId    Int?
+  productId String?
+
+  @@map("advertise")
+}
+
+model Setting {
+  id        Int      @id @default(autoincrement())
+  property  String
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("setting")
+}
+
+model UserToken {
+  id        Int      @id @default(autoincrement())
+  body      String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("usertoken")
+}
+
+model Role {
+  id          Int          @id @default(autoincrement())
+  key         String       @unique
+  name        String
+  description String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  permissions Permission[]
+  User        User[]
+
+  @@map("role")
+}
+
+model Permission {
+  id          Int      @id @default(autoincrement())
+  key         String   @unique
+  name        String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  roles       Role[]
+
+  @@map("permission")
+}
+
+model Media {
+  id        String    @id @default(cuid())
+  fileName  String
+  type      MediaType @default(IMAGE)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Product   Product?  @relation(fields: [productId], references: [id])
+  productId String?
+  Rate      Rate?     @relation(fields: [rateId], references: [id])
+  rateId    String?
+  Post      Post?     @relation(fields: [postId], references: [id])
+  postId    Int?
+
+  @@map("media")
+}
+
+model Tag {
+  id        String    @id @default(cuid())
+  title     String
+  slag      String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[]
+  posts     Post[]
+
+  @@map("tag")
+}
+
+model Post {
+  id            Int         @id @default(autoincrement())
+  title         String
+  slag          String      @unique @default(uuid())
+  body          String      @db.Text
+  author        User        @relation(fields: [userId], references: [id])
+  tags          Tag[]
+  medias        Media[]
+  adevertisings Advertise[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  userId        String
+
+  @@map("post")
+}
+
+model Category {
+  id          String     @id @default(cuid())
+  title       String
+  description String
+  slag        String     @unique
+  icon        String?    @default("category-icon-placeholder.jpg")
+  products    Product[]
+  parentId    String?
+  parent      Category?  @relation("SubCategory", fields: [parentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  categories  Category[] @relation("SubCategory")
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@map("category")
+}
+
+model Faq {
+  id        String   @id @default(cuid())
+  question  String
+  answer    String   @default("")
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+  Product   Product? @relation(fields: [productId], references: [id])
+  productId String?
+  userId    String
+
+  @@map("faq")
+}
+
+model Rate {
+  id        String   @id @default(cuid())
+  title     String
+  message   String
+  value     Int
+  user      User     @relation(fields: [userId], references: [id])
+  medias    Media[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+  product   Product? @relation(fields: [productId], references: [id])
+  productId String?
+
+  @@map("rate")
+}
+
+model Product {
+  id           String      @id @default(cuid())
+  code         String?     @unique @default(cuid())
+  name         String
+  summary      String?     @db.Text
+  description  String      @db.Text
+  price        Float
+  slag         String      @unique
+  medias       Media[]
+  tags         Tag[]
+  faqs         Faq[]
+  rates        Rate[]
+  stock        Int?        @default(-1)
+  sku          String?     @unique
+  barCode      String? // @unique
+  type         ProductType @default(PHYSICAL)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  category     Category?   @relation(fields: [categoryId], references: [id])
+  categoryId   String?
+  favorites    Favorite[]
+  orders       Order[]
+  advertisings Advertise[]
+
+  @@map("product")
+}
+
+model Cart {
+  id        String     @id @default(cuid())
+  orders    Order[]
+  user      User?      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  userId    String
+  code      String     @default(cuid())
+  status    CartStatus @default(PENDING)
+
+  @@map("cart")
+}
+
+model Order {
+  id        String   @id @default(cuid())
+  product   Product  @relation(fields: [productId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  cart      Cart?    @relation(fields: [cartId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  cartId    String?
+  productId String
+  quantity  Int      @default(1)
+
+  @@map("order")
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+  AUDIO
+}
+
+enum ProductType {
+  PHYSICAL
+  DIGITAL
+}
+
+enum AdvertiseStyle {
+  CARD
+  BANNER
+}
+
+enum AdvertisePosition {
+  TOP
+  BOTTOM
+  FEED
+}
+
+enum CartStatus {
+  // awaiting payment
+  PENDING
+  // client has been done the payment and it's awaiting
+  // the store/s to deliver the request
+  PROGRESS
+  // payment has been done a the request has been delivered 
+  // to the client, and the client has already done or not
+  // a rate for the store
+  DELIVERED
+  // payment returned to the client 
+  RETURN
+}
