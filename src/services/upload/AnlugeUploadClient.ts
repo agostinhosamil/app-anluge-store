@@ -72,9 +72,9 @@ export class AnlugeUploadClient {
       // `http://localhost/anluge-cdn/static/files/store`,
       formData,
       {
-        onUploadProgress(progressEvent) {
-          // console.log('>>> uploading ', progressEvent)
-        }
+        // onUploadProgress(progressEvent) {
+        //   // console.log('>>> uploading ', progressEvent)
+        // }
       }
     )
 
