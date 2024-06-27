@@ -124,3 +124,68 @@ export const POST: NextApiHandler = async request => {
     }
   })
 }
+
+const DeleteRequestBodySchema = z.object({
+  products: z
+    .array(
+      z.object({
+        id: z.string().min(5).cuid()
+      })
+    )
+    .min(1)
+})
+
+type DeleteRequestBodyProps = z.infer<typeof DeleteRequestBodySchema>
+
+export const DELETE: NextApiHandler = async request => {
+  const signInData = await redirectToLoginIfUnAuthenticated()
+
+  const { user } = signInData
+
+  const clientRequestBody =
+    await getRequestBody<DeleteRequestBodyProps>(request)
+
+  const requestBody =
+    await PostRequestBodySchema.safeParseAsync(clientRequestBody)
+
+  if (!requestBody.success) {
+    return NextResponse.json({
+      error: true,
+      success: false,
+      message: 'Invalid request input',
+      errors: requestBody.error.errors
+    })
+  }
+
+  const { data } = requestBody
+
+  const updatedUser = await prisma.user.update({
+    where: {
+      id: user.id
+    },
+
+    data: {
+      favorites: {
+        deleteMany: data.products.map(product => ({
+          productId: product.id
+        }))
+      }
+    },
+
+    include: {
+      favorites: {
+        include: {
+          product: {
+            include: productIncludeFactory()
+          }
+        }
+      }
+    }
+  })
+
+  return NextResponse.json(updatedUser.favorites, {
+    headers: {
+      'x-favorites-count': String(updatedUser.favorites.length)
+    }
+  })
+}
