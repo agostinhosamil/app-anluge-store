@@ -17,12 +17,12 @@ export const generateImageVariant = (
     throw new Error('Could not generate image variant')
   }
 
-  canvasContext.fillStyle = '#ffffff'
-  canvasContext.fillRect(0, 0, sizes.width, sizes.height)
-
   return new Promise((resolve, reject) => {
     imageElement.onload = () => {
       Object.assign(canvasElement, sizes)
+
+      canvasContext.fillStyle = '#ffffff'
+      canvasContext.fillRect(0, 0, sizes.width, sizes.height)
 
       canvasContext.drawImage(
         imageElement,
