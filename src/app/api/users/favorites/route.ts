@@ -118,9 +118,13 @@ export const POST: NextApiHandler = async request => {
     }
   })
 
-  return NextResponse.json(updatedUser.favorites, {
+  const favorites: Array<ProductProps> = updatedUser.favorites.map(
+    favorite => favorite.product
+  )
+
+  return NextResponse.json(favorites, {
     headers: {
-      'x-favorites-count': String(updatedUser.favorites.length)
+      'x-favorites-count': String(favorites.length)
     }
   })
 }
@@ -183,9 +187,13 @@ export const DELETE: NextApiHandler = async request => {
     }
   })
 
-  return NextResponse.json(updatedUser.favorites, {
+  const favorites: Array<ProductProps> = updatedUser.favorites.map(
+    favorite => favorite.product
+  )
+
+  return NextResponse.json(favorites, {
     headers: {
-      'x-favorites-count': String(updatedUser.favorites.length)
+      'x-favorites-count': String(favorites.length)
     }
   })
 }
