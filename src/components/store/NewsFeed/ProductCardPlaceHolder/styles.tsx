@@ -1,4 +1,5 @@
-import styled, { css, keyframes } from 'styled-components'
+import styled from 'styled-components'
+import { animatedBackground, PlaceHolder } from '~/components/styled'
 
 type StarWrapperProps = {
   $starRatingAverage: number
@@ -12,28 +13,6 @@ const starRatingSizes = {
   large: 35,
   'x-large': 47
 }
-
-const placeHolderShimmer = keyframes`
-  0%{
-    background-position: -450px 0
-  }
-
-  100%{
-      background-position: 450px 0
-  }
-`
-
-const animatedBackground = css`
-  animation-duration: 1s;
-  animation-fill-mode: forwards;
-  animation-iteration-count: infinite;
-  animation-name: ${placeHolderShimmer};
-  animation-timing-function: linear;
-  background: #f6f7f8;
-  background: linear-gradient(to right, #f5f4f3 8%, #ebebeb 18%, #f5f4f3 33%);
-  background-size: 1200px 104px;
-  position: relative;
-`
 
 export const Container = styled.div`
   width: calc(100% / 5);
@@ -84,8 +63,7 @@ export const Container = styled.div`
   }
 `
 
-export const ImageWrapper = styled.div`
-  ${animatedBackground}
+export const ImageWrapper = styled(PlaceHolder)`
   border-radius: 8px;
   -webkit-border-radius: 8px;
   width: 100%;
