@@ -1,0 +1,13 @@
+export type PaymentMethod =
+  | 'TB'
+  | 'CC'
+  | 'CB'
+  | 'CH'
+  | 'CO'
+  | 'CS'
+  | 'DE'
+  | 'LC'
+  | 'NU'
+  | 'PR'
+  | 'CI'
+  | 'OU'
