@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { PlaceHolder } from '~/components/styled'
 
 type StarWrapperProps = {
   $starRatingAverage: number
@@ -68,11 +69,11 @@ export const Container = styled.div`
   }
 `
 
-export const ImageWrapper = styled.div`
-  background-color: rgb(245 245 245);
+export const ImageWrapper = styled(PlaceHolder)`
   border-radius: 8px;
   -webkit-border-radius: 8px;
   width: 100%;
+  min-height: 304px;
   /* padding: 60px; */
   text-align: center;
   box-shadow: 0px 3px 5px 0px rgb(0 0 0 / 10%);
