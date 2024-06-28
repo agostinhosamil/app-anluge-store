@@ -60,7 +60,7 @@ export const getCategoryChildren = (
         }
       })
 
-      console.log('>>> categorySubcategories: ', categorySubcategories)
+      // console.log('>>> categorySubcategories: ', categorySubcategories)
 
       resolve({
         ...category,
