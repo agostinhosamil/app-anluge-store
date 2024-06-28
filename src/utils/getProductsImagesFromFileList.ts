@@ -5,8 +5,9 @@ import {
 } from './getProductsImagesFromZipFile'
 import { productImageUploadClient } from './product/imageUploadClient'
 
+// /^([a-zA-Z0-9%_s\(\)-.]+)$/
 const productCodeRegEx =
-  /\s*-?\s*?(\(([a-zA-Z0-9%_s]+)\)\s*(\.(jpe?g|png|gif))?)$/
+  /\s*-?\s*?(\(([a-zA-Z0-9%_().-]+)\)\s*(\.(jpe?g|png|gif))?)$/i
 
 const getProductCodeFromImageName = (imageName: string): string => {
   const productCodeMatch = productCodeRegEx.exec(imageName)
