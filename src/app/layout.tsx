@@ -43,7 +43,7 @@ export const generateMetadata = (): Metadata => {
       url: origin,
       locale: 'pt-PT',
       phoneNumbers: companyData.phoneNumbers,
-      images: [`/anluge-logo.png`]
+      images: [`/anluge-logo.jpg`]
     }
   }
 }
