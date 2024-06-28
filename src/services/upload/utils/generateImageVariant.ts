@@ -24,12 +24,21 @@ export const generateImageVariant = (
       canvasContext.fillStyle = '#ffffff'
       canvasContext.fillRect(0, 0, sizes.width, sizes.height)
 
+      const imageOriginalWidth = imageElement.naturalWidth
+      const imageOriginalHeight = imageElement.naturalHeight
+
+      const imageOriginalWidthRelativeToHeight =
+        imageOriginalWidth / imageOriginalHeight
+
+      const imageWidth = sizes.width * 0.6
+      const imageHeight = imageWidth / imageOriginalWidthRelativeToHeight
+
       canvasContext.drawImage(
         imageElement,
-        sizes.width * 0.2,
-        sizes.height * 0.2,
-        sizes.width * 0.6,
-        sizes.height * 0.6
+        sizes.width / 2 - imageWidth / 2,
+        sizes.height / 2 - imageHeight / 2,
+        imageWidth,
+        imageHeight
       )
 
       canvasElement.toBlob(canvasBlob => {
