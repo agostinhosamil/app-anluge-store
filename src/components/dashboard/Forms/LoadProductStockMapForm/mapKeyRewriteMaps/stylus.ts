@@ -5,7 +5,7 @@ export const stylusMapKeyRewriteMap: KeyRewriteMap = {
   EAN: 'ean',
   Designação: 'name',
   Status: 'status',
-  Campanha: 'promotionStatus',
+  Campanha: 'promotion',
   null: 'promotionDiscount',
   'Data fim campanha': 'promotionEnd',
   Embalagem: 'package',
@@ -15,5 +15,6 @@ export const stylusMapKeyRewriteMap: KeyRewriteMap = {
   'Sub Família': 'subFamily',
   Marca: 'mark',
   'Quant. a encomendar': 'stock',
-  'Valor Total': 'totalPrice'
+  'Valor Total': 'totalPrice',
+  'Preço Anluge': 'price'
 }

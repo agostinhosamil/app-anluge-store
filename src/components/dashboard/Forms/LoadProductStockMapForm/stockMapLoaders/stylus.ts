@@ -1,15 +1,16 @@
+import { $Enums } from '@prisma/client'
 import { StockMapLoaderResponseDataObject } from '~/helpers/StockMapLoaderResponseDataObject'
 import { StockMapLoader } from '~/Types/Product'
-import { generateRandomId } from '~/utils'
+import { generateRandomId, noEmpty } from '~/utils'
 
 type StylusStockMapData = {
   code: string
   ean: string
   name: string
   status: string
-  promotionStatus: string
+  promotion: string
   promotionDiscount: number
-  promotionEnd: number
+  promotionEnd: string
   package: number
   model: string
   group: string
@@ -18,9 +19,29 @@ type StylusStockMapData = {
   mark: string
   stock: any
   totalPrice: number
+  price: number
 }
 
 type StylusStockMapFormat = Array<StylusStockMapData>
+
+const resolveProductStatus = (status: string): $Enums.ProductStatus => {
+  switch (status.toLowerCase()) {
+    case 'disponível':
+      return 'AVAILABLE'
+    case 'trânsito':
+      return 'TRANSIT'
+    case 'sob consulta':
+      return 'UPON_REQUEST'
+    default:
+      return 'AVAILABLE'
+  }
+}
+
+const readDate = (date: string): Date => {
+  const [day, month, year] = date.split('/')
+
+  return new Date([month, day, year].join('/'))
+}
 
 export const stylusStockMapLoader: StockMapLoader<
   StylusStockMapFormat
@@ -65,11 +86,20 @@ export const stylusStockMapLoader: StockMapLoader<
       description: `Imported product: ${product.name}`,
       id: 'product:id',
       name: product.name,
-      price: 0,
+      price: Number(product.price),
       sku: generateRandomId(),
       stock: -1,
       summary: `Imported product: ${product.name}`,
-      type: 'PHYSICAL'
+      type: 'PHYSICAL',
+      mark: product.mark,
+      model: product.model,
+      minOrderQuantity: -1,
+      promotion: false,
+      promotionDiscount: product.promotionDiscount || 0,
+      promotionEnd: noEmpty(product.promotionEnd)
+        ? readDate(product.promotionEnd)
+        : now,
+      status: resolveProductStatus(product.status)
     })
   }
 
