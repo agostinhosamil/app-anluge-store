@@ -11,8 +11,8 @@
     "prisma:generate": "prisma generate --schema prisma/schema.production.prisma",
     "prisma:seed": "prisma seed --schema prisma/schema.production.prisma",
     "prisma:studio": "prisma studio --schema prisma/schema.production.prisma",
-    "prisma:migrate:dev": "prisma migrate dev --schema prisma/schema.production.prisma --migrations ./prisma/migrations_production",
-    "prisma:migrate:deploy": "prisma migrate deploy --schema prisma/schema.production.prisma --migrations ./prisma/migrations_production"
+    "prisma:migrate:dev": "prisma migrate dev --schema prisma/schema.production.prisma --skip-generate",
+    "prisma:migrate:deploy": "prisma migrate deploy --schema prisma/schema.production.prisma"
   },
   "dependencies": {
     "@editorjs/checklist": "^1.6.0",
