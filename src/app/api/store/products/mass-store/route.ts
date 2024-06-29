@@ -38,7 +38,14 @@ export const POST = async (request: NextRequest) => {
       'sku',
       'stock',
       'summary',
-      'type'
+      'type',
+      'minOrderQuantity',
+      'mark',
+      'promotion',
+      'status',
+      'promotionEnd',
+      'promotionDiscount',
+      'model'
     ])
 
     // if (empty(productData.icon)) {
@@ -57,7 +64,17 @@ export const POST = async (request: NextRequest) => {
       productsData.map(productData =>
         prisma.product.upsert({
           create: productData,
-          update: getObjectProps(productData, ['name']),
+          update: getObjectProps(productData, [
+            'name',
+            'price',
+            'minOrderQuantity',
+            'mark',
+            'promotion',
+            'status',
+            'promotionEnd',
+            'promotionDiscount',
+            'model'
+          ]),
           where: {
             code: String(productData.code)
           },
