@@ -293,30 +293,49 @@ model Rate {
 }
 
 model Product {
-  id           String      @id @default(cuid())
-  code         String?     @unique @default(cuid())
-  name         String
-  summary      String?     @db.TinyText
-  description  String      @db.LongText
-  price        Float
-  slag         String      @unique
-  medias       Media[]
-  tags         Tag[]
-  faqs         Faq[]
-  rates        Rate[]
-  stock        Int?        @default(-1)
-  sku          String?     @unique
-  barCode      String? // @unique
-  type         ProductType @default(PHYSICAL)
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
-  category     Category?   @relation(fields: [categoryId], references: [id])
-  categoryId   String?
-  favorites    Favorite[]
-  orders       Order[]
-  advertisings Advertise[]
+  id                String         @id @default(cuid())
+  code              String?        @unique @default(cuid())
+  name              String
+  summary           String?        @db.TinyText
+  description       String         @db.LongText
+  price             Float
+  slag              String         @unique
+  minOrderQuantity  Int?           @default(-1)
+  status            ProductStatus? @default(AVAILABLE)
+  promotion         Boolean?       @default(false)
+  promotionEnd      DateTime?
+  promotionDiscount Float?         @default(10.0)
+  mark              String?
+  model             String?
+  medias            Media[]
+  tags              Tag[]
+  faqs              Faq[]
+  rates             Rate[]
+  stock             Int?           @default(-1)
+  sku               String?        @unique
+  barCode           String? // @unique
+  type              ProductType    @default(PHYSICAL)
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  category          Category?      @relation(fields: [categoryId], references: [id])
+  categoryId        String?
+  favorites         Favorite[]
+  orders            Order[]
+  advertisings      Advertise[]
+  properties        Property[]
 
   @@map("product")
+}
+
+model Property {
+  id        Int          @id @default(autoincrement())
+  key       String
+  value     String
+  type      PropertyType @default(STRING)
+  Product   Product?     @relation(fields: [productId], references: [id])
+  productId String?
+
+  @@map("property")
 }
 
 model Cart {
@@ -379,4 +398,16 @@ enum CartStatus {
   DELIVERED
   // payment returned to the client 
   RETURN
+}
+
+enum ProductStatus {
+  AVAILABLE
+  TRANSIT
+  UPON_REQUEST
+}
+
+enum PropertyType {
+  STRING
+  NUMBER
+  BOOLEAN
 }
