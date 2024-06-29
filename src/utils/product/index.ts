@@ -1,7 +1,7 @@
 import { $Enums, Product } from '@prisma/client'
 
 import { generateSlagByTitle } from '@utils/generateSlagByTitle'
-import { empty, generateRandomId } from '~/utils'
+import { empty, generateRandomId, noEmpty } from '~/utils'
 import { categoryIncludeFactory } from '../category'
 
 import { ProductInclude, ProductProps } from 'Types/Product'
@@ -47,6 +47,13 @@ export const setProductDefaultProps = (product: Product): Product => {
     product.code = generateRandomId()
   }
 
+  product.promotion = noEmpty(product.promotion)
+
+  product.minOrderQuantity = product.minOrderQuantity || -1
+
+  if (isNaN(product.minOrderQuantity)) {
+    product.minOrderQuantity = -1
+  }
   // product.sku = (product.sku || generateRandomId()).slice(0, 8)
 
   product.type = resolveProductType(product.type)
