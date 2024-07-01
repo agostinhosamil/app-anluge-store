@@ -21,7 +21,9 @@ export const productIncludeFactory = (): ProductInclude => {
         user: true
       }
     },
-    medias: true,
+    medias: {
+      take: 1
+    },
     tags: true,
     rates: {
       include: {

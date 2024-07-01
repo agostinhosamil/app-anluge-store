@@ -336,10 +336,14 @@ model Product {
 model Property {
   id        Int          @id @default(autoincrement())
   key       String
-  value     String
+  value     String?
   type      PropertyType @default(STRING)
   Product   Product?     @relation(fields: [productId], references: [id])
   productId String?
+
+  parentId   Int?
+  parent     Property?  @relation("InnerProperty", fields: [parentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  properties Property[] @relation("InnerProperty")
 
   @@map("property")
 }

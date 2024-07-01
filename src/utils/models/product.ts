@@ -4,6 +4,7 @@ import { Product } from '@prisma/client'
 import { axios } from '@services/axios'
 import { ProductsImagesData } from '@utils/getProductsImagesFromZipFile'
 import { ProductProps, ProductWithRates } from '~/Types/Product'
+import { PropertyProps } from '~/Types/Property'
 import { arrayMerge, arraySplit, noEmpty } from '~/utils'
 import {
   lazilyGetAll,
@@ -174,6 +175,40 @@ export const massUpdateProductsImages = async (
   }
 
   return null
+}
+
+export const massUpdateProductProps = async (
+  productId: string,
+  properties: Array<PropertyProps>
+): Promise<boolean> => {
+  try {
+    const productMassUpdateConcurrency = 5
+    const productMassStoreRequestPath = `/store/products/${productId}/properties-mass-update`
+    const propertiesQueues = arraySplit(
+      properties,
+      productMassUpdateConcurrency
+    )
+
+    for (const propertiesQueue of propertiesQueues) {
+      const productsMassUpdatePromiseResult = await axios.post<
+        Array<ProductProps>
+      >(productMassStoreRequestPath, {
+        properties: propertiesQueue
+      })
+
+      if (typeof productsMassUpdatePromiseResult.data !== 'object') {
+        // TODO: handle this on condition that should be an error
+        continue
+      }
+    }
+  } catch (err) {
+    /**
+     * TODO: Handle this
+     */
+    return false
+  }
+
+  return true
 }
 
 export const updateProductByFormData = async (

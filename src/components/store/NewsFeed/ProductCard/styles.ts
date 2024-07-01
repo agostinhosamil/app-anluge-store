@@ -73,8 +73,10 @@ export const ImageWrapper = styled(PlaceHolder)`
   border-radius: 8px;
   -webkit-border-radius: 8px;
   width: 100%;
-  min-height: 304px;
+  /* min-height: 304px; */
   /* padding: 60px; */
+  display: flex;
+  flex-grow: 1;
   text-align: center;
   box-shadow: 0px 3px 5px 0px rgb(0 0 0 / 10%);
   /* background-image: linear-gradient(45deg, #0d4b83, transparent); */

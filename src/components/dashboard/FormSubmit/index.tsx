@@ -23,7 +23,9 @@ export const FormSubmit: FormSubmitComponent = ({
       <button
         type="submit"
         {...props}
-        disabled={typeof loading === 'boolean' ? loading : props.disabled}
+        disabled={
+          typeof loading === 'boolean' && loading ? true : props.disabled
+        }
       >
         {loading && (
           <i>

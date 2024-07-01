@@ -183,6 +183,9 @@ export default function ProductsPage() {
           <CardButton onClick={loadStockMapButtonClickHandler}>
             Carregar mapa de stock
           </CardButton>
+          <CardButton href="/dashboard/products/properties-mass-update">
+            Atualizar especificações de produtos em massa
+          </CardButton>
         </CardButtons>
       </Dialog>
 
