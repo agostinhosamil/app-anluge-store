@@ -14,6 +14,8 @@ type ContentComponent = React.FunctionComponent<
   React.PropsWithChildren & ContentProps
 >
 
+export const maxDuration = 60
+
 export const Content: ContentComponent = async () => {
   const categoriesNames = [
     'Servidores e Storage',
