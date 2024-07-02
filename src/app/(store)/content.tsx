@@ -43,7 +43,7 @@ export const Content: ContentComponent = async () => {
           key={categorySlagIndex}
           fallback={<CategorySectionPlaceholder />}
         >
-          <CategorySection categoryTitle={categorySlag} />
+          <CategorySection categorySlag={categorySlag} />
         </Suspense>
       ))}
     </HomePage>

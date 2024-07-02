@@ -1,12 +1,11 @@
+import { Fragment, Suspense } from 'react'
 import { CategoryProductsList } from '~/components/store/NewsFeed/CategoryProductsList'
 import { prisma } from '~/services/prisma'
-import { CategoryProps } from '~/Types/Category'
-import { categoryIncludeFactory } from '~/utils/category'
-import { getCategoryChildren } from '~/utils/newsFeed'
-import { productIncludeFactory } from '~/utils/product'
+import { CategoryWithProductId } from '~/Types/Category'
+import { getCategoryChildrenById } from '~/utils/newsFeed'
 
 type CategorySectionProps = {
-  categoryTitle: string
+  categorySlag: string
 }
 
 type CategorySectionComponent = React.FunctionComponent<
@@ -17,15 +16,29 @@ export const CategorySection: CategorySectionComponent = async props => {
   const categoryData = await prisma.category.findFirst({
     where: {
       slag: {
-        startsWith: props.categoryTitle
+        startsWith: props.categorySlag
       }
     },
     include: {
       categories: {
-        include: categoryIncludeFactory()
+        include: {
+          categories: {
+            select: {
+              id: true
+            }
+          },
+
+          products: {
+            select: {
+              id: true
+            }
+          }
+        }
       },
       products: {
-        include: productIncludeFactory()
+        select: {
+          id: true
+        }
       }
     }
   })
@@ -34,7 +47,14 @@ export const CategorySection: CategorySectionComponent = async props => {
     return null
   }
 
-  const category: CategoryProps = await getCategoryChildren(categoryData)
+  const category: CategoryWithProductId =
+    await getCategoryChildrenById(categoryData)
 
-  return <CategoryProductsList category={category} />
+  return (
+    <Fragment>
+      <Suspense fallback={<h1>Loading category data...</h1>}>
+        <CategoryProductsList category={category} />
+      </Suspense>
+    </Fragment>
+  )
 }

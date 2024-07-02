@@ -1,4 +1,6 @@
 import { Category, Prisma } from '@prisma/client'
+import { prisma } from '~/services/prisma'
+import { CategoryWithProductId } from '~/Types/Category'
 
 import { empty } from '~/utils'
 import { generateSlagByTitle } from '~/utils/generateSlagByTitle'
@@ -36,6 +38,35 @@ export const setCategoryDefaultProps = (category: Category): Category => {
   if (empty(category.slag)) {
     category.slag = generateSlagByTitle(category.title)
   }
+
+  return category
+}
+
+export const getCategoryDataById = async (
+  categoryId: string
+): Promise<CategoryWithProductId | null> => {
+  const category: CategoryWithProductId | null =
+    await prisma.category.findUnique({
+      where: {
+        id: categoryId
+      },
+
+      include: {
+        categories: {
+          // include: categoryIncludeFactory()
+          select: {
+            id: true
+          }
+        },
+
+        products: {
+          // include: productIncludeFactory()
+          select: {
+            id: true
+          }
+        }
+      }
+    })
 
   return category
 }

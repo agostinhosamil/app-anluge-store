@@ -36,3 +36,45 @@ export type CategoryFormProps = Prisma.CategoryGetPayload<{
     id?: true
   }
 }>
+
+// type A = Prisma.CategoryGetPayload<{
+//   include: {
+//     products: {
+//       select: {
+//         id: true
+//       }
+//     }
+
+//     categories: {
+//       select: {
+//         id: true
+//       }
+//     }
+//   }
+//   select: {
+//     id: true
+//   }
+// }>
+
+export type AnyCategoryProps =
+  | CategoryProps
+  | CategoryWithProductId
+  | {
+      id: string
+      products: Array<{
+        id: string
+      }>
+      categories: Array<{
+        id: string
+      }>
+    }
+
+export type CategoryWithProductId = {
+  id: string
+  products: Array<{
+    id: string
+  }>
+  categories: Array<{
+    id: string
+  }>
+}

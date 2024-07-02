@@ -41,6 +41,12 @@ export type ProductProps = Omit<
   'include' | 'select'
 >
 
+export type ProductWithId = Prisma.ProductGetPayload<{
+  select: {
+    id: true
+  }
+}>
+
 export enum LoadingStockMap {
   STYLUS = 'product@loadingStockMap/stylus',
   KASPERSKY = 'product@loadingStockMap/kaspersky',

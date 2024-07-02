@@ -1,3 +1,5 @@
+'use client'
+
 import { range } from '~/utils'
 import { ProductCardPlaceHolder } from './ProductCardPlaceHolder'
 

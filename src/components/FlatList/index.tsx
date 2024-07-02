@@ -1,3 +1,5 @@
+'use client'
+
 import { Fragment, useEffect, useState } from 'react'
 import Spinner from 'react-bootstrap/Spinner'
 import { FaSearch } from 'react-icons/fa'
@@ -19,24 +21,9 @@ import {
   SearchInputContainer,
   SpinnerWrapper
 } from './styles'
+import { FlatListProps } from './types'
 
-export type FlatListItemElement = 'entity-card'
-export type FlatListPaginationStyle =
-  | 'standard'
-  | 'infinite-scroll'
-  | 'client-demand'
-
-export type FlatListProps<Data = any> = React.PropsWithChildren & {
-  data: Array<Data>
-  loading?: boolean
-  placeholderCountOnLoading?: number
-  itemsCountPerIteration?: number
-  paginationStyle?: FlatListPaginationStyle
-  renderItem?: (data: Data) => React.ReactNode
-  renderItemPlaceholder?: () => React.ReactNode
-  showSearchBox?: boolean
-  // listItemElement?: FlatListItemElement
-}
+export * from './types'
 
 export function FlatList<Data = any>(
   props: FlatListProps<Data>
