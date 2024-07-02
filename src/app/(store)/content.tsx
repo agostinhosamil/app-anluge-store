@@ -1,13 +1,18 @@
+import { Category } from '@prisma/client'
+import { Suspense } from 'react'
+
 import { prisma } from '~/services/prisma'
-import { CategoryProps } from '~/Types/Category'
-import { categoryIncludeFactory } from '~/utils/category'
+// import { categoryIncludeFactory } from '~/utils/category'
+import { CategoryListSlider } from 'store@components/NewsFeed/CategoryListSlider'
 import { generateSlagByTitleWithoutSignature } from '~/utils/generateSlagByTitle'
-import { getAllCategoriesChildren } from '~/utils/newsFeed'
-import { productIncludeFactory } from '~/utils/product'
+// import { getAllCategoriesChildren } from '~/utils/newsFeed'
+// import { productIncludeFactory } from '~/utils/product'
+import { CategorySectionPlaceholder } from '~/components/store/HomePagePlaceholder/CategorySectionPlaceholder'
+import { CategorySection } from './CategorySection'
 import { HomePage } from './HomePage'
 
 type ContentProps = {
-  categories?: Array<CategoryProps>
+  categories?: Array<any>
 }
 
 type ContentComponent = React.FunctionComponent<
@@ -28,25 +33,19 @@ export const Content: ContentComponent = async () => {
     generateSlagByTitleWithoutSignature(categoryName)
   )
 
-  const categories: Array<CategoryProps> = await getAllCategoriesChildren(
-    await prisma.category.findMany({
-      where: {
-        OR: categoriesSlagsPrefixes.map(categoriesSlagsPrefix => ({
-          slag: {
-            startsWith: categoriesSlagsPrefix
-          }
-        }))
-      },
-      include: {
-        categories: {
-          include: categoryIncludeFactory()
-        },
-        products: {
-          include: productIncludeFactory()
-        }
-      }
-    })
-  )
+  const categories: Array<Category> = await prisma.category.findMany()
 
-  return <HomePage categories={categories} />
+  return (
+    <HomePage>
+      <CategoryListSlider categories={categories} />
+      {categoriesSlagsPrefixes.map((categorySlag, categorySlagIndex) => (
+        <Suspense
+          key={categorySlagIndex}
+          fallback={<CategorySectionPlaceholder />}
+        >
+          <CategorySection categoryTitle={categorySlag} />
+        </Suspense>
+      ))}
+    </HomePage>
+  )
 }

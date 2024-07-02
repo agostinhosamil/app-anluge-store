@@ -3,19 +3,14 @@ import Carousel from 'react-bootstrap/Carousel'
 import { Container } from '@components/styled'
 import { range } from '~/utils'
 
-import { CategoryProps } from '~/Types/Category'
 import { AdvertisingPanel } from './AdvertisingPanel'
-import { CategoryListSlider } from './CategoryListSlider'
-import { CategoryProductsList } from './CategoryProductsList'
+// import { CategoryListSlider } from './CategoryListSlider'
+// import { CategoryProductsList } from './CategoryProductsList'
 import { AdvertisingPanelContainer } from './styles'
 
-type NewsFeedProps = {
-  categories: Array<CategoryProps>
-}
-
-export const NewsFeed: React.FunctionComponent<NewsFeedProps> = props => {
-  const { categories } = props
-
+export const NewsFeed: React.FunctionComponent<
+  React.PropsWithChildren
+> = props => {
   return (
     <Container>
       <AdvertisingPanelContainer>
@@ -30,10 +25,10 @@ export const NewsFeed: React.FunctionComponent<NewsFeedProps> = props => {
           ))}
         </Carousel>
       </AdvertisingPanelContainer>
-      <CategoryListSlider categories={categories} />
-      {categories.map(category => (
+      {props.children}
+      {/* {categories.map(category => (
         <CategoryProductsList key={category.id} category={category} />
-      ))}
+      ))} */}
     </Container>
   )
 }

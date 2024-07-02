@@ -3,15 +3,14 @@
 import { Fragment } from 'react'
 
 import { Container } from '@components/styled'
-import { ProductCardPlaceHolder } from 'store@components/NewsFeed/ProductCardPlaceHolder'
 import { range } from '~/utils'
 
+import { CategorySectionPlaceholder } from './CategorySectionPlaceholder'
 import {
   AdPanel,
   CategoryCard,
   CategoryCardsWrapper,
   HomePageContainer,
-  NewsFeedContainer,
   Title
 } from './styles'
 
@@ -30,12 +29,7 @@ export const HomePagePlaceholder: React.FunctionComponent = () => {
         </CategoryCardsWrapper>
         {range(4).map(i => (
           <Fragment key={i}>
-            <Title />
-            <NewsFeedContainer>
-              {range(30).map(n => (
-                <ProductCardPlaceHolder key={n} />
-              ))}
-            </NewsFeedContainer>
+            <CategorySectionPlaceholder />
           </Fragment>
         ))}
       </HomePageContainer>
