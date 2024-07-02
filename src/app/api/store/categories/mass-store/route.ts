@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { Category } from '@prisma/client'
 import { prisma } from '@services/prisma'
 import { CategoryFormProps } from 'Types/Category'
-import { getObjectProps } from '~/utils'
+import { getObjectProps, noEmpty } from '~/utils'
 import {
   categoryIncludeFactory,
   setCategoryDefaultProps
@@ -51,9 +51,19 @@ export const POST = async (request: NextRequest) => {
 
   try {
     const categories = await prisma.$transaction(
-      categoriesData.map(categoryData =>
+      categoriesData.map(({ parentId, ...categoryData }) =>
         prisma.category.upsert({
-          create: categoryData,
+          create: {
+            ...categoryData,
+
+            parent: !noEmpty(parentId)
+              ? undefined
+              : {
+                  connect: {
+                    slag: String(parentId)
+                  }
+                }
+          },
           update: getObjectProps(categoryData, [
             'description',
             'icon',

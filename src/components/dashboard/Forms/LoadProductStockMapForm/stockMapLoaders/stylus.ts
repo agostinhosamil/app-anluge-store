@@ -64,12 +64,12 @@ export const stylusStockMapLoader: StockMapLoader<
     const productFamily =
       response.findCategory(product.family) ||
       response.storeCategory(product.family, {
-        parentId: productGroup.id
+        parentId: productGroup.slag
       })
     const productSubFamily =
       response.findCategory(product.subFamily) ||
       response.storeCategory(product.subFamily, {
-        parentId: productFamily.id
+        parentId: productFamily.slag
       })
 
     const now = new Date(Date.now())
@@ -77,7 +77,7 @@ export const stylusStockMapLoader: StockMapLoader<
     response.products.push({
       slag: '',
       barCode: product.ean,
-      categoryId: productSubFamily.id,
+      categoryId: productSubFamily.slag,
       code: response.productExists(product.code)
         ? generateRandomId()
         : product.code,

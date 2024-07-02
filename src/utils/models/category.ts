@@ -3,7 +3,7 @@ import { AxiosResponse } from 'axios'
 import { Category } from '~/components/dashboard/Forms/CategoryMassCreationForm/types'
 import { CategoryProps } from '~/Types/Category'
 import { arrayMerge, arraySplit, generateRandomId, noEmpty } from '~/utils'
-import { generateSlagByTitle } from '~/utils/generateSlagByTitle'
+import { generateSlagByTitleWithoutSignature } from '~/utils/generateSlagByTitle'
 
 export const createCategoryByFormData = async (
   formData: FormData
@@ -148,7 +148,7 @@ export const categoryFactoryByTitle = (
   description: categoryTitle,
   icon: null,
   id: generateRandomId(),
-  slag: generateSlagByTitle(categoryTitle),
+  slag: generateSlagByTitleWithoutSignature(categoryTitle),
   title: categoryTitle,
   parentId: (props && props.parentId) || null
 })

@@ -49,7 +49,7 @@ export const setProductDefaultProps = (product: Product): Product => {
 
   product.promotion = noEmpty(product.promotion)
 
-  product.price = noEmpty(product.price) ? Number(product.price) : 0
+  product.price = product.price ? Number(product.price) : 0
 
   product.minOrderQuantity = product.minOrderQuantity || -1
 

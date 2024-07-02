@@ -68,7 +68,7 @@ export const POST = async (request: NextRequest) => {
 
             category: {
               connect: {
-                id: String(categoryId)
+                slag: String(categoryId)
               }
             }
           },
