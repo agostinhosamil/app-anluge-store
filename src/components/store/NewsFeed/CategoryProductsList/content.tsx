@@ -46,9 +46,7 @@ export const CategoryProductsListContent: CategoryProductsListContentComponent =
           <FlatList
             data={products}
             loading={false}
-            renderItemPlaceholder={async () => {
-              'use server'
-
+            renderItemPlaceholder={() => {
               return (
                 <Suspense>
                   <ProductCardPlaceholders />
@@ -58,9 +56,7 @@ export const CategoryProductsListContent: CategoryProductsListContentComponent =
             paginationStyle="standard"
             showSearchBox={false}
             {...flatListProps}
-            renderItem={async product => {
-              'use server'
-
+            renderItem={product => {
               return (
                 <Suspense
                   fallback={
