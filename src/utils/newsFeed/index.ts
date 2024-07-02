@@ -90,7 +90,8 @@ export const getCategoryChildrenById = (
             include: {
               categories: {
                 select: {
-                  id: true
+                  id: true,
+                  title: true
                 }
               },
 

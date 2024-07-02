@@ -8,6 +8,7 @@ import { CategoryProps, CategoryWithProductId } from '~/Types/Category'
 
 import { ProductCardProps } from '../ProductCard'
 // import { ProductsList, Title } from '../styles'
+import { noEmpty } from '~/utils'
 import { ProductCardPlaceHolder } from '../ProductCardPlaceHolder'
 import { getAllCategoryProductsWithIds } from '../utils'
 import { ProductCardWrapper } from './ProductCardWrapper'
@@ -36,10 +37,10 @@ export const CategoryProductsListContent: CategoryProductsListContentComponent =
     return (
       <Fragment key={category.id}>
         <h1>
-          {/* {noEmpty(props.title)
+          {noEmpty(props.title)
             ? props.title.replaceAll('$0', category.title)
-            : category.title} */}
-          Category Title Here
+            : category.title}
+          {/* Category Title Here */}
         </h1>
         <div>
           <FlatList

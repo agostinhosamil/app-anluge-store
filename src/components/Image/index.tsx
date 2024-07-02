@@ -19,7 +19,6 @@ export const Image: ImageComponent = props => {
   const imageFetcher = async (): Promise<void> => {
     if (noEmpty(props.src)) {
       try {
-        console.log(`\n\n\n\n>>> Fetch Image: (${props.src})\n\n\n\n`)
         const response = await fetch(props.src)
         const imageData = await response.blob()
 

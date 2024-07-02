@@ -25,7 +25,7 @@ export const CategoryProductsList: CategoryProductsListComponent = async ({
   const categoryData = await getCategoryDataById(category.id)
 
   if (!categoryData) {
-    return <h1>No found category {category.id}</h1>
+    return null
   }
 
   const categoryWithChildren = await getCategoryChildrenById(categoryData)
