@@ -10,6 +10,10 @@ const nextConfig = {
       },
       {
         hostname: 'cdn.anluge.com'
+      },
+      {
+        hostname:
+          'app-anluge-store-68fb22zww-agostinhosamils-projects.vercel.app'
       }
     ]
   },
