@@ -3,7 +3,7 @@ import { prisma } from '~/services/prisma'
 import { CategoryWithProductId } from '~/Types/Category'
 
 import { empty } from '~/utils'
-import { generateSlagByTitle } from '~/utils/generateSlagByTitle'
+import { generateSlagByTitleWithoutSignature } from '~/utils/generateSlagByTitle'
 
 export const categoryIncludeFactory = (): Prisma.CategoryInclude => {
   const include: Prisma.CategoryInclude = {
@@ -36,7 +36,7 @@ export const setCategoryDefaultProps = (category: Category): Category => {
   }
 
   if (empty(category.slag)) {
-    category.slag = generateSlagByTitle(category.title)
+    category.slag = generateSlagByTitleWithoutSignature(category.title)
   }
 
   return category

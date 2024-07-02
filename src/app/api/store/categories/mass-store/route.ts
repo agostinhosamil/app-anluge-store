@@ -60,7 +60,7 @@ export const POST = async (request: NextRequest) => {
             'title'
           ]),
           where: {
-            id: categoryData.id
+            slag: categoryData.slag
           },
           include: categoryIncludeFactory()
         })

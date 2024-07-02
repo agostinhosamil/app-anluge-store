@@ -1,6 +1,8 @@
 import { Fragment, Suspense } from 'react'
-import { CategoryProductsList } from '~/components/store/NewsFeed/CategoryProductsList'
-import { prisma } from '~/services/prisma'
+
+import { prisma } from '@services/prisma'
+import { CategorySectionPlaceholder } from 'store@components/HomePagePlaceholder/CategorySectionPlaceholder'
+import { CategoryProductsList } from 'store@components/NewsFeed/CategoryProductsList'
 import { CategoryWithProductId } from '~/Types/Category'
 import { getCategoryChildrenById } from '~/utils/newsFeed'
 
@@ -52,7 +54,7 @@ export const CategorySection: CategorySectionComponent = async props => {
 
   return (
     <Fragment>
-      <Suspense fallback={<h1>Loading category data...</h1>}>
+      <Suspense fallback={<CategorySectionPlaceholder />}>
         <CategoryProductsList category={category} />
       </Suspense>
     </Fragment>

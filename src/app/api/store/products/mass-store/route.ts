@@ -61,9 +61,17 @@ export const POST = async (request: NextRequest) => {
 
   try {
     const products = await prisma.$transaction(
-      productsData.map(productData =>
+      productsData.map(({ categoryId, ...productData }) =>
         prisma.product.upsert({
-          create: productData,
+          create: {
+            ...productData,
+
+            category: {
+              connect: {
+                id: String(categoryId)
+              }
+            }
+          },
           update: getObjectProps(productData, [
             'name',
             'price',
