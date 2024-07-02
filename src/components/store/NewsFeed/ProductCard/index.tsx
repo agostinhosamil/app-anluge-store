@@ -1,11 +1,11 @@
 'use client'
 // import React from 'react'
 
-import Image from 'next/image'
 import Link from 'next/link'
 import { Fragment } from 'react'
 import { FaCartPlus, FaEllipsisV, FaHeart } from 'react-icons/fa'
 
+import { Image } from '@components/Image'
 import { useStoreContext } from 'store@components/Context'
 import { ProductProps } from '~/Types/Product'
 import { formatAmount, resolveProductImageUrl } from '~/utils'
