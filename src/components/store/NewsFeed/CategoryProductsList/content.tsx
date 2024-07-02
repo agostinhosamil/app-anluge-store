@@ -1,15 +1,14 @@
-// 'use client'
+'use client'
 
-import { Fragment, Suspense } from 'react'
+import { Fragment } from 'react'
 
-import { FlatList, FlatListProps } from '~/components/FlatList/server'
+import { FlatList, FlatListProps } from '~/components/FlatList'
 import { CategoryProps, CategoryWithProductId } from '~/Types/Category'
 // import { noEmpty } from '~/utils'
 
 import { ProductCardProps } from '../ProductCard'
-import { ProductCardPlaceholders } from '../ProductCardPlaceholders'
 // import { ProductsList, Title } from '../styles'
-import { Spinner } from 'react-bootstrap'
+import { ProductCardPlaceHolder } from '../ProductCardPlaceHolder'
 import { getAllCategoryProductsWithIds } from '../utils'
 import { ProductCardWrapper } from './ProductCardWrapper'
 
@@ -24,7 +23,7 @@ type CategoryProductsListContentComponent =
   React.FunctionComponent<CategoryProductsListContentProps>
 
 export const CategoryProductsListContent: CategoryProductsListContentComponent =
-  async ({ category, ...props }) => {
+  ({ category, ...props }) => {
     const products = getAllCategoryProductsWithIds(category)
 
     if (products.length < 1) {
@@ -46,29 +45,13 @@ export const CategoryProductsListContent: CategoryProductsListContentComponent =
           <FlatList
             data={products}
             loading={false}
-            renderItemPlaceholder={() => {
-              return (
-                <Suspense>
-                  <ProductCardPlaceholders />
-                </Suspense>
-              )
-            }}
+            renderItemPlaceholder={() => <ProductCardPlaceHolder />}
             paginationStyle="standard"
             showSearchBox={false}
             {...flatListProps}
-            renderItem={product => {
-              return (
-                <Suspense
-                  fallback={
-                    <span>
-                      Loading product <Spinner size="sm" />
-                    </span>
-                  }
-                >
-                  <ProductCardWrapper {...productCardProps} product={product} />
-                </Suspense>
-              )
-            }}
+            renderItem={product => (
+              <ProductCardWrapper {...productCardProps} product={product} />
+            )}
           />
         </div>
       </Fragment>

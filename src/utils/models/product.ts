@@ -285,6 +285,35 @@ export const getProducts = async (
   return []
 }
 
+export const getProductById = async (
+  productId: string
+): Promise<ProductProps | null> => {
+  try {
+    const response = await axios.get<Array<ProductProps>>(
+      `/store/products?match.id:equals=${productId}`,
+
+      {
+        fetchOptions: {
+          next: {
+            cache: 'force-cache'
+          }
+        }
+      }
+    )
+
+    if (response.data instanceof Array && response.data.length >= 1) {
+      return response.data[0]
+    }
+  } catch (err) {
+    /**
+     * TODO: Handle this
+     */
+    // pass
+  }
+
+  return null
+}
+
 export const getProductRatesAverage = (
   product: ProductWithRates | ProductProps
 ): number => {
