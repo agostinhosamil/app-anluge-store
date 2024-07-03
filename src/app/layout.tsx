@@ -1,5 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 
+import '@styles/globals.css'
+
 import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
 import NextJsTopLoader from 'nextjs-toploader'
