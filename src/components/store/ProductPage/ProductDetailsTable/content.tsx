@@ -29,7 +29,7 @@ export const Content: ContentComponent = ({ props }) => {
                 )}
               </Row>
               {typeof props[property] === 'object' &&
-                renderProperties(props[property])}
+                renderProperties(props[property] as PropertyMap)}
             </Fragment>
           )
         })}
