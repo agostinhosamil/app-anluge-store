@@ -45,8 +45,13 @@ export const Content: ContentComponent = ({ props }) => {
   )
 
   return (
-    <Container>
-      <Body>{renderProperties(props)}</Body>
-    </Container>
+    <Fragment>
+      <h2 className="text-4xl pointer-events-none text-zinc-600 font-semibold my-4">
+        Ficha técnica
+      </h2>
+      <Container>
+        <Body>{renderProperties(props)}</Body>
+      </Container>
+    </Fragment>
   )
 }
