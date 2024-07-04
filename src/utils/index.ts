@@ -452,3 +452,14 @@ export const generateRandomAlphaNumericId = (length: number = 12): string => {
 export const sanitizeSlagTitle = (slag: string) => {
   return String(slag).toLowerCase().split(/\s+/).join('')
 }
+
+export const emptyProductDescription = (
+  productDescription: string | null | undefined
+): boolean => {
+  const emptyProductDescriptionRe = /imported\s+product:\s+/i
+
+  return (
+    !noEmpty(productDescription) ||
+    emptyProductDescriptionRe.test(productDescription)
+  )
+}
