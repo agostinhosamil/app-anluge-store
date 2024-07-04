@@ -37,7 +37,7 @@ export const ProductImageGallery: ProductImageGalleryComponent = ({
       {product.medias.length >= 2 && (
         <ThumbnailsListWrapper>
           <ul>
-            <li>
+            {/* <li>
               <div
                 onClick={() => {
                   setLoading(true)
@@ -51,7 +51,7 @@ export const ProductImageGallery: ProductImageGalleryComponent = ({
                   height={50}
                 />
               </div>
-            </li>
+            </li> */}
             {product.medias.map(media => (
               <li key={media.id}>
                 <div
