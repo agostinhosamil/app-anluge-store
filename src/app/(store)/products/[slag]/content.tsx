@@ -39,6 +39,7 @@ import {
   Content as StyledContent,
   Summary
 } from 'store@styles/product-page'
+import { emptyProductDescription, formatAmount } from '~/utils'
 
 type ContentComponent = React.FunctionComponent<React.PropsWithChildren>
 
@@ -77,8 +78,7 @@ export const Content: ContentComponent = props => {
                     <h5>12.982.344,98</h5>
                   </OldPrice> */}
                   <Price>
-                    <i>AKZ</i>
-                    <h5>{product.price}</h5>
+                    <h5>{formatAmount(product.price)}</h5>
                   </Price>
                 </PriceList>
               )) || <h5>Preço sob consulta</h5>}
@@ -192,12 +192,16 @@ export const Content: ContentComponent = props => {
         <Column md={8}>
           <ContentWrapper>
             {props.children}
-            <Summary>
-              <RichText>{product.summary}</RichText>
-            </Summary>
-            <StyledContent>
-              <RichText>{product.description}</RichText>
-            </StyledContent>
+            {!emptyProductDescription(product.summary) && (
+              <Summary>
+                <RichText>{product.summary}</RichText>
+              </Summary>
+            )}
+            {!emptyProductDescription(product.description) && (
+              <StyledContent>
+                <RichText>{product.description}</RichText>
+              </StyledContent>
+            )}
           </ContentWrapper>
         </Column>
         <Column md={4}>
