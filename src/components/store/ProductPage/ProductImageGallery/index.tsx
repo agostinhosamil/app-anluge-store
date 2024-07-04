@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from '@components/Image'
 
 import { ProductProps } from '~/Types/Product'
 import { resolveProductImageUrl, uploadedImageUrl } from '~/utils'
