@@ -1,6 +1,6 @@
+import { $Enums, Product } from '@prisma/client'
 import { AxiosResponse } from 'axios'
 
-import { Product } from '@prisma/client'
 import { axios } from '@services/axios'
 import { ProductsImagesData } from '@utils/getProductsImagesFromZipFile'
 import { ProductProps, ProductWithRates } from '~/Types/Product'
@@ -330,4 +330,16 @@ export const getProductRatesAverage = (
   )
 
   return Math.round(productTotalRatesValue / productRatesValues.length)
+}
+
+export const rewriteProductStateLabel = (
+  productState: $Enums.ProductStatus
+) => {
+  const productStatesMap = {
+    [$Enums.ProductStatus.AVAILABLE]: 'Disponível',
+    [$Enums.ProductStatus.TRANSIT]: 'Trânsito',
+    [$Enums.ProductStatus.UPON_REQUEST]: 'Sob consulta'
+  }
+
+  return productStatesMap[productState] || productState
 }
