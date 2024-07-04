@@ -102,6 +102,7 @@ export const POST: NextApiHandler<Params> = async (request, { params }) => {
      * TODO: Handle this
      */
     // pass
+    console.log('>>>> Error: ', err, '\n\n\n\n\n')
   }
 
   return NextResponse.json(
