@@ -2,12 +2,12 @@
 
 import { CategoryProductsList } from '~/components/store/NewsFeed/CategoryProductsList'
 import { Container } from '~/components/styled'
-import { CategoryProps } from '~/Types/Category'
+import { CategoryProps, CategoryWithProductId } from '~/Types/Category'
 
 import { CategoryListWrapper, ChildrenWrapper } from './styles'
 
 type ContentProps = {
-  category: CategoryProps
+  category: CategoryProps | CategoryWithProductId
 }
 
 type ContentComponent = React.FunctionComponent<

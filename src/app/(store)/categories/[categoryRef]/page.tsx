@@ -1,10 +1,7 @@
 import { prisma } from '@services/prisma'
 import { NotFoundPageContent } from 'store@components/NotFoundPageContent'
 import { CategoryListSlider } from '~/components/store/NewsFeed/CategoryListSlider'
-import { CategoryProps } from '~/Types/Category'
-import { categoryIncludeFactory } from '~/utils/category'
-import { getCategoryChildren } from '~/utils/newsFeed'
-import { productIncludeFactory } from '~/utils/product'
+import { getCategoryChildrenById } from '~/utils/newsFeed'
 import { Content } from './content'
 
 type Params = {
@@ -29,7 +26,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   //   }
   // })
 
-  const category: CategoryProps | null = await prisma.category.findFirst({
+  const category = await prisma.category.findFirst({
     where: {
       OR: [
         {
@@ -40,13 +37,35 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         }
       ]
     },
+    // include: {
+    //   categories: {
+    //     include: categoryIncludeFactory()
+    //   },
+
+    //   products: {
+    //     include: productIncludeFactory()
+    //   }
+    // }
     include: {
       categories: {
-        include: categoryIncludeFactory()
-      },
+        include: {
+          categories: {
+            select: {
+              id: true
+            }
+          },
 
+          products: {
+            select: {
+              id: true
+            }
+          }
+        }
+      },
       products: {
-        include: productIncludeFactory()
+        select: {
+          id: true
+        }
       }
     }
   })
@@ -73,7 +92,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   //   ({ id }) => id !== foundCategory.id
   // )
 
-  const categoryData = await getCategoryChildren(category)
+  const categoryData = await getCategoryChildrenById(category)
 
   const otherCategories = await prisma.category.findMany({
     where: {
