@@ -54,7 +54,7 @@ export const ProductImageGallery: ProductImageGalleryComponent = ({
               <li key={media.id}>
                 <div
                   onClick={() =>
-                    setMainImageSrc(uploadedImageUrl(media.fileName))
+                    setMainImageSrc(uploadedImageUrl(`${media.fileName}@large`))
                   }
                 >
                   <Image
