@@ -12,10 +12,6 @@ type ContentProps = {
 type ContentComponent = React.FunctionComponent<ContentProps>
 
 export const Content: ContentComponent = ({ props }) => {
-  const isHeadingRow = (rowData: PropertyMap | string | undefined | null) => {
-    return !(typeof rowData !== 'object')
-  }
-
   const renderProperties = (props: PropertyMap) => (
     <Fragment>
       {props &&
