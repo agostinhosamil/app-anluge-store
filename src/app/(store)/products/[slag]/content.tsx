@@ -12,7 +12,10 @@ import {
   WhatsappShareButton
 } from 'react-share'
 
+import { useApp } from '@components/ApplicationContext'
+import { RichText } from '@components/RichText'
 import { useStoreContext } from 'store@components/Context'
+import { StarRating } from 'store@components/NewsFeed/ProductCard/StarRating'
 import { useProductPageContext } from 'store@components/pages/products/page/context'
 import { CategoryBreadCrumb } from 'store@components/ProductPage/CategoryBreadCrumb'
 import { ProductFAQs } from 'store@components/ProductPage/ProductFAQs'
@@ -36,9 +39,6 @@ import {
   Content as StyledContent,
   Summary
 } from 'store@styles/product-page'
-import { useApp } from '~/components/ApplicationContext'
-import { RichText } from '~/components/RichText'
-import { StarRating } from '~/components/store/NewsFeed/ProductCard/StarRating'
 
 type ContentComponent = React.FunctionComponent<React.PropsWithChildren>
 
@@ -188,9 +188,10 @@ export const Content: ContentComponent = props => {
           </ProductDataWrapper>
         </Column>
       </Row>
-      <Row>
+      <Row className="mb-4">
         <Column md={8}>
           <ContentWrapper>
+            {props.children}
             <Summary>
               <RichText>{product.summary}</RichText>
             </Summary>
@@ -204,7 +205,6 @@ export const Content: ContentComponent = props => {
           <ProductFAQs product={product} />
         </Column>
       </Row>
-      {props.children}
     </Container>
   )
 }

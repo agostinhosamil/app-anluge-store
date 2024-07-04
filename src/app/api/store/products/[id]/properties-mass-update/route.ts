@@ -62,7 +62,11 @@ export const POST: NextApiHandler<Params> = async (request, { params }) => {
       properties.map(property =>
         prisma.property.create({
           data: {
-            productId,
+            Product: {
+              connect: {
+                id: productId
+              }
+            },
             key: property.key,
             value: property.value,
             properties: {
@@ -70,7 +74,11 @@ export const POST: NextApiHandler<Params> = async (request, { params }) => {
                 data: !(property.properties instanceof Array)
                   ? []
                   : property.properties.map(prop => ({
-                      productId,
+                      Product: {
+                        connect: {
+                          id: productId
+                        }
+                      },
                       key: prop.key,
                       value: prop.value
                     }))

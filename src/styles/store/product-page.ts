@@ -259,7 +259,7 @@ export const Title = styled.h2<TitleProps>`
   display: block;
   width: 100%;
   padding-bottom: 25px;
-  font-size: ${props => `${props.$size}px` || '35px'};
+  font-size: ${props => (props.$size ? `${props.$size}px` : '35px')};
   font-weight: 600;
   color: #303030;
 `

@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-import '@styles/globals.css'
+// import '@styles/globals.css'
 
 import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
@@ -45,7 +45,15 @@ export const generateMetadata = (): Metadata => {
       url: origin,
       locale: 'pt-PT',
       phoneNumbers: companyData.phoneNumbers,
-      images: [`/anluge-logo.jpg`]
+      images: [
+        {
+          width: 200,
+          height: 200,
+          url: `/anluge-logo.jpg`,
+          alt: 'Anluge - Comércio e Prestação de Serviços',
+          type: 'image/jpeg'
+        }
+      ]
     }
   }
 }

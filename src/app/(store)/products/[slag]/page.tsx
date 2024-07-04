@@ -1,5 +1,10 @@
 import { Fragment, Suspense } from 'react'
 import { Spinner } from 'react-bootstrap'
+
+import {
+  ProductDetailsTable,
+  ProductDetailsTablePlaceHolder
+} from 'store@components/ProductPage/ProductDetailsTable'
 import { NotFoundPageContent } from '~/components/store/NotFoundPageContent'
 import { ProductPageWrapper } from '~/components/store/pages/products/page'
 import { PageProps } from '~/Types/next'
@@ -38,10 +43,20 @@ export default async function ProductPage({ params }: PageProps<Params>) {
   return (
     <ProductPageWrapper product={product}>
       <Content>
+        <Suspense fallback={<ProductDetailsTablePlaceHolder />}>
+          <ProductDetailsTable productId={product.id} />
+        </Suspense>
+      </Content>
+      <div
+        style={{
+          width: '100%',
+          padding: '0px 50px'
+        }}
+      >
         <Suspense fallback={loadingData}>
           <ProductSiblings product={product} />
         </Suspense>
-      </Content>
+      </div>
     </ProductPageWrapper>
   )
 }
