@@ -23,6 +23,9 @@ export const ProductImageGallery: ProductImageGalleryComponent = ({
   product
 }) => {
   const [loading, setLoading] = useState<boolean>(true)
+  const [mainImageSrc, setMainImageSrc] = useState<string>(
+    resolveProductImageUrl(product, 'large')
+  )
 
   const mainImageLoadHandler = () => {
     setLoading(false)
@@ -33,9 +36,27 @@ export const ProductImageGallery: ProductImageGalleryComponent = ({
       {product.medias.length >= 2 && (
         <ThumbnailsListWrapper>
           <ul>
+            <li>
+              <div
+                onClick={() =>
+                  setMainImageSrc(resolveProductImageUrl(product, 'large'))
+                }
+              >
+                <Image
+                  src={resolveProductImageUrl(product, 'small')}
+                  alt={product.name}
+                  width={50}
+                  height={50}
+                />
+              </div>
+            </li>
             {product.medias.map(media => (
               <li key={media.id}>
-                <div>
+                <div
+                  onClick={() =>
+                    setMainImageSrc(uploadedImageUrl(media.fileName))
+                  }
+                >
                   <Image
                     src={uploadedImageUrl(media.fileName)}
                     alt={product.name}
@@ -51,7 +72,7 @@ export const ProductImageGallery: ProductImageGalleryComponent = ({
       <Content>
         <ImageWrapper className={loading ? 'loading' : undefined}>
           <Image
-            src={resolveProductImageUrl(product, 'large')}
+            src={mainImageSrc}
             alt="Product name should be here"
             width={900}
             height={1200}
