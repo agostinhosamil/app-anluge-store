@@ -1,6 +1,7 @@
 import { ProductProps } from 'Types/Product'
 import { prisma } from '~/services/prisma'
 
+import { productPropertiesToMap } from '~/app/(store)/products/[slag]/utils'
 import { Content } from './content'
 import { PropertyMap } from './types'
 
@@ -109,5 +110,12 @@ export const ProductDetailsTable: ProductDetailsTableComponent =
       return
     }
 
-    return <Content props={productProps} />
+    return (
+      <Content
+        props={{
+          ...productProps,
+          ...productPropertiesToMap(product.properties)
+        }}
+      />
+    )
   }
