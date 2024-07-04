@@ -1,7 +1,10 @@
+import { $Enums } from '@prisma/client'
+
 import { ProductProps } from 'Types/Product'
 import { prisma } from '~/services/prisma'
 
 import { productPropertiesToMap } from '~/app/(store)/products/[slag]/utils'
+import { rewriteProductStateLabel } from '~/utils/models/product'
 import { Content } from './content'
 import { PropertyMap } from './types'
 
@@ -55,7 +58,7 @@ export const ProductDetailsTable: ProductDetailsTableComponent =
     const productPropertiesKeyMap: ProductPropertyKeyMap = {
       code: 'Código do produto',
       minOrderQuantity: {
-        label: 'Quantidade mínima',
+        label: 'Quantidade mínima para encomenda',
         getter(value) {
           if (isNaN(value)) {
             return '1'
@@ -66,7 +69,12 @@ export const ProductDetailsTable: ProductDetailsTableComponent =
           return `${minOrderQuantity < 1 ? 1 : minOrderQuantity}`
         }
       },
-      status: 'Estado do produto (Disponibilidade)',
+      status: {
+        label: 'Estado do produto (Disponibilidade)',
+        getter(value: $Enums.ProductStatus) {
+          return rewriteProductStateLabel(value)
+        }
+      },
       mark: 'Marca',
       model: 'Modelo',
       stock: {
