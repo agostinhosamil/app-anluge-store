@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { animatedBackground } from '~/components/styled'
+import { animatedBackground, PlaceHolder } from '~/components/styled'
 
 export const Container = styled.div`
   width: 100%;
@@ -64,9 +64,11 @@ export const ImageWrapper = styled.div`
   width: 100%;
   height: auto;
   display: block;
-  box-shadow: 0px 2px 5px 1px rgb(0 0 0 / 12%);
+  /* box-shadow: 0px 2px 5px 1px rgb(0 0 0 / 12%); */
   border-radius: 8px;
   -webkit-border-radius: 8px;
+  position: relative;
+  overflow: hidden;
 
   &.loading {
     ${animatedBackground}
@@ -77,5 +79,16 @@ export const ImageWrapper = styled.div`
     height: auto;
     border-radius: 8px;
     -webkit-border-radius: 8px;
+    transform: scale(1.35);
   }
+`
+
+export const ImagePlaceHolder = styled(PlaceHolder)`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
 `

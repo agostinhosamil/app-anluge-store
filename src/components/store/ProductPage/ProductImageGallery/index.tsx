@@ -8,6 +8,7 @@ import { resolveProductImageUrl, uploadedImageUrl } from '~/utils'
 import {
   Container,
   Content,
+  ImagePlaceHolder,
   ImageWrapper,
   ThumbnailsListWrapper
 } from './styles'
@@ -38,9 +39,10 @@ export const ProductImageGallery: ProductImageGalleryComponent = ({
           <ul>
             <li>
               <div
-                onClick={() =>
+                onClick={() => {
+                  setLoading(true)
                   setMainImageSrc(resolveProductImageUrl(product, 'large'))
-                }
+                }}
               >
                 <Image
                   src={resolveProductImageUrl(product, 'small')}
@@ -53,12 +55,13 @@ export const ProductImageGallery: ProductImageGalleryComponent = ({
             {product.medias.map(media => (
               <li key={media.id}>
                 <div
-                  onClick={() =>
+                  onClick={() => {
+                    setLoading(true)
                     setMainImageSrc(uploadedImageUrl(`${media.fileName}@large`))
-                  }
+                  }}
                 >
                   <Image
-                    src={uploadedImageUrl(media.fileName)}
+                    src={uploadedImageUrl(`${media.fileName}@small`)}
                     alt={product.name}
                     width={50}
                     height={50}
@@ -71,6 +74,7 @@ export const ProductImageGallery: ProductImageGalleryComponent = ({
       )}
       <Content>
         <ImageWrapper className={loading ? 'loading' : undefined}>
+          {loading && <ImagePlaceHolder />}
           <Image
             src={mainImageSrc}
             alt="Product name should be here"
