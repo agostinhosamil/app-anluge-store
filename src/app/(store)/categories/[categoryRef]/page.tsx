@@ -2,6 +2,7 @@ import { prisma } from '@services/prisma'
 import { NotFoundPageContent } from 'store@components/NotFoundPageContent'
 import { CategoryListSlider } from '~/components/store/NewsFeed/CategoryListSlider'
 import { getCategoryChildrenById } from '~/utils/newsFeed'
+
 import { Content } from './content'
 
 type Params = {

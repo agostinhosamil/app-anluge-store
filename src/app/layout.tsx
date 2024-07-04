@@ -30,7 +30,7 @@ export const generateMetadata = (): Metadata => {
       default: 'Anluge',
       template: '%s | Anluge'
     },
-    icons: ['/assets/images/svg/anluge-logo-primary.svg'],
+    icons: ['/assets/images/svg/anluge-logo-dark.svg'],
     description:
       'A Anluge, uma empresa angolana de destaque, é a sua parceira ideal para soluções tecnológicas personalizadas. Na Anluge, oferecemos uma vasta gama de serviços que atendem empresas de todos os tamanhos e setores. Nossa equipe especializada está pronta para oferecer consultoria em TI, desenvolvimento de software sob medida, integração de sistemas, segurança cibernética e suporte técnico contínuo. Conte com a Anluge para levar sua empresa ao próximo nível com inovação e excelência.',
     openGraph: {
