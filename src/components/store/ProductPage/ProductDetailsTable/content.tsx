@@ -1,8 +1,8 @@
 'use client'
 
-import { Body, Container, Data, Row } from './styles'
-
 import { Fragment } from 'react'
+
+import { Body, Container, Data, Row } from './styles'
 import { PropertyMap } from './types'
 
 type ContentProps = {
@@ -12,13 +12,21 @@ type ContentProps = {
 type ContentComponent = React.FunctionComponent<ContentProps>
 
 export const Content: ContentComponent = ({ props }) => {
+  const isHeadingRow = (rowData: PropertyMap | string | undefined | null) => {
+    return !rowData
+  }
+
   const renderProperties = (props: PropertyMap) => (
     <Fragment>
       {props &&
         Object.keys(props).map((property, propertyIndex) => {
+          const rowClassName = isHeadingRow(props[property])
+            ? 'heading'
+            : undefined
+
           return (
             <Fragment key={propertyIndex}>
-              <Row>
+              <Row className={rowClassName}>
                 <Data>
                   <strong>{property}</strong>
                 </Data>
