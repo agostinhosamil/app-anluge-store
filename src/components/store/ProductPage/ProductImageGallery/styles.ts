@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { animatedBackground } from '~/components/styled'
 
 export const Container = styled.div`
   width: 100%;
@@ -62,6 +63,10 @@ export const ImageWrapper = styled.div`
   width: 100%;
   height: auto;
   display: block;
+
+  &.loading {
+    ${animatedBackground}
+  }
 
   img {
     width: 100%;
