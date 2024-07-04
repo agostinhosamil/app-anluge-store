@@ -8,7 +8,12 @@ import { FaCartPlus, FaEllipsisV, FaHeart } from 'react-icons/fa'
 import { Image } from '@components/Image'
 import { useStoreContext } from 'store@components/Context'
 import { ProductProps } from '~/Types/Product'
-import { formatAmount, resolveProductImageUrl } from '~/utils'
+import {
+  emptyProductDescription,
+  formatAmount,
+  resolveProductImageUrl
+} from '~/utils'
+import { getProductRatesAverage } from '~/utils/models/product'
 import { StarRating } from './StarRating'
 import * as Styled from './styles'
 
@@ -53,14 +58,22 @@ export const ProductCard: ProductCardComponent = props => {
           <Styled.Name>{product.name}</Styled.Name>
           {!shouldNotShowProductAdditionalData && (
             <Fragment>
-              <Styled.Description>{product.description}</Styled.Description>
+              {!emptyProductDescription(product.summary) && (
+                <Styled.Description>{product.summary}</Styled.Description>
+              )}
               <Styled.StatsData>
-                <div>
-                  <StarRating value={3} />
-                </div>
-                <div>
-                  <span>+133 uniaddes vendidas</span>
-                </div>
+                {product.rates instanceof Array &&
+                  product.rates.length >= 1 && (
+                    <div>
+                      <StarRating value={getProductRatesAverage(product)} />
+                    </div>
+                  )}
+                {product.orders instanceof Array &&
+                  product.orders.length >= 1 && (
+                    <div>
+                      <span>+{product.orders.length} unidades vendidas</span>
+                    </div>
+                  )}
               </Styled.StatsData>
               <Styled.MetaData>
                 <Styled.Price>
