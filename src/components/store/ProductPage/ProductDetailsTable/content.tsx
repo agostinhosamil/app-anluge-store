@@ -24,7 +24,7 @@ export const Content: ContentComponent = ({ props }) => {
                 </Data>
                 {typeof props[property] !== 'object' && (
                   <Data>
-                    <span>{props[property]}</span>
+                    <span>{String(props[property])}</span>
                   </Data>
                 )}
               </Row>
