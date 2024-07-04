@@ -22,6 +22,12 @@ export const Row = styled.tr`
   border-top: 1px solid #e0e0e0;
   display: flex;
   justify-content: stretch;
+  margin: 0px -2px;
+  width: calc(100% + 4px);
+
+  &.heading {
+    background-color: #f7f7f7;
+  }
 
   &:nth-child(1) {
     border-top: unset;
