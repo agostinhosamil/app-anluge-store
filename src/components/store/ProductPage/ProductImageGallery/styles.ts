@@ -34,6 +34,7 @@ export const ThumbnailsListWrapper = styled.div`
         -webkit-border-radius: 8px;
         cursor: pointer;
         transition: transform 0.3s ease-in-out;
+        box-shadow: 0px 2px 5px 1px rgb(0 0 0 / 12%);
 
         img {
           width: 100%;
