@@ -40,6 +40,7 @@ import {
   Summary
 } from 'store@styles/product-page'
 import { emptyProductDescription, formatAmount } from '~/utils'
+import { getProductRatesAverage } from '~/utils/models/product'
 
 type ContentComponent = React.FunctionComponent<React.PropsWithChildren>
 
@@ -65,10 +66,15 @@ export const Content: ContentComponent = props => {
           <ProductDataWrapper>
             <h1>{product.name}</h1>
             <StatsData>
-              <StarRatingElementContainer>
-                <StarRating value={4} />
-              </StarRatingElementContainer>
-              <span>+198k unidades vendidas</span>
+              {product.rates instanceof Array && product.rates.length >= 1 && (
+                <StarRatingElementContainer>
+                  <StarRating value={getProductRatesAverage(product)} />
+                </StarRatingElementContainer>
+              )}
+              {product.orders instanceof Array &&
+                product.orders.length >= 1 && (
+                  <span>+{product.orders.length} unidades vendidas</span>
+                )}
             </StatsData>
             <PriceListWrapper>
               {(product.price >= 1 && (
