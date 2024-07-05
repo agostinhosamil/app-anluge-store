@@ -8,6 +8,8 @@ export const getProductsProperties = (
   return Object.keys(productsProperties).map(productId => {
     const productProperties = productsProperties[productId]
 
+    const product = productProperties.product
+
     const getPropertyChildren = (
       propertyChildren: Properties
     ): Array<PropertyProps> => {
@@ -32,7 +34,7 @@ export const getProductsProperties = (
               ? productProperty
               : null,
             parentId: null,
-            productId,
+            productId: product.code,
             properties: productPropertyHasNotChildren(productProperty)
               ? []
               : getPropertyChildren(productProperty),

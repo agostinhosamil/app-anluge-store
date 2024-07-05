@@ -37,11 +37,25 @@ export const POST: NextApiHandler<Params> = async (request, { params }) => {
 
   const validatedRequestBody = PostRequestBodySchema.safeParse(requestBody)
 
-  const productId = params.id
+  const productCode = decodeURIComponent(params.id)
 
-  console.log({ productId })
+  const product = await prisma.product.findFirst({
+    select: {
+      id: true
+    },
+    where: {
+      OR: [
+        {
+          code: productCode
+        },
+        {
+          id: productCode
+        }
+      ]
+    }
+  })
 
-  if (!validatedRequestBody.data) {
+  if (!(validatedRequestBody.data && product)) {
     return NextResponse.json(
       {
         error: true,
@@ -62,7 +76,7 @@ export const POST: NextApiHandler<Params> = async (request, { params }) => {
       properties.map(property =>
         prisma.property.create({
           data: {
-            productId,
+            productId: product.id,
             key: property.key,
             value: property.value,
             properties: {
@@ -70,7 +84,7 @@ export const POST: NextApiHandler<Params> = async (request, { params }) => {
                 data: !(property.properties instanceof Array)
                   ? []
                   : property.properties.map(prop => ({
-                      productId,
+                      productId: product.id,
                       key: prop.key,
                       value: prop.value
                     }))

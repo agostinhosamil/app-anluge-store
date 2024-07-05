@@ -49,7 +49,7 @@ export default function ProductsPropertiesMassUpdatePage() {
       return
     }
 
-    const getProductId = (properties: Array<PropertyProps>): string => {
+    const getProductCode = (properties: Array<PropertyProps>): string => {
       return String(properties[0]?.productId)
     }
 
@@ -64,12 +64,12 @@ export default function ProductsPropertiesMassUpdatePage() {
     const productsProperties = getProductsProperties(jsonFileData)
 
     for (const productProperties of productsProperties) {
-      const productId = getProductId(productProperties)
-      const product = getProductData(productId)
+      const productCode = getProductCode(productProperties)
+      const product = getProductData(productCode)
 
       if (product) {
         setLoading(
-          <span>
+          <span className="flex flex-col items-center text-center p-10 justify-center">
             {`[${product.id}]`}
             <br />
             {`A atualizar detalhes do produto "${product.name}"...`}
@@ -78,7 +78,7 @@ export default function ProductsPropertiesMassUpdatePage() {
       }
 
       const updatedProductsProperties = await massUpdateProductProps(
-        productId,
+        productCode,
         productProperties
       )
 

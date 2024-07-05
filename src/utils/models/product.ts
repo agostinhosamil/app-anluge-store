@@ -183,7 +183,7 @@ export const massUpdateProductProps = async (
 ): Promise<boolean> => {
   try {
     const productMassUpdateConcurrency = 5
-    const productMassStoreRequestPath = `/store/products/${productId}/properties-mass-update`
+    const productMassStoreRequestPath = `/store/products/${encodeURIComponent(productId)}/properties-mass-update`
     const propertiesQueues = arraySplit(
       properties,
       productMassUpdateConcurrency
