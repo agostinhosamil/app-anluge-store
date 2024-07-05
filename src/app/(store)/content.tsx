@@ -33,11 +33,21 @@ export const Content: ContentComponent = async () => {
     generateSlagByTitleWithoutSignature(categoryName)
   )
 
-  const categories: Array<Category> = await prisma.category.findMany()
+  const categories: Array<Category> = await prisma.category.findMany({
+    where: {
+      parentId: {
+        equals: null
+      }
+    },
+
+    orderBy: {
+      id: 'desc'
+    }
+  })
 
   return (
     <HomePage>
-      <CategoryListSlider categories={categories} />
+      {categories.length >= 1 && <CategoryListSlider categories={categories} />}
       {categoriesSlagsPrefixes.map((categorySlag, categorySlagIndex) => (
         <Suspense
           key={categorySlagIndex}
