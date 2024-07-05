@@ -8,3 +8,5 @@ yarn-error.*
 npm-error.*
 
 certificates
+
+/prisma/seed.js
