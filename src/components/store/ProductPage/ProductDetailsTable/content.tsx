@@ -16,6 +16,25 @@ export const Content: ContentComponent = ({ props }) => {
     return rowData && typeof rowData === 'object'
   }
 
+  const renderPropertyValue = (value: string): React.ReactNode => {
+    const re = /(\s*(;|\n+)\s*)/
+    const valueParagraphs = value.split(re).filter(p => !re.test(p))
+
+    if (valueParagraphs.length < 2) {
+      return <span>{value}</span>
+    }
+
+    return (
+      <Fragment>
+        {valueParagraphs.map((valueParagraph, index) => (
+          <p key={index} className="w-full block first:pt-0 last:pb-0 py-2.5">
+            <span>{valueParagraph}</span>
+          </p>
+        ))}
+      </Fragment>
+    )
+  }
+
   const renderProperties = (props: PropertyMap) => (
     <Fragment>
       {props &&
@@ -31,9 +50,7 @@ export const Content: ContentComponent = ({ props }) => {
                   <strong>{property}</strong>
                 </Data>
                 {typeof props[property] !== 'object' && (
-                  <Data>
-                    <span>{String(props[property])}</span>
-                  </Data>
+                  <Data>{renderPropertyValue(String(props[property]))}</Data>
                 )}
               </Row>
               {typeof props[property] === 'object' &&
