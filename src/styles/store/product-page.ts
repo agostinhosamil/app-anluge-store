@@ -58,6 +58,7 @@ export const PriceList = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 20px;
 `
 
 export const OldPrice = styled.div`
@@ -84,8 +85,6 @@ export const OldPrice = styled.div`
 `
 
 export const Price = styled(OldPrice)`
-  padding-left: 20px;
-
   i {
     font-size: 18px;
     font-weight: 800;
