@@ -123,14 +123,21 @@ export const Name = styled.h5`
   height: 45px;
 `
 
-export const Description = styled.p`
+export const Description = styled.div`
   width: 100%;
   margin: 0px 0px 9px;
-  display: -webkit-box;
+  display: flex;
   width: 100%;
   border-radius: 6px;
-  ${animatedBackground}
-  height: 85px;
+  flex-direction: column;
+  gap: 8px;
+
+  P {
+    width: 100%;
+    ${animatedBackground}
+    height: 12px;
+    border-radius: 12px;
+  }
 `
 
 export const AsideContainer = styled.div`

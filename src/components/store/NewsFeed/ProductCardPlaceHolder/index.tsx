@@ -11,7 +11,12 @@ export const ProductCardPlaceHolder: React.FunctionComponent = () => {
         <Styled.Content>
           <Styled.ImageWrapper />
           <Styled.Name />
-          <Styled.Description />
+          <Styled.Description>
+            <p />
+            <p />
+            <p />
+            <p />
+          </Styled.Description>
           <Styled.StatsData>
             <div />
             <div />
