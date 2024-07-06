@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { PlaceHolder } from '~/components/styled'
 
 type StarWrapperProps = {
@@ -14,13 +14,8 @@ const starRatingSizes = {
   'x-large': 35
 }
 
-export const Container = styled.div`
+const containerWidthSettings = css`
   width: calc(100% / 5);
-  height: auto;
-  padding: 12px;
-  display: flex;
-  flex-direction: row;
-  position: relative;
 
   @media (min-width: 2000px) {
     width: 25%;
@@ -61,8 +56,27 @@ export const Container = styled.div`
   @media (max-width: 410px) {
     width: 100%;
   }
+`
 
-  a {
+type ContainerProps = {
+  $width?: number | `${number}px` | `${number}%` | `${number}rem`
+}
+
+export const Container = styled.div<ContainerProps>`
+  height: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+
+  ${props =>
+    !props.$width
+      ? containerWidthSettings
+      : typeof props.$width === 'string'
+        ? props.$width
+        : `${props.$width}px`}
+
+  & > a {
     width: 100%;
     height: auto;
     display: block;
