@@ -30,7 +30,7 @@ export const CreateCategoryForm: CreateCategoryFormComponent = ({
   ...props
 }) => {
   const [file, setFile] = useState<File>()
-  const [categoryIcon, setCategoryIcon] = useState<string>()
+  const [categoryIcon] = useState<string>()
 
   const formSubmitHandler: React.FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault()
@@ -46,7 +46,8 @@ export const CreateCategoryForm: CreateCategoryFormComponent = ({
       const uploadClient = new AnlugeUploadClient({
         imageSet: 'products',
         uploadedImageSizes: {
-          normal: '500x500'
+          normal: '500x500',
+          large: '1500x800'
         }
       })
 
