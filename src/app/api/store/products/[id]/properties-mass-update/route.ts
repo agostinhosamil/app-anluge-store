@@ -72,8 +72,16 @@ export const POST: NextApiHandler<Params> = async (request, { params }) => {
   try {
     const { properties } = validatedRequestBody.data
 
-    const createdProperties = await prisma.$transaction(
-      properties.map(property =>
+    const createdProperties = await prisma.$transaction([
+      ...properties.map(property =>
+        prisma.property.deleteMany({
+          where: {
+            key: property.key,
+            productId: product.id
+          }
+        })
+      ),
+      ...properties.map(property =>
         prisma.property.create({
           data: {
             productId: product.id,
@@ -93,7 +101,7 @@ export const POST: NextApiHandler<Params> = async (request, { params }) => {
           }
         })
       )
-    )
+    ])
 
     if (createdProperties) {
       return NextResponse.json({
