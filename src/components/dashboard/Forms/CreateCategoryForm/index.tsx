@@ -46,7 +46,10 @@ export const CreateCategoryForm: CreateCategoryFormComponent = ({
       const uploadClient = new AnlugeUploadClient({
         imageSet: 'products',
         uploadedImageSizes: {
+          'x-small': '339x181',
+          small: '510x272',
           normal: '500x500',
+          medium: '880x470',
           large: '1500x800'
         }
       })
