@@ -105,7 +105,7 @@
     "globals": "^15.3.0",
     "postcss": "^8.4.39",
     "prettier": "^3.2.5",
-    "prisma": "^5.15.0",
+    "prisma": "^5.16.1",
     "prisma-erd-generator": "^1.11.2",
     "prisma-zod-generator": "^0.8.13",
     "tailwindcss": "^3.4.4",
