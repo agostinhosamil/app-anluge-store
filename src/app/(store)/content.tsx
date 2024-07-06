@@ -48,14 +48,16 @@ export const Content: ContentComponent = async () => {
   return (
     <HomePage>
       {categories.length >= 1 && <CategoryListSlider categories={categories} />}
-      {categoriesSlagsPrefixes.map((categorySlag, categorySlagIndex) => (
-        <Suspense
-          key={categorySlagIndex}
-          fallback={<CategorySectionPlaceholder />}
-        >
-          <CategorySection categorySlag={categorySlag} />
-        </Suspense>
-      ))}
+      <div className="w-full pt-4 block">
+        {categoriesSlagsPrefixes.map((categorySlag, categorySlagIndex) => (
+          <Suspense
+            key={categorySlagIndex}
+            fallback={<CategorySectionPlaceholder />}
+          >
+            <CategorySection categorySlag={categorySlag} />
+          </Suspense>
+        ))}
+      </div>
     </HomePage>
   )
 }
