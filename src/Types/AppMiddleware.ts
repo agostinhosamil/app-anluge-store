@@ -8,9 +8,15 @@ export type AppMiddlewareProps<Body = any> = {
 
 export type AppMiddlewareMathKey = string | RegExp
 
+export type AppMiddlewareHandlerResponse =
+  | void
+  | NextResponse
+  | undefined
+  | null
+
 export type AppMiddlewareHandler<Body = any> = (
   props: AppMiddlewareProps<Body>
-) => Promise<void> | void
+) => Promise<AppMiddlewareHandlerResponse> | AppMiddlewareHandlerResponse
 
 export type AppMiddleware<Body = any> = {
   match: AppMiddlewareMathKey
