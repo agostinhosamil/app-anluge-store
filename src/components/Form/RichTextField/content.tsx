@@ -6,7 +6,7 @@ import { MenuBar } from './MenuBar'
 import { Container, EditorBody, FixedContainer } from './styles'
 import { TipTapBubbleMenu } from './TipTapBubbleMenu'
 
-type RichTextFieldContentProps = {}
+type RichTextFieldContentProps = any
 
 type RichTextFieldContentComponent =
   React.FunctionComponent<RichTextFieldContentProps>
@@ -14,8 +14,7 @@ type RichTextFieldContentComponent =
 export const RichTextFieldContent: RichTextFieldContentComponent = () => {
   const editorContentRef = useRef<HTMLDivElement>(null)
 
-  const { editor, fixed, setEditorWidth, editorWidth } =
-    useRichTextFieldContext()
+  const { editor, fixed, setEditorWidth } = useRichTextFieldContext()
 
   const ContainerElement = fixed ? FixedContainer : Container
 
@@ -24,7 +23,7 @@ export const RichTextFieldContent: RichTextFieldContentComponent = () => {
       return
     }
 
-    const editorContentResizeObserver = new window.ResizeObserver(entry => {
+    const editorContentResizeObserver = new window.ResizeObserver(() => {
       if (!editorContentRef.current) {
         return
       }
@@ -45,7 +44,7 @@ export const RichTextFieldContent: RichTextFieldContentComponent = () => {
     <Fragment>
       <ContainerElement>
         <MenuBar editor={editor} />
-        <EditorBody>
+        <EditorBody className="prose">
           <EditorContent ref={editorContentRef} editor={editor} />
           <TipTapBubbleMenu />
         </EditorBody>
