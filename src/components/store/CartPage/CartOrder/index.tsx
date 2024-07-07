@@ -106,7 +106,7 @@ export const CartOrder: CartOrderComponent = ({ product }) => {
         <BudgetData>
           {product.price >= 1 && (
             <Price>
-              <strong>{formatAmount(product.price)}</strong>
+              <strong>{formatAmount(product.price * amount)}</strong>
             </Price>
           )}
           <AmountInputWrapper>
