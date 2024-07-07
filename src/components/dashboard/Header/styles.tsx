@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const Container = styled.header`
   width: 100%;
@@ -6,7 +6,7 @@ export const Container = styled.header`
   display: flex;
   flex-direction: row;
   align-items: center;
-`;
+`
 
 export const FixedContainer = styled(Container)`
   position: fixed;
@@ -15,14 +15,14 @@ export const FixedContainer = styled(Container)`
   right: 0px;
   background-color: #ffffff;
   box-shadow: 0px 6px 15px 11px rgb(0 0 0 / 24%);
-  padding: 20px 30px 24px;
+  padding: 11px 30px 15px;
   z-index: 10;
-`;
+`
 
 export const HeaderShadowElement = styled.div`
   width: 100%;
   height: 150px;
-`;
+`
 
 export const LogoWrapper = styled.div`
   width: 100%;
@@ -44,7 +44,7 @@ export const LogoWrapper = styled.div`
       font-size: 32px;
     }
   }
-`;
+`
 
 export const MenuContainer = styled.div`
   width: 100%;
@@ -52,7 +52,7 @@ export const MenuContainer = styled.div`
   display: inline-flex;
   align-items: center;
   justify-content: flex-end;
-`;
+`
 
 export const SearchBoxContainer = styled.div`
   width: 100%;
@@ -67,7 +67,7 @@ export const SearchBoxContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 9px 14px;
+    padding: 5px 9px;
 
     input {
       width: 100%;
@@ -76,14 +76,18 @@ export const SearchBoxContainer = styled.div`
       background-color: transparent;
       font-size: 18px;
       padding-left: 9px;
+      font-weight: 300;
+      font-size: 16px;
+      margin-top: -3px;
     }
 
     i {
       display: block;
-      padding-left: 14px;
+      padding: 0px 7px;
+      font-size: 12px;
     }
   }
-`;
+`
 
 export const MenuListWrapper = styled.div`
   display: block;
@@ -95,15 +99,15 @@ export const MenuListWrapper = styled.div`
     li {
       display: inline-flex;
       align-items: center;
-      margin: 0px 0px 0px 28px;
+      margin: 0px 0px 0px 18px;
       font-size: 32px;
       color: #101213;
       cursor: pointer;
 
       * {
         color: inherit;
-        font-size: 32px;
+        font-size: 19px;
       }
     }
   }
-`;
+`
