@@ -1,4 +1,4 @@
-import Image from 'next/image'
+// import Image from 'next/image'
 import Link from 'next/link'
 
 import { Container } from './styles'
@@ -8,12 +8,18 @@ type AdvertisingPanelProps = {
   title: string
 }
 
-export const AdvertisingPanel: React.FunctionComponent<AdvertisingPanelProps> = (props) => {
+export const AdvertisingPanel: React.FunctionComponent<
+  AdvertisingPanelProps
+> = props => {
   return (
     <Container>
       <Link href="/">
-        <div>
-          <Image src={`/assets/images/uploads/${props.image}`} alt={props.title} width={1200} height={820} />
+        <div className="block w-full">
+          <img
+            className="block w-full h-auto border-none outline-none"
+            src={`/assets/images/uploads/${props.image}`}
+            alt={props.title}
+          />
         </div>
       </Link>
     </Container>
