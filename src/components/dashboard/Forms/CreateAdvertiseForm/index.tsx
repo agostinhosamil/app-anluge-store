@@ -80,7 +80,7 @@ export const CreateAdvertiseForm: CreateAdvertiseFormComponent = ({
   ...props
 }) => {
   const [file, setFile] = useState<File>()
-  const [post, setPost] = useState<PostProps>()
+  const [post] = useState<PostProps>()
   const [product, setProduct] = useState<ProductProps>()
   const [loading, setLoading] = useState<boolean>(Boolean(pending))
   const [selectProductDialogTitle, setSelectProductDialogTitle] =
@@ -135,8 +135,10 @@ export const CreateAdvertiseForm: CreateAdvertiseFormComponent = ({
         imageSet: 'advertises',
         uploadedImageSizes: {
           large: '1200x800',
-          normal: '800x800',
-          small: '200x200'
+          normal: '920x460',
+          small: '620x310',
+          'x-small': '380x190',
+          'xx-small': '250x125'
         }
       })
 
