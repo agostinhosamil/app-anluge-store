@@ -1,4 +1,4 @@
-import { noEmpty } from '.'
+import { arraySplit, noEmpty } from '.'
 import {
   ProductImagesData,
   ProductsImagesData
@@ -73,23 +73,33 @@ export const getProductsImagesFromFileList: GetProductsImagesFromFileListUtil =
 
     const productsImagesData: Array<ProductImagesData> = []
 
-    for (const imageFile of validImageFiles) {
-      const imageProductCode = getProductCodeFromImageName(imageFile.name)
+    const imageFilesUploadConcurrency = 20
+    const imageFilesUploadQueues = arraySplit(
+      validImageFiles,
+      imageFilesUploadConcurrency
+    )
 
+    for (const imageFileUploadQueue of imageFilesUploadQueues) {
       try {
-        const uploadedImage =
-          await productImageUploadClient.uploadFile(imageFile)
+        const uploadedImages =
+          await productImageUploadClient.uploadFiles(imageFileUploadQueue)
 
-        productsImagesData.push({
-          medias: [
-            {
-              fileName: uploadedImage.name
+        for (let i = 0; i < uploadedImages.length; i++) {
+          const uploadedImage = uploadedImages[i]
+          const imageFile = imageFileUploadQueue[i]
+          const imageProductCode = getProductCodeFromImageName(imageFile.name)
+
+          productsImagesData.push({
+            medias: [
+              {
+                fileName: uploadedImage.name
+              }
+            ],
+            product: {
+              code: imageProductCode
             }
-          ],
-          product: {
-            code: imageProductCode
-          }
-        })
+          })
+        }
       } catch (err) {
         continue
       }

@@ -84,6 +84,7 @@ export default function ProductImageMassUpdatePage() {
     setLoading(true)
 
     const productsImages = await getProductsImagesFromFileList(files)
+
     const updatedProducts = await massUpdateProductsImages(productsImages)
 
     if (!updatedProducts) {
