@@ -76,6 +76,7 @@ export const stylusStockMapLoader: StockMapLoader<
 
     response.products.push({
       slag: '',
+      hidden: false,
       barCode: product.ean,
       categoryId: productSubFamily.slag,
       code: response.productExists(product.code)
