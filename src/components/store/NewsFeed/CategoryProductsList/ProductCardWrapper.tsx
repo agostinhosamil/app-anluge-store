@@ -37,5 +37,13 @@ export const ProductCardWrapper: ProductCardWrapperComponent = props => {
     return <ProductCardPlaceHolder />
   }
 
+  const productHasNoMedias = !(
+    data.medias instanceof Array && data.medias.length >= 1
+  )
+
+  if (productHasNoMedias || data.status !== 'AVAILABLE' || data.hidden) {
+    return null
+  }
+
   return <ProductCard product={data} />
 }
