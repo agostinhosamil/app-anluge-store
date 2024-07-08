@@ -60,5 +60,5 @@ export const ProductsList = styled.div`
 export const AdvertisingPanelContainer = styled.div`
   width: 100%;
   display: block;
-  padding: 30px 8px;
+  padding: 20px 8px 10px;
 `
