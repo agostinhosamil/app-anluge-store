@@ -70,13 +70,13 @@ export const AuthenticationWrapperContextProvider: AuthenticationWrapperContextP
               username: userData.email
             })
 
+            setLoading(undefined)
+
             if (signInResponse) {
               return resolve(signInResponse)
             }
 
             alert('Incorrect user or password')
-
-            setLoading(undefined)
           }
         }
 
