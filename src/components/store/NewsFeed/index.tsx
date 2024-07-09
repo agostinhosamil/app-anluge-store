@@ -24,6 +24,9 @@ export const NewsFeed: React.FunctionComponent<
           <div className="w-full h-full flex flex-col justify-center pt-[20px] pb-[10px] pr-[8px]">
             <Partial unAuth>
               <div className="w-full flex bg-zinc-200 rounded-2xl p-7 flex-col items-center justify-center gap-6 h-full">
+                <h3 className="pb-1 text-xl text-center w-full font-normal">
+                  Crie uma conta ou Inicie sessão
+                </h3>
                 <p className="text-zinc-500 font-light text-sm text-center">
                   Junte-se à nossa comunidade de compras e desfrute de
                   benefícios exclusivos ao iniciar sessão ou criar uma conta
