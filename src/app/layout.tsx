@@ -17,7 +17,6 @@ import { StoreContextWrapper } from '~/components/store/Context/StoreContextWrap
 import { getAuthTokenCookie } from '~/utils/authTokenCookie'
 import { getServerHeaders } from '~/utils/server'
 
-import { UnderConstructionFallback } from '~/components/UndeConstructionFallback'
 import companyData from '~/config/cache/company-data/index.json'
 
 export const generateMetadata = (): Metadata => {
@@ -59,16 +58,16 @@ export const generateMetadata = (): Metadata => {
   }
 }
 
-// type RootLayoutProps = Readonly<{
-//   children: React.ReactNode
-// }>
+type RootLayoutProps = Readonly<{
+  children: React.ReactNode
+}>
 
 const roboto = Roboto({
   weight: ['100', '300', '500', '700', '900'],
   subsets: ['latin', 'cyrillic']
 })
 
-export default async function RootLayout() {
+export default async function RootLayout({ children }: RootLayoutProps) {
   const authTokenCookie = getAuthTokenCookie()
   const cartData = await getCartData()
   const headers = getServerHeaders()
@@ -106,7 +105,7 @@ export default async function RootLayout() {
           <ApplicationContextProvider headers={headers}>
             <AuthenticationWrapper auth={authenticatedUser}>
               <StoreContextWrapper cart={cartData}>
-                <UnderConstructionFallback />
+                {children}
               </StoreContextWrapper>
             </AuthenticationWrapper>
           </ApplicationContextProvider>
