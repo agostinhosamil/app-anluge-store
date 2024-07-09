@@ -1,12 +1,17 @@
 'use client'
 
 import { useAuthenticationContext } from '~/components/AuthenticationWrapper'
+import { redirect } from '~/utils/navigation'
 
 export const LoginButton = () => {
   const auth = useAuthenticationContext()
 
-  const buttonClickHandler = () => {
-    auth.requestSignIn()
+  const buttonClickHandler = async () => {
+    const signInResponse = await auth.requestSignIn()
+
+    if (signInResponse) {
+      redirect(window.location.href)
+    }
   }
 
   return (
