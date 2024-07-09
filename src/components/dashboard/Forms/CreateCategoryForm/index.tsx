@@ -58,7 +58,7 @@ export const CreateCategoryForm: CreateCategoryFormComponent = ({
         // formData.append('categoryIcon', file)
 
         uploadClient.uploadFile(file).then(uploadedImage => {
-          console.log('uploadedImage -> ', uploadedImage)
+          // console.log('uploadedImage -> ', uploadedImage)
 
           formData.append('category[icon]', uploadedImage.name)
 
