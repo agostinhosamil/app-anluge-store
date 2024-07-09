@@ -43,7 +43,7 @@ export const Container = styled.footer`
 export const ServiceDetails = styled.div`
   width: 100%;
   height: auto;
-  padding: 80px 10%;
+  padding: 10px 10% 60px;
 
   ul {
     width: 100%;
