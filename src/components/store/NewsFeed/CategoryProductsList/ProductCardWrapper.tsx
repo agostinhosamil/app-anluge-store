@@ -4,22 +4,23 @@ import { useEffect, useState } from 'react'
 
 import { ProductProps, ProductWithId } from '~/Types/Product'
 import { getProductById } from '~/utils/models/product'
-import { ProductCard } from '../ProductCard'
+import { ProductCard, ProductCardProps } from '../ProductCard'
 import { ProductCardPlaceHolder } from '../ProductCardPlaceHolder'
 
 type ProductCardWrapperProps = {
   product: ProductWithId
 }
 
-type ProductCardWrapperComponent =
-  React.FunctionComponent<ProductCardWrapperProps>
+type ProductCardWrapperComponent = React.FunctionComponent<
+  Partial<Omit<ProductCardProps, 'product'>> & ProductCardWrapperProps
+>
 
 export const ProductCardWrapper: ProductCardWrapperComponent = props => {
   const [data, setData] = useState<ProductProps>()
 
   useEffect(() => {
     const effectHandler = async () => {
-      const productData = await getProductById(id)
+      const productData = await getProductById(product.id)
 
       if (productData) {
         setData(productData)
@@ -31,7 +32,7 @@ export const ProductCardWrapper: ProductCardWrapperComponent = props => {
     }
   }, [])
 
-  const { id } = props.product
+  const { product, ...restOfProps } = props
 
   if (!data) {
     return <ProductCardPlaceHolder />
@@ -45,5 +46,5 @@ export const ProductCardWrapper: ProductCardWrapperComponent = props => {
     return null
   }
 
-  return <ProductCard product={data} />
+  return <ProductCard {...restOfProps} product={data} />
 }
