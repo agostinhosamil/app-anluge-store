@@ -19,6 +19,7 @@ import * as Styled from './styles'
 
 export type ProductCardProps = {
   product: ProductProps
+  width?: number | `${number}px` | `${number}%` | `${number}rem`
   showAside?: boolean
   showProductAdditionalData?: boolean
 }
@@ -44,7 +45,7 @@ export const ProductCard: ProductCardComponent = props => {
   )
 
   return (
-    <Styled.Container>
+    <Styled.Container $width={props.width}>
       <Link href={`/products/${product.slag}`}>
         <Styled.Content>
           <Styled.ImageWrapper>
