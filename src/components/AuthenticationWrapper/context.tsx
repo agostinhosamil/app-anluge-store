@@ -62,22 +62,23 @@ export const AuthenticationWrapperContextProvider: AuthenticationWrapperContextP
           const formData = new FormData(formElement)
           const jsonFormData = formDataToJson(formData)
 
-          if (user) {
-            const { user: userData } = deepmerge({ user }, jsonFormData)
+          const { user: userData } = deepmerge(
+            (user && { user }) || {},
+            jsonFormData
+          )
 
-            const signInResponse = await signIn({
-              password: userData.password,
-              username: userData.email
-            })
+          const signInResponse = await signIn({
+            password: userData.password,
+            username: String(userData.email || userData.username)
+          })
 
-            setLoading(undefined)
+          setLoading(undefined)
 
-            if (signInResponse) {
-              return resolve(signInResponse)
-            }
-
-            alert('Incorrect user or password')
+          if (signInResponse) {
+            return resolve(signInResponse)
           }
+
+          alert('Incorrect user or password')
         }
 
         loginFormCancelHandlerState.current = () => {
