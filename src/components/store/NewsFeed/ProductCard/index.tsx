@@ -76,13 +76,11 @@ export const ProductCard: ProductCardComponent = props => {
                   )}
               </Styled.StatsData>
               <Styled.MetaData>
-                <Styled.Price>
-                  {(product.price >= 1 && (
-                    <Fragment>
-                      <h3>{formatAmount(product.price)}</h3>
-                    </Fragment>
-                  )) || <h5>Preço sob consulta</h5>}
-                </Styled.Price>
+                {product.price >= 1 && (
+                  <Styled.Price>
+                    <h3>{formatAmount(product.price)}</h3>
+                  </Styled.Price>
+                )}
                 <span>{product.category?.title}</span>
               </Styled.MetaData>
             </Fragment>
