@@ -1,7 +1,5 @@
-'use client'
-
 import { NewsFeed } from 'store@components/NewsFeed'
-import { PageContainer } from 'store@components/styles'
+// import { PageContainer } from 'store@components/styles'
 // import { CategoryProps } from '~/Types/Category'
 
 // type HomePageProps = {
@@ -12,11 +10,11 @@ type HomePageComponent = React.FunctionComponent<React.PropsWithChildren> // & H
 
 export const HomePage: HomePageComponent = ({ ...props }) => {
   return (
-    <PageContainer>
+    <div className="w-full h-auto block pt-[40px] px-[20px]">
       <NewsFeed>
         {/* <CategoryListSlider categories={categories} /> */}
         {props.children}
       </NewsFeed>
-    </PageContainer>
+    </div>
   )
 }
