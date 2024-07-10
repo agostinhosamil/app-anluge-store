@@ -35,7 +35,7 @@ export const updateAdvertiseByFormData = async (
 ): Promise<AdvertiseProps | null> => {
   try {
     const response = await axios.patch<AdvertiseProps>(
-      `/store/advertises/${advertiseId}`,
+      `/sys/advertises/${advertiseId}`,
       formData
     )
 
@@ -55,7 +55,7 @@ export const deleteAdvertiseById = async (
   advertiseId: string
 ): Promise<boolean> => {
   try {
-    const response = await axios.delete(`/store/advertises/${advertiseId}`)
+    const response = await axios.delete(`/sys/advertises/${advertiseId}`)
 
     if (response.data && response.data.success) {
       return true
@@ -78,7 +78,7 @@ export const getAdvertises = async (
 ): Promise<Array<AdvertiseProps>> => {
   try {
     const response = await axios.get<Array<AdvertiseProps>>(
-      '/store/advertises'.concat(
+      '/sys/advertises'.concat(
         noEmpty(query) ? `?${query.replace(/\?\s*/, '')}` : ''
       )
     )
