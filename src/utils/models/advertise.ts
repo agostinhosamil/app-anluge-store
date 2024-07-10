@@ -92,3 +92,5 @@ export const getAdvertises = async (
 
   return []
 }
+
+// export const getActiveAdvertises = async (): AdvertiseGroupsLists => {}
