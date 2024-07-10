@@ -8,7 +8,7 @@ export const NewsletterForm = () => {
 
   return (
     <NewsletterFormContainer>
-      <h1>Receba as nossa promoções em primeira mão</h1>
+      <h1>Receba as nossas promoções em primeira mão</h1>
       <p>
         Gostaria de ser um dos primeiros a saber dos produtos em promoção?
         Então, Inscreva-se na nossa newsletter.
