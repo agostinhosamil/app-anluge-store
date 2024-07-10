@@ -8,11 +8,10 @@ export const NewsletterForm = () => {
 
   return (
     <NewsletterFormContainer>
-      <h1>Receba nossa promoções em primeira mão</h1>
+      <h1>Receba as nossa promoções em primeira mão</h1>
       <p>
-        Gostaria de ser um dos primeiros a saber os produtos em promoção ou em
-        alta na nossa loja? Então, considere se inscrever na nossa newsletter
-        para estar a frente e sempre se manter atualizado.
+        Gostaria de ser um dos primeiros a saber dos produtos em promoção?
+        Então, Inscreva-se na nossa newsletter.
       </p>
       <form method="post" action="/api/newsletter/subscribe">
         <div>

@@ -55,7 +55,7 @@ export const Footer: React.FunctionComponent = () => {
                 <span>
                   Nossas entregas rápidas garantem que você receba seus pedidos
                   no menor tempo possível, sem abrir mão da qualidade e cuidado
-                  no serviço
+                  no serviço.
                 </span>
               </data>
             </li>
@@ -68,9 +68,9 @@ export const Footer: React.FunctionComponent = () => {
               <data>
                 <strong>Atendimento 24/24</strong>
                 <span>
-                  Estamos aqui para você a qualquer hora do dia ou da noite.
-                  Nosso atendimento 24/24 garante suporte contínuo para resolver
-                  suas dúvidas e oferecer assistência quando você mais precisa.
+                  Estamos aqui para servi-lo. Nosso atendimento 24/24 garante
+                  suporte contínuo para resolver as suas dúvidas e oferecer
+                  assistência quando você mais precisa.
                 </span>
               </data>
             </li>
@@ -83,9 +83,8 @@ export const Footer: React.FunctionComponent = () => {
               <data>
                 <strong>Garantias de devolução</strong>
                 <span>
-                  Oferecemos garantias sólidas de devolução para garantir sua
-                  total satisfação. Se não estiver completamente feliz com seu
-                  pedido, estamos aqui para fazer tudo certo.
+                  Oferecemos garantias sólidas de devolução em até 7 dias para
+                  garantir sua total satisfação.
                 </span>
               </data>
             </li>
@@ -208,9 +207,7 @@ export const Footer: React.FunctionComponent = () => {
                       <li>
                         <Link href="/help">Central de ajuda</Link>
                       </li>
-                      <Partial
-                        isEither={['admin', 'admin:master', 'seller', 'editor']}
-                      >
+                      <Partial isNeither={['guest', 'client']}>
                         <li>
                           <Link href="/dashboard">
                             Ir ao painel administrador
@@ -229,17 +226,17 @@ export const Footer: React.FunctionComponent = () => {
                       </li>
                       <li>
                         <Link target="_blank" href="/about/mission">
-                          Nossa missão
+                          Missão
                         </Link>
                       </li>
                       <li>
                         <Link target="_blank" href="/about/vision">
-                          Nossa visão
+                          Visão
                         </Link>
                       </li>
                       <li>
                         <Link target="_blank" href="/about/values">
-                          Nossos valores
+                          Valores
                         </Link>
                       </li>
                     </ul>
