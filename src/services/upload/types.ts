@@ -4,11 +4,14 @@ export type UploadedImageSizes =
       [key: string]: string
     }
 
+export type UploadedImageObjectFit = 'contain' | 'cover' | 'fill' | 'scale-down'
+
 export type UploadedImageSet = string
 
 export type AnlugeUploadClientOptions = {
   uploadedImageSizes?: UploadedImageSizes
   imageSet?: UploadedImageSet
+  uploadedImageObjectFit?: UploadedImageObjectFit
 }
 
 export type UploadedImage = {
