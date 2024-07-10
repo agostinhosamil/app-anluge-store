@@ -55,6 +55,18 @@ export const generateImageVariant = (
       }
     }
 
+    const resolveDefault = (): UploadedImageCoords => {
+      const imageWidth = destinationSize.width * 0.6
+      const imageHeight = imageWidth / (sourceSize.width / sourceSize.height)
+
+      return {
+        width: imageWidth,
+        height: imageHeight,
+        x: destinationSize.width / 2 - imageWidth / 2,
+        y: destinationSize.height / 2 - imageHeight / 2
+      }
+    }
+
     switch (imageObjectFit) {
       case 'cover':
         return resolveCover()
@@ -67,14 +79,7 @@ export const generateImageVariant = (
         }
 
       default:
-        return {
-          height:
-            (destinationSize.width * 0.6) /
-            (sourceSize.width / sourceSize.height),
-          width: destinationSize.width * 0.6,
-          x: destinationSize.width / 2 - (destinationSize.width * 0.6) / 2,
-          y: destinationSize.height / 2 - (destinationSize.height * 0.6) / 2
-        }
+        return resolveDefault()
     }
   }
 
