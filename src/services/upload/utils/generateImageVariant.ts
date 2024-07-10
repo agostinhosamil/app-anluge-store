@@ -40,12 +40,6 @@ export const generateImageVariant = (
   ): UploadedImageCoords => {
     const { destinationSize, sourceSize } = props
 
-    console.log(
-      '>>> [resolveImageCoords] imageObjectFit: ',
-      imageObjectFit,
-      '\n\n\n'
-    )
-
     const resolveCover = (): UploadedImageCoords => {
       const imageHeight = destinationSize.height
       const imageOriginalHeightRelativeToOriginalWidth =
