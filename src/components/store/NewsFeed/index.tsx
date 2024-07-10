@@ -1,28 +1,51 @@
-import Image from 'next/image'
-import Carousel from 'react-bootstrap/Carousel'
+import Link from 'next/link'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 
+import Image from '@components/Image'
 import { Partial } from '@components/Partial'
-import { Container } from '@components/styled'
-import { range } from '~/utils'
+import { prisma } from '@services/prisma'
 
-import { AdvertisingPanel } from './AdvertisingPanel'
 // import { CategoryListSlider } from './CategoryListSlider'
 // import { CategoryProductsList } from './CategoryProductsList'
-import Link from 'next/link'
+import { Slide, TouchSlider } from '~/components/TouchSlider'
+import { formatAmount, resolveProductImageUrl } from '~/utils'
+import { AdvertisingPanelsCarrousel } from './AdvertisingPanelsCarrousel'
 import { LoginButton } from './LoginButton'
-import { AdvertisingPanelContainer } from './styles'
 
 export const NewsFeed: React.FunctionComponent<
   React.PropsWithChildren
-> = props => {
+> = async props => {
+  const promotedProducts = await prisma.product.findMany({
+    where: {
+      promotion: true
+      // medias: {
+      //   some: {
+      //     id: {
+      //       not: undefined
+      //     }
+      //   }
+      // }
+    },
+
+    take: 10,
+    orderBy: {
+      categoryId: 'asc'
+    },
+
+    include: {
+      medias: {
+        take: 1
+      }
+    }
+  })
+
   return (
-    <Container>
+    <div className="w-full h-auto m-auto block relative max-w-[1320px]">
       <Row>
-        <Col md={4}>
-          <div className="w-full h-full flex flex-col justify-center pt-[20px] pb-[10px] pr-[8px]">
-            <Partial unAuth>
+        <Partial unAuth>
+          <Col md={4}>
+            <div className="w-full h-full flex flex-col justify-center pt-[20px] pb-[10px] pr-[8px]">
               <div className="w-full flex bg-zinc-200 rounded-2xl p-7 flex-col items-center justify-center gap-6 h-full">
                 <h3 className="pb-1 text-xl text-center w-full font-normal">
                   Crie uma conta ou Inicie sessão
@@ -93,28 +116,58 @@ export const NewsFeed: React.FunctionComponent<
                   </ol>
                 </div>
               </div>
-            </Partial>
+            </div>
+          </Col>
+        </Partial>
+        <Col md={8}>
+          <div className="w-full block px-[8px] pt-[20px] pb-[10px]">
+            <AdvertisingPanelsCarrousel />
           </div>
         </Col>
-        <Col md={8}>
-          <AdvertisingPanelContainer>
-            <Carousel controls={false}>
-              {range(1).map(i => (
-                <Carousel.Item key={i}>
-                  <AdvertisingPanel
-                    image="image001.jpg"
-                    title="Uma poderosa solução para proteger os ativos da sua empresa"
-                  />
-                </Carousel.Item>
-              ))}
-            </Carousel>
-          </AdvertisingPanelContainer>
-        </Col>
+        <Partial auth>
+          <Col md={4}>
+            <div className="w-full h-full flex flex-col gap-4 justify-center pt-[20px] pb-[10px] pr-[8px]">
+              <div className="w-full flex bg-[#acb9da] px-7 pb-7 rounded-2xl flex-col justify-center gap-6 h-full">
+                <strong className="block w-full pt-7 text-white font-extrabold uppercase">
+                  Promoções recentes
+                </strong>
+                <TouchSlider showIndicators={false} showButtons>
+                  {promotedProducts.map(product => (
+                    <Slide key={product.id}>
+                      <div className="w-[210px] h-auto flex flex-col gap-2 relative">
+                        <div className="bg-zinc-400 w-full h-[210px] rounded-md">
+                          <Image
+                            src={resolveProductImageUrl(product, 'medium')}
+                            className="rounded-md border-0 outline-none"
+                            width="210"
+                            height="210"
+                            alt={product.name}
+                          />
+                        </div>
+                        <Link
+                          href={`/products/${product.slag}?ref=home-page.latest-promotions`}
+                          className="font-light text-sm font-sans text-zinc-900 text-wrap break-words line-clamp-2"
+                        >
+                          {product.name}
+                        </Link>
+                        {product.price >= 1 && (
+                          <span className="text-nowrap overflow-hidden text-ellipsis">
+                            {formatAmount(product.price)}
+                          </span>
+                        )}
+                      </div>
+                    </Slide>
+                  ))}
+                </TouchSlider>
+              </div>
+            </div>
+          </Col>
+        </Partial>
       </Row>
       {props.children}
       {/* {categories.map(category => (
         <CategoryProductsList key={category.id} category={category} />
       ))} */}
-    </Container>
+    </div>
   )
 }
