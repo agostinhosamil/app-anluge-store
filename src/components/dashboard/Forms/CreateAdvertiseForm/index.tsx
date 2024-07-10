@@ -133,6 +133,7 @@ export const CreateAdvertiseForm: CreateAdvertiseFormComponent = ({
     if (typeof onFormSubmit === 'function') {
       const uploadClient = new AnlugeUploadClient({
         imageSet: 'advertises',
+        uploadedImageObjectFit: 'fill',
         uploadedImageSizes: {
           large: '1200x800',
           normal: '920x460',
@@ -148,9 +149,9 @@ export const CreateAdvertiseForm: CreateAdvertiseFormComponent = ({
       if (file instanceof File) {
         const uploadedImage = await uploadClient.uploadFile(file)
 
-        formData.append('advertise[banner]', uploadedImage.name)
-
-        // console.log('\n\n\nuploadedImage.name => ', uploadedImage.name)
+        if ('name' in uploadedImage) {
+          formData.append('advertise[banner]', uploadedImage.name)
+        }
       }
 
       const advertiseDuration = parseInt(

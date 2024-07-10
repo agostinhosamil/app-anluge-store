@@ -83,7 +83,11 @@ export class AnlugeUploadClient {
         uploadFileOptions.uploadedImageSizes
       )
 
-      const imageVariants = await generateImageVariants(file, imageVariantsData)
+      const imageVariants = await generateImageVariants(
+        file,
+        imageVariantsData,
+        uploadFileOptions.uploadedImageObjectFit
+      )
 
       imageVariantsData.forEach((imageVariantData, imageVariantDataIndex) => {
         const imageVariant = imageVariants[imageVariantDataIndex]
@@ -148,7 +152,7 @@ export class AnlugeUploadClient {
       }
     )
 
-    console.log(`\n\n\n\n>>> [uploadFile] response.data: \n`, response.data)
+    // console.log(`\n\n\n\n>>> [uploadFile] response.data: \n`, response.data)
 
     return response.data[0]
   }
