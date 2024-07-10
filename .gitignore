@@ -12,4 +12,5 @@ certificates
 /prisma/seed.js
 
 /prisma/generated/**/*
+/prisma/generated/*/**
 !/prisma/generated/.gitkeep
