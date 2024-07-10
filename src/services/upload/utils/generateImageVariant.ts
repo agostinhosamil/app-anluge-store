@@ -41,17 +41,17 @@ export const generateImageVariant = (
     const { destinationSize, sourceSize } = props
 
     const resolveCover = (): UploadedImageCoords => {
-      const imageHeight = destinationSize.height
+      const imageWidth = destinationSize.width
       const imageOriginalHeightRelativeToOriginalWidth =
         sourceSize.height / sourceSize.width
-      const imageWidthRelativeToDestinationHeight =
-        destinationSize.width * imageOriginalHeightRelativeToOriginalWidth
+      const imageHeight =
+        imageWidth * imageOriginalHeightRelativeToOriginalWidth
 
       return {
         height: imageHeight,
-        width: imageWidthRelativeToDestinationHeight,
-        x: -1 * (destinationSize.width / 2),
-        y: 0
+        width: imageWidth,
+        x: 0,
+        y: destinationSize.width / 2 - imageHeight / 2
       }
     }
 
