@@ -1,5 +1,5 @@
 import { axios } from '@services/axios'
-import { AdvertiseProps } from '~/Types/Advertise'
+import { AdvertiseGroupsLists, AdvertiseProps } from '~/Types/Advertise'
 import { noEmpty } from '~/utils'
 
 export const createAdvertiseByFormData = async (
@@ -91,6 +91,26 @@ export const getAdvertises = async (
   }
 
   return []
+}
+
+export const getActiveAdvertises = async (
+  query?: string
+): Promise<AdvertiseGroupsLists | null> => {
+  try {
+    const response = await axios.get<AdvertiseGroupsLists>(
+      '/sys/advertises/active'.concat(
+        noEmpty(query) ? `?${query.replace(/\?\s*/, '')}` : ''
+      )
+    )
+
+    if ('top' in response.data) {
+      return response.data
+    }
+  } catch (err) {
+    // pass
+  }
+
+  return null
 }
 
 // export const getActiveAdvertises = async (): AdvertiseGroupsLists => {}

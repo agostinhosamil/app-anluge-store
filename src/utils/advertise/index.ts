@@ -43,10 +43,11 @@ type ActiveAdvertisesGetterOptions = {
 }
 
 export const getActiveAdvertises = async (
-  options: ActiveAdvertisesGetterOptions
+  options?: ActiveAdvertisesGetterOptions
 ): Promise<AdvertiseGroupsLists | null> => {
   const advertisesLengthPerPage = 50
-  const page = !isNaN(Number(options.page)) ? Number(options.page) : 1
+  const page =
+    options && !isNaN(Number(options.page)) ? Number(options.page) : 1
 
   try {
     const activeAdvertises: Array<AdvertiseProps> =

@@ -24,6 +24,9 @@ export type AdvertiseGroups = {
   small: Array<AdvertiseProps>
 }
 
+export type AdvertiseSize = keyof AdvertiseGroups
+export type AdvertisePosition = keyof AdvertiseGroupsLists
+
 export type AdvertiseGroupsLists = {
   top: AdvertiseGroups
   feed: AdvertiseGroups
