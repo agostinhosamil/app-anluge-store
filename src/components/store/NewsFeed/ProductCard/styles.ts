@@ -69,12 +69,17 @@ export const Container = styled.div<ContainerProps>`
   flex-direction: row;
   position: relative;
 
-  ${props =>
-    !props.$width
-      ? containerWidthSettings
-      : typeof props.$width === 'string'
+  ${props => {
+    if (typeof props.$width === 'undefined' || !props.$width) {
+      return containerWidthSettings
+    }
+    
+    return css`
+      width: ${typeof props.$width === 'string'
         ? props.$width
-        : `${props.$width}px`}
+        : `${props.$width}px`};
+    `
+  }}
 
   & > a {
     width: 100%;
