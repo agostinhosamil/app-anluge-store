@@ -73,7 +73,7 @@ export const Container = styled.div<ContainerProps>`
     if (typeof props.$width === 'undefined' || !props.$width) {
       return containerWidthSettings
     }
-    
+
     return css`
       width: ${typeof props.$width === 'string'
         ? props.$width
@@ -172,6 +172,8 @@ export const AsideContainer = styled.div`
   width: 35px;
   height: auto;
   padding: 40px 0px;
+  position: relative;
+  z-index: 1;
 
   @media (min-width: 2000px) {
     margin-left: -7px;
