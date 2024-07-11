@@ -1,5 +1,5 @@
 import { Category } from '@prisma/client'
-import { Suspense } from 'react'
+import { Fragment, Suspense } from 'react'
 
 import { prisma } from '~/services/prisma'
 // import { categoryIncludeFactory } from '~/utils/category'
@@ -8,6 +8,7 @@ import { generateSlagByTitleWithoutSignature } from '~/utils/generateSlagByTitle
 // import { getAllCategoriesChildren } from '~/utils/newsFeed'
 // import { productIncludeFactory } from '~/utils/product'
 import { CategorySectionPlaceholder } from '~/components/store/HomePagePlaceholder/CategorySectionPlaceholder'
+import { AdvertiseGroup } from '~/components/store/NewsFeed/AdvertiseGroup'
 import { CategorySection } from './CategorySection'
 import { HomePage } from './HomePage'
 
@@ -45,17 +46,23 @@ export const Content: ContentComponent = async () => {
     }
   })
 
+  const randomCategorySlagIndex = Math.floor(
+    categoriesSlagsPrefixes.length * Math.random()
+  )
+
   return (
     <HomePage>
       {categories.length >= 1 && <CategoryListSlider categories={categories} />}
       <div className="w-full pt-4 block">
         {categoriesSlagsPrefixes.map((categorySlag, categorySlagIndex) => (
-          <Suspense
-            key={categorySlagIndex}
-            fallback={<CategorySectionPlaceholder />}
-          >
-            <CategorySection categorySlag={categorySlag} />
-          </Suspense>
+          <Fragment key={categorySlagIndex}>
+            {categorySlagIndex === randomCategorySlagIndex && (
+              <AdvertiseGroup group="feed" />
+            )}
+            <Suspense fallback={<CategorySectionPlaceholder />}>
+              <CategorySection categorySlag={categorySlag} />
+            </Suspense>
+          </Fragment>
         ))}
       </div>
     </HomePage>
