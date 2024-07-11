@@ -4,42 +4,19 @@ import Row from 'react-bootstrap/Row'
 
 import Image from '@components/Image'
 import { Partial } from '@components/Partial'
-import { prisma } from '@services/prisma'
 
 // import { CategoryListSlider } from './CategoryListSlider'
 // import { CategoryProductsList } from './CategoryProductsList'
-import { Slide, TouchSlider } from '~/components/TouchSlider'
-import { formatAmount, resolveProductImageUrl } from '~/utils'
+// import { Slide, TouchSlider } from '~/components/TouchSlider'
+// import { formatAmount, resolveProductImageUrl } from '~/utils'
+import { AdvertiseGroup } from './AdvertiseGroup'
 import { AdvertisingPanelsCarrousel } from './AdvertisingPanelsCarrousel'
 import { LoginButton } from './LoginButton'
+import { PromotedProductsSlider } from './PromotedProductsSlider'
 
 export const NewsFeed: React.FunctionComponent<
   React.PropsWithChildren
 > = async props => {
-  const promotedProducts = await prisma.product.findMany({
-    where: {
-      promotion: true
-      // medias: {
-      //   some: {
-      //     id: {
-      //       not: undefined
-      //     }
-      //   }
-      // }
-    },
-
-    take: 10,
-    orderBy: {
-      categoryId: 'asc'
-    },
-
-    include: {
-      medias: {
-        take: 1
-      }
-    }
-  })
-
   return (
     <div className="w-full h-auto m-auto block relative max-w-[1320px]">
       <Row>
@@ -125,46 +102,11 @@ export const NewsFeed: React.FunctionComponent<
           </div>
         </Col>
         <Partial auth>
-          <Col md={4}>
-            <div className="w-full h-full flex flex-col gap-4 justify-center pt-[20px] pb-[10px] pr-[8px]">
-              <div className="w-full flex bg-[#acb9da] px-7 pb-7 rounded-2xl flex-col justify-center gap-6 h-full">
-                <strong className="block w-full pt-7 text-white font-extrabold uppercase">
-                  Promoções recentes
-                </strong>
-                <TouchSlider showIndicators={false} showButtons>
-                  {promotedProducts.map(product => (
-                    <Slide key={product.id}>
-                      <div className="w-[210px] h-auto flex flex-col gap-2 relative">
-                        <div className="bg-zinc-400 w-full h-[210px] rounded-md">
-                          <Image
-                            src={resolveProductImageUrl(product, 'medium')}
-                            className="rounded-md border-0 outline-none"
-                            width="210"
-                            height="210"
-                            alt={product.name}
-                          />
-                        </div>
-                        <Link
-                          href={`/products/${product.slag}?ref=home-page.latest-promotions`}
-                          className="font-light text-sm font-sans text-zinc-900 text-wrap break-words line-clamp-2"
-                        >
-                          {product.name}
-                        </Link>
-                        {product.price >= 1 && (
-                          <span className="text-nowrap overflow-hidden text-ellipsis">
-                            {formatAmount(product.price)}
-                          </span>
-                        )}
-                      </div>
-                    </Slide>
-                  ))}
-                </TouchSlider>
-              </div>
-            </div>
-          </Col>
+          <PromotedProductsSlider />
         </Partial>
       </Row>
       {props.children}
+      <AdvertiseGroup group="bottom" />
       {/* {categories.map(category => (
         <CategoryProductsList key={category.id} category={category} />
       ))} */}

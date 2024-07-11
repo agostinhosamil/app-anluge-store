@@ -1,10 +1,15 @@
 import { useEffect, useState } from 'react'
 
-import { getAdvertises } from '@utils/models/advertise'
-import { AdvertiseProps } from '~/Types/Advertise'
+import { getActiveAdvertises, getAdvertises } from '@utils/models/advertise'
+import {
+  AdvertiseGroups,
+  AdvertiseGroupsLists,
+  AdvertiseProps
+} from '~/Types/Advertise'
+import { noEmpty } from '..'
 
-export type UseAdvertiseHookDataObject = {
-  advertises: Array<AdvertiseProps>
+export type UseAdvertiseHookDataObject<T = any> = {
+  advertises: T
   loading: boolean
   addAdvertise: (advertise: AdvertiseProps) => void
   addAdvertises: (advertiseList: Array<AdvertiseProps>) => void
@@ -16,16 +21,46 @@ export type UseAdvertiseHookDataObject = {
   ) => void
 }
 
-export const useAdvertise = (): UseAdvertiseHookDataObject => {
+type AdvertiseStatePropsMap = {
+  group: AdvertiseGroups
+  none: Array<AdvertiseProps>
+}
+
+export const useAdvertise = <
+  AdvertiseStatePropKey extends keyof AdvertiseStatePropsMap = 'none'
+>(
+  group?: keyof AdvertiseGroupsLists
+): UseAdvertiseHookDataObject<
+  AdvertiseStatePropsMap[AdvertiseStatePropKey]
+> => {
   const [loading, setLoading] = useState<boolean>(true)
-  const [advertises, setAdvertises] = useState<Array<AdvertiseProps>>([])
+  const [advertises, setAdvertises] = useState<
+    AdvertiseStatePropsMap[AdvertiseStatePropKey]
+  >([] as unknown as AdvertiseStatePropsMap[AdvertiseStatePropKey])
 
   useEffect(() => {
     const handleEffect = async () => {
+      if (noEmpty(group)) {
+        const advertises = await getActiveAdvertises()
+
+        if (advertises) {
+          const groupAdvertises = advertises[group]
+
+          setLoading(false)
+          setAdvertises(
+            groupAdvertises as AdvertiseStatePropsMap[AdvertiseStatePropKey]
+          )
+        }
+
+        return
+      }
+
       const registeredAdvertises = await getAdvertises()
 
-      setAdvertises(registeredAdvertises)
       setLoading(false)
+      setAdvertises(
+        registeredAdvertises as AdvertiseStatePropsMap[AdvertiseStatePropKey]
+      )
     }
 
     handleEffect()
@@ -37,7 +72,13 @@ export const useAdvertise = (): UseAdvertiseHookDataObject => {
 
     addAdvertise(advertise) {
       const currentAdvertises = advertises instanceof Array ? advertises : []
-      setAdvertises([...currentAdvertises, advertise])
+
+      if (advertises instanceof Array) {
+        setAdvertises([
+          ...currentAdvertises,
+          advertise
+        ] as AdvertiseStatePropsMap[AdvertiseStatePropKey])
+      }
     },
 
     removeAdvertise(advertiseId) {
@@ -45,9 +86,15 @@ export const useAdvertise = (): UseAdvertiseHookDataObject => {
         return
       }
 
-      setAdvertises(
-        advertises.filter(advertise => advertise.id !== advertiseId)
-      )
+      if (advertises instanceof Array) {
+        const filteredAdvertises = advertises.filter(
+          advertise => advertise.id !== advertiseId
+        )
+
+        setAdvertises(
+          filteredAdvertises as AdvertiseStatePropsMap[AdvertiseStatePropKey]
+        )
+      }
     },
 
     updateAdvertise(advertiseId, advertiseData) {
@@ -55,8 +102,8 @@ export const useAdvertise = (): UseAdvertiseHookDataObject => {
         return
       }
 
-      setAdvertises(
-        advertises.map(advertise => {
+      if (advertises instanceof Array) {
+        const updatedAdvertiseList = advertises.map(advertise => {
           if (advertise.id !== advertiseId) {
             return advertise
           }
@@ -66,15 +113,26 @@ export const useAdvertise = (): UseAdvertiseHookDataObject => {
             ...advertiseData
           }
         })
-      )
+
+        setAdvertises(
+          updatedAdvertiseList as AdvertiseStatePropsMap[AdvertiseStatePropKey]
+        )
+      }
     },
 
     setAdvertises(advertiseList) {
-      setAdvertises(advertiseList)
+      setAdvertises(
+        advertiseList as AdvertiseStatePropsMap[AdvertiseStatePropKey]
+      )
     },
 
     addAdvertises(advertiseList) {
-      setAdvertises([...advertises, ...advertiseList])
+      if (advertises instanceof Array) {
+        setAdvertises([
+          ...advertises,
+          ...advertiseList
+        ] as AdvertiseStatePropsMap[AdvertiseStatePropKey])
+      }
     }
   }
 }

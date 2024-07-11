@@ -62,3 +62,14 @@ export const AdvertisingPanelContainer = styled.div`
   display: block;
   padding: 20px 8px 10px;
 `
+
+export const AdvertiseCarouselWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background-color: rgb(212 212 216 / 1);
+
+  div.carousel-inner {
+    height: 100%;
+  }
+`

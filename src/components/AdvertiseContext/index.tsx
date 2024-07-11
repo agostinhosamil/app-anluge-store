@@ -1,3 +1,5 @@
+'use client'
+
 import { AdvertiseContext } from './context'
 import { AdvertiseContextData } from './types'
 

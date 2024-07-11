@@ -12,10 +12,11 @@ import { getCartData } from '@utils/cart'
 import { AuthenticationWrapper } from '~/components/AuthenticationWrapper'
 import StyledComponentsRegistry from './lib/registry'
 
-import { ApplicationContextProvider } from '~/components/ApplicationContext'
-import { StoreContextWrapper } from '~/components/store/Context/StoreContextWrapper'
-import { getAuthTokenCookie } from '~/utils/authTokenCookie'
-import { getServerHeaders } from '~/utils/server'
+import { AdvertiseContextWrapper } from '@components/AdvertiseContext'
+import { ApplicationContextProvider } from '@components/ApplicationContext'
+import { StoreContextWrapper } from '@components/store/Context/StoreContextWrapper'
+import { getAuthTokenCookie } from '@utils/authTokenCookie'
+import { getServerHeaders } from '@utils/server'
 
 import companyData from '~/config/cache/company-data/index.json'
 
@@ -102,13 +103,15 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         <NextJsTopLoader showSpinner={false} />
         <StyledComponentsRegistry>
           <GlobalStyles />
-          <ApplicationContextProvider headers={headers}>
-            <AuthenticationWrapper auth={authenticatedUser}>
-              <StoreContextWrapper cart={cartData}>
-                {children}
-              </StoreContextWrapper>
-            </AuthenticationWrapper>
-          </ApplicationContextProvider>
+          <AdvertiseContextWrapper>
+            <ApplicationContextProvider headers={headers}>
+              <AuthenticationWrapper auth={authenticatedUser}>
+                <StoreContextWrapper cart={cartData}>
+                  {children}
+                </StoreContextWrapper>
+              </AuthenticationWrapper>
+            </ApplicationContextProvider>
+          </AdvertiseContextWrapper>
         </StyledComponentsRegistry>
       </body>
     </html>
