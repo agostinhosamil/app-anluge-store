@@ -5,10 +5,10 @@ import Carousel from 'react-bootstrap/Carousel'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 
+import { PlaceHolder } from '@components/styled'
 import { useAdvertise } from '@utils/hooks/useAdvertise'
-import { AdvertiseGroupsLists } from '~/Types/Advertise'
+import { AdvertiseGroupsLists } from 'Types/Advertise'
 
-import { PlaceHolder } from '~/components/styled'
 import { AdvertiseCarouselWrapper } from './styles'
 import { resolveAdvertiseImageUrl, resolveAdvertiseLinkUrl } from './utils'
 
