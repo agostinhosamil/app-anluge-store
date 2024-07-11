@@ -51,7 +51,7 @@ export const AdvertiseGroup: React.FunctionComponent<
   }
 
   return (
-    <div className="w-full px-[20px] py-4">
+    <div className="w-full px-[20px] pt-4 pb-[40px]">
       <Row>
         {advertises.large.length >= 1 && (
           <Col md={resolveColSize(8)} lg={resolveColSize(7)}>
