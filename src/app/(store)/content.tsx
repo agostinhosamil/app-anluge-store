@@ -57,7 +57,9 @@ export const Content: ContentComponent = async () => {
         {categoriesSlagsPrefixes.map((categorySlag, categorySlagIndex) => (
           <Fragment key={categorySlagIndex}>
             {categorySlagIndex === randomCategorySlagIndex && (
-              <AdvertiseGroup group="feed" />
+              <div className="w-[calc(100%+30px)]  ml-[-15px]">
+                <AdvertiseGroup group="feed" />
+              </div>
             )}
             <Suspense fallback={<CategorySectionPlaceholder />}>
               <CategorySection categorySlag={categorySlag} />
