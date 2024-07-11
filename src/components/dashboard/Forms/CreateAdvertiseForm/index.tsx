@@ -135,7 +135,7 @@ export const CreateAdvertiseForm: CreateAdvertiseFormComponent = ({
         imageSet: 'advertises',
         uploadedImageObjectFit: 'fill',
         uploadedImageSizes: {
-          large: '1200x800',
+          large: '1200x600',
           normal: '920x460',
           small: '620x310',
           'x-small': '380x190',
