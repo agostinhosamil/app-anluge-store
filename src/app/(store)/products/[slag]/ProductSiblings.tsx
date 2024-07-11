@@ -50,7 +50,7 @@ export const ProductSiblings = async (props: ProductSiblingsProps) => {
             placeholderCountOnLoading: 15
           }}
           category={productCategory}
-          title="Mais produtos da categoria $0"
+          title="Produtos semelhantes"
         />
       </Column>
     </Row>
