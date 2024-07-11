@@ -17,6 +17,8 @@ export const Container = styled.div<HeaderProps>`
   position: relative;
   padding: 12px 40px;
   transition: all 0.3s ease-in-out;
+  max-width: 1420px;
+  margin: auto;
 
   * {
     color: inherit;
