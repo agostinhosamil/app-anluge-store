@@ -17,7 +17,7 @@ export const NewsletterForm = () => {
         <div>
           <input
             type="text"
-            placeholder="Seu melhor endereço de email"
+            placeholder="Insira o seu endereço de email"
             name="newsletter[email]"
             id="newsletter-user-email"
             autoCapitalize="off"
