@@ -55,7 +55,13 @@ export const CategorySection: CategorySectionComponent = async props => {
   return (
     <Fragment>
       <Suspense fallback={<CategorySectionPlaceholder />}>
-        <CategoryProductsList category={category} />
+        <CategoryProductsList
+          flatListProps={{
+            itemsCountPerIteration: 15,
+            placeholderCountOnLoading: 15
+          }}
+          category={category}
+        />
       </Suspense>
     </Fragment>
   )
