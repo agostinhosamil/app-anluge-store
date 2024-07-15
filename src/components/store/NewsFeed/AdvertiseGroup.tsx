@@ -14,6 +14,7 @@ import { resolveAdvertiseImageUrl, resolveAdvertiseLinkUrl } from './utils'
 
 type AdvertisingGroupProps = {
   group: keyof AdvertiseGroupsLists
+  flexDirection?: 'row' | 'column'
 }
 
 export const AdvertiseGroup: React.FunctionComponent<
@@ -23,14 +24,43 @@ export const AdvertiseGroup: React.FunctionComponent<
 
   const { advertises, loading } = useAdvertise<'group'>(group)
 
+  let rowProps: React.HTMLAttributes<HTMLDivElement> = {}
+
+  if (props.flexDirection === 'column') {
+    rowProps = {
+      className: 'gap-4'
+    }
+  }
+
+  const resolveColSize = (defaultSize: number): number => {
+    const hasLargeAdvertises = Boolean(
+      advertises.large instanceof Array && advertises.large.length > 0
+    )
+    const hasSmallAdvertises = Boolean(
+      advertises.small instanceof Array && advertises.small.length > 0
+    )
+
+    if (
+      !hasLargeAdvertises ||
+      !hasSmallAdvertises ||
+      props.flexDirection === 'column'
+    ) {
+      return 12
+    }
+
+    return defaultSize
+  }
+
   if (loading) {
     return (
-      <div className="w-full px-[20px] py-4">
-        <Row>
-          <Col md={8} lg={7}>
+      <div
+        className={`w-full ${props.flexDirection === 'column' ? '' : 'px-[20px]'} py-5`}
+      >
+        <Row {...rowProps}>
+          <Col md={resolveColSize(8)} lg={resolveColSize(7)}>
             <PlaceHolder className="w-full h-[280px] rounded-lg" />
           </Col>
-          <Col md={4} lg={5}>
+          <Col md={resolveColSize(4)} lg={resolveColSize(5)}>
             <PlaceHolder className="w-full h-[280px] rounded-lg" />
           </Col>
         </Row>
@@ -38,21 +68,15 @@ export const AdvertiseGroup: React.FunctionComponent<
     )
   }
 
-  const resolveColSize = (defaultSize: number): number => {
-    if (advertises.large.length < 1 || advertises.small.length < 1) {
-      return 12
-    }
-
-    return defaultSize
-  }
-
   if (advertises.large.length < 1 && advertises.small.length < 1) {
     return null
   }
 
   return (
-    <div className="w-full px-[20px] pt-4 pb-[40px]">
-      <Row>
+    <div
+      className={`w-full ${props.flexDirection === 'column' ? '' : 'px-[20px]'} pt-4 pb-[40px]`}
+    >
+      <Row {...rowProps}>
         {advertises.large.length >= 1 && (
           <Col md={resolveColSize(8)} lg={resolveColSize(7)}>
             <div className="w-full h-full rounded-[12px] bg-zinc-300">
