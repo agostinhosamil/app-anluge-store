@@ -54,7 +54,7 @@ export const getActiveAdvertises = async (
       await prisma.advertise.findMany({
         where: {
           expiresAt: {
-            lte: new Date(Date.now())
+            gte: new Date(Date.now())
           }
         },
 
