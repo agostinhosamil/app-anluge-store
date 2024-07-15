@@ -53,7 +53,7 @@ export const Content: ContentComponent = async () => {
   return (
     <HomePage>
       {categories.length >= 1 && <CategoryListSlider categories={categories} />}
-      <div className="w-full pt-4 block">
+      <div className="w-full pt-4 block h-auto m-auto relative max-w-[1320px]">
         {categoriesSlagsPrefixes.map((categorySlag, categorySlagIndex) => (
           <Fragment key={categorySlagIndex}>
             {categorySlagIndex === randomCategorySlagIndex && (
