@@ -15,6 +15,7 @@ import {
 import { useApp } from '@components/ApplicationContext'
 import { RichText } from '@components/RichText'
 import { useStoreContext } from 'store@components/Context'
+import { AdvertiseGroup } from 'store@components/NewsFeed/AdvertiseGroup'
 import { StarRating } from 'store@components/NewsFeed/ProductCard/StarRating'
 import { useProductPageContext } from 'store@components/pages/products/page/context'
 import { CategoryBreadCrumb } from 'store@components/ProductPage/CategoryBreadCrumb'
@@ -211,6 +212,7 @@ export const Content: ContentComponent = props => {
           </ContentWrapper>
         </Column>
         <Column md={4}>
+          <AdvertiseGroup group="top" flexDirection="column" />
           <ProductRates product={product} />
           <ProductFAQs product={product} />
         </Column>
