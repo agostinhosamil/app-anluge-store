@@ -52,10 +52,11 @@ export const getActiveAdvertises = async (
   try {
     const activeAdvertises: Array<AdvertiseProps> =
       await prisma.advertise.findMany({
-        // where: {
-        //   // expiresAt: {
-        //   // }
-        // },
+        where: {
+          expiresAt: {
+            lte: new Date(Date.now())
+          }
+        },
 
         take: advertisesLengthPerPage,
         skip: advertisesLengthPerPage * (page - 1),
