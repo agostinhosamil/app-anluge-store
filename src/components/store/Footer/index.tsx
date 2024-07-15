@@ -54,8 +54,7 @@ export const Footer: React.FunctionComponent = () => {
                 <strong>Entregas rápidas</strong>
                 <span>
                   Nossas entregas rápidas garantem que você receba seus pedidos
-                  no menor tempo possível, sem abrir mão da qualidade e cuidado
-                  no serviço.
+                  o mais breve possível, sem abrir mão da qualidade do serviço.
                 </span>
               </data>
             </li>
@@ -83,8 +82,13 @@ export const Footer: React.FunctionComponent = () => {
               <data>
                 <strong>Garantias de devolução</strong>
                 <span>
-                  Oferecemos garantias sólidas de devolução em até 7 dias para
+                  Oferecemos garantias sólidas de devolução ou troca para
                   garantir sua total satisfação.
+                  <br />
+                  Leia a nossa{' '}
+                  <Link href="/about/terms#returning">
+                    política de devolução
+                  </Link>
                 </span>
               </data>
             </li>
