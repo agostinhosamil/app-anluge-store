@@ -205,6 +205,7 @@ export const HeaderMenuFixedWrapper = styled.div.attrs({
   left: 0px;
   right: 0px;
   box-shadow: 0px 10px 15px rgb(0 0 0 / 24%);
+  background-color: #ffffff;
   z-index: 4;
 
   & > div {
