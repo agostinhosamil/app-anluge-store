@@ -25,7 +25,7 @@ export default async function StoreProductsPage() {
   const randomCategorySlagIndex = Math.floor(categories.length * Math.random())
 
   return (
-    <Fragment>
+    <div className="block w-full pt-10">
       <div className="w-full flex justify-center flex-col mb-[-30px]">
         <AdvertiseGroup group="top" />
       </div>
@@ -44,6 +44,6 @@ export default async function StoreProductsPage() {
         ))}
       </div>
       <AdvertiseGroup group="bottom" />
-    </Fragment>
+    </div>
   )
 }

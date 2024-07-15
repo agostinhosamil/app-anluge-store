@@ -97,7 +97,10 @@ export const ImageWrapper = styled(PlaceHolder)`
   display: flex;
   flex-grow: 1;
   text-align: center;
-  box-shadow: 0px 3px 5px 0px rgb(0 0 0 / 10%);
+  /* box-shadow: 0px 3px 5px 0px rgb(0 0 0 / 10%); */
+  box-shadow:
+    rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
   /* background-image: linear-gradient(45deg, #0d4b83, transparent); */
 
   img {
