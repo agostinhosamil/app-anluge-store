@@ -52,7 +52,7 @@ export const ProductCard: ProductCardComponent = props => {
             <Image
               src={resolveProductImageUrl(product, 'normal')}
               width={210}
-              height={250}
+              height={305}
               alt={product.name}
             />
           </Styled.ImageWrapper>
