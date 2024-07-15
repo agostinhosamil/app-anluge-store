@@ -165,13 +165,13 @@ export const Footer: React.FunctionComponent = () => {
                         <Link href="/">Página inicial</Link>
                       </li>
                       <li>
-                        <Link href="/">Produtos</Link>
+                        <Link href="/products">Produtos</Link>
                       </li>
                       <li>
-                        <Link href="/">Categorias</Link>
+                        <Link href="/categories">Categorias</Link>
                       </li>
                       <li>
-                        <Link href="/">Sobre</Link>
+                        <Link href="/about">Sobre</Link>
                       </li>
                     </ul>
                   </Column>
