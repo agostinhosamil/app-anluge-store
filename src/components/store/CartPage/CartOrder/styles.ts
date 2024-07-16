@@ -20,16 +20,18 @@ export const SelectedContainer = styled(Container)`
 `
 
 export const ImageWrapper = styled.div`
-  width: 100px;
-  height: 120px;
+  width: 80px;
+  height: 80px;
   background-color: #f0f0f0;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
 
   i {
     width: inherit;
     height: inherit;
     background-color: inherit;
-    border-radius: 8px;
-    -webkit-border-radius: 8px;
+    border-radius: inherit;
+    -webkit-border-radius: inherit;
 
     img {
       border-radius: inherit;

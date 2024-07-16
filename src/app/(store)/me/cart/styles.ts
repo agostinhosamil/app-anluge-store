@@ -14,7 +14,6 @@ export const TitleContainer = styled.div`
   padding: 20px 35px;
   border-radius: 8px;
   -webkit-border-radius: 8px;
-  background-color: #ebebeb;
 
   h1 {
     display: block;
@@ -75,12 +74,13 @@ export const ListWrapper = styled(TitleContainer)`
   padding: 30px 35px;
   border-radius: 8px;
   -webkit-border-radius: 8px;
-  background-color: #ebebeb;
+  background-color: #ececec;
   margin-top: 20px;
 `
 
 export const MainListWrapper = styled(ListWrapper)`
   padding: 0px;
+  background-color: #fafafa;
 `
 
 export const SubmitButtonWrapper = styled.div`

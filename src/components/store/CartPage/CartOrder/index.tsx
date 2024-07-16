@@ -77,8 +77,8 @@ export const CartOrder: CartOrderComponent = ({ product }) => {
           <Image
             src={resolveProductImageUrl(product)}
             alt={product.name}
-            width={100}
-            height={120}
+            width={80}
+            height={80}
           />
         </i>
       </ImageWrapper>
