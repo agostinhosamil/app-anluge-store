@@ -2,6 +2,7 @@ import { Fragment, Suspense } from 'react'
 import { Spinner } from 'react-bootstrap'
 
 import { AdvertiseGroup } from 'store@components/NewsFeed/AdvertiseGroup'
+import { CategoryMapSlider } from 'store@components/NewsFeed/CategoryMapSlider'
 import { NotFoundPageContent } from 'store@components/NotFoundPageContent'
 import { ProductPageWrapper } from 'store@components/pages/products/page'
 import {
@@ -49,12 +50,17 @@ export default async function ProductPage({ params }: PageProps<Params>) {
           <ProductDetailsTable productId={product.id} />
         </Suspense>
       </Content>
-      <div className="w-full px-[50px]">
+      <div className="w-full max-w-[1320px] mx-auto px-[50px]">
         <Suspense fallback={loadingData}>
           <ProductSiblings product={product} />
         </Suspense>
       </div>
-      <AdvertiseGroup group="bottom" />
+      <div className="w-full max-w-[1320px] mx-auto block pt-6 pb-9">
+        <CategoryMapSlider rows={3} />
+      </div>
+      <div className="w-full max-w-[1320px] mx-auto">
+        <AdvertiseGroup group="bottom" />
+      </div>
     </ProductPageWrapper>
   )
 }

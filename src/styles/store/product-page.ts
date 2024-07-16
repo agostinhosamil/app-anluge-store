@@ -5,6 +5,8 @@ export const Container = styled.div`
   height: auto;
   position: relative;
   padding: 50px 50px 0px;
+  max-width: 1320px;
+  margin: auto;
 `
 
 export const ProductImageGalleryWrapper = styled.div`
