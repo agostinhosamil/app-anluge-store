@@ -130,7 +130,7 @@ export default function CategoriesPage() {
       </ContentHeader>
 
       <Dialog
-        size="medium"
+        size="large"
         title={resolveDialogTitle()}
         onClose={dialogCloseHandler}
         show={showCreateCategoryDialog}
