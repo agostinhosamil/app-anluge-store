@@ -103,20 +103,25 @@ export const PATCH = async (
 
   const categoryData = getObjectProps(requestBody.category, [
     'icon',
+    'banner',
     'title',
     'description'
   ])
 
-  const category = await prisma.category.update({
-    data: setCategoryDefaultProps(categoryData),
+  try {
+    const category = await prisma.category.update({
+      data: setCategoryDefaultProps(categoryData),
 
-    where: {
-      id: params.id
+      where: {
+        id: params.id
+      }
+    })
+
+    if (category) {
+      return NextResponse.json(category)
     }
-  })
-
-  if (category) {
-    return NextResponse.json(category)
+  } catch (err) {
+    console.log('>>> Prisma Error: ', err)
   }
 
   return NextResponse.json(
