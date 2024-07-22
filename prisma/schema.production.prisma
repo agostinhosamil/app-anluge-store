@@ -11,9 +11,9 @@ datasource db {
   directUrl = env("ANLUGE_STORE_POSTGRES_DATABASE_URL_NON_POOLING") // uses a direct connection
 }
 
-generator zod {
-  provider = "prisma-zod-generator"
-}
+// generator zod {
+//   provider = "prisma-zod-generator"
+// }
 
 // generator erd {
 //   provider = "prisma-erd-generator"

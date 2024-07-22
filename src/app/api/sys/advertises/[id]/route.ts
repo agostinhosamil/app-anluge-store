@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server'
 import { prisma } from '@services/prisma'
 import { getRequestBody } from '@utils/server/getRequestBody'
 import { NextApiHandler } from 'Types/next'
-import { AdvertiseCreateOneSchema } from 'zod@schemas/createOneAdvertise.schema'
+// import { AdvertiseCreateOneSchema } from 'zod@schemas/createOneAdvertise.schema'
 
 type Params = {
   id: string
@@ -86,9 +86,10 @@ export const PATCH: NextApiHandler<Params> = async (request, { params }) => {
   //   'expiresAt'
   // ])
 
-  const advertiseProps = AdvertiseCreateOneSchema.safeParse({
-    data: requestBody.advertise
-  })
+  const advertiseProps = {
+    data: requestBody.advertise,
+    success: true
+  }
 
   if (!advertiseProps.success) {
     return NextResponse.json({
@@ -100,7 +101,7 @@ export const PATCH: NextApiHandler<Params> = async (request, { params }) => {
   }
 
   try {
-    const { data } = advertiseProps.data
+    const data = advertiseProps.data
 
     const advertise = await prisma.advertise.update({
       where: {
