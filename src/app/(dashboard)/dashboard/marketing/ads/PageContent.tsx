@@ -10,13 +10,22 @@ import {
 } from 'dashboard@components/Forms/CreateAdvertiseForm'
 import { uploadedImageUrl } from '~/utils'
 
+import { Prisma } from '@prisma/client'
 import { useState } from 'react'
+import { LoadingScreen } from '~/components/LoadingScreen'
 import { AdvertiseProps } from '~/Types/Advertise'
 import { createAdvertise } from '~/utils/models/advertise'
 import { AdvertisingListWrapper, Container } from './styles'
 
+type AdvertiseWidthProductOrPost = Prisma.AdvertiseGetPayload<{
+  include: {
+    post: true
+    product: true
+  }
+}>
+
 type PageContentProps = {
-  advertisingList: Array<AdvertiseProps>
+  advertisingList: Array<AdvertiseProps | AdvertiseWidthProductOrPost>
 }
 
 type PageContentComponent = React.FunctionComponent<PageContentProps>
@@ -60,6 +69,11 @@ export const PageContent: PageContentComponent = ({ advertisingList }) => {
           onClick={createAdvertiseButtonClickHandler}
         />
       </ContentHeader>
+      {createAdvertiseFormLoading && (
+        <LoadingScreen>
+          <span>Loading...</span>
+        </LoadingScreen>
+      )}
       <AdvertisingListWrapper>
         <FlatList
           data={advertisingList}
