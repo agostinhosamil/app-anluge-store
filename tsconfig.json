@@ -58,6 +58,9 @@
       "store@styles/*": [
         "./src/styles/store/*"
       ],
+      "partners@styles/*": [
+        "./src/styles/partners/*"
+      ],
       "institution@styles/*": [
         "./src/styles/institution/*"
       ],
@@ -76,6 +79,9 @@
       "blog@components/*": [
         "./src/components/blog/*"
       ],
+      "partners@components/*": [
+        "./src/components/partners/*"
+      ],
       "store@utils/*": [
         "./src/utils/store/*"
       ],
@@ -87,6 +93,9 @@
       ],
       "blog@utils/*": [
         "./src/utils/blog/*"
+      ],
+      "partners@utils/*": [
+        "./src/utils/partners/*"
       ]
     }
   },

@@ -1,4 +1,5 @@
 import { arraySplit, noEmpty } from '.'
+import { filterValidImageFiles } from './filterValidImageFiles'
 import {
   ProductImagesData,
   ProductsImagesData
@@ -27,45 +28,6 @@ const getProductCodeFromImageName = (imageName: string): string => {
 export type GetProductsImagesFromFileListUtil = (
   imageFiles: Array<File>
 ) => Promise<ProductsImagesData>
-
-const filterValidImageFiles = async (
-  imageFiles: Array<File>
-): Promise<Array<File>> => {
-  const productsImagesData: Array<null | File> = await Promise.all(
-    imageFiles.map((imageFile): Promise<null | File> => {
-      return new Promise(resolve => {
-        const tmpImage = new Image()
-
-        const imageLoadHandler = async () => {
-          resolve(imageFile)
-        }
-
-        try {
-          tmpImage.onload = () => {
-            imageLoadHandler()
-          }
-
-          tmpImage.onerror = () => resolve(null)
-          tmpImage.onabort = () => resolve(null)
-
-          tmpImage.src = URL.createObjectURL(imageFile)
-        } catch (err) {
-          resolve(null)
-        }
-      })
-    })
-  )
-
-  const validImageFiles: Array<File> = []
-
-  for (const imageFile of productsImagesData) {
-    if (imageFile) {
-      validImageFiles.push(imageFile)
-    }
-  }
-
-  return validImageFiles
-}
 
 export const getProductsImagesFromFileList: GetProductsImagesFromFileListUtil =
   async imageFiles => {

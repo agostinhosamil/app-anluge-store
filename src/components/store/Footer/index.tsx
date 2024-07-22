@@ -186,13 +186,13 @@ export const Footer: React.FunctionComponent = () => {
                         <Link href="/">Marketplace</Link>
                       </li>
                       <li>
-                        <Link href="/">Instituição</Link>
+                        <Link href="/about">Instituição</Link>
                       </li>
                       <li>
-                        <Link href="/">Empresas / Parceiros</Link>
+                        <Link href="/partners">Empresas / Parceiros</Link>
                       </li>
                       <li>
-                        <Link href="/">Blog</Link>
+                        <Link href="/blog">Blog</Link>
                       </li>
                     </ul>
                   </Column>
