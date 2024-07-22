@@ -150,7 +150,8 @@ export const categoryFactoryByTitle = (
   id: generateRandomId(),
   slag: generateSlagByTitleWithoutSignature(categoryTitle),
   title: categoryTitle,
-  parentId: (props && props.parentId) || null
+  parentId: (props && props.parentId) || null,
+  banner: null
 })
 
 export const getCategoriesTree = async (): Promise<Array<CategoryProps>> => {
