@@ -21,6 +21,7 @@ export const categoryFactory = (
 ): Base<Category> => {
   const defaultProps: Base<Category> = {
     title: '',
+    banner: '',
     description: '',
     icon: null,
     slag: '',

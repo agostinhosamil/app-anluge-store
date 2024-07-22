@@ -5,7 +5,7 @@ import { categoryFactory, renderCategories } from './helpers'
 import { Body, Container, Footer } from './styles'
 import { CategoryProps } from './types'
 
-type CategoryMassCreationFormProps = {}
+type CategoryMassCreationFormProps = any
 
 type CategoryMassCreationFormComponent =
   React.FunctionComponent<CategoryMassCreationFormProps>

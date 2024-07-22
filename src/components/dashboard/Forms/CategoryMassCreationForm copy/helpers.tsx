@@ -25,6 +25,7 @@ export const categoryFactory = (
 
   const defaultProps: CategoryProps = {
     title: '',
+    banner: '',
     description: '',
     icon: null,
     id: categoryId,
