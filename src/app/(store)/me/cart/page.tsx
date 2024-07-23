@@ -1,7 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter } from 'next/navigation'
+// import { useRouter } from 'next/navigation'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { Spinner } from 'react-bootstrap'
 import { default as Col, default as Column } from 'react-bootstrap/Col'
@@ -23,6 +23,7 @@ import { generateRandomId, validPhoneNumber } from '~/utils'
 import { signIn } from '~/utils/auth/client'
 import { CreateOrderRequestResponse } from '~/utils/models/order'
 import { getUsers } from '~/utils/models/user'
+import { redirect } from '~/utils/navigation'
 import {
   CheckoutForm,
   CheckOutFormWrapper,
@@ -93,7 +94,7 @@ export default function CartPage() {
   const { products, clearCart } = useStoreContext()
   const { auth, requestSignIn } = useAuthenticationContext()
 
-  const router = useRouter()
+  // const router = useRouter()
 
   // const cartOrdersFactory = () =>
   //   products.map(product => ({
@@ -114,7 +115,7 @@ export default function CartPage() {
     if (readyToCheckout && products.length < 1 && createdOrder?.success) {
       const { cart } = createdOrder
 
-      router.push(`/me/cart/checkout/${cart.id}`)
+      redirect(`/me/cart/checkout/${cart.id}`)
     }
   }, [products, readyToCheckout])
 
