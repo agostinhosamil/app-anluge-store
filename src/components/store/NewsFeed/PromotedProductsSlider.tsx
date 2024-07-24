@@ -41,8 +41,8 @@ export const PromotedProductsSlider = async () => {
   return (
     <Col md={4}>
       <div className="w-full h-full flex flex-col gap-4 justify-center pt-[20px] pb-[10px] pr-[8px]">
-        <div className="w-full flex bg-[#ebebeb] px-7 pb-7 rounded-2xl flex-col justify-center gap-6 h-full">
-          <strong className="block w-full pt-7 text-zinc-700 font-extrabold uppercase">
+        <div className="w-full flex shadow-md bg-[#D9AFD9] bg-gradient-to-r from-purple-300 to-blue-200 px-7 pb-7 rounded-2xl flex-col justify-center gap-6 h-full">
+          <strong className="block w-full pt-7 text-white font-extrabold uppercase">
             Promoções recentes
           </strong>
           <TouchSlider showIndicators={false} showButtons>
@@ -60,12 +60,12 @@ export const PromotedProductsSlider = async () => {
                   </div>
                   <Link
                     href={`/products/${product.slag}?ref=home-page.latest-promotions`}
-                    className="font-light text-sm font-sans text-zinc-900 text-wrap break-words line-clamp-2"
+                    className="font-light text-sm font-sans text-white text-wrap break-words line-clamp-2"
                   >
                     {product.name}
                   </Link>
                   {product.price >= 1 && (
-                    <span className="text-nowrap overflow-hidden text-ellipsis">
+                    <span className="text-nowrap text-white overflow-hidden text-ellipsis">
                       {formatAmount(product.price)}
                     </span>
                   )}
@@ -78,3 +78,5 @@ export const PromotedProductsSlider = async () => {
     </Col>
   )
 }
+// background-color: #D9AFD9;
+// background-image: linear-gradient(0deg, #D9AFD9 0%, #97D9E1 100%);
