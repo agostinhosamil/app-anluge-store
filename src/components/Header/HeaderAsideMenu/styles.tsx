@@ -36,9 +36,13 @@ export const Container = styled.div`
       flex-direction: row;
       justify-content: flex-start;
 
-      a {
+      a,
+      button {
         width: 100%;
         display: flex;
+        background-color: transparent;
+        border: 0px;
+        outline: 0px;
         flex-direction: row;
         align-items: center;
         padding: 7px 20px 8px;

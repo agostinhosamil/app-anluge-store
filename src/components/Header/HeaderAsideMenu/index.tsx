@@ -1,12 +1,15 @@
 import Link from 'next/link'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { Partial } from '@components/Partial'
+import { signOut } from '@utils/auth/client'
 import { useAuthenticationContext } from '~/components/AuthenticationWrapper'
 import { Icon } from '~/components/Icon'
 import { useStoreContext } from '~/components/store/Context'
 import { getUserOpenedCarts, userHasOpenedCarts } from '~/utils/models/user'
 
+import { Spinner } from 'react-bootstrap'
+import { redirect } from '~/utils/navigation'
 import { Container } from './styles'
 
 type HeaderAsideMenuProps = {
@@ -17,6 +20,8 @@ type HeaderAsideMenuComponent = React.FunctionComponent<
   React.HTMLAttributes<HTMLDivElement> & HeaderAsideMenuProps
 >
 
+type LoadingState = 'signOut'
+
 export const HeaderAsideMenu: HeaderAsideMenuComponent = ({
   onClose,
   ...props
@@ -26,6 +31,8 @@ export const HeaderAsideMenu: HeaderAsideMenuComponent = ({
 
   const { auth } = useAuthenticationContext()
   const { products: cartOrders } = useStoreContext()
+
+  const [loading, setLoading] = useState<LoadingState | false>(false)
 
   useEffect(() => {
     if (containerRef.current) {
@@ -46,6 +53,20 @@ export const HeaderAsideMenu: HeaderAsideMenuComponent = ({
     if (closeMenuOnBlurState.current && typeof onClose === 'function') {
       onClose()
     }
+  }
+
+  const signOutButtonClickHandler = () => {
+    setLoading('signOut')
+
+    if (loading === 'signOut') {
+      return
+    }
+
+    signOut().then(() => {
+      redirect(window.location.href)
+
+      setLoading(false)
+    })
   }
 
   return (
@@ -121,12 +142,21 @@ export const HeaderAsideMenu: HeaderAsideMenuComponent = ({
             </Link>
           </li>
           <li>
-            <Link href="/api/auth/logout">
+            <button
+              type="button"
+              disabled={loading === 'signOut'}
+              onClick={signOutButtonClickHandler}
+            >
               <i>
                 <Icon name="FaPowerOff" />
               </i>
               <span>Terminar sessão</span>
-            </Link>
+              {loading === 'signOut' && (
+                <div>
+                  <Spinner size="sm" />
+                </div>
+              )}
+            </button>
           </li>
         </Partial>
       </ul>
