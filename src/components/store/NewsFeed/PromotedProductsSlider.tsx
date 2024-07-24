@@ -34,6 +34,10 @@ export const PromotedProductsSlider = async () => {
     }
   })
 
+  if (promotedProducts.length < 1) {
+    return null
+  }
+
   return (
     <Col md={4}>
       <div className="w-full h-full flex flex-col gap-4 justify-center pt-[20px] pb-[10px] pr-[8px]">

@@ -96,7 +96,7 @@ export const NewsFeed: React.FunctionComponent<
             </div>
           </Col>
         </Partial>
-        <Col md={8}>
+        <Col>
           <div className="w-full block px-[8px] pt-[20px] pb-[10px]">
             <AdvertisingPanelsCarrousel />
           </div>
