@@ -36,3 +36,10 @@ export type ImageVariant = {
   object: File
   url: string
 }
+
+export type FileDataRefObject = {
+  ref: File
+  key: string | null | undefined
+}
+
+export type FileDataObject = File | FileDataRefObject

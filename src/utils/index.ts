@@ -1,12 +1,7 @@
-import { Category } from '@prisma/client'
 import { compareSync } from 'bcryptjs'
 import deepmerge from 'deepmerge'
-import { CategoryProps } from '~/Types/Category'
 
 import { LoadingStockMap, ProductProps } from '~/Types/Product'
-
-export * from './getProductsImagesFromZipFile'
-export * from './getZipFileContent'
 
 export const getApiAccessToken = (): string => {
   // const authenticationToken = `cookies().get(
@@ -317,9 +312,7 @@ export const resolveUserAvatarUrl = (userAvatarUrl?: string | null): string => {
   return uploadedImageUrl(userAvatarUrl || 'user-avatar-placeholder.jpg')
 }
 
-export const resolveCategoryImageUrl = (
-  category: Category | CategoryProps
-): string => {
+export const resolveCategoryImageUrl = (category: any): string => {
   if (noEmpty(category.icon)) {
     return uploadedImageUrl(category.icon)
   }
@@ -463,3 +456,24 @@ export const emptyProductDescription = (
     emptyProductDescriptionRe.test(productDescription)
   )
 }
+
+export const getProductCodeFromImageName = (imageName: string): string => {
+  const productCodeRegEx =
+    /\s*-?\s*?(\(([a-zA-Z0-9%_().-]+)\)\s*(\.(jpe?g|png|gif))?)$/i
+
+  const productCodeMatch = productCodeRegEx.exec(imageName)
+
+  if (productCodeMatch) {
+    return decodeURIComponent(String(productCodeMatch[2]))
+  }
+
+  return imageName
+    .split('.')
+    .filter(slice => noEmpty(slice))
+    .slice(0, -1)
+    .join('.')
+    .trim()
+}
+
+// export * from './getProductsImagesFromZipFile'
+// export * from './getZipFileContent'

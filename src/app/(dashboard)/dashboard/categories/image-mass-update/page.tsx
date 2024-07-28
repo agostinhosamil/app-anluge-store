@@ -3,23 +3,25 @@
 import { useState } from 'react'
 import { Col, Form, Row } from 'react-bootstrap'
 
-import { FormGroup } from '@components/Form/FormGroup'
-import { Container } from '@components/styled'
-import { ActionButton, ContentHeader } from 'dashboard@components/ContentHeader'
-import { FormSubmit } from 'dashboard@components/FormSubmit'
-import { ProductProps } from '~/Types/Product'
-import { Dialog } from '~/components/Dialog'
+import { EntityCard } from '@components/dashboard/EntityCard'
+import { Dialog } from '@components/Dialog'
 import {
   DropZone,
   DropZoneChangeHandler,
   DropZoneChangeHandlerProps
-} from '~/components/DropZone'
-import { FlatList } from '~/components/FlatList'
-import { EntityCard } from '~/components/dashboard/EntityCard'
-import { LoadingScreen } from '~/components/styled'
-import { getProductsImagesFromZipFile, resolveProductImageUrl } from '~/utils'
+} from '@components/DropZone'
+import { FlatList } from '@components/FlatList'
+import { FormGroup } from '@components/Form/FormGroup'
+import { LoadingScreen } from '@components/LoadingScreen'
+import { Container } from '@components/styled'
+import { getCategoriesImagesFromFileList } from '@utils/getCategoriesImagesFromFileList'
+import { getCategoriesImagesFromZipFile } from '@utils/getCategoriesImagesFromZipFile'
+import { ActionButton, ContentHeader } from 'dashboard@components/ContentHeader'
+import { FormSubmit } from 'dashboard@components/FormSubmit'
+import { CategoryProps } from 'Types/Category'
+import { resolveCategoryImageUrl } from '~/utils'
 
-import { getProductsImagesFromFileList } from '~/utils/getProductsImagesFromFileList'
+import { Category } from '@prisma/client'
 import {
   HidePreviewListButtonWrapper,
   LoadImagesForm,
@@ -29,15 +31,15 @@ import {
   SubTitle
 } from './styles'
 
-export default function ProductImageMassUpdatePage() {
+export default function CategoryImageMassUpdatePage() {
   const [file, setFile] = useState<File>()
   const [files, setFiles] = useState<Array<File>>([])
   const [loading, setLoading] = useState<boolean>(false)
   const [showLoadImagesDialog, setShowLoadImagesDialog] =
     useState<boolean>(false)
-  const [updatedProducts, setUpdatedProducts] = useState<Array<ProductProps>>(
-    []
-  )
+  const [updatedCategories, setUpdatedCategories] = useState<
+    Array<CategoryProps | Category | Omit<Category, 'createdAt' | 'updatedAt'>>
+  >([])
 
   const dropZoneChangeHandler = async ({
     file
@@ -60,19 +62,21 @@ export default function ProductImageMassUpdatePage() {
 
     setLoading(true)
 
-    const productsImages = await getProductsImagesFromZipFile(file)
+    const categoriesImages = await getCategoriesImagesFromZipFile(file)
 
-    if (productsImages) {
+    if (categoriesImages) {
       alert('Imagens dos produtos atualizadas com sucesso')
+    } else {
+      alert('Failed')
     }
 
-    // const updatedProducts = await massUpdateProductsImages(productsImages)
+    // const updatedCategories = await massUpdateCategoriesImages(categoriesImages)
 
-    // if (!updatedProducts) {
-    //   alert('could not update products images')
+    // if (!updatedCategories) {
+    //   alert('could not update categories images')
     // }
 
-    // setUpdatedProducts(updatedProducts instanceof Array ? updatedProducts : [])
+    // setUpdatedCategories(updatedCategories instanceof Array ? updatedCategories : [])
 
     setLoading(false)
   }
@@ -86,25 +90,27 @@ export default function ProductImageMassUpdatePage() {
 
     setLoading(true)
 
-    const productsImages = await getProductsImagesFromFileList(files)
+    const updatedCategories = await getCategoriesImagesFromFileList(files)
 
-    if (productsImages) {
-      alert('Imagens dos produtos atualizadas com sucesso')
+    if (updatedCategories) {
+      setUpdatedCategories(updatedCategories)
+    } else {
+      alert('Failed')
     }
 
-    // const updatedProducts = await massUpdateProductsImages(productsImages)
+    // const updatedCategories = await massUpdateCategoriesImages(categoriesImages)
 
-    // if (!updatedProducts) {
-    //   alert('could not update products images')
+    // if (!updatedCategories) {
+    //   alert('could not update categories images')
     // }
 
-    // setUpdatedProducts(updatedProducts instanceof Array ? updatedProducts : [])
+    // setUpdatedCategories(updatedCategories instanceof Array ? updatedCategories : [])
     setShowLoadImagesDialog(false)
     setLoading(false)
   }
 
   const hidePreviewListButtonClickHandler = () => {
-    setUpdatedProducts([])
+    setUpdatedCategories([])
   }
 
   const loadImagesDialogCloseHandler = () => {
@@ -132,7 +138,7 @@ export default function ProductImageMassUpdatePage() {
 
       <Form
         method="post"
-        action="/api/store/products/image-mass-update"
+        action="/api/store/categories/image-mass-update"
         onSubmit={event => formSubmitHandler(event)}
       >
         {loading && !showLoadImagesDialog && (
@@ -164,7 +170,7 @@ export default function ProductImageMassUpdatePage() {
         </Row>
       </Form>
 
-      {updatedProducts.length >= 1 && (
+      {updatedCategories.length >= 1 && (
         <Row>
           <Col md={8}>
             <SubTitle>Produtos atualizados:</SubTitle>
@@ -178,14 +184,14 @@ export default function ProductImageMassUpdatePage() {
           </Col>
           <Col md={12}>
             <FlatList
-              data={updatedProducts}
+              data={updatedCategories}
               itemsCountPerIteration={10}
               showSearchBox={false}
-              renderItem={product => (
+              renderItem={category => (
                 <EntityCard
-                  title={product.name}
-                  subTitle={product.category?.title}
-                  avatar={resolveProductImageUrl(product)}
+                  title={category.title}
+                  subTitle={category.description}
+                  avatar={resolveCategoryImageUrl(category)}
                   avatarSize="x-large"
                 />
               )}
@@ -202,12 +208,12 @@ export default function ProductImageMassUpdatePage() {
       >
         {loading && (
           <LoadingScreen>
-            <h1>Carregando imagens...</h1>
+            <span>Carregando imagens...</span>
           </LoadingScreen>
         )}
         <LoadImagesForm
           method="post"
-          action="/api/store/products/images/mass-update"
+          action="/api/store/categories/images/mass-update"
           onSubmit={event => loadImagesFormSubmitHandler(event)}
         >
           <LoadImagesFormTitle>
@@ -221,7 +227,7 @@ export default function ProductImageMassUpdatePage() {
           <LoadImagesFormDropZoneWrapper>
             <DropZone
               maxFiles={undefined}
-              height={70}
+              height={110}
               onChange={loadImagesDropZoneChangeHandler}
             />
           </LoadImagesFormDropZoneWrapper>

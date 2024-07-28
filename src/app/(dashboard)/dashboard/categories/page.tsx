@@ -30,6 +30,7 @@ export default function CategoriesPage() {
     useState<boolean>(false)
   const [showCategorySimpleCreationForm, setShowCategorySimpleCreationForm] =
     useState<boolean>(false)
+  const [showOptionsDialog, setShowOptionsDialog] = useState<boolean>(false)
   const [showDeleteCategoryDialog, setShowDeleteCategoryDialog] =
     useState<boolean>(false)
 
@@ -45,6 +46,10 @@ export default function CategoriesPage() {
 
   const deleteCategoryDialogCloseHandler = () => {
     setShowDeleteCategoryDialog(false)
+  }
+
+  const optionsDialogCloseHandler = () => {
+    setShowOptionsDialog(false)
   }
 
   const simpleCreationFormButtonClickHandler = () => {
@@ -127,6 +132,13 @@ export default function CategoriesPage() {
             onClick={() => setShowCreateCategoryDialog(true)}
           />
         </Partial>
+
+        <Partial can={'category:edit'}>
+          <ActionButton
+            icon="FaEllipsisVertical"
+            onClick={() => setShowOptionsDialog(true)}
+          />
+        </Partial>
       </ContentHeader>
 
       <Dialog
@@ -166,6 +178,23 @@ export default function CategoriesPage() {
           </p>
           <p>Esta ação não de poder ser revertida</p>
         </RemoveForm>
+      </Dialog>
+
+      <Dialog
+        title="Opções"
+        closeButtonLabel="Fechar"
+        size="medium"
+        show={showOptionsDialog}
+        onClose={optionsDialogCloseHandler}
+      >
+        <CardButtons>
+          <CardButton href="/dashboard/categories/image-mass-update">
+            Editar imagens em massa
+          </CardButton>
+          <CardButton href="/dashboard/categories/new/mass-creation-form">
+            Abrir formulário de criação em massa
+          </CardButton>
+        </CardButtons>
       </Dialog>
 
       {!categoryState.loading && categoryState.categories.length < 1 && (

@@ -1,7 +1,7 @@
 import { axios } from '@services/axios'
 import { AxiosResponse } from 'axios'
 import { Category } from '~/components/dashboard/Forms/CategoryMassCreationForm/types'
-import { CategoryProps } from '~/Types/Category'
+import { CategoriesImagesData, CategoryProps } from '~/Types/Category'
 import { arrayMerge, arraySplit, generateRandomId, noEmpty } from '~/utils'
 import { generateSlagByTitleWithoutSignature } from '~/utils/generateSlagByTitle'
 
@@ -19,6 +19,53 @@ export const createCategoryByFormData = async (
     if (response.status === 200 && createdCategory.id) {
       return createdCategory
     }
+  } catch (err) {
+    // pass
+  }
+
+  return null
+}
+
+export const massUpdateCategoriesImages = async (
+  categories: CategoriesImagesData
+): Promise<Array<Category> | null> => {
+  try {
+    const productMassUpdateConcurrency = 5
+    const productMassStoreRequestPath = '/store/categories/image-mass-update'
+    const categoriesQueues = arraySplit(
+      categories,
+      productMassUpdateConcurrency
+    )
+
+    const categoriesMassUpdateQueuesResponses: Array<
+      AxiosResponse<Array<Category>>
+    > = []
+
+    for (const categoriesQueue of categoriesQueues) {
+      const categoriesMassUpdatePromiseResult = await axios.post<
+        Array<Category>
+      >(productMassStoreRequestPath, {
+        categories: categoriesQueue
+      })
+
+      categoriesMassUpdateQueuesResponses.push(
+        categoriesMassUpdatePromiseResult
+      )
+    }
+
+    const categoriesMassUpdateQueuesResponsesData =
+      categoriesMassUpdateQueuesResponses
+        .filter(response => response.data instanceof Array)
+        .map(response => response.data)
+
+    const updatedCategories = arrayMerge<Category>(
+      ...categoriesMassUpdateQueuesResponsesData
+    )
+    // const response = await axios.post(productMassStoreRequestPath, {
+    //   categories
+    // })
+
+    return updatedCategories
   } catch (err) {
     // pass
   }

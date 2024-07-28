@@ -4,6 +4,7 @@ import {
   ProductImagesData,
   ProductsImagesData
 } from './getProductsImagesFromZipFile'
+import { massUpdateProductsImages } from './models/product'
 import { productImageUploadClient } from './product/imageUploadClient'
 
 // /^([a-zA-Z0-9%_s\(\)-.]+)$/
@@ -33,8 +34,6 @@ export const getProductsImagesFromFileList: GetProductsImagesFromFileListUtil =
   async imageFiles => {
     const validImageFiles = await filterValidImageFiles(imageFiles)
 
-    const productsImagesData: Array<ProductImagesData> = []
-
     const imageFilesUploadConcurrency = 20
     const imageFilesUploadQueues = arraySplit(
       validImageFiles,
@@ -45,6 +44,8 @@ export const getProductsImagesFromFileList: GetProductsImagesFromFileListUtil =
       try {
         const uploadedImages =
           await productImageUploadClient.uploadFiles(imageFileUploadQueue)
+
+        const productsImagesData: Array<ProductImagesData> = []
 
         for (let i = 0; i < uploadedImages.length; i++) {
           const uploadedImage = uploadedImages[i]
@@ -62,6 +63,11 @@ export const getProductsImagesFromFileList: GetProductsImagesFromFileListUtil =
             }
           })
         }
+
+        // mass-update productsImagesData
+        massUpdateProductsImages(productsImagesData).then(products => {
+          console.log('Mass Updated: ', products?.length, 'products')
+        })
       } catch (err) {
         continue
       }
@@ -111,5 +117,5 @@ export const getProductsImagesFromFileList: GetProductsImagesFromFileListUtil =
     //   productImagesData => Boolean(productImagesData)
     // ) as ProductsImagesData
 
-    return productsImagesData
+    return []
   }

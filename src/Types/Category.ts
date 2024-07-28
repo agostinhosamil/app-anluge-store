@@ -80,3 +80,11 @@ export type CategoryWithProductId = {
     id: string
   }>
 }
+
+export type CategoryImagesData = {
+  slag: string
+  icon: string
+  banner: string
+}
+
+export type CategoriesImagesData = Array<CategoryImagesData>

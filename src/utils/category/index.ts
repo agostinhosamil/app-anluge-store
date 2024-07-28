@@ -70,3 +70,22 @@ export const getCategoryDataById = async (
 
   return category
 }
+
+export const getCategoryDataFromImageFileName = (imageFileName: string) => {
+  const re = /^(([a-zA-Z0-9-_.]+)\s*-\s*(Icon|Banner)(\.(png|jpe?g))?)$/i
+
+  const imageFileNameReMatch = imageFileName.match(re)
+
+  if (imageFileNameReMatch) {
+    const [, , slag, imageType] = Array.from(imageFileNameReMatch).map(data =>
+      String(data).toLowerCase()
+    )
+
+    return {
+      slag,
+      imageType
+    }
+  }
+
+  return null
+}

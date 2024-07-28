@@ -1,15 +1,26 @@
 import axios from 'axios'
 
-import { AnlugeUploadClientOptions, UploadedImage } from './types'
+import { noEmpty } from '~/utils'
+import {
+  AnlugeUploadClientOptions,
+  FileDataObject,
+  UploadedImage
+} from './types'
 import { generateImageVariants, getImageVariantsData } from './utils'
 
+type ImageSetProps = {
+  id: number
+  key: string
+  name: string
+}
+
 type AddToFormDataPropsWithSingleFile = {
-  file: File
+  file: FileDataObject
   multiple?: false
 }
 
 type AddToFormDataPropsWithMultipleFile = {
-  files: Array<File>
+  files: Array<FileDataObject>
   multiple: true
 }
 
@@ -42,7 +53,7 @@ export class AnlugeUploadClient {
     uploadFileOptions,
     ...options
   }: AddToFormDataProps) => {
-    let files: Array<File> = []
+    let files: Array<FileDataObject> = []
 
     if ('file' in options) {
       files = [options.file]
@@ -63,7 +74,10 @@ export class AnlugeUploadClient {
      */
     let uploadFileIndex = 0
 
-    for (const file of files) {
+    for (const fileDataObject of files) {
+      const file =
+        fileDataObject instanceof File ? fileDataObject : fileDataObject.ref
+
       const multiple = Boolean(
         typeof options.multiple === 'boolean' && options.multiple
       )
@@ -73,6 +87,16 @@ export class AnlugeUploadClient {
         : `files[${uploadFileIndex++}]`
 
       formData.append(`${fileFormDataPrefix}[name]`, file)
+      formData.append(`${fileFormDataPrefix}[originalFileName]`, file.name)
+
+      if (!(fileDataObject instanceof File) && noEmpty(fileDataObject.key)) {
+        formData.append(`${fileFormDataPrefix}[fileKey]`, fileDataObject.key)
+      }
+
+      // formData.append(
+      //   `${fileFormDataPrefix}[objectId]`,
+      //   getProductCodeFromImageName(file.name)
+      // )
       formData.append(`${fileFormDataPrefix}[alias]`, 'default')
       formData.append(
         `${fileFormDataPrefix}[set]`,
@@ -111,7 +135,7 @@ export class AnlugeUploadClient {
   }
 
   uploadFile = async (
-    file: File,
+    file: FileDataObject,
     options?: AnlugeUploadClientOptions
   ): Promise<UploadedImage> => {
     const uploadFileOptions: AnlugeUploadClientOptions = {
@@ -158,7 +182,7 @@ export class AnlugeUploadClient {
   }
 
   uploadFiles = async (
-    files: Array<File> | FileList,
+    files: Array<FileDataObject> | FileList,
     options?: AnlugeUploadClientOptions
   ): Promise<Array<UploadedImage>> => {
     files = Array.from(files)
@@ -183,5 +207,37 @@ export class AnlugeUploadClient {
     )
 
     return response.data
+  }
+
+  getImageSet = async (imageSetName: string): Promise<ImageSetProps | null> => {
+    try {
+      const response = await axios.get<ImageSetProps>(
+        `${process.env.NEXT_PUBLIC_ANLUGE_CDN_API_URL}/static/images/${imageSetName}`
+      )
+
+      if ('key' in response.data) {
+        return response.data
+      }
+    } catch (err) {
+      return null
+    }
+
+    return null
+  }
+
+  getImageSetOrCreate = async (
+    imageSetName: string
+  ): Promise<ImageSetProps> => {
+    const response = await axios.post<ImageSetProps>(
+      `${process.env.NEXT_PUBLIC_ANLUGE_CDN_API_URL}/static/images/${imageSetName}`
+    )
+
+    return response.data
+  }
+
+  getImageSetKey = async (imageSetName: string): Promise<string> => {
+    const imageSet = await this.getImageSetOrCreate(imageSetName)
+
+    return imageSet.key
   }
 }
