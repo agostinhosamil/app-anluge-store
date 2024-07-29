@@ -1,5 +1,5 @@
 // import * as Icons from "react-icons/fa6";
-import Image from 'next/image'
+import Image from '@components/Image'
 
 import * as CardIcons from './card-icons'
 import { EntityCardOptions, IconButtonHandlers } from './card-icons/types'
