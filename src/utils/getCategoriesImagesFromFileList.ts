@@ -125,7 +125,7 @@ const uploadCategoriesImagesRefObjects = async (
   categoriesImagesRefObjects: Array<FileDataRefObject>,
   uploadClient: AnlugeUploadClient
 ) => {
-  const filesQueues = arraySplit(categoriesImagesRefObjects, 100)
+  const filesQueues = arraySplit(categoriesImagesRefObjects, 20)
 
   const allUploadedImages: Array<UploadedImage> = []
 
@@ -136,9 +136,11 @@ const uploadCategoriesImagesRefObjects = async (
       try {
         const uploadedImages = await uploadClient.uploadFiles(filesQueues[i])
 
-        allUploadedImages.push(...uploadedImages)
+        if (uploadedImages instanceof Array) {
+          allUploadedImages.push(...uploadedImages)
 
-        filesQueues.splice(i, 1)
+          filesQueues.splice(i, 1)
+        }
       } catch (err) {
         continue
       }

@@ -63,9 +63,13 @@ export default function CategoryImageMassUpdatePage() {
     setLoading(true)
 
     const categoriesImages = await getCategoriesImagesFromZipFile(file)
+    const updatedCategories =
+      await getCategoriesImagesFromFileList(categoriesImages)
 
-    if (categoriesImages) {
-      alert('Imagens dos produtos atualizadas com sucesso')
+    if (updatedCategories) {
+      setUpdatedCategories(updatedCategories)
+
+      alert('Imagens das categorias atualizadas com sucesso')
     } else {
       alert('Failed')
     }
@@ -141,11 +145,9 @@ export default function CategoryImageMassUpdatePage() {
         action="/api/store/categories/image-mass-update"
         onSubmit={event => formSubmitHandler(event)}
       >
-        {loading && !showLoadImagesDialog && (
-          <LoadingScreen>
-            <h1>Loading...</h1>
-          </LoadingScreen>
-        )}
+        <LoadingScreen show={loading && !showLoadImagesDialog}>
+          <span>A atualizar as categorias...</span>
+        </LoadingScreen>
         <FormGroup
           title="Carregar arquivo compactado"
           subtitle="Carregue um arquivo compactado contendo as images dos produtos com nome sufixado pelo código do produto entre parenteses"
@@ -173,7 +175,7 @@ export default function CategoryImageMassUpdatePage() {
       {updatedCategories.length >= 1 && (
         <Row>
           <Col md={8}>
-            <SubTitle>Produtos atualizados:</SubTitle>
+            <SubTitle>Categorias atualizadas:</SubTitle>
           </Col>
           <Col md={4}>
             <HidePreviewListButtonWrapper>
@@ -206,11 +208,9 @@ export default function CategoryImageMassUpdatePage() {
         onClose={loadImagesDialogCloseHandler}
         title="Carregar imagens diretamente"
       >
-        {loading && (
-          <LoadingScreen>
-            <span>Carregando imagens...</span>
-          </LoadingScreen>
-        )}
+        <LoadingScreen show={loading}>
+          <span>A atualizar categorias...</span>
+        </LoadingScreen>
         <LoadImagesForm
           method="post"
           action="/api/store/categories/images/mass-update"
