@@ -3,23 +3,23 @@
 import { useState } from 'react'
 import { Col, Form, Row } from 'react-bootstrap'
 
-import { FormGroup } from '@components/Form/FormGroup'
-import { Container } from '@components/styled'
-import { ActionButton, ContentHeader } from 'dashboard@components/ContentHeader'
-import { FormSubmit } from 'dashboard@components/FormSubmit'
-import { ProductProps } from '~/Types/Product'
-import { Dialog } from '~/components/Dialog'
+import { EntityCard } from '@components/dashboard/EntityCard'
+import { Dialog } from '@components/Dialog'
 import {
   DropZone,
   DropZoneChangeHandler,
   DropZoneChangeHandlerProps
-} from '~/components/DropZone'
-import { FlatList } from '~/components/FlatList'
-import { EntityCard } from '~/components/dashboard/EntityCard'
-import { LoadingScreen } from '~/components/styled'
-import { getProductsImagesFromZipFile, resolveProductImageUrl } from '~/utils'
-
+} from '@components/DropZone'
+import { FlatList } from '@components/FlatList'
+import { FormGroup } from '@components/Form/FormGroup'
+import { Container, LoadingScreen } from '@components/styled'
+import { getProductsImagesFromZipFile } from '@utils/getProductsImagesFromZipFile'
+import { ActionButton, ContentHeader } from 'dashboard@components/ContentHeader'
+import { FormSubmit } from 'dashboard@components/FormSubmit'
+import { ProductProps } from 'Types/Product'
+import { resolveProductImageUrl } from '~/utils'
 import { getProductsImagesFromFileList } from '~/utils/getProductsImagesFromFileList'
+
 import {
   HidePreviewListButtonWrapper,
   LoadImagesForm,
