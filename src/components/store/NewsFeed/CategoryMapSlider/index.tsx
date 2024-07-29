@@ -3,8 +3,9 @@ import { Fragment } from 'react'
 
 import { PlaceHolder } from '@components/PlaceHolder'
 import { prisma } from '@services/prisma'
+import Image from '~/components/Image'
 import { Marquee } from '~/components/Marquee'
-import { arraySplit } from '~/utils'
+import { arraySplit, resolveCategoryImageUrl } from '~/utils'
 
 type CategoryMapSliderProps = {
   rows?: number | `${number}`
@@ -55,6 +56,13 @@ export const CategoryMapSlider = async (props: CategoryMapSliderProps) => {
                   className="w-[150px] h-max block relative"
                 >
                   <PlaceHolder className="bg-zinc-200 rounded-full size-[150px]">
+                    <Image
+                      src={resolveCategoryImageUrl(category)}
+                      width={150}
+                      height={150}
+                      alt={category.title}
+                      className="rounded-full pointer-events-none select-none"
+                    />
                     <span className="w-[150px] break-words whitespace-break-spaces px-2 line-clamp-6 absolute top-full mt-[+20px] text-center font-light text-zinc-900 select-none pointer-events-none">
                       {category.title}
                     </span>
