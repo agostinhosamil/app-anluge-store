@@ -17,7 +17,7 @@ export const CategoryCard: React.FunctionComponent<
           <CategoryDataWrapper>
             <div
               style={{
-                backgroundImage: `url("${resolveCategoryImageUrl(props)}")`
+                backgroundImage: `url("${resolveCategoryImageUrl(props, 'banner@small')}")`
               }}
             />
             <data>
