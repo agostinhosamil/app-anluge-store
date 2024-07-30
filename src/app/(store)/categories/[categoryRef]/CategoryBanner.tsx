@@ -27,7 +27,7 @@ export const CategoryBanner: CategoryBannerComponent = props => {
       <Image
         alt={props.categoryTitle}
         fill={true}
-        src={uploadedImageUrl(String(props.categoryIcon))}
+        src={uploadedImageUrl(String(props.categoryIcon).concat('@large'))}
       />
     </CategoryBannerContainer>
   )
