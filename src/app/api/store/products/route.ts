@@ -14,6 +14,8 @@ type PostRequestBodyProps = {
   }
 }
 
+export const maxDuration = 60
+
 export async function GET(request: NextRequest) {
   const queryString = request.nextUrl.searchParams
   const productsQueryArguments = getSearchParamsQueryArgument(queryString)
