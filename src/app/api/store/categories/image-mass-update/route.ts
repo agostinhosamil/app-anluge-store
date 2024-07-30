@@ -19,6 +19,8 @@ const requestBodyObjectSchema = z.object({
 
 type RequestBodyObject = z.infer<typeof requestBodyObjectSchema>
 
+export const maxDuration = 60
+
 export const POST: NextApiHandler = async request => {
   const requestBody = await getRequestBody<RequestBodyObject>(request)
 
