@@ -138,7 +138,7 @@ export const PATCH = async (
       : []
 
   const productTags = requestBody.product.tags.map(title => {
-    const slag = generateSlagByTitle(title).replace(/(\-[0-9]+)$/, '')
+    const slag = generateSlagByTitle(title).replace(/(-[0-9]+)$/, '')
 
     return {
       title,
@@ -173,7 +173,7 @@ export const PATCH = async (
           })),
 
           disconnect: deletedProductTags.map(tag => {
-            const tagSlag = generateSlagByTitle(tag).replace(/(\-[0-9]+)$/, '')
+            const tagSlag = generateSlagByTitle(tag).replace(/(-[0-9]+)$/, '')
 
             return {
               slag: tagSlag
