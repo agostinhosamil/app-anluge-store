@@ -3,6 +3,8 @@ import deepmerge from 'deepmerge'
 
 import { LoadingStockMap, ProductProps } from '~/Types/Product'
 
+export { resolveCategoryImageUrl } from './resolveCategoryImageUrl'
+
 export const getApiAccessToken = (): string => {
   // const authenticationToken = `cookies().get(
   //   String(process.env.APP_AUTH_COOKIE_NAME)
@@ -310,14 +312,6 @@ export const resolveProductImageUrl = (
 
 export const resolveUserAvatarUrl = (userAvatarUrl?: string | null): string => {
   return uploadedImageUrl(userAvatarUrl || 'user-avatar-placeholder.jpg')
-}
-
-export const resolveCategoryImageUrl = (category: any): string => {
-  if (noEmpty(category.icon)) {
-    return uploadedImageUrl(category.icon)
-  }
-
-  return uploadedImageUrl('category-icon-placeholder.jpg')
 }
 
 export const strMatches = (string1: string, string2: string): boolean => {
