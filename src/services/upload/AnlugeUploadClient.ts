@@ -235,9 +235,11 @@ export class AnlugeUploadClient {
     return response.data
   }
 
-  getImageSetKey = async (imageSetName: string): Promise<string> => {
+  getImageSetKey = async (
+    imageSetName: string
+  ): Promise<string | undefined> => {
     const imageSet = await this.getImageSetOrCreate(imageSetName)
 
-    return imageSet.key
+    return 'key' in imageSet ? imageSet.key : undefined
   }
 }
