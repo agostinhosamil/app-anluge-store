@@ -24,7 +24,7 @@ export const CategoryBannerContainer = styled(PlaceHolder)`
     border-radius: inherit;
     -webkit-border-radius: inherit;
     object-fit: fill;
-    position: relative;
+    position: static !important;
     height: auto !important;
     box-shadow:
       rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
