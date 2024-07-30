@@ -20,7 +20,10 @@ export async function GET(request: NextRequest) {
   const queryString = request.nextUrl.searchParams
   const productsQueryArguments = getSearchParamsQueryArgument(queryString)
 
-  const include = productIncludeFactory()
+  const include = {
+    ...productIncludeFactory(),
+    category: true
+  }
 
   try {
     const products = await prisma.product.findMany({
