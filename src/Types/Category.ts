@@ -69,6 +69,13 @@ export type AnyCategoryProps =
         id: string
       }>
     }
+  | {
+      id: string
+      title: string
+      products: Array<{
+        id: string
+      }>
+    }
 
 export type CategoryWithProductId = {
   id: string
