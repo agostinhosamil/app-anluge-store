@@ -3,6 +3,8 @@ import styled from 'styled-components'
 export const Container = styled.div`
   width: 100%;
   height: auto;
+  max-width: 1320px;
+  margin: auto;
   display: block;
   padding: 100px 100px 0px;
   transition: all 0.3s ease-in-out;
