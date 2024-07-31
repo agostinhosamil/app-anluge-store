@@ -17,6 +17,7 @@ import { ApplicationContextProvider } from '@components/ApplicationContext'
 import { StoreContextWrapper } from '@components/store/Context/StoreContextWrapper'
 import { getAuthTokenCookie } from '@utils/authTokenCookie'
 import { getServerHeaders } from '@utils/server'
+import { Toaster } from 'ui@components/toaster'
 
 import companyData from '~/config/cache/company-data/index.json'
 
@@ -112,6 +113,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
               </AuthenticationWrapper>
             </ApplicationContextProvider>
           </AdvertiseContextWrapper>
+          <Toaster />
         </StyledComponentsRegistry>
       </body>
     </html>
