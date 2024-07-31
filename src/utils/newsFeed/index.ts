@@ -88,12 +88,12 @@ export const getCategoryChildrenById = (
         include: {
           categories: {
             include: {
-              categories: {
-                select: {
-                  id: true,
-                  title: true
-                }
-              },
+              // categories: {
+              //   select: {
+              //     id: true,
+              //     title: true
+              //   }
+              // },
 
               products: {
                 select: {
