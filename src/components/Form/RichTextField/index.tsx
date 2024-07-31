@@ -1,8 +1,10 @@
 'use client'
 
-import TipTapColorExtension from '@tiptap/extension-color'
+import TipTapColorExtension, { Color } from '@tiptap/extension-color'
 import TipTapDropCursorExtension from '@tiptap/extension-dropcursor'
 import TipTapFloatingMenuExtension from '@tiptap/extension-floating-menu'
+import TipTapFontFamilyExtension from '@tiptap/extension-font-family'
+import TipTapHighlightExtension from '@tiptap/extension-highlight'
 import TipTapImageExtension from '@tiptap/extension-image'
 import TipTapTableExtension from '@tiptap/extension-table'
 import TipTapTableCellExtension from '@tiptap/extension-table-cell'
@@ -80,6 +82,7 @@ export const RichTextField: RichTextFieldComponent = ({
       TipTapUnderlineExtension,
       TipTapTextStyleExtension,
       TipTapFloatingMenuExtension,
+      TipTapFontFamilyExtension,
       TipTapTableExtension.configure({
         resizable: true,
         allowTableNodeSelection: true
@@ -87,9 +90,13 @@ export const RichTextField: RichTextFieldComponent = ({
       TipTapTableRowExtension,
       TipTapTableCellExtension,
       TipTapTableHeaderExtension,
-      TipTapImageExtension,
       TipTapDropCursorExtension,
-      TipTapTextExtension
+      TipTapHighlightExtension.configure({
+        multicolor: true
+      }),
+      TipTapImageExtension,
+      TipTapTextExtension,
+      Color
     ],
     content: '<p>Hello World! 🌎️</p>'
   })

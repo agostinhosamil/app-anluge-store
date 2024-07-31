@@ -1,4 +1,5 @@
 import { BubbleMenu } from '@tiptap/react'
+
 import { useRichTextFieldContext } from './hooks'
 
 export const TipTapBubbleMenu = () => {

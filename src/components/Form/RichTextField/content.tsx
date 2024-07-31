@@ -1,10 +1,11 @@
 import { EditorContent } from '@tiptap/react'
-
 import { Fragment, useEffect, useRef } from 'react'
+
 import { useRichTextFieldContext } from './hooks'
 import { MenuBar } from './MenuBar'
 import { Container, EditorBody, FixedContainer } from './styles'
 import { TipTapBubbleMenu } from './TipTapBubbleMenu'
+import { TipTapFloatingMenu } from './TipTapFloatingMenu'
 
 type RichTextFieldContentProps = any
 
@@ -44,9 +45,11 @@ export const RichTextFieldContent: RichTextFieldContentComponent = () => {
     <Fragment>
       <ContainerElement>
         <MenuBar editor={editor} />
-        <EditorBody className="prose">
-          <EditorContent ref={editorContentRef} editor={editor} />
+        <span>Some data: {editor?.getAttributes('textStyle').fontSize}</span>
+        <EditorBody className="prose relative w-full">
           <TipTapBubbleMenu />
+          <TipTapFloatingMenu />
+          <EditorContent ref={editorContentRef} editor={editor} />
         </EditorBody>
       </ContainerElement>
     </Fragment>
