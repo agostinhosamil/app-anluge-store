@@ -7,6 +7,8 @@ import { FaCartPlus, FaEllipsisV, FaHeart } from 'react-icons/fa'
 
 import { Image } from '@components/Image'
 import { useStoreContext } from 'store@components/Context'
+import { ToastAction } from 'ui@components/toast'
+import { useToast } from 'ui@components/use-toast'
 import { ProductProps } from '~/Types/Product'
 import {
   emptyProductDescription,
@@ -29,10 +31,25 @@ type ProductCardComponent = React.FunctionComponent<ProductCardProps>
 export const ProductCard: ProductCardComponent = props => {
   const storeContext = useStoreContext()
 
+  const { toast } = useToast()
+
   const { product } = props
 
   const addToCartButtonClickHandler = () => {
     storeContext.addOrder(product)
+
+    toast({
+      title: 'Produto adicionado ao carrinho',
+      description: `'${product.name}' está pronto para ser encomendado.`,
+      action: (
+        <ToastAction
+          altText="Remover"
+          onClick={() => storeContext.removeOrder(product.id)}
+        >
+          Remover
+        </ToastAction>
+      )
+    })
   }
 
   const shouldNotShowAside = !(
