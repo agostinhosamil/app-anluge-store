@@ -4,7 +4,8 @@ import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 import NextImage, { ImageProps } from 'next/image'
 import { Fragment, useState } from 'react'
 
-import { noEmpty } from '~/utils'
+import { convertBlobToFile, noEmpty } from '~/utils'
+import { filterValidImageFiles } from '~/utils/filterValidImageFiles'
 import errorImage from './error.png'
 import loadingImage from './loading.png'
 import { LoadingContainer } from './styles'
@@ -23,13 +24,23 @@ export const Image: ImageComponent = props => {
         const imageData = await response.blob()
 
         if (imageData) {
-          setSrc(URL.createObjectURL(imageData))
-          setError(false)
+          const validImages = await filterValidImageFiles([
+            convertBlobToFile(imageData, 'image.jpg')
+          ])
+
+          if (validImages.length >= 1) {
+            setSrc(URL.createObjectURL(imageData))
+            setError(false)
+
+            return
+          }
+
+          setSrc(errorImage)
 
           return
         }
       } catch (err) {
-        // pass...
+        setSrc(errorImage)
       }
     }
 
@@ -45,7 +56,7 @@ export const Image: ImageComponent = props => {
   const NextImageWrapper = loading ? LoadingContainer : Fragment
 
   return (
-    <NextImageWrapper>
+    <NextImageWrapper className={props.className}>
       {noEmpty(src) ? (
         <img {...props} src={src} />
       ) : (
