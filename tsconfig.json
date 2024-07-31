@@ -76,6 +76,9 @@
       "institution@components/*": [
         "./src/components/institution/*"
       ],
+      "ui@components/*": [
+        "./src/components/ui/*"
+      ],
       "blog@components/*": [
         "./src/components/blog/*"
       ],
