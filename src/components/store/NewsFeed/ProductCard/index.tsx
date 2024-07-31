@@ -41,6 +41,7 @@ export const ProductCard: ProductCardComponent = props => {
     toast({
       title: 'Produto adicionado ao carrinho',
       description: `'${product.name}' está pronto para ser encomendado.`,
+      duration: 5000,
       action: (
         <ToastAction
           altText="Remover"
