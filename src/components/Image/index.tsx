@@ -53,7 +53,9 @@ export const Image: ImageComponent = props => {
     imageFetcher()
   }
 
-  const NextImageWrapper = loading ? LoadingContainer : Fragment
+  const NextImageWrapper = loading
+    ? LoadingContainer
+    : ({ children }: React.PropsWithChildren) => <Fragment>{children}</Fragment>
 
   return (
     <NextImageWrapper className={props.className}>
