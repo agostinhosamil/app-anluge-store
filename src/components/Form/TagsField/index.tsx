@@ -36,6 +36,26 @@ export const TagsField: TagsFieldComponent = ({
   const labelText = noEmpty(label) ? label : 'Tags'
 
   const inputKeyUpHandler: React.KeyboardEventHandler = event => {
+    const pressedKey = event.key.toLowerCase()
+
+    if (event.ctrlKey && pressedKey === 'v') {
+      const inputElement = event.target as HTMLInputElement
+      const inputElementValue = inputElement.value
+        .split(',')
+        .filter(tagSlag => noEmpty(tagSlag))
+        .map(tagSlag => tagSlag.trim())
+        .map(tagSlag => ({
+          id: generateRandomId(),
+          slag: sanitizeTagSlag(tagSlag)
+        }))
+
+      setTags([...tags, ...inputElementValue])
+
+      inputElement.value = ''
+    }
+  }
+
+  const inputKeyDownHandler: React.KeyboardEventHandler = event => {
     const tagListSeparatorKeys = [',', ';', 'enter']
     const pressedKey = event.key.toLowerCase()
 
@@ -97,7 +117,8 @@ export const TagsField: TagsFieldComponent = ({
               autoCapitalize="off"
               autoComplete="off"
               spellCheck={false}
-              onKeyDown={inputKeyUpHandler}
+              onKeyDown={inputKeyDownHandler}
+              onKeyUp={inputKeyUpHandler}
             />
           </li>
         </ul>
