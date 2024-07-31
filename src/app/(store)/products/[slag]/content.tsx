@@ -4,7 +4,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Column from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import { FaCartPlus, FaEllipsisVertical, FaHeart } from 'react-icons/fa6'
+import {
+  FaCartArrowDown,
+  FaCartPlus,
+  FaEllipsisVertical,
+  FaHeart,
+  FaMinus,
+  FaPlus
+} from 'react-icons/fa6'
 import {
   FacebookShareButton,
   LinkedinShareButton,
@@ -14,6 +21,7 @@ import {
 
 import { useApp } from '@components/ApplicationContext'
 import { RichText } from '@components/RichText'
+import { useState } from 'react'
 import { useStoreContext } from 'store@components/Context'
 import { AdvertiseGroup } from 'store@components/NewsFeed/AdvertiseGroup'
 import { StarRating } from 'store@components/NewsFeed/ProductCard/StarRating'
@@ -40,20 +48,112 @@ import {
   Content as StyledContent,
   Summary
 } from 'store@styles/product-page'
+import { ToastAction } from 'ui@components/toast'
+import { useToast } from 'ui@components/use-toast'
 import { emptyProductDescription, formatAmount } from '~/utils'
 import { getProductRatesAverage } from '~/utils/models/product'
 
 type ContentComponent = React.FunctionComponent<React.PropsWithChildren>
 
 export const Content: ContentComponent = props => {
-  const { product } = useProductPageContext()
-
-  const storeContext = useStoreContext()
   const app = useApp()
+  const { toast } = useToast()
+  const { product } = useProductPageContext()
+  const storeContext = useStoreContext()
+
+  const productOrderData = storeContext.getOrder(product.id)
+
+  const productOrderQuantity = Number(productOrderData?.quantity)
+
+  const [quantity, setQuantity] = useState<number>(
+    !isNaN(productOrderQuantity) && productOrderQuantity >= 1
+      ? productOrderQuantity
+      : 1
+  )
 
   const addToCartButtonClickHandler = () => {
-    storeContext.addOrder(product)
+    storeContext.addOrder({
+      ...product,
+      quantity
+    })
+
+    toast({
+      title: 'Produto adicionado ao carrinho',
+      description: `'${product.name}' está pronto para ser encomendado.`,
+      action: (
+        <ToastAction
+          altText="Remover"
+          onClick={() => storeContext.removeOrder(product.id)}
+        >
+          Remover
+        </ToastAction>
+      )
+    })
   }
+
+  const removeFromCartButtonClickHandler = () => {
+    storeContext.removeOrder(product.id)
+
+    toast({
+      title: 'Produto removido do carrinho',
+      description: `'${product.name}' está fora da lista de encomendas.`,
+      action: (
+        <ToastAction
+          altText="Re-Adicionar"
+          onClick={() => storeContext.addOrder(product)}
+        >
+          Re-Adicionar
+        </ToastAction>
+      )
+    })
+  }
+
+  const plusButtonClickHandler = () => {
+    if (!storeContext.productOrdered(product.id)) {
+      return setQuantity(quantity + 1)
+    }
+
+    storeContext.updateOrder(product.id, {
+      quantity: quantity + 1
+    })
+  }
+
+  const minusButtonClickHandler = () => {
+    if (quantity < 2) {
+      return
+    }
+
+    if (!storeContext.productOrdered(product.id)) {
+      return setQuantity(quantity - 1)
+    }
+
+    storeContext.updateOrder(product.id, {
+      quantity: quantity - 1
+    })
+  }
+
+  const quantityInputChangeHandler: React.ChangeEventHandler = event => {
+    const inputElement = event.target as HTMLInputElement
+    const inputElementValue = Number(
+      inputElement.value.replaceAll(/[^0-9]/g, '')
+    )
+
+    setQuantity(
+      !isNaN(inputElementValue) && inputElementValue >= 1
+        ? inputElementValue
+        : 1
+    )
+  }
+
+  const quantityInputKeyDownHandler: React.KeyboardEventHandler = event => {
+    const pressedKey = event.key
+
+    if (/^[^0-9]$/.test(pressedKey)) {
+      event.preventDefault()
+    }
+  }
+
+  const productOrdered = storeContext.productOrdered(product.id)
 
   return (
     <Container>
@@ -93,21 +193,65 @@ export const Content: ContentComponent = props => {
             <CategoryBreadCrumbWrapper>
               <CategoryBreadCrumb product={product} />
             </CategoryBreadCrumbWrapper>
+            <div className="w-full flex gap-3 flex-row items-center py-3">
+              <button
+                type="button"
+                role="button"
+                onClick={minusButtonClickHandler}
+                disabled={quantity < 2}
+                className="outline-none flex items-center justify-center border-0 bg-zinc-200 text-zinc-900 enabled:hover:bg-zinc-300 enabled:active:bg-zinc-400 cursor-pointer rounded-full size-[35px]"
+              >
+                <FaMinus />
+              </button>
+              <input
+                type="text"
+                className="w-[60px] px-3 py-2 border-1 border-zinc-300 rounded-md outline-none text-center uppercase font-extrabold text-zinc-900"
+                value={quantity}
+                onChange={quantityInputChangeHandler}
+                onKeyDown={quantityInputKeyDownHandler}
+              />
+
+              <button
+                type="button"
+                role="button"
+                onClick={plusButtonClickHandler}
+                className="outline-none flex items-center justify-center border-0 bg-zinc-200 text-zinc-900 hover:bg-zinc-300 active:bg-zinc-400 cursor-pointer rounded-full size-[35px]"
+              >
+                <FaPlus />
+              </button>
+            </div>
             <ProductActionsListWrapper>
               <ul>
-                <li>
-                  <ActionButton
-                    type="button"
-                    role="button"
-                    $color="primary"
-                    onClick={addToCartButtonClickHandler}
-                  >
-                    <i>
-                      <FaCartPlus />
-                    </i>
-                    <span>Adicionar ao carrinho</span>
-                  </ActionButton>
-                </li>
+                {!productOrdered && (
+                  <li>
+                    <ActionButton
+                      type="button"
+                      role="button"
+                      $color="primary"
+                      onClick={addToCartButtonClickHandler}
+                    >
+                      <i>
+                        <FaCartPlus />
+                      </i>
+                      <span>Adicionar ao carrinho</span>
+                    </ActionButton>
+                  </li>
+                )}
+                {productOrdered && (
+                  <li>
+                    <ActionButton
+                      type="button"
+                      role="button"
+                      $color="red"
+                      onClick={removeFromCartButtonClickHandler}
+                    >
+                      <i>
+                        <FaCartArrowDown />
+                      </i>
+                      <span>Remover do carrinho</span>
+                    </ActionButton>
+                  </li>
+                )}
                 <li>
                   <ActionButton type="button" role="button">
                     <i>

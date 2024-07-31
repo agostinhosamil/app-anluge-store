@@ -126,8 +126,17 @@ export const ProductActionsListWrapper = styled.div`
   }
 `
 
+const actionButtonColors = {
+  primary: '#0170bf',
+  greed: '#3bbf01',
+  red: '#d83232',
+  default: '#2f363b'
+}
+
+type ActionButtonColors = typeof actionButtonColors
+type ActionButtonColor = keyof ActionButtonColors
 type ActionButtonProps = {
-  $color?: 'primary' | 'default'
+  $color?: ActionButtonColor
 }
 
 export const ActionButton = styled.button<ActionButtonProps>`
@@ -139,8 +148,7 @@ export const ActionButton = styled.button<ActionButtonProps>`
   border: 0px;
   outline: 0px;
   color: #ffffff;
-  background-color: ${props =>
-    props.$color === 'primary' ? '#0170bf' : '#2f363b'};
+  background-color: ${props => actionButtonColors[props.$color || 'default']};
   align-items: center;
   transition: all 0.3s ease-in-out;
 

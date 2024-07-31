@@ -49,7 +49,13 @@ export const StoreContextProvider: StoreContextProviderComponent = props => {
     products: cart,
 
     productOrdered(product) {
-      return Boolean(cart.find(({ id }) => id === product.id))
+      return Boolean(
+        cart.find(({ id }) => {
+          const productId = typeof product === 'string' ? product : product.id
+
+          return id === productId
+        })
+      )
     },
 
     addOrder(product) {
@@ -85,6 +91,10 @@ export const StoreContextProvider: StoreContextProviderComponent = props => {
       const updatedCartData = cart.filter(product => product.id !== productId)
 
       updateCart(updatedCartData)
+    },
+
+    getOrder(productId) {
+      return cart.find(product => product.id === productId)
     },
 
     clearCart() {
