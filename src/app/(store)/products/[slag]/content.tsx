@@ -80,7 +80,7 @@ export const Content: ContentComponent = props => {
     toast({
       title: 'Produto adicionado ao carrinho',
       description: `'${product.name}' está pronto para ser encomendado.`,
-      duration: 5000,
+      duration: 500,
       action: (
         <ToastAction
           altText="Remover"
@@ -98,11 +98,18 @@ export const Content: ContentComponent = props => {
     toast({
       title: 'Produto removido do carrinho',
       description: `'${product.name}' está fora da lista de encomendas.`,
-      duration: 5000,
+      duration: 500,
       action: (
         <ToastAction
           altText="Re-Adicionar"
-          onClick={() => storeContext.addOrder(product)}
+          onClick={() => {
+            storeContext.addOrder({
+              ...product,
+              quantity
+            })
+
+            alert('A')
+          }}
         >
           Re-Adicionar
         </ToastAction>
