@@ -5,7 +5,8 @@ import Spinner from 'react-bootstrap/Spinner'
 import { FaSearch } from 'react-icons/fa'
 
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa6'
-import { range } from '~/utils'
+import { noEmpty, range } from '~/utils'
+import { stringsMatch } from '~/utils/stringsMatch'
 import { EmptyListContainer } from '../dashboard/styles'
 import {
   Body,
@@ -28,6 +29,7 @@ export * from './types'
 export function FlatList<Data = any>(
   props: FlatListProps<Data>
 ): React.ReactNode {
+  const [query, setQuery] = useState<string>()
   const [listCursor, setListCursor] = useState<number>(0)
   const [data, setData] = useState<Array<Data>>(props.data)
 
@@ -78,8 +80,24 @@ export function FlatList<Data = any>(
     ))
   }
 
-  const listItemDataFilter = (): boolean => {
-    return true
+  const listItemDataFilter = (listItem: Data): boolean => {
+    if (!noEmpty(query)) {
+      return true
+    }
+
+    if (!(typeof listItem === 'object' && listItem)) {
+      return false
+    }
+
+    const listItemKeyValues = Object.values(listItem)
+
+    for (const listItemData of listItemKeyValues) {
+      if (noEmpty(listItemData) && stringsMatch(query, listItemData)) {
+        return true
+      }
+    }
+
+    return false
   }
 
   const listLoaderButtonClickHandler = () => {
@@ -100,6 +118,13 @@ export function FlatList<Data = any>(
     if (listCursor > 0) {
       setListCursor(listCursor - itemsCountPerIteration)
     }
+  }
+
+  const searchInputChangeHandler: React.ChangeEventHandler = event => {
+    const inputElement = event.target as HTMLInputElement
+    const inputElementValue = inputElement.value.replaceAll(/\s+/g, ' ')
+
+    setQuery(noEmpty(inputElementValue) ? inputElementValue : undefined)
   }
 
   const resolveCurrentPaginationIteration = () => {
@@ -214,6 +239,12 @@ export function FlatList<Data = any>(
     }
   }
 
+  const dataSliceLimit = noEmpty(query)
+    ? data.length
+    : itemsCountPerIteration + listCursor
+
+  const listData = data.slice(0, dataSliceLimit).filter(listItemDataFilter)
+
   return (
     <Container>
       {typeof showSearchBox === 'boolean' && showSearchBox && (
@@ -223,7 +254,13 @@ export function FlatList<Data = any>(
               <i>
                 <FaSearch />
               </i>
-              <input type="text" autoComplete="off" spellCheck={false} />
+              <input
+                type="text"
+                autoComplete="off"
+                spellCheck={false}
+                value={query}
+                onChange={searchInputChangeHandler}
+              />
             </div>
           </SearchInputContainer>
         </Head>
@@ -231,19 +268,16 @@ export function FlatList<Data = any>(
       <Body>
         <List>
           {!isLoading &&
-            data
-              .slice(0, itemsCountPerIteration + listCursor)
-              .filter(listItemDataFilter)
-              .map(
-                (listItemData, listItemDataIndex) =>
-                  props.renderItem && (
-                    <Fragment key={listItemDataIndex}>
-                      {props.renderItem(listItemData)}
-                    </Fragment>
-                  )
-              )}
+            listData.map(
+              (listItemData, listItemDataIndex) =>
+                props.renderItem && (
+                  <Fragment key={listItemDataIndex}>
+                    {props.renderItem(listItemData)}
+                  </Fragment>
+                )
+            )}
 
-          {!isLoading && data.length < 1 && (
+          {!isLoading && listData.length < 1 && (
             <EmptyListContainer>
               {props.children || (
                 <EmptyListContainer>
