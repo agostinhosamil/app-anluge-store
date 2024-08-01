@@ -22,7 +22,10 @@ export const GET: NextApiHandler = async () => {
       favorites: {
         include: {
           product: {
-            include: productIncludeFactory()
+            include: {
+              ...productIncludeFactory(),
+              category: true
+            }
           }
         }
       }
