@@ -44,10 +44,15 @@ export const groupProductsByCategory = (
   }
 
   for (const product of products) {
+    // console.log('\n\n\n\n>>> product.category: ', product.category, '\n\n\n\n')
     const productCategoryKey = product.category?.slag || ''
 
-    productsByCategory[productCategoryKey] =
-      productsByCategory[productCategoryKey] || defaultCategoryDataObject
+    productsByCategory[productCategoryKey] = productsByCategory[
+      productCategoryKey
+    ] || {
+      products: [],
+      category: product.category ?? defaultCategoryDataObject.category
+    }
 
     if (
       !productsByCategory[productCategoryKey].products.some(
