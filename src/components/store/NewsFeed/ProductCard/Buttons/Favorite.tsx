@@ -48,6 +48,10 @@ export const FavoriteButton: FavoriteButtonComponent = ({ product }) => {
       const signInResponse = await requestSignIn()
 
       if (!signInResponse) {
+        toast({
+          description: 'Não foi possível adicionar produto a lista de desejos'
+        })
+
         return setLoading(false)
       }
     }
@@ -65,7 +69,7 @@ export const FavoriteButton: FavoriteButtonComponent = ({ product }) => {
     })
 
     toast({
-      description: `Produto ${productAlreadyInWishList ? 'removido dos' : 'adicionado aos'} favoritos`
+      description: `Produto ${productAlreadyInWishList ? 'removido da' : 'adicionado a'} lista de desejos`
     })
 
     setLoading(false)

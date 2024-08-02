@@ -75,6 +75,10 @@ export const AuthenticationWrapperContextProvider: AuthenticationWrapperContextP
           setLoading(undefined)
 
           if (signInResponse) {
+            setShowLoginDialog(false)
+
+            setUser(signInResponse.user)
+
             return resolve(signInResponse)
           }
 
@@ -95,16 +99,17 @@ export const AuthenticationWrapperContextProvider: AuthenticationWrapperContextP
         user
       },
 
-      setUser(user) {
-        setUser(user)
+      setUser(userData) {
+        setUser({ ...(user ?? {}), ...userData })
       },
 
       updateUser(userData) {
-        if (!user) {
-          return
-        }
+        // if (!user) {
+        //   console.log('É Iso aqui Ohhh!!!')
+        //   return
+        // }
 
-        setUser({ ...user, ...userData })
+        setUser({ ...(user ?? {}), ...userData } as UserProps)
       },
 
       authenticated() {
