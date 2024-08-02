@@ -3,7 +3,7 @@
 
 import Link from 'next/link'
 import { Fragment } from 'react'
-import { FaCartPlus, FaEllipsisV, FaHeart } from 'react-icons/fa'
+import { FaCartPlus } from 'react-icons/fa'
 
 import { Image } from '@components/Image'
 import { useStoreContext } from 'store@components/Context'
@@ -16,6 +16,7 @@ import {
   resolveProductImageUrl
 } from '~/utils'
 import { getProductRatesAverage } from '~/utils/models/product'
+import { FavoriteButton, OptionsButton } from './Buttons'
 import { StarRating } from './StarRating'
 import * as Styled from './styles'
 
@@ -123,18 +124,10 @@ export const ProductCard: ProductCardComponent = props => {
                 </button>
               </li>
               <li>
-                <button type="button" role="button">
-                  <i>
-                    <FaHeart />
-                  </i>
-                </button>
+                <FavoriteButton product={product} />
               </li>
               <li>
-                <button type="button" role="button">
-                  <i>
-                    <FaEllipsisV />
-                  </i>
-                </button>
+                <OptionsButton />
               </li>
             </ul>
           </Styled.AsideBody>

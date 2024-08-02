@@ -13,3 +13,25 @@ export type UserProps = Prisma.UserGetPayload<{
     }
   }
 }>
+
+export type UserPropsWithFavorites = Prisma.UserGetPayload<{
+  include: {
+    carts: {
+      include: CartInclude
+    }
+    favorites: {
+      include: {
+        product: {
+          select: {
+            id: true
+          }
+        }
+      }
+    }
+    role: {
+      include: {
+        permissions: true
+      }
+    }
+  }
+}>

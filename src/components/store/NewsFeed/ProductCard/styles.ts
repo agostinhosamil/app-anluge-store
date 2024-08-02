@@ -265,6 +265,14 @@ export const AsideBody = styled.div`
           }
         }
 
+        &.color-red {
+          background-color: #ff4f4d;
+
+          i {
+            color: #ffffff;
+          }
+        }
+
         &:hover {
           transform: scale(1.1);
         }

@@ -1,4 +1,4 @@
-import { UserProps } from 'Types/UserProps'
+import { UserProps, UserPropsWithFavorites } from 'Types/UserProps'
 import { SignInResponse } from '~/utils/auth/types'
 
 export type AuthenticationWrapperContextAuthObject = {
@@ -13,6 +13,7 @@ export type RequestSignInHelper = (
 export type AuthenticationWrapperContext = {
   auth: AuthenticationWrapperContextAuthObject
   setUser: (user: UserProps) => void
+  updateUser: (user: Partial<UserPropsWithFavorites>) => void
   authenticated: () => boolean
 
   requestSignIn: RequestSignInHelper

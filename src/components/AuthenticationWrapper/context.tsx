@@ -99,6 +99,14 @@ export const AuthenticationWrapperContextProvider: AuthenticationWrapperContextP
         setUser(user)
       },
 
+      updateUser(userData) {
+        if (!user) {
+          return
+        }
+
+        setUser({ ...user, ...userData })
+      },
+
       authenticated() {
         return Boolean(user)
       }
