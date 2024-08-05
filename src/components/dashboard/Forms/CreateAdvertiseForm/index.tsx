@@ -131,20 +131,35 @@ export const CreateAdvertiseForm: CreateAdvertiseFormComponent = ({
     // TODO: Validate the form data
 
     if (typeof onFormSubmit === 'function') {
+      const formElement = event.target as HTMLFormElement
+      const formData = new FormData(formElement)
+
+      const advertiseStyle = String(formData.get('advertise[style]'))
+        .trim()
+        .toUpperCase()
+
+      const uploadedImageSizes =
+        advertiseStyle === 'SKYSCRAPER'
+          ? {
+              large: '250x938',
+              normal: '160x600',
+              small: '130x488',
+              'x-small': '100x375',
+              'xx-small': '70x261'
+            }
+          : {
+              large: '1200x600',
+              normal: '920x460',
+              small: '620x310',
+              'x-small': '380x190',
+              'xx-small': '250x125'
+            }
+
       const uploadClient = new AnlugeUploadClient({
         imageSet: 'advertises',
         uploadedImageObjectFit: 'fill',
-        uploadedImageSizes: {
-          large: '1200x600',
-          normal: '920x460',
-          small: '620x310',
-          'x-small': '380x190',
-          'xx-small': '250x125'
-        }
+        uploadedImageSizes
       })
-
-      const formElement = event.target as HTMLFormElement
-      const formData = new FormData(formElement)
 
       if (file instanceof File) {
         const uploadedImage = await uploadClient.uploadFile(file)
@@ -334,10 +349,10 @@ export const CreateAdvertiseForm: CreateAdvertiseFormComponent = ({
         </Row>
 
         <Row>
-          <Col md={6}>
+          <Col md={8}>
             <FormGroup title="Tamanho do anúncio">
               <CheckOptionsGroup $height={193}>
-                <CheckOptionWrapper $width="30%">
+                <CheckOptionWrapper $width="40%">
                   <CheckOption
                     name="advertise[style]"
                     value="CARD"
@@ -354,10 +369,18 @@ export const CreateAdvertiseForm: CreateAdvertiseFormComponent = ({
                     defaultChecked={true}
                   />
                 </CheckOptionWrapper>
+                <CheckOptionWrapper $width="20%">
+                  <CheckOption
+                    name="advertise[style]"
+                    value="SKYSCRAPER"
+                    type="radio"
+                    label="Arranha Céu"
+                  />
+                </CheckOptionWrapper>
               </CheckOptionsGroup>
             </FormGroup>
           </Col>
-          <Col md={6}>
+          <Col md={4}>
             <FormGroup title="Posicionamento do anúncio">
               <CheckOptionsGroup $direction="vertical">
                 <CheckOptionWrapper>

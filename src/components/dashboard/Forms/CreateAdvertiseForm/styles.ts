@@ -169,6 +169,7 @@ export const CheckOptionWrapper = styled.div<CheckOptionWrapperProps>`
 
 export const CheckOptionBody = styled.div`
   display: inline-flex;
+  text-align: center;
 `
 
 export const DropZoneLabel = styled.strong`

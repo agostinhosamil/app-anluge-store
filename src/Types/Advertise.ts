@@ -22,6 +22,7 @@ export type AdvertiseProps = Prisma.AdvertiseGetPayload<{
 export type AdvertiseGroups = {
   large: Array<AdvertiseProps>
   small: Array<AdvertiseProps>
+  skyscraper: Array<AdvertiseProps>
 }
 
 export type AdvertiseSize = keyof AdvertiseGroups

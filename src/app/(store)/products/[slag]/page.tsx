@@ -50,6 +50,9 @@ export default async function ProductPage({ params }: PageProps<Params>) {
           <ProductDetailsTable productId={product.id} />
         </Suspense>
       </Content>
+      <div className="w-full px-8">
+        <AdvertiseGroup group="feed" />
+      </div>
       <div className="w-full max-w-[1320px] mx-auto px-[50px]">
         <Suspense fallback={loadingData}>
           <ProductSiblings product={product} />

@@ -15,6 +15,7 @@ import { resolveAdvertiseImageUrl, resolveAdvertiseLinkUrl } from './utils'
 type AdvertisingGroupProps = {
   group: keyof AdvertiseGroupsLists
   flexDirection?: 'row' | 'column'
+  skyscraper?: boolean
 }
 
 export const AdvertiseGroup: React.FunctionComponent<
@@ -64,12 +65,21 @@ export const AdvertiseGroup: React.FunctionComponent<
             <PlaceHolder className="w-full h-[280px] rounded-lg" />
           </Col>
         </Row>
+        {props.skyscraper && (
+          <Row className="gap-4">
+            <Col md={12}>
+              <PlaceHolder className="w-full h-[980px] rounded-lg" />
+            </Col>
+          </Row>
+        )}
       </div>
     )
   }
 
   if (advertises.large.length < 1 && advertises.small.length < 1) {
-    return null
+    if (!(props.skyscraper && advertises.skyscraper.length >= 1)) {
+      return null
+    }
   }
 
   return (
@@ -130,6 +140,28 @@ export const AdvertiseGroup: React.FunctionComponent<
           </Col>
         )}
       </Row>
+      {props.skyscraper && advertises.skyscraper.length >= 1 && (
+        <Row className="gap-4">
+          {advertises.skyscraper.map(advertise => (
+            <div
+              key={advertise.id}
+              className="w-full h-auto block relative rounded-lg"
+            >
+              <Link
+                className="block w-full h-auto"
+                href={resolveAdvertiseLinkUrl(advertise)}
+                target="_blank"
+              >
+                <img
+                  className="w-full rounded-lg"
+                  src={resolveAdvertiseImageUrl(advertise, 'normal')}
+                  alt={String(advertise.title)}
+                />
+              </Link>
+            </div>
+          ))}
+        </Row>
+      )}
     </div>
   )
 }

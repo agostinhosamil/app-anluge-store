@@ -365,7 +365,7 @@ export const Content: ContentComponent = props => {
           </ContentWrapper>
         </Column>
         <Column md={4}>
-          <AdvertiseGroup group="top" flexDirection="column" />
+          <AdvertiseGroup group="top" flexDirection="column" skyscraper />
           <ProductRates product={product} />
           <ProductFAQs product={product} />
         </Column>

@@ -93,6 +93,9 @@ export const getActiveAdvertises = async (
         ),
         small: positionedAdvertises.filter(
           advertise => advertise.style === 'CARD'
+        ),
+        skyscraper: positionedAdvertises.filter(
+          advertise => advertise.style === 'SKYSCRAPER'
         )
       }
     }

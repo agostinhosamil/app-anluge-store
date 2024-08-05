@@ -385,6 +385,7 @@ enum ProductType {
 enum AdvertiseStyle {
   CARD
   BANNER
+  SKYSCRAPER
 }
 
 enum AdvertisePosition {
