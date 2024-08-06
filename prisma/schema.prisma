@@ -63,28 +63,29 @@ model AdminInvitation {
 }
 
 model User {
-  id            String      @id @default(cuid())
+  id            String         @id @default(cuid())
   name          String
-  email         String      @unique
+  email         String         @unique
   password      String
-  phone         String      @unique
-  username      String?     @unique
+  phone         String         @unique
+  username      String?        @unique
   emailVerified DateTime?
-  image         String?     @default("user-avatar-placeholder.jpg")
+  image         String?        @default("user-avatar-placeholder.jpg")
   Token         UserToken[]
-  role          Role        @relation(fields: [roleId], references: [id])
+  role          Role           @relation(fields: [roleId], references: [id])
   rates         Rate[]
   favorites     Favorite[]
   carts         Cart[]
   roleId        Int
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
   Faq           Faq[]
   accounts      Account[]
   sessions      Session[]
   posts         Post[]
   passwords     Password[]
   addresses     Address[]
+  Subscription  Subscription[]
 
   @@map("user")
 }
@@ -369,6 +370,21 @@ model Order {
   quantity  Int      @default(1)
 
   @@map("order")
+}
+
+model Subscription {
+  id        Int                 @id @default(autoincrement())
+  user      User                @relation(fields: [userId], references: [id])
+  context   SubscriptionContext @default(NEWSLETTER)
+  userId    String
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
+
+  @@map("subscription")
+}
+
+enum SubscriptionContext {
+  NEWSLETTER
 }
 
 enum MediaType {
