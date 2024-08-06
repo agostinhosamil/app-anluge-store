@@ -348,7 +348,7 @@ export const Content: ContentComponent = props => {
           </ProductDataWrapper>
         </Column>
       </Row>
-      <Row className="mb-4">
+      <Row>
         <Column md={8}>
           <ContentWrapper>
             {props.children}
