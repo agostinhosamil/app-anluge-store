@@ -84,7 +84,7 @@ export const AdvertiseGroup: React.FunctionComponent<
 
   return (
     <div
-      className={`w-full ${props.flexDirection === 'column' ? '' : 'px-[20px]'} pt-4 pb-[40px]`}
+      className={`w-full ${props.flexDirection === 'column' ? 'flex flex-col gap-4' : 'px-[20px]'} pt-4 pb-[40px]`}
     >
       <Row {...rowProps}>
         {advertises.large.length >= 1 && (
