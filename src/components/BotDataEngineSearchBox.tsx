@@ -8,7 +8,7 @@ export const BotDataEngineSearchBox = () => {
     '@type': 'WebSite',
     potentialAction: {
       target:
-        'http://www.mercadolivre.com.br/jm/search?as_word={search_term_string}&searchbox=google',
+        'https://www.anluge.com/store/search?query={search_term_string}&searchbox=google',
       '@type': 'SearchAction',
       'query-input': 'required name=search_term_string'
     }
