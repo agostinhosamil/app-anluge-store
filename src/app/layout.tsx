@@ -19,6 +19,7 @@ import { getAuthTokenCookie } from '@utils/authTokenCookie'
 import { getServerHeaders } from '@utils/server'
 import { Toaster } from 'ui@components/toaster'
 
+import { BotDataEngineSearchBox } from '@components/BotDataEngineSearchBox'
 import companyData from '~/config/cache/company-data/index.json'
 
 export const generateMetadata = (): Metadata => {
@@ -114,6 +115,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             </ApplicationContextProvider>
           </AdvertiseContextWrapper>
           <Toaster />
+          <BotDataEngineSearchBox />
         </StyledComponentsRegistry>
       </body>
     </html>
