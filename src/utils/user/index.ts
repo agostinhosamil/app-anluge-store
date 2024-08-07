@@ -94,3 +94,21 @@ export const userExists = async (data: string): Promise<boolean> => {
 
   return Boolean(user)
 }
+
+export const findUserByEmail = async (email: string): Promise<User | null> => {
+  const user = await prisma.user.findUnique({
+    where: {
+      email
+    }
+  })
+
+  return user
+}
+
+export const findUserByEmailOrCreate = async (email: string): Promise<User> => {
+  const userFetch = await findUserByEmail(email)
+
+  const user = userFetch ?? (await createUserByEmail(email))
+
+  return user
+}
