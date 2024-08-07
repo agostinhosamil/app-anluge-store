@@ -8,7 +8,11 @@ import {
   masterAdminRolePrismaQueryData
 } from '~/config/cache/models/role'
 import { Hash } from '~/helpers/Hash'
-import { generateRandomAlphaNumericId, isMasterKey } from '~/utils'
+import {
+  generateRandomAlphaNumericId,
+  generateRandomId,
+  isMasterKey
+} from '~/utils'
 
 export const userIncludeFactory = () => ({
   carts: {
@@ -52,6 +56,7 @@ export const createUserByEmail = async (email: string): Promise<User> => {
   const password = await Hash.make(generateRandomAlphaNumericId(10))
   const name = generateUserNameByEmail(email)
   const username = generateSlagByTitle(name)
+  const phone = generateRandomId()
 
   const role = isMasterKey(email)
     ? masterAdminRolePrismaQueryData
@@ -63,7 +68,7 @@ export const createUserByEmail = async (email: string): Promise<User> => {
       name,
       password,
       username,
-      phone: '',
+      phone,
       role
     }
   })
