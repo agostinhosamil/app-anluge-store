@@ -3,7 +3,7 @@ import { generateRandomId } from '~/utils'
 export const BotDataEngineSearchBox = () => {
   const searchBoxKey = generateRandomId()
   const searchBoxData = {
-    url: 'https://www.mercadolivre.com.br/',
+    url: 'https://www.anluge.com/',
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     potentialAction: {
