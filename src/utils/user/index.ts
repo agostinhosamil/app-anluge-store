@@ -70,3 +70,27 @@ export const createUserByEmail = async (email: string): Promise<User> => {
 
   return user
 }
+
+export const userExists = async (data: string): Promise<boolean> => {
+  const user = await prisma.user.findFirst({
+    where: {
+      OR: [
+        {
+          email: data
+        },
+        {
+          phone: data
+        },
+        {
+          username: data
+        }
+      ]
+    },
+
+    select: {
+      id: true
+    }
+  })
+
+  return Boolean(user)
+}
