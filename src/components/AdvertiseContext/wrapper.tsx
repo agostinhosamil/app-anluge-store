@@ -16,6 +16,7 @@ export const AdvertiseContextWrapper: React.FunctionComponent<
   React.PropsWithChildren & AdvertiseContextWrapperProps
 > = ({ children }) => {
   const advertiseGroupsFactory = (): AdvertiseGroups => ({
+    skyscraper: [],
     large: [],
     small: []
   })
