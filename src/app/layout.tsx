@@ -6,10 +6,11 @@ import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
 import NextJsTopLoader from 'nextjs-toploader'
 
+import { AuthenticationWrapper } from '@components/AuthenticationWrapper'
+import { ErrorBoundary } from '@components/ErrorBoundary'
 import { GlobalStyles } from '@styles/rootLayout'
 import { auth } from '@utils/auth'
 import { getCartData } from '@utils/cart'
-import { AuthenticationWrapper } from '~/components/AuthenticationWrapper'
 import StyledComponentsRegistry from './lib/registry'
 
 import { AdvertiseContextWrapper } from '@components/AdvertiseContext'
@@ -103,20 +104,22 @@ export default async function RootLayout({ children }: RootLayoutProps) {
       </head>
       <body className={roboto.className}>
         <NextJsTopLoader showSpinner={false} />
-        <StyledComponentsRegistry>
-          <GlobalStyles />
-          <AdvertiseContextWrapper>
-            <ApplicationContextProvider headers={headers}>
-              <AuthenticationWrapper auth={authenticatedUser}>
-                <StoreContextWrapper cart={cartData}>
-                  {children}
-                </StoreContextWrapper>
-              </AuthenticationWrapper>
-            </ApplicationContextProvider>
-          </AdvertiseContextWrapper>
-          <Toaster />
-          <BotDataEngineSearchBox />
-        </StyledComponentsRegistry>
+        <ErrorBoundary>
+          <StyledComponentsRegistry>
+            <GlobalStyles />
+            <AdvertiseContextWrapper>
+              <ApplicationContextProvider headers={headers}>
+                <AuthenticationWrapper auth={authenticatedUser}>
+                  <StoreContextWrapper cart={cartData}>
+                    {children}
+                  </StoreContextWrapper>
+                </AuthenticationWrapper>
+              </ApplicationContextProvider>
+            </AdvertiseContextWrapper>
+            <Toaster />
+            <BotDataEngineSearchBox />
+          </StyledComponentsRegistry>
+        </ErrorBoundary>
       </body>
     </html>
   )
