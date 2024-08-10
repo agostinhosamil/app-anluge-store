@@ -41,13 +41,14 @@ export const getProductsImagesFromFileList: GetProductsImagesFromFileListUtil =
       imageFilesUploadConcurrency
     )
 
-    let iterator = -1
     let attemptsCount = 0
 
     while (
       imageFilesUploadQueues.length >= 1 &&
       attemptsCount <= maxAttemptsCount
     ) {
+      let iterator = -1
+
       attemptsCount++
 
       for (const imageFileUploadQueue of imageFilesUploadQueues) {
