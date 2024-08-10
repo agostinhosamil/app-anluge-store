@@ -10,9 +10,11 @@ import errorImage from './error.png'
 import loadingImage from './loading.png'
 import { LoadingContainer } from './styles'
 
-type ImageComponent = React.FunctionComponent<
-  React.ImgHTMLAttributes<HTMLImageElement>
->
+type ImageComponentProps = React.ImgHTMLAttributes<HTMLImageElement> & {
+  fill?: boolean
+}
+
+type ImageComponent = React.FunctionComponent<ImageComponentProps>
 
 export const Image: ImageComponent = props => {
   const [loading, setLoading] = useState<boolean>(false)
