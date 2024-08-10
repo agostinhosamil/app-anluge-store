@@ -41,7 +41,7 @@ export const getProductsImagesFromFileList: GetProductsImagesFromFileListUtil =
       imageFilesUploadConcurrency
     )
 
-    // let i = -1
+    let iterator = -1
     let attemptsCount = 0
 
     while (
@@ -51,7 +51,7 @@ export const getProductsImagesFromFileList: GetProductsImagesFromFileListUtil =
       attemptsCount++
 
       for (const imageFileUploadQueue of imageFilesUploadQueues) {
-        // i++
+        iterator++
 
         try {
           const uploadedImages =
@@ -79,6 +79,8 @@ export const getProductsImagesFromFileList: GetProductsImagesFromFileListUtil =
           // mass-update productsImagesData
           massUpdateProductsImages(productsImagesData).then(products => {
             console.log('Mass Updated: ', products?.length, 'products')
+
+            imageFilesUploadQueues.splice(iterator, 1)
           })
         } catch (err) {
           continue
