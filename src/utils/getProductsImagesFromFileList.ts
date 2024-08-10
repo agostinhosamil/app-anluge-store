@@ -34,42 +34,55 @@ export const getProductsImagesFromFileList: GetProductsImagesFromFileListUtil =
   async imageFiles => {
     const validImageFiles = await filterValidImageFiles(imageFiles)
 
+    const maxAttemptsCount = 100
     const imageFilesUploadConcurrency = 20
     const imageFilesUploadQueues = arraySplit(
       validImageFiles,
       imageFilesUploadConcurrency
     )
 
-    for (const imageFileUploadQueue of imageFilesUploadQueues) {
-      try {
-        const uploadedImages =
-          await productImageUploadClient.uploadFiles(imageFileUploadQueue)
+    // let i = -1
+    let attemptsCount = 0
 
-        const productsImagesData: Array<ProductImagesData> = []
+    while (
+      imageFilesUploadQueues.length >= 1 &&
+      attemptsCount <= maxAttemptsCount
+    ) {
+      attemptsCount++
 
-        for (let i = 0; i < uploadedImages.length; i++) {
-          const uploadedImage = uploadedImages[i]
-          const imageFile = imageFileUploadQueue[i]
-          const imageProductCode = getProductCodeFromImageName(imageFile.name)
+      for (const imageFileUploadQueue of imageFilesUploadQueues) {
+        // i++
 
-          productsImagesData.push({
-            medias: [
-              {
-                fileName: uploadedImage.name
+        try {
+          const uploadedImages =
+            await productImageUploadClient.uploadFiles(imageFileUploadQueue)
+
+          const productsImagesData: Array<ProductImagesData> = []
+
+          for (let i = 0; i < uploadedImages.length; i++) {
+            const uploadedImage = uploadedImages[i]
+            const imageFile = imageFileUploadQueue[i]
+            const imageProductCode = getProductCodeFromImageName(imageFile.name)
+
+            productsImagesData.push({
+              medias: [
+                {
+                  fileName: uploadedImage.name
+                }
+              ],
+              product: {
+                code: imageProductCode
               }
-            ],
-            product: {
-              code: imageProductCode
-            }
-          })
-        }
+            })
+          }
 
-        // mass-update productsImagesData
-        massUpdateProductsImages(productsImagesData).then(products => {
-          console.log('Mass Updated: ', products?.length, 'products')
-        })
-      } catch (err) {
-        continue
+          // mass-update productsImagesData
+          massUpdateProductsImages(productsImagesData).then(products => {
+            console.log('Mass Updated: ', products?.length, 'products')
+          })
+        } catch (err) {
+          continue
+        }
       }
     }
 
