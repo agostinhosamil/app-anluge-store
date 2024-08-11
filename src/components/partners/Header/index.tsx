@@ -13,8 +13,10 @@ import Link from 'next/link'
 export const Header = () => {
   return (
     <Fragment>
-      <TopHeader module="partners" />
-      <header className="w-full flex justify-center items-center mt-3 h-max relative bg-zinc-950 text-zinc-50">
+      <div className="w-full block bg-white pb-3">
+        <TopHeader module="partners" />
+      </div>
+      <header className="w-full flex justify-center items-center h-max relative bg-zinc-950 text-zinc-50">
         <video
           controls={false}
           loop

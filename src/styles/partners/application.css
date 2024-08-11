@@ -360,7 +360,7 @@ div.section-title-container h1 {
   display: block;
   width: 100%;
   padding: 0px 35px;
-  color: #343434;
+  color: #ffffff;
 }
 div.section-title-container h1 b {
   font-weight: 800;
@@ -419,7 +419,7 @@ section.about-company-section div.about-company-section-content div.body i {
 }
 section.about-company-section div.about-company-section-content div.body h2 {
   font-size: 36px;
-  color: #202020;
+  color: #ffffff;
   font-weight: 700;
   line-height: 38px;
   display: block;
@@ -434,7 +434,7 @@ section.about-company-section div.about-company-section-content div.body h2 {
 section.about-company-section div.about-company-section-content div.body p {
   font-size: 18px;
   font-weight: 300;
-  color: #858585;
+  color: #a1a4bc;
   line-height: 19px;
 }
 section.about-company-section div.about-company-section-content div.body ol {
@@ -463,7 +463,7 @@ section.about-company-section div.about-company-section-content div.body ol li d
 section.about-company-section div.about-company-section-content div.body ol li data strong {
   font-size: 32px;
   font-weight: 600;
-  color: #222222;
+  color: #ffffff;
 }
 section.about-company-section div.about-company-section-content div.body ol li data span {
   font-size: 14px;
@@ -514,7 +514,7 @@ section.about-services-section {
   width: 100%;
   height: auto;
   display: block;
-  background-color: #edeff7;
+  background-color: rgb(23 60 207 / 8%);
   border-top-right-radius: 70px;
   border-bottom-left-radius: 70px;
   padding: 80px 0px;
@@ -549,7 +549,7 @@ section.about-services-section div.about-services-section-content div.title-cont
 section.about-services-section div.about-services-section-content div.title-container div p {
   font-size: 14px;
   font-weight: 300;
-  color: #707070;
+  color: #ffffff;
   padding-left: 30px;
 }
 section.about-services-section div.about-services-section-content div.title-container div h2 {
@@ -557,7 +557,7 @@ section.about-services-section div.about-services-section-content div.title-cont
   font-size: 37px;
   line-height: 38px;
   padding-right: 40px;
-  color: #595a5e;
+  color: #ffffff;
 }
 @media (max-width: 450px) {
   section.about-services-section div.about-services-section-content div.title-container div h2 {
@@ -593,7 +593,7 @@ section.about-services-section div.about-services-section-content div.services-l
 }
 section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card {
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.72);
+  background-color: rgb(255 255 255 / 6%);
   border-radius: 15px;
   -webkit-border-radius: 15px;
   padding: 60px 40px 40px;
@@ -601,7 +601,7 @@ section.about-services-section div.about-services-section-content div.services-l
 section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card strong {
   font-weight: 700;
   font-size: 26px;
-  color: #202020;
+  color: #ffffff;
   line-height: 30px;
   white-space: nowrap;
   overflow: hidden;
@@ -612,9 +612,10 @@ section.about-services-section div.about-services-section-content div.services-l
   display: -webkit-box;
   width: 100%;
   padding: 20px 0px 35px;
-  color: #919191;
+  color: #787d93;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
+  line-clamp: 4;
   overflow: hidden;
   max-height: 121px;
   margin-bottom: 20px;
@@ -915,45 +916,60 @@ section.about-hiring-banner-section div.about-hiring-banner-section-content div.
 section.blog-section {
   width: 100%;
   height: auto;
-  padding-bottom: 80px;
+  padding-bottom: 10px;
 }
+
 section.blog-section div.blog-section-content {
   width: 100%;
   display: block;
   position: relative;
 }
+
 section.blog-section div.blog-section-content div.blog-posts-list {
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
   flex-wrap: wrap;
-  align-items: center;
   text-align: center;
 }
+
 section.blog-section div.blog-section-content div.blog-posts-list article.blog-post {
-  width: 33.3333333333%;
+  width: 100%;
   padding: 20px;
   position: relative;
 }
+
 section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper {
   width: 100%;
   height: auto;
   display: block;
-  background-color: #ffffff;
+  background-color: rgb(255 255 255 / 11%);
   border-radius: 8px;
   -webkit-border-radius: 8px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
 }
+
+section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper.expanded {
+  background-color: transparent;
+}
+
 section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.image-wrapper {
   width: 100%;
   height: auto;
 }
+
 section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.image-wrapper img {
   width: 100%;
   border-top-right-radius: 8px;
   border-top-left-radius: 8px;
 }
+
+section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.image-wrapper.expanded img {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
 section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data {
   width: 100%;
   height: auto;
@@ -962,44 +978,72 @@ section.blog-section div.blog-section-content div.blog-posts-list article.blog-p
   padding: 40px 30px;
   text-align: left;
 }
+
+section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data.expanded {
+  padding: 40px 0px;
+}
+
 section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data i {
   font-size: 12px;
-  color: #404040;
+  color: #d8d8d8;
   font-weight: 400;
 }
+
 section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data h3 {
   font-weight: 700;
-  color: #202020;
+  color: #ffffff;
   font-size: 25px;
   line-height: 23px;
   padding-top: 15px;
 }
+
+section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data.expanded h3 {
+  font-size: 45px;
+  line-height: 48px;
+}
+
 section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data p {
   font-size: 15px;
   margin: 0px 0px 20px;
-  color: #939393;
+  color: #bdbdbd;
   font-weight: 300;
   line-height: 17px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 5;
+  line-clamp: 5;
   overflow: hidden;
+  height: 113px;
   max-height: 113px;
   padding: 25px 0px;
 }
-section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data a {
+
+section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data.expanded p {
+  display: block;
+  overflow: unset;
+  max-height: unset;
+  height: auto;
+  font-size: 37px;
+  line-height: 45px;
+}
+
+section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data a,
+section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data button {
   display: inline-flex;
+  align-items: center;
   border-radius: 30px;
   -webkit-border-radius: 30px;
-  padding: 6px 18px 8px;
+  padding: 4px 18px 6px;
   width: max-content;
   background-color: #f0f0f0;
   color: #163b62;
 }
+
 section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data a:hover {
   background-color: #bfbfbf;
 }
-@media (max-width: 1300px) {
+
+/* @media (max-width: 1300px) {
   section.blog-section div.blog-section-content div.blog-posts-list article.blog-post {
     width: 50%;
   }
@@ -1008,13 +1052,14 @@ section.blog-section div.blog-section-content div.blog-posts-list article.blog-p
   section.blog-section div.blog-section-content div.blog-posts-list article.blog-post {
     width: 100%;
   }
-}
+} */
 
 footer.data-page-footer {
   width: 100%;
   background-color: #0140bf;
   padding: 0px 0px 80px;
 }
+
 footer.data-page-footer div.newsletter-form-container {
   width: 100%;
   height: auto;
@@ -1022,6 +1067,7 @@ footer.data-page-footer div.newsletter-form-container {
   background: rgba(0, 0, 0, 0.35);
   padding: 80px 120px;
 }
+
 footer.data-page-footer div.newsletter-form-container form.newsletter-form {
   width: 100%;
   height: auto;
@@ -1029,21 +1075,26 @@ footer.data-page-footer div.newsletter-form-container form.newsletter-form {
   flex-direction: row;
   align-items: center;
 }
+
 footer.data-page-footer div.newsletter-form-container form.newsletter-form div.title-wrapper {
   width: 50%;
 }
+
 footer.data-page-footer div.newsletter-form-container form.newsletter-form div.title-wrapper h5 {
   font-size: 25px;
   font-weight: 600;
   color: #ffffff;
 }
+
 footer.data-page-footer div.newsletter-form-container form.newsletter-form div.input-wrapper {
   width: 50%;
 }
+
 footer.data-page-footer div.newsletter-form-container form.newsletter-form div.input-wrapper div.input-element-container {
   width: 100%;
   height: auto;
 }
+
 footer.data-page-footer div.newsletter-form-container form.newsletter-form div.input-wrapper div.input-element-container div {
   display: flex;
   border: 1px solid #ececec;
@@ -1053,12 +1104,14 @@ footer.data-page-footer div.newsletter-form-container form.newsletter-form div.i
   border-radius: 12px;
   -webkit-border-radius: 12px;
 }
+
 footer.data-page-footer div.newsletter-form-container form.newsletter-form div.input-wrapper div.input-element-container div input {
   width: 100%;
   padding: 0px 20px;
   border: 0px;
   outline: 0px;
 }
+
 footer.data-page-footer div.newsletter-form-container form.newsletter-form div.input-wrapper div.input-element-container div button {
   outline: 0px;
   border: 0px;
@@ -1069,47 +1122,57 @@ footer.data-page-footer div.newsletter-form-container form.newsletter-form div.i
   white-space: nowrap;
   padding: 11px 20px;
 }
+
 @media (max-width: 960px) {
   footer.data-page-footer div.newsletter-form-container {
     padding: 80px 40px 80px;
   }
+
   footer.data-page-footer div.newsletter-form-container form.newsletter-form {
     flex-direction: column;
   }
+
   footer.data-page-footer div.newsletter-form-container form.newsletter-form div.title-wrapper {
     width: 100%;
     padding: 0px 10% 25px;
     text-align: center;
   }
+
   footer.data-page-footer div.newsletter-form-container form.newsletter-form div.input-wrapper {
     width: 100%;
   }
 }
+
 @media (max-width: 450px) {
   footer.data-page-footer div.newsletter-form-container {
     padding: 40px;
   }
+
   footer.data-page-footer div.newsletter-form-container form.newsletter-form div.input-wrapper div.input-element-container div {
     flex-direction: column;
     background-color: unset;
     border: unset;
   }
+
   footer.data-page-footer div.newsletter-form-container form.newsletter-form div.input-wrapper div.input-element-container div input {
     padding: 8px 14px;
     border-radius: inherit;
     -webkit-border-radius: inherit;
   }
+
   footer.data-page-footer div.newsletter-form-container form.newsletter-form div.input-wrapper div.input-element-container div button {
     width: 100%;
     margin-top: 12px;
   }
 }
+
 footer.data-page-footer div.footer-body {
   width: 100%;
   height: auto;
   display: block;
   padding: 80px 120px 0px;
 }
+
 footer.data-page-footer div.footer-body h5 {
   width: 100%;
   display: block;
@@ -1119,6 +1182,7 @@ footer.data-page-footer div.footer-body h5 {
   color: #ffffff;
   margin-bottom: 25px;
 }
+
 footer.data-page-footer div.footer-body h5:before {
   content: "";
   position: absolute;
@@ -1130,24 +1194,29 @@ footer.data-page-footer div.footer-body h5:before {
   -webkit-border-radius: 12px;
   background-color: #fe6b6a;
 }
+
 footer.data-page-footer div.footer-body div.company-data-wrapper {
   width: 100%;
   padding-right: 40px;
 }
+
 footer.data-page-footer div.footer-body div.company-data-wrapper p {
   display: block;
   padding: 12px 0px;
   font-size: 14px;
   color: #ffffff;
 }
+
 footer.data-page-footer div.footer-body div.company-data-wrapper ol {
   display: flex;
   flex-direction: row;
   padding: 25px 0px 0px;
 }
+
 footer.data-page-footer div.footer-body div.company-data-wrapper ol li {
   margin: 0px 12px 12px 0px;
 }
+
 footer.data-page-footer div.footer-body div.company-data-wrapper ol li a {
   display: flex;
   width: 35px;
@@ -1160,39 +1229,48 @@ footer.data-page-footer div.footer-body div.company-data-wrapper ol li a {
   justify-content: center;
   transition: all 0.2s ease-in-out;
 }
+
 footer.data-page-footer div.footer-body div.company-data-wrapper ol li a:hover {
   transform: scale(1.09833);
 }
+
 @media (max-width: 992px) {
   footer.data-page-footer div.footer-body div.company-data-wrapper {
     width: 100%;
     padding: 0px 0px 30px;
   }
 }
+
 footer.data-page-footer div.footer-body ul {
   width: 100%;
   display: flex;
   flex-direction: column;
   padding: 20px 0px 0px;
 }
+
 footer.data-page-footer div.footer-body ul li {
   padding: 12px 0px;
 }
+
 footer.data-page-footer div.footer-body ul li * {
   color: #ffffff;
 }
+
 footer.data-page-footer div.footer-body ul li a:hover {
   text-decoration: underline;
 }
+
 @media (max-width: 767px) {
   footer.data-page-footer div.footer-body ul {
     padding: 20px 0px;
     flex-direction: row;
   }
+
   footer.data-page-footer div.footer-body ul li {
     padding: 0px 15px 15px 0px;
   }
 }
+
 @media (max-width: 1000px) {
   footer.data-page-footer div.footer-body {
     padding: 80px 40px 0px;
@@ -1209,6 +1287,7 @@ div.page-menu {
   background-color: rgba(1, 64, 191, 0.97);
   z-index: 6;
 }
+
 div.page-menu ul {
   width: 100%;
   height: 100%;
@@ -1218,20 +1297,25 @@ div.page-menu ul {
   justify-content: center;
   align-items: center;
 }
+
 div.page-menu ul li {
   padding: 8px 0px;
 }
+
 div.page-menu ul li a {
   font-size: 14px;
   font-weight: 400;
   color: #ffffff;
 }
+
 div.page-menu ul li a:hover {
   text-decoration: underline;
 }
+
 div.page-menu.x-hide {
   animation: hidePageMenu 0.6s ease-in-out;
 }
+
 div.page-menu button {
   position: fixed;
   top: 8px;
@@ -1249,14 +1333,17 @@ div.page-menu button {
   from {
     transform: translateX(-100%);
   }
+
   to {
     transform: translateX(0%);
   }
 }
+
 @keyframes hidePageMenu {
   from {
     transform: translateX(0%);
   }
+
   to {
     transform: translateX(-100%);
   }
