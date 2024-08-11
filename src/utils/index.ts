@@ -3,6 +3,7 @@ import deepmerge from 'deepmerge'
 
 import { LoadingStockMap, ProductProps } from '~/Types/Product'
 
+export { path } from './path'
 export { resolveCategoryImageUrl } from './resolveCategoryImageUrl'
 
 export const getApiAccessToken = (): string => {
