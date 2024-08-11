@@ -62,7 +62,9 @@ export const Header: HeaderComponent = ({ style = 'default', ...props }) => {
           <HeaderMenuItem
             href="/me/cart"
             icon="FaCartShopping"
-            count={products.length >= 1 ? products.length : undefined}
+            count={
+              products && products.length >= 1 ? products.length : undefined
+            }
           />
           <HeaderMenuItem
             icon="FaBarsStaggered"
