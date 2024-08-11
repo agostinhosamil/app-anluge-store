@@ -2,9 +2,7 @@ import { useAuthenticationContext } from '~/components/AuthenticationWrapper'
 import { NewsletterFormContainer } from './styles'
 
 export const NewsletterForm = () => {
-  const {
-    auth: { user }
-  } = useAuthenticationContext()
+  const { auth: { user } = {} } = useAuthenticationContext()
 
   return (
     <NewsletterFormContainer>
