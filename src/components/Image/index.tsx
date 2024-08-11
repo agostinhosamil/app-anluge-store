@@ -33,22 +33,22 @@ export const Image: ImageComponent = props => {
           ])
 
           if (validImages.length >= 1) {
-            setSrc(URL.createObjectURL(imageData))
             setError(false)
+            setSrc(URL.createObjectURL(imageData))
 
             return
           }
 
+          setError(true)
           setSrc(errorImage)
 
           return
         }
-      } catch (err) {
-        setSrc(errorImage)
-      }
+      } catch (err) {}
     }
 
     setError(true)
+    setSrc(errorImage)
   }
 
   const nextImageErrorHandler = () => {
