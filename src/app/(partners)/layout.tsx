@@ -1,3 +1,4 @@
+import { Footer } from 'partners@components/Footer'
 import { Header } from 'partners@components/Header'
 import { LayoutProps } from 'Types/next'
 
@@ -8,6 +9,7 @@ export default function PartnersPagesLayout({ children }: LayoutProps) {
     <div className="flex flex-col w-full">
       <Header />
       {children}
+      <Footer />
     </div>
   )
 }
