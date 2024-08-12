@@ -383,6 +383,17 @@ model Subscription {
   @@map("subscription")
 }
 
+model Partner {
+  id        String   @id @default(cuid())
+  name      String
+  site      String?
+  logo      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("partner")
+}
+
 enum SubscriptionContext {
   NEWSLETTER
 }
