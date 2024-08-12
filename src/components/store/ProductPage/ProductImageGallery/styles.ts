@@ -20,6 +20,13 @@ export const ThumbnailsListWrapper = styled.div`
     width: inherit;
     padding: 40px 0px;
     margin-right: 20px;
+    max-height: 450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 12px;
+    overflow-x: visible;
+    overflow-y: clip;
 
     li {
       width: 60px;
