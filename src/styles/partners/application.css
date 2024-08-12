@@ -591,6 +591,22 @@ section.about-services-section div.about-services-section-content div.services-l
   width: 33.3333333333%;
   padding: 10px;
 }
+
+section.about-services-section div.about-services-section-content div.services-list-wrapper ul li.expanded {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5% 0px 0px;
+  background-color: rgb(10 13 26 / 56%);
+  backdrop-filter: blur(6px);
+  z-index: 50;
+}
+
 section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card {
   width: 100%;
   background-color: rgb(255 255 255 / 6%);
@@ -598,6 +614,34 @@ section.about-services-section div.about-services-section-content div.services-l
   -webkit-border-radius: 15px;
   padding: 60px 40px 40px;
 }
+
+section.about-services-section div.about-services-section-content div.services-list-wrapper ul li.expanded div.service-card.expanded {
+  background-color: rgb(10 13 26);
+  max-width: 640px;
+}
+
+section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card:hover {
+  cursor: pointer;
+  background-color: rgb(255 255 255 / 8%);
+}
+
+section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card:active {
+  background-color: rgb(255 255 255 / 11%);
+}
+
+section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card.expanded:hover {
+  background-color: rgb(10 13 26);
+}
+
+section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card.expanded:active {
+  background-color: rgb(10 13 26);
+}
+
+section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card * {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
 section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card strong {
   font-weight: 700;
   font-size: 26px;
@@ -608,6 +652,13 @@ section.about-services-section div.about-services-section-content div.services-l
   display: block;
   text-overflow: ellipsis;
 }
+
+section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card.expanded strong {
+  white-space: unset;
+  overflow: unset;
+  text-overflow: unset;
+}
+
 section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card p {
   display: -webkit-box;
   width: 100%;
@@ -620,6 +671,15 @@ section.about-services-section div.about-services-section-content div.services-l
   max-height: 121px;
   margin-bottom: 20px;
 }
+
+section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card.expanded p {
+  display: block;
+  -webkit-box-orient: unset;
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
+  overflow: unset;
+}
+
 section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card div {
   width: 100%;
   display: flex;
