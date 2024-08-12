@@ -42,6 +42,7 @@ export const PostList: PostListComponent = props => {
       ] of rowsCountByWindowWidthMap) {
         if (window.innerWidth <= windowMaxWidth) {
           updatedColsCount = colsCountByWindowWidth
+          break
         }
       }
 
@@ -62,7 +63,7 @@ export const PostList: PostListComponent = props => {
       {cols.map((col, colIndex) => (
         <div
           key={colIndex}
-          className="w-full md:w-1/2 my-4 flex flex-col gap-y-3 items-start justify-start"
+          className="w-full md:w-1/2 my-4 flex flex-col gap-y-1 items-start justify-start"
         >
           {col.map(post => (
             <PostPreview key={post.id} {...post} />
