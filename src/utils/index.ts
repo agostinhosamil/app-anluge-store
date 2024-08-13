@@ -78,6 +78,9 @@ export const range: RangeFunction = num => {
   return arr
 }
 
+export const capitalize = (str: string): string =>
+  str.charAt(0).toUpperCase().concat(str.slice(1))
+
 export const noEmpty = (data: any): data is string => {
   return typeof data === 'string' && /\S/.test(data)
 }

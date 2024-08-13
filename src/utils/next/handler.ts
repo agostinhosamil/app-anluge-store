@@ -1,7 +1,13 @@
 import { NextApiHandler } from 'Types/next'
 
-export type NextApiHandlerFactory = (
-  apiHandler: NextApiHandler
+type NextApiHandlerArg = NextApiHandler | NextApiHandler<any>
+
+export type NextApiHandlerFactory = <
+  TNextApiHandler extends NextApiHandlerArg | object = NextApiHandler
+>(
+  apiHandler: TNextApiHandler extends NextApiHandlerArg
+    ? TNextApiHandler
+    : NextApiHandler<TNextApiHandler>
 ) => NextApiHandler
 
 export const handler: NextApiHandlerFactory =
