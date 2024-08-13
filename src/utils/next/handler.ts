@@ -1,16 +1,41 @@
+import { NextResponse } from 'next/server'
+
 import { NextApiHandler } from 'Types/next'
+import { ApiMiddleware } from '~/middlewares/api'
+
+import { handleMiddleware } from './handleMiddleware'
 
 type NextApiHandlerArg = NextApiHandler | NextApiHandler<any>
+
+type ApiHandler<TNextApiHandler> = TNextApiHandler extends NextApiHandlerArg
+  ? TNextApiHandler
+  : NextApiHandler<TNextApiHandler>
 
 export type NextApiHandlerFactory = <
   TNextApiHandler extends NextApiHandlerArg | object = NextApiHandler
 >(
-  apiHandler: TNextApiHandler extends NextApiHandlerArg
-    ? TNextApiHandler
-    : NextApiHandler<TNextApiHandler>
+  ...args:
+    | [...apiMiddlewares: Array<ApiMiddleware>, ApiHandler<TNextApiHandler>]
+    | [ApiHandler<TNextApiHandler>]
 ) => NextApiHandler
 
 export const handler: NextApiHandlerFactory =
-  apiHandler => async (request, options) => {
-    return await apiHandler(request, options)
+  (...args) =>
+  async (request, props) => {
+    const apiMiddlewares = args
+      .slice(0, -1)
+      .map(apiMiddleware => String(apiMiddleware))
+    const apiHandler = args[-1 + args.length] as ApiHandler<NextApiHandlerArg>
+
+    const response = NextResponse
+
+    for (const apiMiddleware of apiMiddlewares) {
+      await handleMiddleware(apiMiddleware as ApiMiddleware, {
+        request,
+        response,
+        props
+      })
+    }
+
+    return await apiHandler(request, props)
   }

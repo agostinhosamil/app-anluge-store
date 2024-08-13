@@ -1,5 +1,6 @@
 import { compareSync } from 'bcryptjs'
 import deepmerge from 'deepmerge'
+import { PathInternal } from '~/Types/eager'
 
 import { LoadingStockMap, ProductProps } from '~/Types/Product'
 
@@ -110,6 +111,32 @@ export const getObjectProps = <ObjectType = any>(
   }
 
   return objectData
+}
+
+export const getObjectProp = <PropType = any, ObjectType extends object = any>(
+  property: PathInternal<ObjectType>,
+  object: ObjectType
+): PropType | null => {
+  const re = /(\.|:)+/
+  const propertySlices = property.split(re).filter(slice => !re.test(slice))
+
+  if (propertySlices.length < 1) {
+    return null
+  }
+
+  let objectPropertyValue: any = object
+
+  for (const propertySlice of propertySlices) {
+    if (
+      objectPropertyValue &&
+      typeof objectPropertyValue === 'object' &&
+      typeof objectPropertyValue[propertySlice] !== typeof undefined
+    ) {
+      objectPropertyValue = objectPropertyValue[propertySlice]
+    }
+  }
+
+  return objectPropertyValue as PropType
 }
 
 export const resolvePartnerCompanyNameByLoadingStockMapFormat = (
