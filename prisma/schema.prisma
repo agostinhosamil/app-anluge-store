@@ -151,7 +151,7 @@ model Advertise {
   popup     Boolean           @default(false)
   createdAt DateTime          @default(now())
   updatedAt DateTime          @updatedAt
-  postId    Int?
+  postId    String?
   productId String?
 
   @@map("advertise")
@@ -214,7 +214,7 @@ model Media {
   Rate      Rate?     @relation(fields: [rateId], references: [id])
   rateId    String?
   Post      Post?     @relation(fields: [postId], references: [id])
-  postId    Int?
+  postId    String?
 
   @@map("media")
 }
@@ -232,7 +232,7 @@ model Tag {
 }
 
 model Post {
-  id            Int         @id @default(autoincrement())
+  id            String      @id @default(cuid())
   title         String
   slag          String      @unique @default(uuid())
   body          String      @db.LongText
