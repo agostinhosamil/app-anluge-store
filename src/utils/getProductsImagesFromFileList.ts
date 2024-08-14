@@ -77,11 +77,11 @@ export const getProductsImagesFromFileList: GetProductsImagesFromFileListUtil =
             })
           }
 
+          imageFilesUploadQueues.splice(iterator, 1)
+
           // mass-update productsImagesData
           massUpdateProductsImages(productsImagesData).then(products => {
             console.log('Mass Updated: ', products?.length, 'products')
-
-            imageFilesUploadQueues.splice(iterator, 1)
           })
         } catch (err) {
           continue
