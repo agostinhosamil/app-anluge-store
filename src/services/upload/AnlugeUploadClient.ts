@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import { noEmpty } from '~/utils'
+import { convertImageFileToJpeg } from '~/utils/images'
 import {
   AnlugeUploadClientOptions,
   FileDataObject,
@@ -75,8 +76,9 @@ export class AnlugeUploadClient {
     let uploadFileIndex = 0
 
     for (const fileDataObject of files) {
-      const file =
+      const file = (await convertImageFileToJpeg(
         fileDataObject instanceof File ? fileDataObject : fileDataObject.ref
+      )) as File
 
       const multiple = Boolean(
         typeof options.multiple === 'boolean' && options.multiple
