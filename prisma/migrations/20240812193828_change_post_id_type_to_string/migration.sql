@@ -5,7 +5,7 @@
 
 */
 -- DropForeignKey
-ALTER TABLE `_posttotag` DROP FOREIGN KEY `_PostToTag_A_fkey`;
+ALTER TABLE `_PostToTag` DROP FOREIGN KEY `_PostToTag_A_fkey`;
 
 -- DropForeignKey
 ALTER TABLE `advertise` DROP FOREIGN KEY `advertise_postId_fkey`;
@@ -14,7 +14,7 @@ ALTER TABLE `advertise` DROP FOREIGN KEY `advertise_postId_fkey`;
 ALTER TABLE `media` DROP FOREIGN KEY `media_postId_fkey`;
 
 -- AlterTable
-ALTER TABLE `_posttotag` MODIFY `A` VARCHAR(191) NOT NULL;
+ALTER TABLE `_PostToTag` MODIFY `A` VARCHAR(191) NOT NULL;
 
 -- AlterTable
 ALTER TABLE `advertise` MODIFY `postId` VARCHAR(191) NULL;
