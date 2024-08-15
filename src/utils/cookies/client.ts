@@ -93,7 +93,7 @@ export const setCookie: SetCookieUtil = (
 
 export const getCookie = (cookieName: string) => {
   const name = cookieName + '='
-  const decodedCookieData = decodeURIComponent(document.cookie)
+  const decodedCookieData = decodeURIComponent(global.document?.cookie || '')
   const ca = decodedCookieData.split(';')
 
   for (let i = 0; i < ca.length; i++) {
