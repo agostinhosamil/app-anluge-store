@@ -1,4 +1,12 @@
-export type CookieDate = Date | string | number
+export type CookieDate =
+  | Date
+  | number
+  | `${number}h`
+  | `${number}m`
+  | `${number}s`
+  | `${number}d`
+  | `${number}M`
+  | `${number}y`
 
 export type CookieOptions = {
   'Max-Age'?: CookieDate
@@ -81,6 +89,26 @@ export const setCookie: SetCookieUtil = (
   // console.log({ cookieData })
 
   document.cookie = cookieData
+}
+
+export const getCookie = (cookieName: string) => {
+  const name = cookieName + '='
+  const decodedCookieData = decodeURIComponent(document.cookie)
+  const ca = decodedCookieData.split(';')
+
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i]
+
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1)
+    }
+
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length)
+    }
+  }
+
+  return ''
 }
 
 export const cookie = {
