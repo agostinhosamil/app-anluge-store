@@ -1,7 +1,9 @@
-import axios from 'axios'
+import { axios } from '@services/axios/cdn'
 
 import { noEmpty } from '~/utils'
 import { convertImageFileToJpeg } from '~/utils/images'
+
+import { setCookie } from '~/utils/cookies/client'
 import {
   AnlugeUploadClientOptions,
   FileDataObject,
@@ -168,7 +170,7 @@ export class AnlugeUploadClient {
     // })
 
     const response = await axios.post<Array<UploadedImage>>(
-      `${process.env.NEXT_PUBLIC_ANLUGE_CDN_API_URL}/static/files/store`,
+      `/static/files/store`,
       // `http://localhost/anluge-cdn/static/files/store`,
       formData,
       {
@@ -177,6 +179,14 @@ export class AnlugeUploadClient {
         // }
       }
     )
+
+    const XClientDeviceId = response.headers['X-Client-Device-Id']
+
+    if (noEmpty(XClientDeviceId)) {
+      setCookie('X-Client-Device-Id', XClientDeviceId, {
+        'Max-Age': '10y'
+      })
+    }
 
     // console.log(`\n\n\n\n>>> [uploadFile] response.data: \n`, response.data)
 
@@ -204,9 +214,17 @@ export class AnlugeUploadClient {
     })
 
     const response = await axios.post<Array<UploadedImage>>(
-      `${process.env.NEXT_PUBLIC_ANLUGE_CDN_API_URL}/static/files/store`,
+      `/static/files/store`,
       formData
     )
+
+    const XClientDeviceId = response.headers['X-Client-Device-Id']
+
+    if (noEmpty(XClientDeviceId)) {
+      setCookie('X-Client-Device-Id', XClientDeviceId, {
+        'Max-Age': '10y'
+      })
+    }
 
     return response.data
   }
@@ -214,7 +232,7 @@ export class AnlugeUploadClient {
   getImageSet = async (imageSetName: string): Promise<ImageSetProps | null> => {
     try {
       const response = await axios.get<ImageSetProps>(
-        `${process.env.NEXT_PUBLIC_ANLUGE_CDN_API_URL}/static/images/${imageSetName}`
+        `/static/images/${imageSetName}`
       )
 
       if ('key' in response.data) {
@@ -231,7 +249,7 @@ export class AnlugeUploadClient {
     imageSetName: string
   ): Promise<ImageSetProps> => {
     const response = await axios.post<ImageSetProps>(
-      `${process.env.NEXT_PUBLIC_ANLUGE_CDN_API_URL}/static/images/${imageSetName}`
+      `/static/images/${imageSetName}`
     )
 
     return response.data
