@@ -30,11 +30,18 @@ export const handler: NextApiHandlerFactory =
     const response = NextResponse
 
     for (const apiMiddleware of apiMiddlewares) {
-      await handleMiddleware(apiMiddleware as ApiMiddleware, {
-        request,
-        response,
-        props
-      })
+      const middlewareHandlerResponse = await handleMiddleware(
+        apiMiddleware as ApiMiddleware,
+        {
+          request,
+          response,
+          props
+        }
+      )
+
+      if (middlewareHandlerResponse instanceof NextResponse) {
+        return middlewareHandlerResponse
+      }
     }
 
     return await apiHandler(request, props)
