@@ -12,10 +12,19 @@ export const POST = async (request: NextRequest) => {
   })
 
   if (signInResponse) {
+    const currentDate = new Date()
+    currentDate.setDate(currentDate.getDate() + 5)
+    const maxAge = currentDate.getTime()
+
     cookies().set({
       name: String(process.env.APP_AUTH_COOKIE_NAME),
       value: signInResponse.token,
-      path: '/'
+      path: '/',
+      maxAge,
+      expires: maxAge,
+      httpOnly: true,
+      secure: true,
+      sameSite: true
     })
 
     return NextResponse.json(signInResponse, {
