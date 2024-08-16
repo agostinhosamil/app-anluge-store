@@ -12,7 +12,7 @@ import { SignInResponse } from '~/utils/auth/types'
 import { generateSlagByTitle } from '~/utils/generateSlagByTitle'
 import { getRequestBody } from '~/utils/server/getRequestBody'
 
-export const GET = handler<NextApiHandler>('auth:jwt', async request => {
+export const GET = handler<NextApiHandler>(async request => {
   const queryString = request.nextUrl.searchParams
   const productsQueryArguments = getSearchParamsQueryArgument(queryString)
   const posts = await prisma.post.findMany(productsQueryArguments)
