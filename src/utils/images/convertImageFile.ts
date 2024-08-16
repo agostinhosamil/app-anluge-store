@@ -10,6 +10,22 @@ export type ImageType = keyof typeof imageTypeMap
 
 export type ImageFileArgument = File | Blob | FileDataRefObject
 
+export type ImageOptions = Partial<{
+  type: ImageType
+  backgroundColor: string | [number, number, number]
+  size:
+    | `${number}`
+    | number
+    | `${number}x${number}`
+    | {
+        width: number | `${number}`
+        height: number | `${number}`
+      }
+}>
+
+type ArgumentsWithImageType = [ImageFileArgument, ImageType?]
+type ArgumentsWithImageOptions = [ImageFileArgument, ImageOptions?]
+
 const resolveFileObject = (file: ImageFileArgument): File => {
   if (file instanceof File) {
     return file
@@ -23,10 +39,20 @@ const resolveFileObject = (file: ImageFileArgument): File => {
 }
 
 export const convertImageFile = (
-  file: ImageFileArgument,
-  type?: ImageType
+  ...args: ArgumentsWithImageOptions | ArgumentsWithImageType
 ): Promise<File | null> => {
-  const imageType = imageTypeMap[type || 'jpg']
+  // file: ImageFileArgument,
+  // type?: ImageType
+  const [file, lastArgument] = args
+
+  const options: ImageOptions =
+    typeof lastArgument !== 'string'
+      ? lastArgument ?? {}
+      : {
+          type: lastArgument
+        }
+
+  const imageType = imageTypeMap[options.type || 'jpg']
 
   const imageFileObject = resolveFileObject(file)
 
@@ -56,6 +82,15 @@ export const convertImageFile = (
 
     imageElement.addEventListener('load', () => {
       assignSizes()
+
+      const backgroundColorOption = options.backgroundColor ?? '#ffffff'
+      const imageBackgroundColor =
+        typeof backgroundColorOption === 'string'
+          ? backgroundColorOption
+          : `rgb(${backgroundColorOption.join(' ')})`
+
+      imageCanvasContext.fillStyle = imageBackgroundColor
+      imageCanvasContext.fillRect(0, 0, imageSize.width, imageSize.height)
 
       imageCanvasContext.drawImage(
         imageElement,
