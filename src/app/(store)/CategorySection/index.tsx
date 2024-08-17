@@ -1,10 +1,10 @@
 import { Fragment, Suspense } from 'react'
 
 import { prisma } from '@services/prisma'
+import { getCategoryChildrenById } from '@utils/newsFeed'
 import { CategorySectionPlaceholder } from 'store@components/HomePagePlaceholder/CategorySectionPlaceholder'
 import { CategoryProductsList } from 'store@components/NewsFeed/CategoryProductsList'
-import { CategoryWithProductId } from '~/Types/Category'
-import { getCategoryChildrenById } from '~/utils/newsFeed'
+import { CategoryWithProductId } from 'Types/Category'
 
 type CategorySectionProps = {
   categorySlag: string
