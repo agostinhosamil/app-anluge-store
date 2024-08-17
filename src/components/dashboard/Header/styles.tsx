@@ -111,3 +111,19 @@ export const MenuListWrapper = styled.div`
     }
   }
 `
+
+export const CommandPromptContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background-color: rgb(255 255 255 / 85%);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: flex-start;
+  z-index: 50;
+  padding: 5% 0px;
+`

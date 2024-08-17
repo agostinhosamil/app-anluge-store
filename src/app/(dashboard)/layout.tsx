@@ -1,18 +1,16 @@
 // 'use client'
-import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 
+import { auth } from '@utils/auth'
+import { getCookie } from '@utils/cookies'
 import { DashboardPageWrapper } from 'dashboard@components/DashboardPageWrapper'
 import { LayoutProps } from 'Types/next'
-import { auth } from '~/utils/auth'
 
 export default async function DashboardLayout(props: LayoutProps) {
-  const authTokenCookie = cookies().get(
-    String(process.env.APP_AUTH_COOKIE_NAME)
-  )
+  const authTokenCookie = getCookie(String(process.env.APP_AUTH_COOKIE_NAME))
 
   const authenticatedUser = await auth({
-    token: (authTokenCookie && authTokenCookie.value) || ''
+    token: authTokenCookie
   })
 
   if (!authenticatedUser) {
