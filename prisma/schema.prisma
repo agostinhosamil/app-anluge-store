@@ -240,11 +240,23 @@ model Post {
   tags          Tag[]
   medias        Media[]
   adevertisings Advertise[]
+  context       PostContext @default(BLOG)
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
   userId        String
+  subject       Subject?    @relation(fields: [subjectId], references: [id])
+  subjectId     String?
 
   @@map("post")
+}
+
+model Subject {
+  id    String @id @default(cuid())
+  title String
+  slag  String @unique @default(uuid())
+  posts Post[]
+
+  @@map("subject")
 }
 
 model Category {
@@ -456,4 +468,9 @@ enum PropertyType {
   STRING
   NUMBER
   BOOLEAN
+}
+
+enum PostContext {
+  BLOG
+  HELP
 }
