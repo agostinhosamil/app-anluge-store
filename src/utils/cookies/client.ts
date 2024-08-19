@@ -1,3 +1,5 @@
+import { sanitizeCookieName } from './utils'
+
 export type CookieDate =
   | Date
   | number
@@ -74,6 +76,8 @@ export const setCookie: SetCookieUtil = (
     options['Max-Age'] = readCookieDate(options['Max-Age'])
   }
 
+  cookieName = sanitizeCookieName(cookieName)
+
   const cookieOptions: Array<string> = []
   const value =
     typeof cookieValue === 'object' && cookieValue
@@ -92,7 +96,7 @@ export const setCookie: SetCookieUtil = (
 }
 
 export const getCookie = (cookieName: string) => {
-  const name = cookieName + '='
+  const name = sanitizeCookieName(cookieName) + '='
   const decodedCookieData = decodeURIComponent(global.document?.cookie || '')
   const ca = decodedCookieData.split(';')
 
