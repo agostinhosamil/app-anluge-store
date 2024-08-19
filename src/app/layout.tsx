@@ -22,6 +22,8 @@ import { Toaster } from 'ui@components/toaster'
 
 import { BotDataEngineSearchBox } from '@components/BotDataEngineSearchBox'
 import companyData from '~/config/cache/company-data/index.json'
+import { noEmpty } from '~/utils'
+import { getCookie } from '~/utils/cookies'
 
 export const generateMetadata = (): Metadata => {
   const serverHeaders = getServerHeaders()
@@ -80,8 +82,16 @@ export default async function RootLayout({ children }: RootLayoutProps) {
     token: (authTokenCookie && authTokenCookie) || ''
   })
 
+  const documentElementProps: React.HtmlHTMLAttributes<HTMLElement> = {}
+
+  const currentTheme = getCookie('__APP-anluge-theme')
+
+  if (noEmpty(currentTheme)) {
+    documentElementProps.className = currentTheme
+  }
+
   return (
-    <html lang="en">
+    <html lang="en" {...documentElementProps}>
       <head>
         <link
           rel="shortcut icon"
