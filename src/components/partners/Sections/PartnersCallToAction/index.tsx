@@ -23,7 +23,7 @@ export const PartnersCallToActionSection = () => {
                   <input
                     type="text"
                     placeholder="Seu nome"
-                    className="w-full pt-3 pb-[18px] px-3 text-white font-sans text-2xl bg-zinc-900 border-2 border-solid outline-none border-zinc-700 rounded-lg"
+                    className="w-full pt-3 pb-[18px] px-3 text-zinc-900 dark:text-zinc-50 font-sans text-2xl bg-zinc-50 dark:bg-zinc-900 border-2 border-solid outline-none border-zinc-300 focus:bg-zinc-100 dark:focus:bg-zinc-950 dark:border-zinc-700 rounded-lg"
                   />
                 </Col>
               </Row>
@@ -32,14 +32,14 @@ export const PartnersCallToActionSection = () => {
                   <input
                     type="text"
                     placeholder="Nome da sua empresa"
-                    className="w-full pt-3 pb-[18px] px-3 text-white font-sans text-2xl bg-zinc-900 border-2 border-solid outline-none border-zinc-700 rounded-lg"
+                    className="w-full pt-3 pb-[18px] px-3 text-zinc-900 dark:text-zinc-50 font-sans text-2xl bg-zinc-50 dark:bg-zinc-900 border-2 border-solid outline-none border-zinc-300 focus:bg-zinc-100 dark:focus:bg-zinc-950 dark:border-zinc-700 rounded-lg"
                   />
                 </Col>
                 <Col md={6}>
                   <input
                     type="text"
                     placeholder="Seu endereço de email"
-                    className="w-full pt-3 pb-[18px] px-3 text-white font-sans text-2xl bg-zinc-900 border-2 border-solid outline-none border-zinc-700 rounded-lg"
+                    className="w-full pt-3 pb-[18px] px-3 text-zinc-900 dark:text-zinc-50 font-sans text-2xl bg-zinc-50 dark:bg-zinc-900 border-2 border-solid outline-none border-zinc-300 focus:bg-zinc-100 dark:focus:bg-zinc-950 dark:border-zinc-700 rounded-lg"
                   />
                 </Col>
               </Row>
@@ -48,7 +48,7 @@ export const PartnersCallToActionSection = () => {
                   <textarea
                     rows={5}
                     placeholder="Seu nome"
-                    className="w-full resize-none overflow-hidden pt-3 pb-[18px] px-3 text-white font-sans text-2xl bg-zinc-900 border-2 border-solid outline-none border-zinc-700 rounded-lg"
+                    className="w-full pt-3 resize-none overflow-hidden pb-[18px] px-3 text-zinc-900 dark:text-zinc-50 font-sans text-2xl bg-zinc-50 dark:bg-zinc-900 border-2 border-solid outline-none border-zinc-300 focus:bg-zinc-100 dark:focus:bg-zinc-950 dark:border-zinc-700 rounded-lg"
                   />
                 </Col>
               </Row>

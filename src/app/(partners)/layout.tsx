@@ -6,7 +6,7 @@ import 'partners@styles/application.css'
 
 export default function PartnersPagesLayout({ children }: LayoutProps) {
   return (
-    <div className="flex flex-col w-full bg-gradient-to-br bg-zinc-950 text-white">
+    <div className="flex flex-col w-full bg-zinc-50 dark:bg-zinc-950 text-zinc-800 dark:text-zinc-50">
       <Header />
       {children}
       <Footer />

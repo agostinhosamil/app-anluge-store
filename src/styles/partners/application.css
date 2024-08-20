@@ -362,6 +362,9 @@ div.section-title-container h1 {
   padding: 0px 35px;
   color: #ffffff;
 }
+html.light div.section-title-container h1 {
+  color: #303030;
+}
 div.section-title-container h1 b {
   font-weight: 800;
   color: #fe6b6a;
@@ -425,6 +428,11 @@ section.about-company-section div.about-company-section-content div.body h2 {
   display: block;
   padding: 7px 0px 25px;
 }
+
+html.light section.about-company-section div.about-company-section-content div.body h2 {
+  color: #3d3d3d;
+}
+
 @media (max-width: 900px) {
   section.about-company-section div.about-company-section-content div.body h2 {
     font-size: 24px;
@@ -436,6 +444,9 @@ section.about-company-section div.about-company-section-content div.body p {
   font-weight: 300;
   color: #a1a4bc;
   line-height: 19px;
+}
+html.light section.about-company-section div.about-company-section-content div.body p {
+  color: #6e728d;
 }
 section.about-company-section div.about-company-section-content div.body ol {
   width: 100%;
@@ -464,6 +475,9 @@ section.about-company-section div.about-company-section-content div.body ol li d
   font-size: 32px;
   font-weight: 600;
   color: #ffffff;
+}
+html.light section.about-company-section div.about-company-section-content div.body ol li data strong {
+  color: #395065;
 }
 section.about-company-section div.about-company-section-content div.body ol li data span {
   font-size: 14px;
@@ -518,6 +532,9 @@ section.about-services-section {
   border-top-right-radius: 70px;
   border-bottom-left-radius: 70px;
   padding: 80px 0px;
+}
+html.light section.about-services-section {
+  background-color: rgb(32 82 181);
 }
 section.about-services-section div.about-services-section-content {
   width: 100%;
@@ -607,6 +624,10 @@ section.about-services-section div.about-services-section-content div.services-l
   z-index: 50;
 }
 
+html.light section.about-services-section div.about-services-section-content div.services-list-wrapper ul li.expanded {
+  background-color: rgb(255 255 255 / 56%);
+}
+
 section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card {
   width: 100%;
   background-color: rgb(255 255 255 / 6%);
@@ -620,6 +641,10 @@ section.about-services-section div.about-services-section-content div.services-l
   max-width: 640px;
 }
 
+html.light section.about-services-section div.about-services-section-content div.services-list-wrapper ul li.expanded div.service-card.expanded {
+  background-color: rgb(255, 255, 255);
+}
+
 section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card:hover {
   cursor: pointer;
   background-color: rgb(255 255 255 / 8%);
@@ -631,10 +656,15 @@ section.about-services-section div.about-services-section-content div.services-l
 
 section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card.expanded:hover {
   background-color: rgb(10 13 26);
+  cursor: auto;
 }
 
 section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card.expanded:active {
   background-color: rgb(10 13 26);
+}
+
+html.light section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card.expanded:active {
+  background-color: rgb(255, 255, 255);
 }
 
 section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card * {
@@ -651,6 +681,10 @@ section.about-services-section div.about-services-section-content div.services-l
   overflow: hidden;
   display: block;
   text-overflow: ellipsis;
+}
+
+html.light section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card.expanded strong {
+  color: #232323;
 }
 
 section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card.expanded strong {
@@ -670,6 +704,14 @@ section.about-services-section div.about-services-section-content div.services-l
   overflow: hidden;
   max-height: 121px;
   margin-bottom: 20px;
+}
+
+html.light section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card p {
+  color: #d0d9ff;
+}
+
+html.light section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card.expanded p {
+  color: #505050;
 }
 
 section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card.expanded p {
@@ -1010,6 +1052,14 @@ section.blog-section div.blog-section-content div.blog-posts-list article.blog-p
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
 }
 
+html.light section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper.expanded {
+  box-shadow: none;
+}
+
+html.light section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper.expanded p {
+  color: #1f1f1f;
+}
+
 section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper.expanded {
   background-color: transparent;
 }
@@ -1049,12 +1099,20 @@ section.blog-section div.blog-section-content div.blog-posts-list article.blog-p
   font-weight: 400;
 }
 
+html.light section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data i {
+  color: #878484;
+}
+
 section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data h3 {
   font-weight: 700;
   color: #ffffff;
   font-size: 25px;
   line-height: 23px;
   padding-top: 15px;
+}
+
+html.light section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data h3 {
+  color: #323232;
 }
 
 section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data.expanded h3 {
@@ -1078,6 +1136,14 @@ section.blog-section div.blog-section-content div.blog-posts-list article.blog-p
   padding: 25px 0px;
 }
 
+html.light section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data p {
+  color: #878686;
+}
+
+html.light section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data.expanded p {
+  color: #303030;
+}
+
 section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data.expanded p {
   display: block;
   overflow: unset;
@@ -1097,6 +1163,8 @@ section.blog-section div.blog-section-content div.blog-posts-list article.blog-p
   width: max-content;
   background-color: #f0f0f0;
   color: #163b62;
+  border: 0px;
+  outline: none;
 }
 
 section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data a:hover {
