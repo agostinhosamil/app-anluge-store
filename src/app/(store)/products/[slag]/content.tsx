@@ -8,7 +8,6 @@ import {
   FaCartArrowDown,
   FaCartPlus,
   FaEllipsisVertical,
-  FaHeart,
   FaMinus,
   FaPlus
 } from 'react-icons/fa6'
@@ -50,8 +49,10 @@ import {
 } from 'store@styles/product-page'
 import { ToastAction } from 'ui@components/toast'
 import { useToast } from 'ui@components/use-toast'
+import { FavoriteButton } from '~/components/store/FavoriteButton'
 import { emptyProductDescription, formatAmount } from '~/utils'
 import { getProductRatesAverage } from '~/utils/models/product'
+import { Favorite } from './buttons/Favorite'
 
 type ContentComponent = React.FunctionComponent<React.PropsWithChildren>
 
@@ -262,11 +263,9 @@ export const Content: ContentComponent = props => {
                   </li>
                 )}
                 <li>
-                  <ActionButton type="button" role="button">
-                    <i>
-                      <FaHeart />
-                    </i>
-                  </ActionButton>
+                  <FavoriteButton product={product}>
+                    <Favorite />
+                  </FavoriteButton>
                 </li>
                 <li>
                   <ActionButton type="button" role="button">
