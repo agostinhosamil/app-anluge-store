@@ -1,3 +1,5 @@
+'use client'
+
 // import * as Icons from "react-icons/fa6";
 import Image from '@components/Image'
 
