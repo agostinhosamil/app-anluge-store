@@ -97,55 +97,74 @@ export const Aside = () => {
           </AsideSection>
         </Partial>
 
-        <AsideSection title="Instituição">
-          <AsideLink label="Central de ajuda">
-            <AsideLink label="Criar artigo" />
-            <AsideLink label="Artigos" />
-          </AsideLink>
-          <AsideLink label="Documentos">
-            <AsideLink
-              href="/dashboard/institution/documents/terms"
-              label="Termos de serviço"
-            />
-            <AsideLink
-              href="/dashboard/institution/documents/privacy"
-              label="Política de privacidade"
-            />
-            <AsideLink
-              href="/dashboard/institution/documents/payments"
-              label="Política de pagamentos"
-            />
-            <AsideLink
-              href="/dashboard/institution/documents/cookies"
-              label="Política de uso de cookies"
-            />
-            <AsideLink label="Sobre a empresa">
+        <Partial isNeither={['guest', 'client', 'seller']}>
+          <AsideSection title="Instituição">
+            <AsideLink label="Empresa">
               <AsideLink
-                href="/dashboard/institution/documents/story"
-                label="História"
+                label="Serviços"
+                icon="FaWrench"
+                href="/dashboard/company/services"
               />
               <AsideLink
-                href="/dashboard/institution/documents/mission"
-                label="Missão"
+                label="Parceiros"
+                icon="FaHandshake"
+                href="/dashboard/company/partners"
               />
               <AsideLink
-                href="/dashboard/institution/documents/vision"
-                label="Visão"
-              />
-              <AsideLink
-                href="/dashboard/institution/documents/values"
-                label="Valores"
+                label="Contactos"
+                icon="FaPhoneFlip"
+                href="/dashboard/company/contacts"
               />
             </AsideLink>
-          </AsideLink>
-          <Partial isEither={['editor', 'admin', 'admin:master']}>
-            <AsideLink
-              icon="FaBusinessTime"
-              href="/dashboard/company/data"
-              label="Dados da empresa"
-            />
-          </Partial>
-        </AsideSection>
+            <AsideLink label="Central de ajuda">
+              <AsideLink label="Criar artigo" />
+              <AsideLink label="Artigos" />
+            </AsideLink>
+            <AsideLink label="Documentos">
+              <AsideLink
+                href="/dashboard/institution/documents/terms"
+                label="Termos de serviço"
+              />
+              <AsideLink
+                href="/dashboard/institution/documents/privacy"
+                label="Política de privacidade"
+              />
+              <AsideLink
+                href="/dashboard/institution/documents/payments"
+                label="Política de pagamentos"
+              />
+              <AsideLink
+                href="/dashboard/institution/documents/cookies"
+                label="Política de uso de cookies"
+              />
+              <AsideLink label="Sobre a empresa">
+                <AsideLink
+                  href="/dashboard/institution/documents/story"
+                  label="História"
+                />
+                <AsideLink
+                  href="/dashboard/institution/documents/mission"
+                  label="Missão"
+                />
+                <AsideLink
+                  href="/dashboard/institution/documents/vision"
+                  label="Visão"
+                />
+                <AsideLink
+                  href="/dashboard/institution/documents/values"
+                  label="Valores"
+                />
+              </AsideLink>
+            </AsideLink>
+            <Partial isEither={['editor', 'admin', 'admin:master']}>
+              <AsideLink
+                icon="FaBusinessTime"
+                href="/dashboard/company/data"
+                label="Dados da empresa"
+              />
+            </Partial>
+          </AsideSection>
+        </Partial>
       </Body>
     </Container>
   )
