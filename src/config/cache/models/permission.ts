@@ -137,6 +137,36 @@ export const permissions: Array<Permission> = [
     description: 'User can delete any permission from the system'
   },
   {
+    key: 'service:create',
+    name: 'Create service',
+    description: 'User can create new services'
+  },
+  {
+    key: 'service:edit',
+    name: 'Edit services',
+    description: 'User can edit service register data'
+  },
+  {
+    key: 'service:delete',
+    name: 'Delete service',
+    description: 'User can delete any service from the system'
+  },
+  {
+    key: 'partner:create',
+    name: 'Create partner',
+    description: 'User can create new partners'
+  },
+  {
+    key: 'partner:edit',
+    name: 'Edit partners',
+    description: 'User can edit partner register data'
+  },
+  {
+    key: 'partner:delete',
+    name: 'Delete partner',
+    description: 'User can delete any partner from the system'
+  },
+  {
     key: 'user:edit:role',
     name: 'Edit user role',
     description: 'User can edit another user role'
