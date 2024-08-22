@@ -661,12 +661,12 @@ section.about-services-section div.about-services-section-content div.services-l
   background-color: rgb(255 255 255 / 11%);
 }
 
-section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card.expanded:hover {
+html.dark section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card.expanded:hover {
   background-color: rgb(10 13 26);
   cursor: auto;
 }
 
-section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card.expanded:active {
+html.dark section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card.expanded:active {
   background-color: rgb(10 13 26);
 }
 
