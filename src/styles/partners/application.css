@@ -362,7 +362,8 @@ div.section-title-container h1 {
   padding: 0px 35px;
   color: #ffffff;
 }
-html.light div.section-title-container h1 {
+html.light div.section-title-container h1,
+div.section-title-container h1 {
   color: #303030;
 }
 div.section-title-container h1 b {
@@ -429,7 +430,8 @@ section.about-company-section div.about-company-section-content div.body h2 {
   padding: 7px 0px 25px;
 }
 
-html.light section.about-company-section div.about-company-section-content div.body h2 {
+html.light section.about-company-section div.about-company-section-content div.body h2,
+section.about-company-section div.about-company-section-content div.body h2 {
   color: #3d3d3d;
 }
 
@@ -445,7 +447,8 @@ section.about-company-section div.about-company-section-content div.body p {
   color: #a1a4bc;
   line-height: 19px;
 }
-html.light section.about-company-section div.about-company-section-content div.body p {
+html.light section.about-company-section div.about-company-section-content div.body p,
+section.about-company-section div.about-company-section-content div.body p {
   color: #6e728d;
 }
 section.about-company-section div.about-company-section-content div.body ol {
@@ -476,7 +479,8 @@ section.about-company-section div.about-company-section-content div.body ol li d
   font-weight: 600;
   color: #ffffff;
 }
-html.light section.about-company-section div.about-company-section-content div.body ol li data strong {
+html.light section.about-company-section div.about-company-section-content div.body ol li data strong,
+section.about-company-section div.about-company-section-content div.body ol li data strong {
   color: #395065;
 }
 section.about-company-section div.about-company-section-content div.body ol li data span {
@@ -533,7 +537,8 @@ section.about-services-section {
   border-bottom-left-radius: 70px;
   padding: 80px 0px;
 }
-html.light section.about-services-section {
+html.light section.about-services-section,
+section.about-services-section {
   background-color: rgb(32 82 181);
 }
 section.about-services-section div.about-services-section-content {
@@ -624,7 +629,8 @@ section.about-services-section div.about-services-section-content div.services-l
   z-index: 50;
 }
 
-html.light section.about-services-section div.about-services-section-content div.services-list-wrapper ul li.expanded {
+html.light section.about-services-section div.about-services-section-content div.services-list-wrapper ul li.expanded,
+section.about-services-section div.about-services-section-content div.services-list-wrapper ul li.expanded {
   background-color: rgb(255 255 255 / 56%);
 }
 
@@ -641,7 +647,8 @@ section.about-services-section div.about-services-section-content div.services-l
   max-width: 640px;
 }
 
-html.light section.about-services-section div.about-services-section-content div.services-list-wrapper ul li.expanded div.service-card.expanded {
+html.light section.about-services-section div.about-services-section-content div.services-list-wrapper ul li.expanded div.service-card.expanded,
+section.about-services-section div.about-services-section-content div.services-list-wrapper ul li.expanded div.service-card.expanded {
   background-color: rgb(255, 255, 255);
 }
 
@@ -663,7 +670,8 @@ section.about-services-section div.about-services-section-content div.services-l
   background-color: rgb(10 13 26);
 }
 
-html.light section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card.expanded:active {
+html.light section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card.expanded:active,
+section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card.expanded:active {
   background-color: rgb(255, 255, 255);
 }
 
@@ -683,7 +691,8 @@ section.about-services-section div.about-services-section-content div.services-l
   text-overflow: ellipsis;
 }
 
-html.light section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card.expanded strong {
+html.light section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card.expanded strong,
+section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card.expanded strong {
   color: #232323;
 }
 
@@ -706,11 +715,13 @@ section.about-services-section div.about-services-section-content div.services-l
   margin-bottom: 20px;
 }
 
-html.light section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card p {
+html.light section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card p,
+section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card p {
   color: #d0d9ff;
 }
 
-html.light section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card.expanded p {
+html.light section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card.expanded p,
+section.about-services-section div.about-services-section-content div.services-list-wrapper ul li div.service-card.expanded p {
   color: #505050;
 }
 
@@ -1052,11 +1063,13 @@ section.blog-section div.blog-section-content div.blog-posts-list article.blog-p
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
 }
 
-html.light section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper.expanded {
+html.light section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper.expanded,
+section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper.expanded {
   box-shadow: none;
 }
 
-html.light section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper.expanded p {
+html.light section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper.expanded p,
+section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper.expanded p {
   color: #1f1f1f;
 }
 
@@ -1099,7 +1112,8 @@ section.blog-section div.blog-section-content div.blog-posts-list article.blog-p
   font-weight: 400;
 }
 
-html.light section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data i {
+html.light section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data i,
+section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data i {
   color: #878484;
 }
 
@@ -1111,7 +1125,8 @@ section.blog-section div.blog-section-content div.blog-posts-list article.blog-p
   padding-top: 15px;
 }
 
-html.light section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data h3 {
+html.light section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data h3,
+section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data h3 {
   color: #323232;
 }
 
@@ -1136,11 +1151,13 @@ section.blog-section div.blog-section-content div.blog-posts-list article.blog-p
   padding: 25px 0px;
 }
 
-html.light section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data p {
+html.light section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data p,
+section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data p {
   color: #878686;
 }
 
-html.light section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data.expanded p {
+html.light section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data.expanded p,
+section.blog-section div.blog-section-content div.blog-posts-list article.blog-post div.blog-post-content-wrapper div.post-data.expanded p {
   color: #303030;
 }
 

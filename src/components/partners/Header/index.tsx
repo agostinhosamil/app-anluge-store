@@ -75,12 +75,15 @@ export const Header = () => {
           </div>
         </div>
         <div className="w-full p-20 absolute top-0 left-0 h-full flex flex-col gap-4 text-zinc-100 items-center justify-center text-center">
-          <h1 className="font-extrabold uppercase text-white">Hello, Man</h1>
+          <h1 className="font-extrabold uppercase text-white">
+            Tecnologia Integrada para o Sucesso Digital
+          </h1>
           <p className="text-sm font-semibold max-w-xl">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati
-            blanditiis deleniti officia quasi quas est sed, ipsam assumenda modi
-            itaque veritatis nihil reiciendis sit libero, delectus eveniet enim
-            repellendus sequi.
+            Oferecemos soluções completas em tecnologia, desde o desenvolvimento
+            de websites modernos e personalizados, até a reparação de materiais
+            informáticos e serviços de segurança cibernética. Nosso objetivo é
+            garantir que sua empresa esteja sempre conectada, segura e
+            funcionando em seu melhor desempenho.
           </p>
           <ul className="flex flex-row gap-2 p-7">
             <li>
