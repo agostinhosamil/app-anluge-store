@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 
 import {
   CloseButton,
@@ -8,36 +8,37 @@ import {
   DialogBoxBody,
   DialogBoxSize,
   Title,
-  TitleWrapper,
-} from "./styles";
+  TitleWrapper
+} from './styles'
 
 type DialogProps = {
-  show?: boolean;
-  size?: DialogBoxSize;
-  onClose?: () => void;
-  title?: string;
-  closeButtonLabel?: string;
-};
+  show?: boolean
+  size?: DialogBoxSize
+  onClose?: () => void
+  title?: string
+  showButton?: boolean
+  closeButtonLabel?: string
+}
 
 type DialogComponent = React.FunctionComponent<
   React.PropsWithChildren & DialogProps
->;
+>
 
-export const Dialog: DialogComponent = (props) => {
-  const [show, setShow] = useState<boolean>(props.show || false);
-  const [centerDialogBox, setCenterDialogBox] = useState<boolean>(true);
+export const Dialog: DialogComponent = props => {
+  const [show, setShow] = useState<boolean>(props.show || false)
+  const [centerDialogBox, setCenterDialogBox] = useState<boolean>(true)
 
   const dialogBoxElementRef = (dialogBoxElement: HTMLDivElement): void => {
     if (!dialogBoxElement) {
-      return;
+      return
     }
 
-    const dialogBoxElementHeight = dialogBoxElement.offsetHeight;
+    const dialogBoxElementHeight = dialogBoxElement.offsetHeight
 
     if (dialogBoxElementHeight >= window.innerHeight - 80) {
-      setCenterDialogBox(false);
+      setCenterDialogBox(false)
     }
-  };
+  }
 
   // const updateDialogBox = () => {
   //   if (!dialogBoxElementRef.current) {
@@ -52,32 +53,35 @@ export const Dialog: DialogComponent = (props) => {
   // };
 
   useEffect(() => {
-    setShow(props.show || false);
-  }, [props.show]);
+    setShow(props.show || false)
+  }, [props.show])
 
   // useEffect(updateDialogBox, []);
 
   if (!show) {
-    return null;
+    return null
   }
 
   const closeButtonClickHandler = () => {
-    setShow(false);
+    setShow(false)
 
-    if (typeof props.onClose === "function") {
-      props.onClose();
+    if (typeof props.onClose === 'function') {
+      props.onClose()
     }
-  };
+  }
 
   const labeledCloseButton = () =>
     Boolean(
-      typeof props.closeButtonLabel === "string" &&
-        /\S/.test(props.closeButtonLabel),
-    );
+      typeof props.closeButtonLabel === 'string' &&
+        /\S/.test(props.closeButtonLabel)
+    )
 
   const titled = Boolean(
-    typeof props.title === "string" && /\S/.test(props.title),
-  );
+    typeof props.title === 'string' && /\S/.test(props.title)
+  )
+
+  const doNotShowButton =
+    typeof props.showButton === 'boolean' && !props.showButton
 
   return (
     <Container $centerContent={centerDialogBox}>
@@ -88,12 +92,14 @@ export const Dialog: DialogComponent = (props) => {
           </TitleWrapper>
         )}
         <DialogBoxBody>{props.children}</DialogBoxBody>
-        <CloseButtonWrapper>
-          <CloseButton onClick={closeButtonClickHandler} type="button">
-            {(labeledCloseButton() && props.closeButtonLabel) || "Cancelar"}
-          </CloseButton>
-        </CloseButtonWrapper>
+        {!doNotShowButton && (
+          <CloseButtonWrapper>
+            <CloseButton onClick={closeButtonClickHandler} type="button">
+              {(labeledCloseButton() && props.closeButtonLabel) || 'Cancelar'}
+            </CloseButton>
+          </CloseButtonWrapper>
+        )}
       </DialogBox>
     </Container>
-  );
-};
+  )
+}
