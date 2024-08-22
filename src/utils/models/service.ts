@@ -72,6 +72,24 @@ export const updateServiceByFormData = async (
   return null
 }
 
+export const updateService = async (
+  serviceId: string,
+  serviceData: CreateServiceFormDataObject
+): Promise<Service | null> => {
+  const response = await axios.patch<Service>(
+    `/company/services/${serviceId}`,
+    serviceData
+  )
+
+  const createdService = response.data
+
+  if (response.status === 200) {
+    return createdService
+  }
+
+  return null
+}
+
 export const deleteServiceById = async (
   serviceId: string
 ): Promise<boolean> => {
