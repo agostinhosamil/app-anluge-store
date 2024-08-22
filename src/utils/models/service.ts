@@ -77,7 +77,7 @@ export const deleteServiceById = async (
 ): Promise<boolean> => {
   const response = await axios.delete(`/company/services/${serviceId}`)
 
-  if (response.data && response.data.success) {
+  if (response.data) {
     return true
   }
 
