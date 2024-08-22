@@ -35,6 +35,10 @@ type EntityCardComponent = React.FunctionComponent<
   React.PropsWithChildren & EntityCardProps
 >
 
+export type EntityCardActionHandler<EntityData extends object = any> = (
+  entity: EntityData
+) => Promise<void> | void
+
 export type { EntityCardOption, EntityCardOptions } from './card-icons/types'
 
 export const EntityCard: EntityCardComponent = ({
