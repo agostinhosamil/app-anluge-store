@@ -1,10 +1,12 @@
 import Link from 'next/link'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { FaBars, FaHome, FaSearch, FaUserCog, FaUsersCog } from 'react-icons/fa'
-
 import { FaX } from 'react-icons/fa6'
+
 import { path } from '~/utils'
+
 import { CommandPrompt } from './CommandPrompt'
+import { HeaderNavigationMenu } from './NavigationMenu'
 import {
   CommandPromptContainer,
   Container,
@@ -21,8 +23,6 @@ export const Header = () => {
   const [promptOpened, setPromptOpened] = useState<boolean>(false)
 
   const containerRef = useRef<HTMLElement>(null)
-
-  // const windowScrollHandler = useCallback(, [fixed])
 
   useEffect(() => {
     const windowScrollHandler = () => {
@@ -78,6 +78,9 @@ export const Header = () => {
             </Link>
           </div>
         </LogoWrapper>
+        <div className="flex flex-row items-center px-2">
+          <HeaderNavigationMenu />
+        </div>
         <MenuContainer>
           <SearchBoxContainer>
             <div className="hover:bg-zinc-50 transition-colors">

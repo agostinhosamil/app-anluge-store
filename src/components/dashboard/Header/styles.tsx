@@ -15,7 +15,7 @@ export const FixedContainer = styled(Container)`
   right: 0px;
   background-color: #ffffff;
   box-shadow: 0px 6px 15px 11px rgb(0 0 0 / 24%);
-  padding: 11px 30px 15px;
+  padding: 16px 30px 20px;
   z-index: 10;
 `
 
