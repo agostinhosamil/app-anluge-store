@@ -1,7 +1,8 @@
 export const light = {
   colors: {
     background: {
-      v100: '#ffffff',
+      v50: '#ffffff',
+      v100: '#fafafa',
       v200: '#f7f7f7',
       v300: '#eeeeee',
       v400: '#e5e5e5',
@@ -12,6 +13,7 @@ export const light = {
       v900: '#a6a6a6'
     },
     foreground: {
+      v50: '#ffffff',
       v100: '#f2f2f2',
       v200: '#d9d9d9',
       v300: '#bfbfbf',

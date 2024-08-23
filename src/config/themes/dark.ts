@@ -3,6 +3,7 @@ import { Theme } from '.'
 export const dark: Theme = {
   colors: {
     background: {
+      v50: '#000000',
       v100: '#262626',
       v200: '#404040',
       v300: '#595959',
@@ -14,6 +15,7 @@ export const dark: Theme = {
       v900: '#f2f2f2'
     },
     foreground: {
+      v50: '#909090',
       v100: '#a6a6a6',
       v200: '#b3b3b3',
       v300: '#bfbfbf',
