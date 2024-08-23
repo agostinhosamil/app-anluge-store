@@ -13,11 +13,13 @@ import {
   FaTruck,
   FaWhatsapp
 } from 'react-icons/fa6'
+import { RxMoon, RxSun } from 'react-icons/rx'
 
 import Image from 'next/image'
 import Link from 'next/link'
 import { Partial } from '~/components/Partial'
 import { stringifyCompanyTaxData } from '~/utils'
+import { useTheme } from '~/utils/hooks/useTheme'
 import { NewsletterForm } from './NewsletterForm'
 import {
   CompanyDataWrapper,
@@ -39,6 +41,8 @@ const companyTaxData = [
 ]
 
 export const Footer: React.FunctionComponent = () => {
+  const theme = useTheme()
+
   return (
     <React.Fragment>
       <ServiceDetails>
@@ -52,10 +56,7 @@ export const Footer: React.FunctionComponent = () => {
               </div>
               <data>
                 <strong>Entregas rápidas</strong>
-                <span>
-                  Nossas entregas rápidas garantem que você receba seus pedidos
-                  o mais breve possível, sem abrir mão da qualidade do serviço.
-                </span>
+                <span>Garantimos a entrega do seu pedido em até 72 horas.</span>
               </data>
             </li>
             <li>
@@ -67,9 +68,8 @@ export const Footer: React.FunctionComponent = () => {
               <data>
                 <strong>Atendimento 24/24</strong>
                 <span>
-                  Estamos aqui para servi-lo. Nosso atendimento 24/24 garante
-                  suporte contínuo para resolver as suas dúvidas e oferecer
-                  assistência quando você mais precisa.
+                  Nosso atendimento garante suporte 24/24 e dar-lhe assistência
+                  contínua.
                 </span>
               </data>
             </li>
@@ -80,15 +80,13 @@ export const Footer: React.FunctionComponent = () => {
                 </i>
               </div>
               <data>
-                <strong>Garantias de devolução</strong>
+                <strong>Tempo de garantia</strong>
                 <span>
-                  Oferecemos garantias sólidas de devolução ou troca para
-                  garantir sua total satisfação.
+                  Garantimos a sua total satisfação na compra dos nossos
+                  produtos.
                   <br />
-                  Leia a nossa{' '}
-                  <Link href="/about/terms#returning">
-                    política de devolução
-                  </Link>
+                  Leia os nossos{' '}
+                  <Link href="/about/terms#returning">Termos</Link>
                 </span>
               </data>
             </li>
@@ -161,7 +159,7 @@ export const Footer: React.FunctionComponent = () => {
             </Column>
             <Column lg={8}>
               <FooterMenuListsWrapper>
-                <Row style={{ display: 'flex', justifyContent: 'center' }}>
+                <Row className="flex justify-center">
                   <Column sm={3}>
                     <h4>Páginas</h4>
                     <ul>
@@ -262,6 +260,17 @@ export const Footer: React.FunctionComponent = () => {
                       </li>
                       <li>
                         <Link href="/about/payments">Pagamentos</Link>
+                      </li>
+                      <li>
+                        <button
+                          type="button"
+                          role="button"
+                          onClick={theme.switchTheme}
+                          className="bg-transparent border-0 outline-none size-5 text-zinc-50 flex items-center justify-center"
+                          title="Alterar tema"
+                        >
+                          {theme.name === 'dark' ? <RxSun /> : <RxMoon />}
+                        </button>
                       </li>
                     </ol>
                   </Column>

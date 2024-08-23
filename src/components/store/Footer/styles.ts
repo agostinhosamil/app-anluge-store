@@ -261,6 +261,10 @@ export const CompanyDataWrapper = styled.div`
 
 export const FooterMenuListsWrapper = styled.div`
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   h4 {
     font-weight: 500;
@@ -307,7 +311,7 @@ export const FooterMenuListsWrapper = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 30px 0px;
+    padding: 30px 0px 11px;
     flex-wrap: wrap;
 
     li {
