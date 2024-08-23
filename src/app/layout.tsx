@@ -22,6 +22,7 @@ import { Toaster } from 'ui@components/toaster'
 
 import { BotDataEngineSearchBox } from '@components/BotDataEngineSearchBox'
 import companyData from '~/config/cache/company-data/index.json'
+import { defaultTheme, themes } from '~/config/themes'
 import { noEmpty } from '~/utils'
 import { getCookie } from '~/utils/cookies'
 
@@ -83,14 +84,22 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   })
 
   const documentElementProps: React.HtmlHTMLAttributes<HTMLElement> = {}
-  const applicationContextProviderConfig: Record<string, string> = {}
+  const applicationContextProviderConfig: Record<string, any> = {}
 
-  const currentTheme = getCookie('__APP-anluge-theme')
+  let currentTheme = getCookie('__APP-anluge-theme')
 
-  if (noEmpty(currentTheme)) {
-    applicationContextProviderConfig.theme = currentTheme
-    documentElementProps.className = currentTheme
+  if (!(noEmpty(currentTheme) || currentTheme in themes)) {
+    currentTheme = defaultTheme
   }
+
+  applicationContextProviderConfig.theme = currentTheme
+
+  if (currentTheme in themes) {
+    applicationContextProviderConfig.themeProps =
+      themes[currentTheme as keyof typeof themes]
+  }
+
+  documentElementProps.className = currentTheme
 
   return (
     <html lang="en" {...documentElementProps}>
@@ -118,12 +127,12 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         <NextJsTopLoader showSpinner={false} />
         <ErrorBoundary>
           <StyledComponentsRegistry>
-            <GlobalStyles />
             <AdvertiseContextWrapper>
               <ApplicationContextProvider
                 headers={headers}
                 config={applicationContextProviderConfig}
               >
+                <GlobalStyles />
                 <AuthenticationWrapper auth={authenticatedUser}>
                   <StoreContextWrapper cart={cartData}>
                     {children}
