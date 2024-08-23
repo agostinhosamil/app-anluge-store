@@ -20,9 +20,8 @@ export * from './hook'
 export * from './types'
 
 type ApplicationContextProviderProps = {
-  headers: {
-    [key: string]: string
-  }
+  headers: Record<string, string>
+  config?: Record<string, string>
 }
 
 type ApplicationContextProviderComponent = React.FunctionComponent<
