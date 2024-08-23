@@ -83,10 +83,12 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   })
 
   const documentElementProps: React.HtmlHTMLAttributes<HTMLElement> = {}
+  const applicationContextProviderConfig: Record<string, string> = {}
 
   const currentTheme = getCookie('__APP-anluge-theme')
 
   if (noEmpty(currentTheme)) {
+    applicationContextProviderConfig.theme = currentTheme
     documentElementProps.className = currentTheme
   }
 
@@ -118,7 +120,10 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           <StyledComponentsRegistry>
             <GlobalStyles />
             <AdvertiseContextWrapper>
-              <ApplicationContextProvider headers={headers}>
+              <ApplicationContextProvider
+                headers={headers}
+                config={applicationContextProviderConfig}
+              >
                 <AuthenticationWrapper auth={authenticatedUser}>
                   <StoreContextWrapper cart={cartData}>
                     {children}
