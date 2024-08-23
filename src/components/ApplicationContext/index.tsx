@@ -1,18 +1,24 @@
 'use client'
 
+import deepmerge from 'deepmerge'
 import { useRef, useState } from 'react'
 
 import { Dialog } from '@components/Dialog'
-
+import { formDataToJson } from '@utils/formDataToJson'
+import { Theme } from '~/config/themes'
 import { noEmpty } from '~/utils'
-import { formDataToJson } from '~/utils/formDataToJson'
 
+import { ThemeProvider } from 'styled-components'
 import { AlertDialogProps } from './components/alert'
 import { AlertBody } from './components/alert/AlertBody'
 import { FormWrapper } from './components/FormWrapper'
 import { LoadingDialogIcon, LoadingStateIcon } from './components/loading'
 import { ApplicationContext } from './context'
-import { AlertResponse, ApplicationContextProps } from './types'
+import {
+  AlertResponse,
+  ApplicationContextConfig,
+  ApplicationContextProps
+} from './types'
 import { appOriginValueFallback } from './utils'
 
 export * from './context'
@@ -55,6 +61,12 @@ export const ApplicationContextProvider: ApplicationContextProviderComponent =
       useState<LoadingDialogState>(DEFAULT_LOADING_DIALOG_STATE)
     const [FormDialogContent, setFormDialogContent] =
       useState<React.ElementType>()
+    const [config, setConfig] = useState<ApplicationContextConfig>({
+      theme: {
+        name: String(props.config?.theme ?? ''),
+        props: (props.config?.themeProps ?? {}) as Theme
+      }
+    })
 
     const alertDialogPropsState = useRef<AlertDialogProps>()
     const formDialogCloseHandlerState = useRef<() => void>()
@@ -77,6 +89,7 @@ export const ApplicationContextProvider: ApplicationContextProviderComponent =
     }
 
     const applicationContextData: ApplicationContextProps = {
+      config,
       origin: props.headers['x-app-origin'] || appOriginValueFallback(),
 
       alert(...args) {
@@ -154,6 +167,12 @@ export const ApplicationContextProvider: ApplicationContextProviderComponent =
         })
       },
 
+      setConfig: value => {
+        const updatedConfig = deepmerge(config, value)
+
+        setConfig(updatedConfig as ApplicationContextConfig)
+      },
+
       awaits(handler) {
         updateLoadingState({
           show: true
@@ -221,37 +240,43 @@ export const ApplicationContextProvider: ApplicationContextProviderComponent =
 
     return (
       <ApplicationContext.Provider value={applicationContextData}>
-        {props.children}
-        <Dialog
-          size="x-large"
-          show={showFormDialog}
-          onClose={formDialogCloseHandler}
-        >
-          <FormWrapper onSubmit={formDialogSubmitHandler}>
-            {FormDialogContent && <FormDialogContent />}
-          </FormWrapper>
-        </Dialog>
-        <Dialog
-          showButton={false}
-          show={showAlertDialog}
-          size="medium"
-          onClose={alertDialogCloseHandler}
-        >
-          {alertDialogPropsState.current && (
-            <AlertBody
-              {...alertDialogPropsState.current}
-              closeDialog={closeAlertDialog}
-            />
-          )}
-        </Dialog>
-        <Dialog show={loadingDialogState.show} showButton={false} size="small">
-          <div className="w-full flex flex-row gap-3 items-center justify-center">
-            <LoadingDialogIcon name={loadingDialogState.state} />
-            <span className="text-2xl font-extralight text-zinc-800">
-              {loadingDialogState.label}
-            </span>
-          </div>
-        </Dialog>
+        <ThemeProvider theme={config.theme.props}>
+          {props.children}
+          <Dialog
+            size="x-large"
+            show={showFormDialog}
+            onClose={formDialogCloseHandler}
+          >
+            <FormWrapper onSubmit={formDialogSubmitHandler}>
+              {FormDialogContent && <FormDialogContent />}
+            </FormWrapper>
+          </Dialog>
+          <Dialog
+            showButton={false}
+            show={showAlertDialog}
+            size="medium"
+            onClose={alertDialogCloseHandler}
+          >
+            {alertDialogPropsState.current && (
+              <AlertBody
+                {...alertDialogPropsState.current}
+                closeDialog={closeAlertDialog}
+              />
+            )}
+          </Dialog>
+          <Dialog
+            show={loadingDialogState.show}
+            showButton={false}
+            size="small"
+          >
+            <div className="w-full flex flex-row gap-3 items-center justify-center">
+              <LoadingDialogIcon name={loadingDialogState.state} />
+              <span className="text-2xl font-extralight text-zinc-800">
+                {loadingDialogState.label}
+              </span>
+            </div>
+          </Dialog>
+        </ThemeProvider>
       </ApplicationContext.Provider>
     )
   }

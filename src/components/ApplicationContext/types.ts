@@ -1,7 +1,9 @@
+import { DeepPartial } from 'react-hook-form'
 import { z } from 'zod'
 
 import { FontAwesome6IconName } from 'Types/react-icons'
 
+import { Theme } from '~/config/themes'
 import { AlertButton } from './components/alert'
 
 export type OpenFormDialogUtilArgsWithDataSchema<
@@ -47,8 +49,18 @@ export type AlertUtilsArgs =
   | AlertUtilsArgsWithTitle
   | AlertUtilsArgsWithoutTitle
 
+export type ApplicationContextConfig = {
+  theme: {
+    name: string
+    props: Theme
+  }
+}
+
 export type ApplicationContextProps = {
   origin: string
+  config: ApplicationContextConfig
+
+  setConfig: (config: DeepPartial<ApplicationContextConfig>) => void
 
   openFormDialog: <FormDataObjectType extends z.ZodRawShape>(
     ...[
