@@ -19,11 +19,11 @@ import {
 
 export const CommandPrompt = () => {
   return (
-    <div className="block w-full max-w-3xl bg-white rounded-lg">
-      <Command className="rounded-lg border shadow-md">
+    <div className="block w-full max-w-3xl bg-zinc-50 dark:bg-zinc-900 rounded-lg">
+      <Command className="rounded-lg border-[1px] border-solid border-zinc-300 dark:border-zinc-950 shadow-md dark:text-zinc-50 [&_*]:outline-none [&_*]:select-none outline-none">
         <CommandInput
           placeholder="Type a command or search..."
-          className="border-0 outline-none"
+          className="border-0 outline-none dark:text-zinc-50"
         />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>

@@ -12,7 +12,7 @@ export const Container = styled.header`
 export const HeaderBodyContainer = styled.div`
   width: 100%;
   height: 630px;
-  background-color: #0470bf;
+  background-color: ${({ theme }) => theme.colors.background.header};
   margin: 6px 0px 0px;
   background-image: linear-gradient(3deg, rgb(5 24 38 / 65%), transparent);
   background-image: -webkit-linear-gradient(
@@ -205,7 +205,7 @@ export const HeaderMenuFixedWrapper = styled.div.attrs({
   left: 0px;
   right: 0px;
   box-shadow: 0px 10px 15px rgb(0 0 0 / 24%);
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.colors.background.v50};
   z-index: 4;
 
   & > div {
@@ -216,5 +216,5 @@ export const HeaderMenuFixedWrapper = styled.div.attrs({
 export const HeaderMenuShadow = styled.div`
   width: 100%;
   height: 120px;
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.colors.background.v50};
 `

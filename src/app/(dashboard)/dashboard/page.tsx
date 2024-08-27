@@ -37,7 +37,7 @@ export default function DashboardPage() {
     <Fragment>
       <ContentHeader title="Painel administrador" />
       <div className="flex min-h-screen w-full flex-col">
-        <main className="flex flex-1 flex-col gap-4 pb-4 md:gap-8 md:pb-8">
+        <main className="flex flex-1 flex-col gap-4 pb-4 md:gap-8 md:pb-8 dark:text-zinc-200">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
             <Card className="sm:col-span-2" x-chunk="dashboard-05-chunk-0">
               <CardHeader className="pb-3">

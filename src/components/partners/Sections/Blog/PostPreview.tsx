@@ -34,7 +34,7 @@ const FixedPostPreviewWrapper: FixedPostPreviewWrapperComponent = props => {
   }
 
   return (
-    <div className="size-full py-14 overflow-y-auto flex flex-col items-center fixed z-50 dark:bg-opacity-85 bg-zinc-50 dark:bg-zinc-950 top-0 left-0">
+    <div className="size-full py-14 overflow-y-auto flex flex-col items-center fixed z-50 bg-zinc-50 dark:bg-zinc-950 top-0 left-0">
       <div className="fixed right-9 top-5">
         <button
           type="button"

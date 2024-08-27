@@ -94,6 +94,7 @@ export const Options: IconButtonComponent = props => {
           {...dropDownMenuAxis}
           onMouseEnter={cardIconDropDownMenuMouseEnterHandler}
           onMouseLeave={cardIconDropDownMenuMouseLeaveHandler}
+          className="bg-zinc-50 dark:bg-zinc-950"
         >
           <CardIconDropDownMenuList>
             {props.options.map((option, optionIndex) => (

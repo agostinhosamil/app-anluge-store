@@ -124,7 +124,7 @@ export const CreateCategoryForm: CreateCategoryFormComponent = ({
           <FloatingLabel
             controlId="category-title"
             label="Nome"
-            className="mb-3"
+            className="mb-3 bootstrap-floating-label"
           >
             <Form.Control
               type="text"

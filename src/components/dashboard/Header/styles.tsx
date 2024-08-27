@@ -13,7 +13,6 @@ export const FixedContainer = styled(Container)`
   top: 0px;
   left: 0px;
   right: 0px;
-  background-color: #ffffff;
   box-shadow: 0px 6px 15px 11px rgb(0 0 0 / 24%);
   padding: 16px 30px 20px;
   z-index: 10;
@@ -60,10 +59,8 @@ export const SearchBoxContainer = styled.div`
 
   div {
     width: 100%;
-    background-color: #ffffff;
     border-radius: 40px;
     -webkit-border-radius: 40px;
-    border: 1px solid #dcdcdc;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -101,7 +98,6 @@ export const MenuListWrapper = styled.div`
       align-items: center;
       margin: 0px 0px 0px 18px;
       font-size: 32px;
-      color: #101213;
       cursor: pointer;
 
       * {
@@ -118,7 +114,6 @@ export const CommandPromptContainer = styled.div`
   position: fixed;
   top: 0px;
   left: 0px;
-  background-color: rgb(255 255 255 / 85%);
   backdrop-filter: blur(6px);
   display: flex;
   justify-content: center;

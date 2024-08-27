@@ -7,7 +7,7 @@ type UserCardImageContainerProps = {
 export const Container = styled.div`
   width: 100%;
   max-width: 430px;
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.colors.background.v50};
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   box-shadow: 0px 16px 8px 2px rgb(0 0 0 / 27%);
@@ -15,7 +15,7 @@ export const Container = styled.div`
   top: 100%;
   right: 20px;
   z-index: 8;
-  color: #333333;
+  color: ${({ theme }) => theme.colors.background.v800};
   border: 0px;
   outline: 0px;
 
@@ -46,13 +46,13 @@ export const UserCardContainer = styled.div`
   h3 {
     font-size: 27px;
     font-weight: 600;
-    color: #222222;
+    color: ${({ theme }) => theme.colors.background.v900};
     padding: 60px 30px 10px;
   }
 
   h5 {
     font-weight: 300;
-    color: #808080;
+    color: ${({ theme }) => theme.colors.background.v700};
     font-size: 12px;
   }
 `

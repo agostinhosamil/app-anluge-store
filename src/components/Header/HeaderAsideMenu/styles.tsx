@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const Container = styled.div`
   width: 100%;
   max-width: 430px;
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.colors.background.v50};
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   box-shadow: 0px 16px 8px 2px rgb(0 0 0 / 27%);
@@ -46,14 +46,14 @@ export const Container = styled.div`
         flex-direction: row;
         align-items: center;
         padding: 7px 20px 8px;
-        color: #333333;
+        color: ${({ theme }) => theme.colors.background.v900};
 
         &:hover {
-          background-color: #ebebeb;
+          background-color: ${({ theme }) => theme.colors.background.v200};
         }
 
         &:active {
-          background-color: #e0e0e0;
+          background-color: ${({ theme }) => theme.colors.background.v300};
         }
 
         i {

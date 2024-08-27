@@ -182,7 +182,7 @@ export const AuthenticationWrapperContextProvider: AuthenticationWrapperContextP
                   <FloatingLabel
                     controlId="user-username"
                     label="Email ou telefone"
-                    className="mb-3"
+                    className="mb-3 bootstrap-floating-label"
                   >
                     <Form.Control
                       type="text"
@@ -197,7 +197,7 @@ export const AuthenticationWrapperContextProvider: AuthenticationWrapperContextP
                 <FloatingLabel
                   controlId="user-password"
                   label="Palavra passe"
-                  className="mb-3"
+                  className="mb-3 bootstrap-floating-label"
                 >
                   <Form.Control
                     type="password"

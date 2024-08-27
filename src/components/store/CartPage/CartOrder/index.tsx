@@ -1,10 +1,13 @@
 import Image from 'next/image'
 import { useState } from 'react'
-import { FaHeart, FaMinus, FaPlus, FaTrash } from 'react-icons/fa6'
+import { FaMinus, FaPlus, FaTrash } from 'react-icons/fa6'
 
 import { StoreCartItem, useStoreContext } from 'store@components/Context'
+import { FavoriteButton } from 'store@components/FavoriteButton'
 import { CategoryBreadCrumb } from 'store@components/ProductPage/CategoryBreadCrumb'
 import { formatAmount, resolveProductImageUrl } from '~/utils'
+
+import { Favorite } from './buttons/Favorite'
 import {
   AmountInputWrapper,
   BudgetData,
@@ -84,14 +87,12 @@ export const CartOrder: CartOrderComponent = ({ product }) => {
       </ImageWrapper>
       <DataWrapper>
         <HeadingWrapper>
-          <h6>{product.name}</h6>
+          <h6 className="dark:text-zinc-100">{product.name}</h6>
           <ul>
             <li>
-              <button>
-                <i>
-                  <FaHeart />
-                </i>
-              </button>
+              <FavoriteButton product={product}>
+                <Favorite />
+              </FavoriteButton>
             </li>
             <li>
               <button type="button" onClick={removeOrderButtonClickHandler}>
@@ -106,7 +107,9 @@ export const CartOrder: CartOrderComponent = ({ product }) => {
         <BudgetData>
           {product.price >= 1 && (
             <Price>
-              <strong>{formatAmount(product.price * amount)}</strong>
+              <strong className="dark:text-zinc-300">
+                {formatAmount(product.price * amount)}
+              </strong>
             </Price>
           )}
           <AmountInputWrapper>
@@ -127,6 +130,7 @@ export const CartOrder: CartOrderComponent = ({ product }) => {
                 spellCheck="false"
                 onChange={amountInputChangeHandler}
                 value={amount}
+                className="text-zinc-900 bg-zinc-50 dark:bg-zinc-900 dark:text-zinc-100"
               />
               <i>
                 <button type="button" onClick={plusButtonClickHandler}>

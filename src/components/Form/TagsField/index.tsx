@@ -91,9 +91,12 @@ export const TagsField: TagsFieldComponent = ({
   )
 
   return (
-    <Container htmlFor={fieldId}>
+    <Container
+      htmlFor={fieldId}
+      className="bg-zinc-50 border-zinc-300 dark:bg-zinc-800 dark:border-zinc-600"
+    >
       <LabelWrapper>
-        <Label>{labelText}</Label>
+        <Label className="text-zinc-900 dark:text-zinc-50">{labelText}</Label>
       </LabelWrapper>
       <Body>
         <ul>
@@ -119,6 +122,7 @@ export const TagsField: TagsFieldComponent = ({
               spellCheck={false}
               onKeyDown={inputKeyDownHandler}
               onKeyUp={inputKeyUpHandler}
+              className="dark:text-zinc-50"
             />
           </li>
         </ul>

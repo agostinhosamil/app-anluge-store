@@ -44,7 +44,7 @@ export const CreateUserForm: CreateUserFormComponent = ({
           <FloatingLabel
             controlId="user-name"
             label="Nome completo"
-            className="mb-3"
+            className="mb-3 bootstrap-floating-label"
           >
             <Form.Control
               type="text"
@@ -75,7 +75,7 @@ export const CreateUserForm: CreateUserFormComponent = ({
           <FloatingLabel
             controlId="user-email"
             label="Endereço de email"
-            className="mb-3"
+            className="mb-3 bootstrap-floating-label"
           >
             <Form.Control
               type="text"
@@ -90,7 +90,7 @@ export const CreateUserForm: CreateUserFormComponent = ({
           <FloatingLabel
             controlId="user-phone"
             label="Número de telefone"
-            className="mb-3"
+            className="mb-3 bootstrap-floating-label"
           >
             <Form.Control
               type="text"
@@ -109,7 +109,7 @@ export const CreateUserForm: CreateUserFormComponent = ({
             <FloatingLabel
               controlId="user-password"
               label="Palavra passe"
-              className="mb-3"
+              className="mb-3 bootstrap-floating-label"
             >
               <Form.Control
                 type="text"
@@ -123,7 +123,7 @@ export const CreateUserForm: CreateUserFormComponent = ({
             <FloatingLabel
               controlId="user-password-confirmation"
               label="Repita a palavra passe"
-              className="mb-3"
+              className="mb-3 bootstrap-floating-label"
             >
               <Form.Control
                 type="text"

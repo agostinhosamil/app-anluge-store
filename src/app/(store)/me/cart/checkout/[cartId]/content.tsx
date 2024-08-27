@@ -1,6 +1,5 @@
 'use client'
 
-import { Container } from '@components/styled'
 import { CartProps } from 'Types/Cart'
 import Image from 'next/image'
 import { Col, FloatingLabel, Form, Row } from 'react-bootstrap'
@@ -9,26 +8,12 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { FormSubmit } from '~/components/dashboard/FormSubmit'
+import { ScrollArea } from '~/components/ui/scroll-area'
 import {
   resolveProductImageUrl,
   resolveUserAvatarUrl,
   validCardNumber
 } from '~/utils'
-import {
-  CardAvatar,
-  CardAvatarWrapper,
-  CardBody,
-  CardContainer,
-  CardData,
-  CardSubTitle,
-  CardTitle,
-  CartSummaryContainer,
-  CheckoutFormContainer,
-  ContentBody,
-  Paragraph,
-  SubTitle,
-  Title
-} from './styles'
 
 type ContentProps = {
   cart: CartProps
@@ -95,75 +80,95 @@ export const Content: ContentComponent = ({ cart }) => {
     }
 
   return (
-    <Container>
-      <ContentBody>
+    <div className="w-full max-w-[1320px] h-auto m-auto block relative">
+      <div className="w-full h-auto py-14 px-[4%]">
         <Row>
           <Col md={6}>
-            <Title>Resumo do pedido</Title>
-            <SubTitle>Itens a adquirir ({cart.orders.length})</SubTitle>
-            <Paragraph>
+            <h1 className="font-bold text-2xl text-zinc-700 pr-16 dark:text-zinc-50 dark:font-extrabold">
+              Resumo do pedido
+            </h1>
+            <h2 className="block w-full text-xl h-auto py-3 font-normal text-zinc-800 pr-16 dark:text-zinc-200">
+              Itens a adquirir ({cart.orders.length})
+            </h2>
+            <p className="block w-full h-auto p-0 m-0 text-[11px] text-zinc-500 pr-16 dark:text-zinc-300">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Non
               commodi cupiditate, quis deserunt dolorem architecto ut, sequi
               dolore necessitatibus id aliquid, eos perspiciatis omnis
               voluptatibus fugit ipsam similique voluptates quisquam?
-            </Paragraph>
-            <CartSummaryContainer>
-              <ul>
-                {cart.orders.map(({ product }) => (
-                  <li key={product.id}>
-                    <div>
-                      <i>
-                        <Image
-                          width={60}
-                          height={60}
-                          alt={product.name}
-                          src={resolveProductImageUrl(product)}
-                        />
-                      </i>
-                    </div>
-                    <data>
-                      <h5>{product.name}</h5>
-                    </data>
-                  </li>
-                ))}
+            </p>
+            <div className="w-full h-auto my-10 min-[1200px]:max-h-[850px] min-[1200px]:pr-16">
+              <ul className="w-full h-auto block min-[1200px]:max-h-[770px] min-[1200px]:overflow-y-auto min-[1200px]:p-10 min-[1200px]:border-1 min-[1200px]:border-solid min-[1200px]:border-zinc-300 min-[1200px]:dark:border-zinc-700 min-[1200px]:rounded-lg">
+                <ScrollArea>
+                  {cart.orders.map(({ product }) => (
+                    <li
+                      key={product.id}
+                      className="w-full h-auto flex flex-row items-center mt-6 first:mt-0"
+                    >
+                      <div className="flex flex-col mr-3 size-[60px]">
+                        <i>
+                          <Image
+                            width={60}
+                            height={60}
+                            alt={product.name}
+                            src={resolveProductImageUrl(product)}
+                            className="rounded-full outline-none border-0 bg-zinc-300 dark:bg-zinc-800"
+                          />
+                        </i>
+                      </div>
+                      <data className="inline-flex w-full items-center">
+                        <h5 className="dark:text-zinc-100">{product.name}</h5>
+                      </data>
+                    </li>
+                  ))}
+                </ScrollArea>
               </ul>
-            </CartSummaryContainer>
+            </div>
           </Col>
           <Col md={6}>
-            <Title>Checkout</Title>
-            <br />
-            <SubTitle>Dados do cartão</SubTitle>
-            <Paragraph>
+            <h1 className="font-bold text-2xl text-zinc-700 pr-16 mb-3 dark:text-zinc-50 dark:font-extrabold">
+              Checkout
+            </h1>
+            <h2 className="block w-full text-xl h-auto py-3 font-normal text-zinc-800 dark:text-zinc-200 pr-16">
+              Dados do cartão
+            </h2>
+            <p className="block w-full h-auto p-0 m-0 text-[11px] text-zinc-500 pr-16 dark:text-zinc-300">
               Complete seu pedido selecionando um método e fornecendo os seus
               dados de pagamento.
-            </Paragraph>
-            <CardContainer>
-              <CardBody>
-                <CardAvatarWrapper>
-                  <CardAvatar
+            </p>
+
+            <div className="w-full h-auto bg-gray-200 dark:bg-zinc-900 rounded-xl p-6 my-9">
+              <div className="w-full h-auto flex flex-row items-center">
+                <div className="size-16 mr-5">
+                  <Image
                     width={60}
                     height={60}
                     alt={String(cart.user?.name)}
                     src={resolveUserAvatarUrl(cart.user?.image)}
+                    className="border-0 outline-none rounded-full"
                   />
-                </CardAvatarWrapper>
-                <CardData>
-                  <CardTitle>{cart.user?.name}</CardTitle>
-                  <CardSubTitle>{cart.user?.email}</CardSubTitle>
-                </CardData>
-              </CardBody>
-            </CardContainer>
-            <CheckoutFormContainer
+                </div>
+                <data className="w-full inline-flex flex-col [&_*]:pointer-events-none [&_*]:select-none">
+                  <strong className="text-2xl font-bold text-zinc-800 dark:text-zinc-50">
+                    {cart.user?.name}
+                  </strong>
+                  <span className="text-zinc-600 text-[14px] dark:text-zinc-300">
+                    {cart.user?.email}
+                  </span>
+                </data>
+              </div>
+            </div>
+            <form
               method="post"
               action={`/api/me/cart/checkout/${cart.id}?ref=user.checkout.page`}
               onSubmit={handleSubmit(checkoutFormSubmitHandler)}
+              className="w-ful block h-auto"
             >
               <Row>
                 <Col md={6}>
                   <FloatingLabel
                     controlId="card-number"
                     label="Número do cartão"
-                    className="mb-3"
+                    className="mb-3 bootstrap-floating-label"
                   >
                     <Form.Control
                       type="text"
@@ -177,7 +182,7 @@ export const Content: ContentComponent = ({ cart }) => {
                   <FloatingLabel
                     controlId="card-expiration-date"
                     label="MM/AA"
-                    className="mb-3"
+                    className="mb-3 bootstrap-floating-label"
                   >
                     <Form.Control
                       type="text"
@@ -194,7 +199,7 @@ export const Content: ContentComponent = ({ cart }) => {
                   <FloatingLabel
                     controlId="card-cvc"
                     label="CVC"
-                    className="mb-3"
+                    className="mb-3 bootstrap-floating-label"
                   >
                     <Form.Control
                       type="text"
@@ -210,7 +215,7 @@ export const Content: ContentComponent = ({ cart }) => {
                   <FloatingLabel
                     controlId="card-holder"
                     label="Titular do cartão"
-                    className="mb-3"
+                    className="mb-3 bootstrap-floating-label"
                   >
                     <Form.Control
                       type="text"
@@ -221,18 +226,20 @@ export const Content: ContentComponent = ({ cart }) => {
                   </FloatingLabel>
                 </Col>
               </Row>
-              <SubTitle>Endereço de entrega</SubTitle>
-              <Paragraph>
+              <h2 className="block text-xl w-full h-auto py-3 font-normal text-zinc-800 dark:text-zinc-200 pr-16">
+                Endereço de entrega
+              </h2>
+              <p className="block w-full h-auto p-0 m-0 text-[11px] text-zinc-500 pr-16 dark:text-zinc-300">
                 Complete seu pedido selecionando um método e fornecendo os seus
                 dados de pagamento.
-              </Paragraph>
+              </p>
               <br />
               <Row>
                 <Col md={12}>
                   <FloatingLabel
                     controlId="user-address"
                     label="Endereço (Sector, Rua, Bairro)"
-                    className="mb-3"
+                    className="mb-3 bootstrap-floating-label"
                   >
                     <Form.Control
                       type="text"
@@ -248,7 +255,7 @@ export const Content: ContentComponent = ({ cart }) => {
                   <FloatingLabel
                     controlId="user-city"
                     label="Cidade (Província)"
-                    className="mb-3"
+                    className="mb-3 bootstrap-floating-label"
                   >
                     <Form.Control
                       type="text"
@@ -262,7 +269,7 @@ export const Content: ContentComponent = ({ cart }) => {
                   <FloatingLabel
                     controlId="user-address"
                     label="Código postal"
-                    className="mb-3"
+                    className="mb-3 bootstrap-floating-label"
                   >
                     <Form.Control
                       type="text"
@@ -280,10 +287,10 @@ export const Content: ContentComponent = ({ cart }) => {
                   </FormSubmit>
                 </Col>
               </Row>
-            </CheckoutFormContainer>
+            </form>
           </Col>
         </Row>
-      </ContentBody>
-    </Container>
+      </div>
+    </div>
   )
 }

@@ -79,8 +79,10 @@ export const Content: ContentComponent = props => {
           action={`/api/store/orders/${props.cart.id}/cancel`}
           onSubmit={event => formSubmitHandler(event)}
         >
-          <Title>Que pena; estavas tão perto...!</Title>
-          <Paragraph>
+          <Title className="text-red-900 dark:text-red-600">
+            Que pena; estavas tão perto...!
+          </Title>
+          <Paragraph className="text-zinc-500 dark:text-zinc-400">
             Entendemos que às vezes surgem dúvidas ou imprevistos que podem
             levar você a reconsiderar sua compra. Queremos assegurar que estamos
             aqui para ajudar e tornar sua experiência conosco o mais tranquila
@@ -90,31 +92,35 @@ export const Content: ContentComponent = props => {
             com sua decisão de compra, e estamos comprometidos em resolver
             qualquer questão que possa ter surgido durante o processo de compra.
           </Paragraph>
-          <CheckOptionsGroup>
-            <strong>
+          <CheckOptionsGroup className="bg-zinc-200 dark:bg-zinc-900">
+            <strong className="dark:text-zinc-200">
               Por favor, ajude-nos a melhorar o que quer que esteja a faltar na
               nossa plataforma.
               <br />O que o levou a cancelar este pedido?
             </strong>
             <CheckOptionsList>
               {reasons.map((reason, i) => (
-                <li key={i}>
+                <li key={i} className="bg-zinc-50 dark:bg-zinc-950">
                   <input
                     type="radio"
                     name="cancel[reason]"
                     value={i}
                     id={`reason${i}`}
                   />
-                  <label htmlFor={`reason${i}`}>
+                  <label htmlFor={`reason${i}`} className="dark:text-zinc-400">
                     <i />
-                    <span>{reason.title}</span>
+                    <span className="text-zinc-700 dark:text-zinc-50">
+                      {reason.title}
+                    </span>
                     <p suppressHydrationWarning>{reason.description}</p>
                   </label>
                 </li>
               ))}
             </CheckOptionsList>
           </CheckOptionsGroup>
-          <SubTitle>O que está a deixar para trás...</SubTitle>
+          <SubTitle className="text-zinc-600 dark:text-zinc-100">
+            O que está a deixar para trás...
+          </SubTitle>
           <OrderItemsSliderWrapper>
             <TouchSlider showButtons showIndicators>
               {props.cart.orders.map(order => (
@@ -125,14 +131,18 @@ export const Content: ContentComponent = props => {
                         backgroundImage: `url(${resolveProductImageUrl(order.product)})`
                       }}
                     />
-                    <strong>{order.product.name}</strong>
-                    <span>{order.quantity}</span>
+                    <strong className="text-zinc-900 dark:text-zinc-50">
+                      {order.product.name}
+                    </strong>
+                    <span className="text-zinc-500 dark:text-zinc-400">
+                      {order.quantity}
+                    </span>
                   </OrderItem>
                 </Slide>
               ))}
             </TouchSlider>
           </OrderItemsSliderWrapper>
-          <SubTitle>
+          <SubTitle className="text-zinc-600 dark:text-zinc-100">
             Se tiver a ver com algum problema ligado a plataforma ou aos nossos
             serviços, talvez possamos ajudar:
           </SubTitle>
@@ -200,14 +210,17 @@ export const Content: ContentComponent = props => {
               </Col>
             </Row>
           </OptionalLinksListWrapper>
-          <Paragraph style={{ marginTop: '0px' }}>
+          <Paragraph className="!mt-0 text-zinc-500 dark:text-zinc-400">
             Não hesite em entrar em contato conosco através do nosso chat ao
             vivo ou pelo número [Inserir número de contato] para que possamos
             resolver qualquer dúvida ou preocupação que você tenha. Estamos aqui
             para tornar sua experiência de compra conosco excepcional.
           </Paragraph>
           <SubmitButton type="submit">Cancelar pedido</SubmitButton>
-          <CancelLink href="/me/orders">
+          <CancelLink
+            className="text-zinc-700 dark:text-zinc-100"
+            href="/me/orders"
+          >
             <i>
               <FaAngleLeft />
             </i>

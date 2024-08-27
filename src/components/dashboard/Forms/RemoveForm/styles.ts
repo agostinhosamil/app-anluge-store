@@ -23,7 +23,6 @@ export const Body = styled.div`
   }
 
   p {
-    color: #444444;
     display: block;
     margin: 0px;
     padding: 0px 0px 8px;

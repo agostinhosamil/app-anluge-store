@@ -381,6 +381,11 @@ div.section-title-container h1 b {
   }
 }
 
+html body section {
+  max-width: 1320px;
+  margin: auto;
+}
+
 section.about-company-section {
   width: 100%;
   padding: 75px 0px 40px;

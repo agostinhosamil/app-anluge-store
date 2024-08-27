@@ -1,10 +1,12 @@
+import { useRef, useState } from 'react'
 import ReactDropZone, {
   DropzoneProps as ReactDropZoneProps
 } from 'react-dropzone'
 import { FaEye, FaPlus, FaTrash } from 'react-icons/fa6'
 
-import { useRef, useState } from 'react'
+import { cn } from '~/lib/utils'
 import { noEmpty } from '~/utils'
+
 import {
   DropZoneBody,
   DropZoneContainer,
@@ -35,7 +37,7 @@ type DropZoneComponent = React.FunctionComponent<
 
 export const DropZone: DropZoneComponent = ({ defaultValue, ...props }) => {
   const [file, setFile] = useState<File | null>(null)
-  const [files, setFiles] = useState<Array<File>>([])
+  // const [files, setFiles] = useState<Array<File>>([])
   const [dropError, setDropError] = useState<boolean>(false)
 
   const defaultValueState = useRef<string | undefined>(defaultValue)
@@ -44,7 +46,7 @@ export const DropZone: DropZoneComponent = ({ defaultValue, ...props }) => {
     // console.log('reactDropZoneDropHandler >>> ', files)
 
     if (files.length >= 1) {
-      setFiles(files)
+      // setFiles(files)
       setFile(files[0])
 
       if (typeof props.onChange === 'function') {
@@ -93,7 +95,14 @@ export const DropZone: DropZoneComponent = ({ defaultValue, ...props }) => {
         onDropRejected={reactDropZoneDropRejectedHandler}
       >
         {({ getRootProps, getInputProps, isDragActive }) => (
-          <DropZoneElement $error={dropError}>
+          <DropZoneElement
+            className={cn(
+              'border-dashed border-[2px]',
+              dropError
+                ? 'bg-red-200 hover:bg-red-300 active:bg-red-400 border-red-500'
+                : 'bg-zinc-200 hover:bg-zinc-300 active:bg-zinc-400 border-zinc-500 dark:bg-zinc-700 dark:hover:bg-zinc-800 dark:active:bg-zinc-900 dark:border-zinc-600 dark:text-zinc-300'
+            )}
+          >
             <DropZoneBody $height={props.height} {...getRootProps()}>
               {/* {(file && (
                 <DropZoneFilePreview $src={} />
@@ -128,6 +137,7 @@ export const DropZone: DropZoneComponent = ({ defaultValue, ...props }) => {
                   type="button"
                   onClick={deleteButtonClickHandler}
                   title="Remover este arquivo"
+                  className="bg-zinc-200 hover:bg-zinc-300 active:bg-zinc-400 dark:bg-zinc-700 dark:hover:bg-zinc-600 dark:active:bg-zinc-500 dark:text-zinc-200"
                 >
                   <FaTrash />
                 </button>
@@ -135,7 +145,11 @@ export const DropZone: DropZoneComponent = ({ defaultValue, ...props }) => {
             </li>
             <li>
               <div>
-                <button type="button" title="Pre-visualizar este arquivo">
+                <button
+                  type="button"
+                  title="Pre-visualizar este arquivo"
+                  className="bg-zinc-200 hover:bg-zinc-300 active:bg-zinc-400 dark:bg-zinc-700 dark:hover:bg-zinc-600 dark:active:bg-zinc-500 dark:text-zinc-200"
+                >
                   <FaEye />
                 </button>
               </div>

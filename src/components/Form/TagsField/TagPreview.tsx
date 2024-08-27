@@ -59,7 +59,10 @@ export const TagPreview: TagPreviewComponent = props => {
 
   return (
     <li>
-      <span onDoubleClick={spanDoubleClickHandler}>
+      <span
+        onDoubleClick={spanDoubleClickHandler}
+        className="bg-zinc-200 text-zinc-800 dark:bg-zinc-700 dark:text-zinc-300"
+      >
         <input type="hidden" readOnly={true} name={fieldName} value={slag} />
         {(editing && (
           <input
@@ -68,6 +71,7 @@ export const TagPreview: TagPreviewComponent = props => {
             defaultValue={slag}
             onKeyDown={inputKeyDownHandler}
             onBlur={inputBlurHandler}
+            className="dark:text-zinc-50"
           />
         )) || (
           <Fragment>

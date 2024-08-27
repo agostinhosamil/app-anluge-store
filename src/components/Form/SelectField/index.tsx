@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { FaAngleDown, FaAngleLeft, FaAngleUp } from 'react-icons/fa6'
 
+import { cn } from '~/lib/utils'
 import { noEmpty, strMatches } from '~/utils'
 import { Option } from './Option'
 import {
@@ -176,7 +177,7 @@ export const SelectField: SelectFieldComponent<OptionProps> = ({
     setListDataStack(listDataStack.slice(0, -1))
   }
 
-  const filterInputBlurHandler = (event: React.BaseSyntheticEvent) => {
+  const filterInputBlurHandler = () => {
     if (closeOnSelectFieldContainerBlur) {
       resetState()
     }
@@ -251,16 +252,23 @@ export const SelectField: SelectFieldComponent<OptionProps> = ({
         onKeyDown={selectFieldContainerKeyDownHandler}
         onBlur={selectFieldContainerBlurHandler}
         onClick={selectFieldContainerClickHandler}
+        className={cn(
+          'bg-zinc-50 border-zinc-300 dark:bg-zinc-800 dark:border-zinc-600',
+          !opened
+            ? ' hover:bg-zinc-200 active:bg-zinc-300 dark:hover:bg-zinc-700 dark:active:bg-zinc-600'
+            : ''
+        )}
       >
         <Body>
           <LabelContainer>
-            <LabelWrapper>
+            <LabelWrapper className="dark:text-zinc-50">
               {(typing && (
                 <FilterInput
                   value={query}
                   onBlur={filterInputBlurHandler}
                   onChange={filterInputChangeHandler}
                   ref={inputElement => inputElement?.focus()}
+                  className="dark:text-zinc-50"
                 />
               )) || <Label>{resolveFieldLabel()}</Label>}
             </LabelWrapper>
@@ -274,11 +282,15 @@ export const SelectField: SelectFieldComponent<OptionProps> = ({
         <ListWrapper
           onMouseEnter={listWrapperMouseEnterHandler}
           onMouseLeave={listWrapperMouseLeaveHandler}
+          className="bg-zinc-50 border-zinc-400 dark:bg-zinc-800 dark:border-zinc-600"
         >
           <List $maxHeight={listHeight}>
             {listDataStack.length >= 2 && (
               <ListBackButtonWrapper>
-                <ListBackButton onClick={listBackButtonClickHandler}>
+                <ListBackButton
+                  onClick={listBackButtonClickHandler}
+                  className="hover:bg-zinc-100 active:bg-zinc-200 dark:hover:bg-zinc-700 dark:active:bg-zinc-600 dark:text-zinc-100"
+                >
                   <i>
                     <FaAngleLeft />
                   </i>

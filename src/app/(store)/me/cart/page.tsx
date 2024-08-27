@@ -584,7 +584,7 @@ export default function CartPage() {
                 >
                   <Fragment>
                     <h1>Já tem tudo o que precisava?</h1>
-                    <p>Hora de finalizar.</p>
+                    <p className="dark:text-zinc-300">Hora de finalizar.</p>
                     {!auth.user && (
                       <Fragment>
                         <Row>
@@ -592,13 +592,14 @@ export default function CartPage() {
                             <FloatingLabel
                               controlId="user-name"
                               label="Nome completo"
-                              className="mb-3"
+                              className="mb-3 dark:[&>label]:after:!bg-zinc-800 dark:[&>label]:!text-zinc-100"
                             >
                               <Form.Control
                                 type="text"
                                 placeholder="Nome completo"
                                 autoComplete="off"
                                 {...register('user.name')}
+                                className="dark:bg-zinc-800 dark:text-zinc-50 dark:border-zinc-600"
                               />
                             </FloatingLabel>
                           </Col>
@@ -608,13 +609,14 @@ export default function CartPage() {
                             <FloatingLabel
                               controlId="user-email"
                               label="Endereço de email"
-                              className="mb-3"
+                              className="mb-3 dark:[&>label]:after:!bg-zinc-800 dark:[&>label]:!text-zinc-100"
                             >
                               <Form.Control
                                 type="text"
                                 placeholder="Endereço de email"
                                 autoComplete="off"
                                 {...register('user.email')}
+                                className="dark:bg-zinc-800 dark:text-zinc-50 dark:border-zinc-600"
                               />
                             </FloatingLabel>
                           </Col>
@@ -624,13 +626,14 @@ export default function CartPage() {
                             <FloatingLabel
                               controlId="user-phone"
                               label="Número de telefone (Whatsapp)"
-                              className="mb-3"
+                              className="mb-3 dark:[&>label]:after:!bg-zinc-800 dark:[&>label]:!text-zinc-100"
                             >
                               <Form.Control
                                 type="text"
                                 placeholder="Número de telefone (Whatsapp)"
                                 autoComplete="off"
                                 {...register('user.phone')}
+                                className="dark:bg-zinc-800 dark:text-zinc-50 dark:border-zinc-600"
                               />
                             </FloatingLabel>
                           </Col>

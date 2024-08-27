@@ -50,12 +50,13 @@ export const Order: OrderComponent = ({ cart }) => {
     <Fragment>
       <OrderContainer>
         <data>
-          <h5>
+          <h5 className="dark:text-zinc-50">
             {cart.code}
             <i>
               <button
                 type="button"
                 onClick={copyCartTrackingCodeButtonClickHandler}
+                className="text-zinc-500 hover:text-zinc-600 active:text-zinc-700 dark:text-zinc-600 dark:hover:text-zinc-700 dark:active:text-zinc-800"
               >
                 <FaCopy />
               </button>

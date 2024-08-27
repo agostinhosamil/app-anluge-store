@@ -19,7 +19,6 @@ export const SearchInputContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  border: 1px solid #cdcdcd;
   border-radius: 8px;
   -webkit-border-radius: 8px;
   padding: 9px 12px;
@@ -75,7 +74,6 @@ export const Button = styled.button`
   -webkit-border-radius: 8px;
   border: 0px;
   outline: 0px;
-  background-color: #f0f0f0;
   padding: 15px 12px;
 
   div {
@@ -91,7 +89,6 @@ export const Button = styled.button`
       width: 100%;
       display: block;
       text-align: right;
-      color: #898989;
     }
   }
 
@@ -102,13 +99,5 @@ export const Button = styled.button`
   i {
     display: inline-flex;
     margin-left: 8px;
-  }
-
-  &:hover {
-    background-color: #e0e0e0;
-  }
-
-  &:active {
-    background-color: #c1c1c1;
   }
 `

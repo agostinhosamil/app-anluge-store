@@ -40,7 +40,9 @@ const companyTaxData = [
   }
 ]
 
-export const Footer: React.FunctionComponent = () => {
+export const Footer: React.FunctionComponent<
+  React.PropsWithChildren
+> = props => {
   const theme = useTheme()
 
   return (
@@ -96,6 +98,9 @@ export const Footer: React.FunctionComponent = () => {
       <Container>
         <BootstrapContainer>
           <NewsletterForm />
+          {props.children && (
+            <div className="w-full pb-32">{props.children}</div>
+          )}
           <Row>
             <Column lg={4}>
               <CompanyDataWrapper>

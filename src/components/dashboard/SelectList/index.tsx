@@ -75,12 +75,16 @@ export function SelectList<ListDataType = any>(
   return (
     <Container>
       <Header>
-        <SearchInputContainer>
+        <SearchInputContainer className="border-solid border-[1px] border-zinc-300 dark:border-zinc-600">
           <i>
             <FaSearch />
           </i>
           <div>
-            <input value={query} onChange={inputChangeHandler} />
+            <input
+              value={query}
+              onChange={inputChangeHandler}
+              className="dark:text-zinc-50"
+            />
           </div>
         </SearchInputContainer>
       </Header>
@@ -106,13 +110,16 @@ export function SelectList<ListDataType = any>(
                   key={listItem.id}
                   type="button"
                   onClick={buttonClickHandler}
+                  className="bg-zinc-200 hover:bg-zinc-300 dark:text-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700"
                 >
                   <div>
                     <strong>{listItem.title}</strong>
                   </div>
                   {noEmpty(listItem.subTitle) && (
                     <div>
-                      <span>{listItem.subTitle}</span>
+                      <span className="dark:text-zinc-400">
+                        {listItem.subTitle}
+                      </span>
                     </div>
                   )}
                   <i>

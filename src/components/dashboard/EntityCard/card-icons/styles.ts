@@ -1,9 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export type CardIconDropDownMenuProps = {
-  $left: number;
-  $top: number;
-};
+  $left: number
+  $top: number
+}
 
 export const CardIconDropDownMenu = styled.div<CardIconDropDownMenuProps>`
   width: 100%;
@@ -13,18 +13,17 @@ export const CardIconDropDownMenu = styled.div<CardIconDropDownMenuProps>`
   box-shadow: 0px 0px 20px rgb(0 0 0 / 17%);
   border-radius: 8px;
   -webkit-border-radius: 8px;
-  background-color: #ffffff;
   position: fixed;
-  left: ${(props) => props.$left}px;
-  top: ${(props) => props.$top}px;
-`;
+  left: ${props => props.$left}px;
+  top: ${props => props.$top}px;
+`
 
 export const CardIconDropDownMenuList = styled.div`
   width: 100%;
   height: auto;
   display: flex;
   flex-direction: column;
-`;
+`
 
 export const CardIconDropDownMenuListItem = styled.div`
   width: 100%;
@@ -43,28 +42,19 @@ export const CardIconDropDownMenuListItem = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    color: #111111;
 
     * {
       color: inherit;
     }
-
-    &:hover {
-      background-color: #ebebeb !important;
-    }
-
-    &:active {
-      background-color: #e0e0e0 !important;
-    }
   }
-`;
+`
 
 export const CardOptionIconWrapper = styled.div`
   display: inline-flex;
   flex-direction: row;
   align-items: flex-start;
   padding-right: 8px;
-`;
+`
 
 export const CardOptionLabelWrapper = styled.div`
   width: 100%;
@@ -72,4 +62,4 @@ export const CardOptionLabelWrapper = styled.div`
   margin-top: +3px;
   display: flex;
   justify-content: flex-start;
-`;
+`

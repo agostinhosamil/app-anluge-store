@@ -7,7 +7,6 @@ export const OrderContainer = styled.div`
   flex-direction: row;
   align-items: center;
   padding: 20px;
-  border-bottom: 4px solid #ffffff;
 
   data {
     width: 100%;
@@ -30,15 +29,6 @@ export const OrderContainer = styled.div`
           background-color: transparent;
           border: 0px;
           outline: 0px;
-          color: #4c5156;
-
-          &:hover {
-            color: #656d74;
-          }
-
-          &:active {
-            color: #393e44;
-          }
         }
       }
     }

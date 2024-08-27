@@ -16,7 +16,7 @@ export const Aside = () => {
 
   return (
     <Container>
-      <UserCard>
+      <UserCard className="bg-zinc-300 dark:bg-zinc-900">
         <PhotoWrapper>
           <div>
             <Image
@@ -28,8 +28,12 @@ export const Aside = () => {
           </div>
         </PhotoWrapper>
         <DataWrapper>
-          <strong>{auth.user.name}</strong>
-          <span>{auth.user.role.name}</span>
+          <strong className="text-zinc-700 dark:text-zinc-50 dark:font-extrabold">
+            {auth.user.name}
+          </strong>
+          <span className="text-zinc-600 dark:text-zinc-300">
+            {auth.user.role.name}
+          </span>
         </DataWrapper>
       </UserCard>
       <Body>

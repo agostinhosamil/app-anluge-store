@@ -37,7 +37,6 @@ export const TopHeaderMenu = styled.div`
       a {
         font-size: 11px;
         text-transform: uppercase;
-        color: #333333;
         font-weight: 400;
 
         &:hover {
@@ -54,11 +53,9 @@ export const TopHeaderMenu = styled.div`
       }
 
       &.selected a {
-        background-color: #ababab;
         border-radius: 16px;
         -webkit-border-radius: 37px;
         padding: 9px 14px;
-        color: #ffffff;
         font-weight: 700;
 
         &:hover {
@@ -92,7 +89,6 @@ export const TopHeaderData = styled(TopHeaderMenu)`
       position: relative;
       display: flex;
       flex-direction: row;
-      color: #555555;
       align-items: center;
 
       i {

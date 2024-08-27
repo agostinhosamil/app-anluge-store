@@ -51,7 +51,7 @@ export const EntityCard: EntityCardComponent = ({
   const avatarSize = cardAvatarSizesMap[props.avatarSize || 'normal']
 
   return (
-    <Container>
+    <Container className="bg-zinc-200 dark:bg-zinc-900">
       <Body>
         {props.avatar && (
           <AvatarWrapper $avatarSize={props.avatarSize}>
@@ -66,8 +66,8 @@ export const EntityCard: EntityCardComponent = ({
           </AvatarWrapper>
         )}
         <Content>
-          <Title>{title}</Title>
-          <SubTitle>
+          <Title className="text-zinc-950 dark:text-zinc-50">{title}</Title>
+          <SubTitle className="text-zinc-700 dark:text-zinc-400">
             {subTitle instanceof Array ? subTitle.join(' | ') : subTitle}
           </SubTitle>
           {children}

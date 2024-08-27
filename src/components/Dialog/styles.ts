@@ -21,7 +21,7 @@ export type ContainerProps = {
 }
 
 const shouldCenterContent = (props: ContainerProps) =>
-  !Boolean(typeof props.$centerContent === 'boolean' && !props.$centerContent)
+  !(typeof props.$centerContent === 'boolean' && !props.$centerContent)
 
 export const Container = styled.div<ContainerProps>`
   width: 100%;
@@ -31,6 +31,7 @@ export const Container = styled.div<ContainerProps>`
   top: 0px;
   left: 0px;
   background-color: rgb(0 0 0 / 70%);
+  backdrop-filter: blur(8px);
   padding: ${props => (shouldCenterContent(props) ? 40 : 120)}px;
   overflow-y: ${props => (shouldCenterContent(props) ? 'unset' : 'auto')};
   display: flex;
@@ -43,7 +44,6 @@ export const Container = styled.div<ContainerProps>`
 export const DialogBox = styled.div<DialogBoxProps>`
   width: 100%;
   max-width: ${props => dialogBoxSizesMap[props.$size || 'default']}px;
-  background-color: #ffffff;
   padding: 24px 30px;
   border-radius: 12px;
   -webkit-border-radius: 12px;
@@ -84,5 +84,4 @@ export const TitleWrapper = styled.div`
 export const Title = styled.h1`
   font-size: 27px;
   font-weight: 800;
-  color: #111111;
 `

@@ -25,7 +25,6 @@ export const PageWrapper = styled.div`
 export const Title = styled.h1`
   font-size: 57px;
   font-weight: 900;
-  color: #882828;
   max-width: 80%;
   margin: auto;
   display: block;
@@ -34,7 +33,6 @@ export const Title = styled.h1`
 export const SubTitle = styled.h2`
   font-size: 43px;
   font-weight: 700;
-  color: #272727;
 `
 
 export const Paragraph = styled.p`
@@ -42,14 +40,12 @@ export const Paragraph = styled.p`
   display: block;
   margin: 45px auto;
   font-size: 24px;
-  color: #888888;
   font-weight: 300;
 `
 
 export const CheckOptionsGroup = styled.div`
   width: 100%;
   height: auto;
-  background-color: #eeeeee;
   /* box-shadow: 0px 0px 17px 2px rgb(0 0 0 / 10%); */
   border-radius: 16px;
   -webkit-border-radius: 16px;
@@ -78,7 +74,6 @@ export const CheckOptionsList = styled.ol`
     width: calc(100% / 3 - 20px);
     height: auto;
     display: block;
-    background-color: #ffffff;
     border-radius: 8px;
     -webkit-border-radius: 8px;
     box-shadow: 0px 0px 5px 1px rgba(0 0 0 / 13%);
@@ -114,7 +109,6 @@ export const CheckOptionsList = styled.ol`
 
       span {
         font-weight: 900;
-        color: #444444;
         font-size: 18px;
         line-height: 17px;
       }
@@ -169,14 +163,12 @@ export const OrderItem = styled.div`
     overflow-y: hidden;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 4;
-    color: #444444;
     height: 100px;
   }
 
   span {
     display: inline-block;
     font-weight: 900;
-    color: #b0b0b0;
     font-size: 21px;
   }
 `
@@ -282,7 +274,6 @@ export const SubmitButton = styled.button`
 
 export const CancelLink = styled(Link)`
   margin: 35px auto 0px;
-  color: #333333;
   font-weight: 400;
   display: flex;
   flex-direction: row;

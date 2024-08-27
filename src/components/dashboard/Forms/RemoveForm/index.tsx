@@ -22,8 +22,16 @@ export const RemoveForm: RemoveFormComponent = ({ actionLabel, ...props }) => {
   }
 
   return (
-    <Container method="post" action="/" {...props} onSubmit={formSubmitHandler}>
-      <Body>{props.children}</Body>
+    <Container
+      method="post"
+      action="/"
+      {...props}
+      onSubmit={formSubmitHandler}
+      className="[&_*]:select-none"
+    >
+      <Body className="dark:text-zinc-50 [&_p]:text-zinc-800 dark:[&_p]:text-zinc-300">
+        {props.children}
+      </Body>
       <FormSubmit buttonStyle="danger">{actionLabel || 'Continuar'}</FormSubmit>
     </Container>
   )

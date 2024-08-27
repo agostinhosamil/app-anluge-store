@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const Title = styled.h1`
   font-weight: 300;
   text-transform: uppercase;
-  color: #4e4e4e;
+  color: ${({ theme }) => theme.colors.foreground.v800};
   padding: 40px 8px;
 `
 
@@ -17,7 +17,8 @@ export const CategoryListWrapper = styled.div`
     display: block;
     height: 100%;
     width: 60px;
-    background-image: linear-gradient(89deg, #ffffff, transparent);
+    background-image: ${({ theme }) =>
+      `linear-gradient(89deg, ${theme.colors.background.v50}, transparent)`};
     position: absolute;
     left: -3px;
     top: 0px;
@@ -30,7 +31,8 @@ export const CategoryListWrapper = styled.div`
     display: block;
     height: 100%;
     width: 60px;
-    background-image: linear-gradient(270deg, #ffffff, transparent);
+    background-image: ${({ theme }) =>
+      `linear-gradient(270deg, ${theme.colors.background.v50}, transparent)`};
     position: absolute;
     right: -3px;
     top: 0px;

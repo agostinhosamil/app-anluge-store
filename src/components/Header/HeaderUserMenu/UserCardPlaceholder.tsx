@@ -59,7 +59,7 @@ export const UserCardPlaceholder = () => {
               <FloatingLabel
                 controlId="username"
                 label="Email ou telefone"
-                className="mb11"
+                className="mb11 dark:[&>label]:after:!bg-zinc-800 dark:[&>label]:!text-zinc-100"
               >
                 <Form.Control
                   type="text"
@@ -67,6 +67,7 @@ export const UserCardPlaceholder = () => {
                   autoComplete="off"
                   name="user[username]"
                   disabled={loading}
+                  className="dark:bg-zinc-800 dark:text-zinc-50 dark:border-zinc-600"
                 />
               </FloatingLabel>
             </Col>
@@ -74,7 +75,7 @@ export const UserCardPlaceholder = () => {
               <FloatingLabel
                 controlId="user-password"
                 label="Palavra passe"
-                className="mb11"
+                className="mb11 dark:[&>label]:after:!bg-zinc-800 dark:[&>label]:!text-zinc-100"
               >
                 <Form.Control
                   type="password"
@@ -82,6 +83,7 @@ export const UserCardPlaceholder = () => {
                   autoComplete="off"
                   name="user[password]"
                   disabled={loading}
+                  className="dark:bg-zinc-800 dark:text-zinc-50 dark:border-zinc-600"
                 />
               </FloatingLabel>
             </Col>

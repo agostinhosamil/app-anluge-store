@@ -49,8 +49,7 @@ export const Container = styled.li`
 export const CategoryCardBody = styled.div`
   width: 360px;
   height: 100%;
-  border: 1px solid #ececec;
-  background-color: #d4d4d4;
+  background-color: ${({ theme }) => theme.colors.background.v100};
   border-radius: 8px;
   -webkit-border-radius: 8px;
 `

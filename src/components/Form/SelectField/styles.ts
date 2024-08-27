@@ -13,7 +13,7 @@ const resolveHighlightColor = (
   highlightColor: string
 ): string => {
   if (typeof highlightOnMouseIn === 'boolean') {
-    return highlightOnMouseIn ? highlightColor : '#ffffff'
+    return highlightOnMouseIn ? highlightColor : 'inherit'
   }
 
   return highlightColor
@@ -33,10 +33,8 @@ export const SelectFieldContainer = styled.div<SelectFieldContainerProps>`
   display: block;
   -webkit-border-radius: 0.375rem;
   padding: 18px 12px;
-  background-color: #ffffff;
   border-width: 1px;
   border-style: solid;
-  border-color: #dee2e6;
   cursor: pointer;
   user-select: none;
   -webkit-user-select: none;
@@ -48,15 +46,21 @@ export const SelectFieldContainer = styled.div<SelectFieldContainerProps>`
     cursor: inherit;
   }
 
-  &:hover {
+  /* &:hover {
     background-color: ${props =>
-      resolveHighlightColor(props.$highlightOnMouseIn, '#f8f8f8')};
+    resolveHighlightColor(
+      props.$highlightOnMouseIn,
+      props.theme.colors.background.v200
+    )};
   }
 
   &:active {
     background-color: ${props =>
-      resolveHighlightColor(props.$highlightOnMouseIn, '#ebebeb')};
-  }
+    resolveHighlightColor(
+      props.$highlightOnMouseIn,
+      props.theme.colors.background.v300
+    )};
+  } */
 `
 
 export const Body = styled.div`
@@ -114,8 +118,6 @@ export const ListWrapper = styled.div`
   right: 0px;
   border-width: 0px 1px 1px;
   border-style: solid;
-  border-color: #dee2e6;
-  background-color: #ffffff;
   border-bottom-right-radius: 0.375rem;
   border-bottom-left-radius: 0.375rem;
   z-index: 12;
@@ -188,14 +190,6 @@ export const OptionButton = styled.button`
   outline: 0px;
   background-color: transparent;
   text-align: left;
-
-  &:hover {
-    background-color: #f0f0f0;
-  }
-
-  &:active {
-    background-color: #ebebeb;
-  }
 `
 
 export const OptionElementBody = styled.div`
@@ -239,10 +233,6 @@ export const OptionScreenButton = styled.button`
   padding: 8px 16px 7px;
   border-radius: 8px;
   -webkit-border-radius: 8px;
-
-  &:hover {
-    background-color: #f0f0f0;
-  }
 `
 
 export const OptionScreenButtonLabel = styled.div`
@@ -274,14 +264,6 @@ export const ListBackButton = styled.button.attrs({ type: 'button' })`
   display: flex;
   align-items: center;
   flex-direction: row;
-
-  &:hover {
-    background-color: #f0f0f0;
-  }
-
-  &:active {
-    background-color: #ebebeb;
-  }
 
   i {
     display: inline-flex;

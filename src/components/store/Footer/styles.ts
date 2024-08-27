@@ -4,7 +4,7 @@ export const Container = styled.footer`
   width: 100%;
   height: auto;
   padding: 60px 80px;
-  background-color: #01223a;
+  background-color: ${({ theme }) => theme.colors.background.footer};
   color: #ffffff;
   transition: all 0.2s ease-in-out;
 
@@ -69,11 +69,11 @@ export const ServiceDetails = styled.div`
           display: block;
           width: inherit;
           height: inherit;
-          background-color: #000000;
+          background-color: ${({ theme }) => theme.colors.background.v400};
           display: flex;
           justify-content: center;
           align-items: center;
-          color: #ffffff;
+          color: ${({ theme }) => theme.colors.foreground.v800};
           border-radius: 9px;
           -webkit-border-radius: 9px;
         }
@@ -84,9 +84,14 @@ export const ServiceDetails = styled.div`
         display: flex;
         flex-direction: column;
         margin-top: -6px;
+        gap: 5px;
+
+        strong {
+          color: ${({ theme }) => theme.colors.foreground.v900};
+        }
 
         span {
-          color: #808080;
+          color: ${({ theme }) => theme.colors.foreground.v700};
           font-size: 11px;
         }
       }
@@ -99,7 +104,7 @@ export const ServiceDetails = styled.div`
 
   @media (max-width: 750px) {
     padding: 30px;
-    background-color: #f4f4f4;
+    background-color: ${({ theme }) => theme.colors.background.v400};
 
     ul {
       flex-wrap: wrap;

@@ -37,7 +37,7 @@ export const CategoryMapSlider = async (props: CategoryMapSliderProps) => {
 
   return (
     <Fragment>
-      <h1 className="text-pretty px-[20px] font-light uppercase mb-[50px]">
+      <h1 className="text-pretty px-[20px] font-light uppercase mb-[50px] dark:text-zinc-100">
         Comprar por categorias
       </h1>
       <div className="w-full h-max mb-[calc(6*24px)] mt-[calc(4*24px)] flex flex-col gap-3 relative">
@@ -61,9 +61,9 @@ export const CategoryMapSlider = async (props: CategoryMapSliderProps) => {
                       width={150}
                       height={150}
                       alt={category.title}
-                      className="rounded-full pointer-events-none select-none"
+                      className="rounded-full pointer-events-none select-none dark:border-solid dark:border-1 dark:border-zinc-700"
                     />
-                    <span className="w-[150px] break-words whitespace-break-spaces px-2 line-clamp-6 absolute top-full mt-[+20px] text-center font-light text-zinc-900 select-none pointer-events-none">
+                    <span className="w-[150px] break-words whitespace-break-spaces px-2 line-clamp-6 absolute top-full mt-[+20px] text-center font-light text-zinc-900 select-none pointer-events-none dark:text-zinc-50">
                       {category.title}
                     </span>
                   </PlaceHolder>

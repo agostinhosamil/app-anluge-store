@@ -32,7 +32,7 @@ export const Header: HeaderComponent = ({ style = 'default', ...props }) => {
 
   return (
     <Container $colorStyle={style}>
-      <HeaderMenu $size={props.size}>
+      <HeaderMenu $size={props.size} className="dark:text-zinc-50">
         <div className="header-logo-container">
           <Link href="/">
             <div className="header-logo-wrapper">

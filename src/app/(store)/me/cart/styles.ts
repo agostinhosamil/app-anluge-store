@@ -19,7 +19,7 @@ export const TitleContainer = styled.div`
     display: block;
     font-size: 22px;
     font-weight: 500;
-    color: #404040;
+    color: ${({ theme }) => theme.colors.foreground.v500};
     padding-bottom: 10px 0px;
   }
 
@@ -74,13 +74,13 @@ export const ListWrapper = styled(TitleContainer)`
   padding: 30px 35px;
   border-radius: 8px;
   -webkit-border-radius: 8px;
-  background-color: #ececec;
+  background-color: ${({ theme }) => theme.colors.background.v100};
   margin-top: 20px;
 `
 
 export const MainListWrapper = styled(ListWrapper)`
   padding: 0px;
-  background-color: #fafafa;
+  background-color: ${({ theme }) => theme.colors.background.v100};
 `
 
 export const SubmitButtonWrapper = styled.div`
@@ -104,7 +104,7 @@ export const CheckoutForm = styled.form`
 
   h1 {
     font-size: 25px;
-    color: #444444;
+    color: ${({ theme }) => theme.colors.foreground.v800};
     display: block;
     margin-bottom: 10px;
   }
@@ -160,7 +160,7 @@ export const CheckoutMessageWrapper = styled.div`
   p {
     display: block;
     font-size: 14px;
-    color: #888888;
+    color: ${({ theme }) => theme.colors.foreground.v600};
   }
 `
 
@@ -178,6 +178,6 @@ export const DefinePasswordDialogParagraph = styled.p`
   width: 100%;
   padding-bottom: 15px;
   font-size: 13px;
-  color: #555555;
+  color: ${({ theme }) => theme.colors.foreground.v500};
   font-weight: 300;
 `

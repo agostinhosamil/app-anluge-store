@@ -85,16 +85,26 @@ export const Dialog: DialogComponent = props => {
 
   return (
     <Container $centerContent={centerDialogBox}>
-      <DialogBox $size={props.size} ref={dialogBoxElementRef}>
+      <DialogBox
+        $size={props.size}
+        ref={dialogBoxElementRef}
+        className="bg-zinc-50 dark:bg-zinc-900"
+      >
         {titled && (
           <TitleWrapper>
-            <Title>{props.title}</Title>
+            <Title className="text-zinc-950 dark:text-zinc-50">
+              {props.title}
+            </Title>
           </TitleWrapper>
         )}
         <DialogBoxBody>{props.children}</DialogBoxBody>
         {!doNotShowButton && (
           <CloseButtonWrapper>
-            <CloseButton onClick={closeButtonClickHandler} type="button">
+            <CloseButton
+              onClick={closeButtonClickHandler}
+              type="button"
+              className="dark:text-zinc-400"
+            >
               {(labeledCloseButton() && props.closeButtonLabel) || 'Cancelar'}
             </CloseButton>
           </CloseButtonWrapper>

@@ -36,7 +36,7 @@ export const CategoryProductsListContent: CategoryProductsListContentComponent =
 
     return (
       <Fragment key={category.id}>
-        <h1 className="text-pretty font-light uppercase">
+        <h1 className="text-pretty font-light uppercase dark:text-zinc-100">
           {noEmpty(props.title)
             ? props.title.replaceAll('$0', category.title)
             : category.title}

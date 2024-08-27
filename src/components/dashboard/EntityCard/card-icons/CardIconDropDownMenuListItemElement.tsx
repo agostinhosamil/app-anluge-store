@@ -32,7 +32,11 @@ export const CardIconDropDownMenuListItemElement: CardIconDropDownMenuListItemEl
       }
 
       return (
-        <Link href={option.href || '#'} {...linkProps}>
+        <Link
+          href={option.href || '#'}
+          {...linkProps}
+          className="text-zinc-950 dark:text-zinc-50"
+        >
           {props.children}
         </Link>
       )
@@ -46,7 +50,12 @@ export const CardIconDropDownMenuListItemElement: CardIconDropDownMenuListItemEl
       }
 
       return (
-        <button type="button" role="button" onClick={clickHandler}>
+        <button
+          type="button"
+          role="button"
+          onClick={clickHandler}
+          className="text-zinc-950 dark:text-zinc-50 hover:bg-zinc-300 active:bg-zinc-400 dark:hover:bg-zinc-900 dark:active:bg-zinc-800"
+        >
           {props.children}
         </button>
       )

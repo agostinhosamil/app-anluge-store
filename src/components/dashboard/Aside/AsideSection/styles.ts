@@ -18,7 +18,6 @@ export const TitleWrapper = styled.div`
 export const Title = styled.h5`
   font-size: 19px;
   font-weight: 600;
-  color: #b9b9b9;
   text-transform: uppercase;
 `
 

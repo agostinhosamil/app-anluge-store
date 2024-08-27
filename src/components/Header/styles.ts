@@ -11,9 +11,14 @@ export type HeaderMenuProps = {
 
 export const Container = styled.div<HeaderProps>`
   width: 100%;
-  background-color: ${props =>
-    props.$colorStyle === 'default' ? '#0170bf' : '#ffffff'};
-  color: ${props => (props.$colorStyle === 'default' ? '#ffffff' : '#333333')};
+  /* background-color: ${props =>
+    props.$colorStyle === 'default'
+      ? '#0170bf'
+      : props.theme.colors.background.v50};
+  color: ${props =>
+    props.$colorStyle === 'default'
+      ? '#ffffff'
+      : props.theme.colors.foreground.v500}; */
   position: relative;
   padding: 12px 40px;
   transition: all 0.3s ease-in-out;

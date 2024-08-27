@@ -40,13 +40,14 @@ export const Content: ContentComponent = ({ user }) => {
       <Row>
         <Column lg={8} md={7}>
           <TitleContainer>
-            <h1>Meus pedidos</h1>
+            <h1 className="dark:text-zinc-50">Meus pedidos</h1>
             <ol>
               <li>
                 <Form.Check
                   label="Selecionar todos os itens"
                   type="checkbox"
                   id="mans"
+                  className="dark:text-zinc-200"
                 />
               </li>
               <li>
@@ -70,8 +71,8 @@ export const Content: ContentComponent = ({ user }) => {
           <MainListWrapper>
             {carts.length < 1 && (
               <EmptyListContainer>
-                <h1>Sem pedidos pendentes</h1>
-                <h2>
+                <h1 className="dark:text-zinc-50">Sem pedidos pendentes</h1>
+                <h2 className="dark:text-zinc-200">
                   Os seus pedidos por receber ou pagar serão apresentados aqui.
                 </h2>
               </EmptyListContainer>
@@ -80,7 +81,7 @@ export const Content: ContentComponent = ({ user }) => {
               <Order key={cart.id} cart={cart} />
             ))}
           </MainListWrapper>
-          <ListWrapper>
+          <ListWrapper className="mb-14">
             <ol>
               <li>
                 <button type="button">

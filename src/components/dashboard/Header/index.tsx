@@ -1,10 +1,11 @@
 import Link from 'next/link'
-import { Fragment, useEffect, useRef, useState } from 'react'
+import { forwardRef, Fragment, useEffect, useRef, useState } from 'react'
 import { FaBars, FaHome, FaSearch, FaUserCog, FaUsersCog } from 'react-icons/fa'
 import { FaX } from 'react-icons/fa6'
 
 import { path } from '~/utils'
 
+import { cn } from '~/lib/utils'
 import { CommandPrompt } from './CommandPrompt'
 import { HeaderNavigationMenu } from './NavigationMenu'
 import {
@@ -17,6 +18,10 @@ import {
   MenuListWrapper,
   SearchBoxContainer
 } from './styles'
+
+type FixedContainerProps = React.PropsWithRef<
+  React.PropsWithChildren<React.HTMLAttributes<HTMLElement>>
+>
 
 export const Header = () => {
   const [fixed, setFixed] = useState<boolean>(false)
@@ -65,12 +70,25 @@ export const Header = () => {
     setPromptOpened(false)
   }
 
-  const ContainerElement = fixed ? FixedContainer : Container
+  const ContainerElement = !fixed
+    ? Container
+    : forwardRef<HTMLElement>(function FixedContainerElement(
+        props: FixedContainerProps,
+        ref
+      ) {
+        return (
+          <FixedContainer
+            {...props}
+            ref={ref}
+            className={cn('bg-zinc-50 dark:bg-zinc-950', props.className)}
+          />
+        )
+      })
 
   return (
     <Fragment>
       {fixed && <HeaderShadowElement />}
-      <ContainerElement ref={containerRef}>
+      <ContainerElement ref={containerRef} className="dark:text-zinc-50">
         <LogoWrapper>
           <div>
             <Link href={path('/')} target="_blank">
@@ -83,7 +101,7 @@ export const Header = () => {
         </div>
         <MenuContainer>
           <SearchBoxContainer>
-            <div className="hover:bg-zinc-50 transition-colors">
+            <div className="hover:bg-zinc-50 transition-colors bg-zinc-50 border-zinc-400 dark:border-zinc-950 dark:bg-zinc-900">
               <button
                 type="button"
                 onClick={searchBoxButtonClickHandler}
@@ -95,7 +113,7 @@ export const Header = () => {
             </div>
           </SearchBoxContainer>
           <MenuListWrapper>
-            <ul>
+            <ul className="text-zinc-950 dark:text-zinc-200">
               <li>
                 <Link href="#">
                   <FaHome />
@@ -121,11 +139,11 @@ export const Header = () => {
         </MenuContainer>
       </ContainerElement>
       {promptOpened && (
-        <CommandPromptContainer>
+        <CommandPromptContainer className="bg-zinc-50 dark:bg-zinc-900 !bg-opacity-85">
           <div className="fixed top-4 right-4">
             <button
               type="button"
-              className="border-0 text-sm flex flex-row items-center justify-center outline-none rounded-full w-9 h-9 bg-zinc-50 hover:bg-zinc-100 active:bg-zinc-200"
+              className="border-0 text-sm flex flex-row items-center justify-center outline-none rounded-full w-9 h-9 bg-zinc-50 dark:bg-zinc-800 dark:hover:bg-zinc-900 dark:active:bg-zinc-950 dark:text-zinc-50 hover:bg-zinc-100 active:bg-zinc-200"
               onClick={commandPromptCloseButtonClickHandler}
             >
               <FaX />

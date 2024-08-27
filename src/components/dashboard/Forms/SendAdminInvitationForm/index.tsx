@@ -9,7 +9,7 @@ import { Spinner } from 'react-bootstrap'
 import { useRole } from '~/utils/hooks/useRole'
 import { Container, Message } from './styles'
 
-type SendAdminInvitationFormProps = {}
+type SendAdminInvitationFormProps = object
 
 type SendAdminInvitationFormComponent = React.FunctionComponent<
   React.FormHTMLAttributes<HTMLFormElement> & SendAdminInvitationFormProps
@@ -49,7 +49,7 @@ export const SendAdminInvitationForm: SendAdminInvitationFormComponent = ({
           <FloatingLabel
             controlId="user-email"
             label="Endereço de email"
-            className="mb-3"
+            className="mb-3 bootstrap-floating-label"
           >
             <Form.Control
               type="text"

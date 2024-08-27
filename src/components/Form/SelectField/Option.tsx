@@ -47,6 +47,7 @@ export const Option: OptionComponent = props => {
         role="button"
         title={props.label}
         onClick={optionButtonClickHandler}
+        className="hover:bg-zinc-200 active:bg-zinc-300 dark:hover:bg-zinc-700 dark:active:bg-zinc-600 dark:text-zinc-50"
       >
         <OptionElementBody>
           {props.icon && (
@@ -67,6 +68,7 @@ export const Option: OptionComponent = props => {
             type="button"
             role="button"
             onClick={optionScreenButtonClickHandler}
+            className="dark:text-zinc-200 hover:bg-zinc-300 dark:hover:bg-zinc-700"
           >
             <OptionScreenButtonLabel>
               <span>Entrar Aqui</span>

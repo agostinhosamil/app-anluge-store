@@ -19,7 +19,6 @@ export type CardAvatarSize = keyof CardAvatarSizesMap
 export const Container = styled.div`
   width: 100%;
   height: auto;
-  background-color: #f2f2f2;
   border-radius: 14px;
   -webkit-border-radius: 14px;
   margin-bottom: 8px;
@@ -66,7 +65,6 @@ export const Content = styled.div`
 export const Title = styled.strong`
   font-weight: 500;
   font-size: 24px;
-  color: #303030;
   display: block;
   margin-top: -9px;
 `
@@ -74,7 +72,6 @@ export const Title = styled.strong`
 export const SubTitle = styled.span`
   font-weight: 400;
   font-size: 13px;
-  color: #909090;
   text-transform: uppercase;
 `
 
@@ -107,15 +104,6 @@ export const IconsWrapper = styled.div`
         i {
           display: block;
           font-size: 25px;
-          color: #697a81;
-        }
-
-        &:hover {
-          background-color: #d8d8d8;
-        }
-
-        &:active {
-          background-color: #b4b4b4;
         }
       }
     }

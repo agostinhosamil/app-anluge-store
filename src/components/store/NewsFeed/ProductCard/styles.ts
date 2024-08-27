@@ -150,7 +150,7 @@ export const Name = styled.h5`
   padding: 25px 0px 0px;
   font-weight: 400;
   font-size: 15px;
-  color: #1e486d;
+  color: ${({ theme }) => theme.colors.foreground.link};
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
@@ -313,7 +313,7 @@ export const MetaData = styled.div`
   span {
     display: block;
     font-size: 14px;
-    color: #707070;
+    color: ${({ theme }) => theme.colors.foreground.v600};
     font-weight: 400;
     padding: 0px 12px;
     border-left: 2px solid #ebebeb;
@@ -330,14 +330,14 @@ export const Price = styled.div`
   h3 {
     font-size: 21px;
     margin-top: -16px;
-    color: #111111;
+    color: ${({ theme }) => theme.colors.foreground.v900};
   }
 
   i {
     display: block;
     font-size: 17px;
     font-weight: 800;
-    color: #464646;
+    color: ${({ theme }) => theme.colors.foreground.v900};
   }
 
   h5 {

@@ -19,15 +19,13 @@ export const Head = styled.div`
 export const SearchInputContainer = styled.label`
   width: 100%;
   max-width: 430px;
-  background-color: #ffffff;
   border-radius: 44px;
   -webkit-border-radius: 44px;
-  border: 1px solid #e0e0e0;
   display: flex;
   flex-direction: row;
   align-items: center;
   cursor: text;
-  padding: 12px 13px;
+  padding: 12px 22px;
 
   div {
     width: 100%;
@@ -45,6 +43,7 @@ export const SearchInputContainer = styled.label`
       width: 100%;
       border: 0px;
       outline: 0px;
+      background-color: transparent;
     }
   }
 `
@@ -75,15 +74,19 @@ export const ListLoaderButton = styled.button`
   padding: 9px 35px;
   border-radius: 40px;
   -webkit-border-radius: 40px;
-  background-color: #f0f0f0;
+  color: ${props => props.theme.colors.foreground.button.default.normal};
+  background-color: ${props =>
+    props.theme.colors.background.button.default.normal};
 
   &:not([disabled]) {
     &:hover {
-      background-color: #e0e0e0;
+      background-color: ${props =>
+        props.theme.colors.background.button.default.hover};
     }
 
     &:active {
-      background-color: #a0a0a0;
+      background-color: ${props =>
+        props.theme.colors.background.button.default.active};
     }
   }
 `
@@ -133,8 +136,14 @@ export const ListPaginationButton = styled(
 })`
   padding: 9px 14px;
   transition: 0.2s ease-in-out;
-  background-color: ${props => (props.$selected ? '#0160bf' : '#f0f0f0')};
-  color: ${props => (props.$selected ? '#ffffff' : '#333333')};
+  background-color: ${props =>
+    props.$selected
+      ? '#0160bf'
+      : props.theme.colors.background.button.default.normal};
+  color: ${props =>
+    props.$selected
+      ? '#ffffff'
+      : props.theme.colors.foreground.button.default.normal};
 
   span {
     display: flex;
@@ -143,11 +152,17 @@ export const ListPaginationButton = styled(
 
   &:not([disabled]) {
     &:hover {
-      background-color: ${props => (props.$selected ? '#0454a5' : '#e0e0e0')};
+      background-color: ${props =>
+        props.$selected
+          ? '#0454a5'
+          : props.theme.colors.background.button.default.hover};
     }
 
     &:active {
-      background-color: ${props => (props.$selected ? '#044587' : '#a0a0a0')};
+      background-color: ${props =>
+        props.$selected
+          ? '#044587'
+          : props.theme.colors.background.button.default.active};
     }
   }
 `

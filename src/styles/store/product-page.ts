@@ -17,19 +17,12 @@ export const ProductDataWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-
-  h1 {
-    font-size: 43px;
-    font-weight: 600;
-    display: block;
-    padding: 0px 0px 20px;
-  }
+  gap: 20px;
 `
 
 export const StatsData = styled.div`
   width: 100%;
   display: block;
-  padding: 0px 0px 20px;
   display: flex;
   flex-direction: row;
 
@@ -51,7 +44,6 @@ export const PriceListWrapper = styled.div`
   width: 100%;
   height: auto;
   display: block;
-  padding: 0px 0px 20px;
 `
 
 export const PriceList = styled.div`

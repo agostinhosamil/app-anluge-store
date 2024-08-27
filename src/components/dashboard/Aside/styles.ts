@@ -13,7 +13,6 @@ export const UserCard = styled.div`
   height: auto;
   display: flex;
   flex-direction: row;
-  background-color: #d7d7d7;
   border-radius: 20px;
   -webkit-border-radius: 12px;
   padding: 15px;
@@ -42,13 +41,11 @@ export const DataWrapper = styled.div`
   flex-direction: column;
 
   strong {
-    color: #3e3e3e;
     display: block;
     padding-bottom: 6px;
   }
 
   span {
-    color: #767676;
     font-size: 11px;
     text-transform: uppercase;
   }

@@ -13,8 +13,8 @@ export const Container = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background-color: #ffffff;
-  border: 1px solid #cecece;
+  background-color: ${({ theme }) => theme.colors.background.v50};
+  border: 1px solid ${({ theme }) => theme.colors.background.v300};
 
   * {
     color: #303030 !important;
@@ -46,6 +46,7 @@ export const Container = styled.div`
     border-bottom-right-radius: inherit;
     -webkit-border-bottom-right-radius: inherit;
     padding-right: 12px;
+    background-color: transparent;
   }
 `
 
@@ -70,17 +71,18 @@ export const ExpandedContainer = styled(Container)`
 `
 
 export const ExpandedContainerWrapper = styled.div`
-  width: 80%;
-  height: 63px;
   top: 0px;
   left: 10%;
+  width: 80%;
   right: 0px;
   z-index: 2;
+  height: 63px;
   position: absolute;
-  box-shadow: 0px 18px 20px 9px rgb(0 0 0 / 35%);
-  background-color: #ffffff;
   border-radius: 25px;
   -webkit-border-radius: 25px;
+  box-shadow: 0px 18px 20px 9px rgb(0 0 0 / 35%);
+  background-color: ${({ theme }) => theme.colors.background.v50};
+  border: 1px solid ${({ theme }) => theme.colors.background.v300};
 
   @media (max-width: 850px) {
     width: 100%;

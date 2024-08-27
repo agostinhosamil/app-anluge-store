@@ -22,7 +22,6 @@ export const LabelWrapper = styled.div`
 
 export const Label = styled.h5`
   font-weight: 600;
-  color: #111111;
   font-size: 19px;
 `
 
@@ -45,8 +44,6 @@ export const Body = styled.div`
         flex-direction: row;
         align-items: center;
         padding: 8px 15px 8px 17px;
-        background-color: #ebebeb;
-        color: #525252;
         border-radius: 40px;
         -webkit-border-radius: 40px;
         font-size: 14px;

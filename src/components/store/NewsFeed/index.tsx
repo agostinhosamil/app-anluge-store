@@ -23,11 +23,11 @@ export const NewsFeed: React.FunctionComponent<
         <Partial unAuth>
           <Col md={4}>
             <div className="w-full h-full flex flex-col justify-center pt-[20px] pb-[10px] pr-[8px]">
-              <div className="w-full flex bg-zinc-200 rounded-2xl p-7 flex-col items-center justify-center gap-6 h-full">
-                <h3 className="pb-1 text-xl text-center w-full font-normal">
+              <div className="w-full flex bg-zinc-200 dark:bg-zinc-900 rounded-2xl p-7 flex-col items-center justify-center gap-6 h-full">
+                <h3 className="pb-1 text-xl text-center w-full font-normal dark:text-zinc-50">
                   Crie uma conta ou Inicie sessão
                 </h3>
-                <p className="text-zinc-500 font-light text-sm text-center">
+                <p className="text-zinc-500 dark:text-zinc-200 font-light text-sm text-center">
                   Junte-se à nossa comunidade de compras e desfrute de
                   benefícios exclusivos ao iniciar sessão ou criar uma conta
                   agora mesmo. Com apenas um clique, você pode conectar-se
@@ -40,7 +40,7 @@ export const NewsFeed: React.FunctionComponent<
                   </li>
                   <li className="inline-flex w-full">
                     <Link
-                      className="w-full px-4 py-2 rounded-xl bg-blue-400 hover:bg-blue-500 active:bg-blue-600 text-white text-center font-bold border-none outline-none"
+                      className="w-full px-4 py-2 rounded-xl bg-blue-400 dark:bg-blue-500 dark:hover:bg-blue-600 dark:active:bg-blue-700 hover:bg-blue-500 active:bg-blue-600 text-white text-center font-bold border-none outline-none"
                       type="button"
                       href="/register?ref=home-page"
                     >
@@ -49,7 +49,7 @@ export const NewsFeed: React.FunctionComponent<
                   </li>
                 </ul>
                 <div className="text-center flex flex-col gap-2">
-                  <span>Acesso rápido com:</span>
+                  <span className="dark:text-zinc-400">Acesso rápido com:</span>
                   <ol className="pt-2 w-full flex flex-row gap-3 justify-center">
                     <li className="inline-flex justify-center">
                       <button

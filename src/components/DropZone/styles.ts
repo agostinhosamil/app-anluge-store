@@ -21,11 +21,8 @@ export const DropZoneContainer = styled.div`
 
 export const DropZoneElement = styled.div<DropZoneElementProps>`
   width: 100%;
-  background-color: ${props => (props.$error ? '#ffe6e6' : '#f8f8f8')};
   border-radius: 8px;
   -webkit-border-radius: 8px;
-  border: 2px dashed ${props => (props.$error ? '#9d5959' : '#808080')};
-  color: ${props => (props.$error ? '#9d5959' : '#808080')};
   cursor: pointer;
   user-select: none;
   -webkit-user-select: none;
@@ -35,14 +32,6 @@ export const DropZoneElement = styled.div<DropZoneElementProps>`
     color: inherit;
     user-select: none;
     -webkit-user-select: none;
-  }
-
-  &:hover {
-    background-color: ${props => (props.$error ? '#ffbfbf' : '#ebebeb')};
-  }
-
-  &:active {
-    background-color: ${props => (props.$error ? '#e8a9a9' : '#e0e0e0')};
   }
 
   i {
@@ -88,6 +77,8 @@ export const DropZoneFilePreview = styled.div<DropZoneFilePreviewProps>`
   -webkit-background-size: cover;
   background-attachment: scroll;
   background-position: center;
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
 `
 
 export const DropZoneFooter = styled.div`
@@ -110,7 +101,6 @@ export const DropZoneFooter = styled.div`
         padding: 2px;
 
         button {
-          background-color: #ebebeb;
           border: 0px;
           outline: 0px;
           color: #515151;
@@ -119,12 +109,7 @@ export const DropZoneFooter = styled.div`
           -webkit-border-radius: 50%;
           transition: transform 0.2s ease-in-out;
 
-          &:hover {
-            background-color: #dfdfdf;
-          }
-
           &:active {
-            background-color: #b1b1b1;
             transform: scale(0.9783);
           }
         }

@@ -5,7 +5,6 @@ export const Container = styled.div`
   height: auto;
   display: flex;
   flex-direction: row;
-  border-top: 5px solid #ffffff;
   padding-top: 19px;
   padding: 30px 35px;
 
@@ -142,11 +141,9 @@ export const AmountInputWrapper = styled.div`
     input {
       width: 62px;
       font-size: 14px;
-      color: #202020;
       text-align: center;
       outline: 0px;
       border: 0px;
-      background-color: #ffffff;
       border-radius: 5px;
       -webkit-border-radius: 5px;
       padding: 9px;

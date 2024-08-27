@@ -22,7 +22,9 @@ export const ContentHeader: ContentHeaderComponent = props => {
     <Container>
       {props.title && (
         <TitleWrapper>
-          <h1>{props.title}</h1>
+          <h1 className="dark:text-zinc-50 dark:font-extrabold">
+            {props.title}
+          </h1>
         </TitleWrapper>
       )}
       {props.children && (

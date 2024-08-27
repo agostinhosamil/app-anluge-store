@@ -13,7 +13,7 @@ import Link from 'next/link'
 export const Header = () => {
   return (
     <Fragment>
-      <div className="w-full block bg-white pb-3">
+      <div className="w-full block bg-zinc-50 dark:bg-black pb-3">
         <TopHeader module="partners" />
       </div>
       <header className="w-full flex justify-center items-center h-max relative bg-zinc-950 text-zinc-50">
@@ -24,7 +24,7 @@ export const Header = () => {
           src="/assets/videos/13232-246463976_medium.mp4"
           width="100%"
         />
-        <div className="absolute top-0 left-0 w-full z-[2] h-auto flex flex-row items-center p-5">
+        <div className="absolute top-0 left-0 right-0 w-full max-w-[1520px] m-auto z-[2] h-auto flex flex-row items-center p-5">
           <div className="w-max flex flex-row items-center gap-2">
             <Image
               src="/assets/images/svg/anluge-logo-light.svg"

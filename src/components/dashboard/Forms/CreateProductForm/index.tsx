@@ -155,7 +155,7 @@ export const CreateProductForm: CreateProductFormComponent = ({
           <FloatingLabel
             controlId="product-name"
             label="Nome do produto"
-            className="mb-3"
+            className="mb-3 bootstrap-floating-label"
           >
             <Form.Control
               type="text"
@@ -207,7 +207,7 @@ export const CreateProductForm: CreateProductFormComponent = ({
           <FloatingLabel
             controlId="product-price"
             label="Preço"
-            className="mb-3"
+            className="mb-3 bootstrap-floating-label"
           >
             <Form.Control
               type="number"
@@ -223,7 +223,7 @@ export const CreateProductForm: CreateProductFormComponent = ({
           <FloatingLabel
             controlId="product-code"
             label="Código do produto (Referência da fornecedora)"
-            className="mb-3"
+            className="mb-3 bootstrap-floating-label"
           >
             <Form.Control
               type="text"
@@ -278,7 +278,7 @@ export const CreateProductForm: CreateProductFormComponent = ({
                 <FloatingLabel
                   controlId="product-stock"
                   label="Quantidade"
-                  className="mb-3"
+                  className="mb-3 bootstrap-floating-label"
                 >
                   <Form.Control
                     type="number"
@@ -294,7 +294,7 @@ export const CreateProductForm: CreateProductFormComponent = ({
                 <FloatingLabel
                   controlId="product-sku"
                   label="SKU"
-                  className="mb-3"
+                  className="mb-3 bootstrap-floating-label"
                 >
                   <Form.Control
                     type="text"
@@ -309,7 +309,7 @@ export const CreateProductForm: CreateProductFormComponent = ({
                 <FloatingLabel
                   controlId="product-bar-code"
                   label="Código de barras"
-                  className="mb-3"
+                  className="mb-3 bootstrap-floating-label"
                 >
                   <Form.Control
                     type="number"

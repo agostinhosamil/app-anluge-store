@@ -1,12 +1,12 @@
 import styled, { css, keyframes } from 'styled-components'
 
 const placeHolderShimmer = keyframes`
-  0%{
-    background-position: -450px 0
+  0% {
+    background-position: -450px 0;
   }
 
-  100%{
-      background-position: 450px 0
+  100% {
+    background-position: 450px 0;
   }
 `
 
@@ -16,13 +16,13 @@ export const animatedBackground = css`
   animation-iteration-count: infinite;
   animation-name: ${placeHolderShimmer};
   animation-timing-function: linear;
-  background-color: #f6f7f8;
-  background-image: linear-gradient(
+  background-color: ${({ theme }) => theme.colors.background.placeholder.main};
+  background-image: ${({ theme }) => `linear-gradient(
     to right,
-    #f5f4f3 8%,
-    #ebebeb 18%,
-    #f5f4f3 33%
-  );
+    ${theme.colors.background.placeholder.color1} 8%,
+    ${theme.colors.background.placeholder.color2} 18%,
+    ${theme.colors.background.placeholder.color3} 33%
+  )`};
   background-size: 1200px 104px;
   position: relative;
 `
@@ -34,7 +34,7 @@ export const LoadingScreen = styled.div`
   top: 0px;
   left: 0px;
   right: 0px;
-  background-color: rgb(255 255 255 / 87%);
+  background-color: ${({ theme }) => theme.colors.background.loadingScreen};
   border-radius: 12px;
   -webkit-border-radius: 12px;
   display: flex;
@@ -55,7 +55,7 @@ export const LoadingScreen = styled.div`
     margin-top: 20px;
     font-size: 18px;
     font-weight: 500;
-    color: #444444;
+    color: ${({ theme }) => theme.colors.foreground.v900};
   }
 `
 

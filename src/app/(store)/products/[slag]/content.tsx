@@ -34,14 +34,11 @@ import {
   CategoryBreadCrumbWrapper,
   Container,
   ContentWrapper,
-  Price,
-  PriceList,
   PriceListWrapper,
   ProductActionsListWrapper,
   ProductDataWrapper,
   ProductImageGalleryWrapper,
   ProductTagListWrapper,
-  ShareOptionsContainer,
   StarRatingElementContainer,
   StatsData,
   Content as StyledContent,
@@ -175,7 +172,9 @@ export const Content: ContentComponent = props => {
         </Column>
         <Column md={7}>
           <ProductDataWrapper>
-            <h1>{product.name}</h1>
+            <h1 className="text-[43px] font-semibold block dark:text-zinc-50">
+              {product.name}
+            </h1>
             <StatsData>
               {product.rates instanceof Array && product.rates.length >= 1 && (
                 <StarRatingElementContainer>
@@ -189,15 +188,17 @@ export const Content: ContentComponent = props => {
             </StatsData>
             <PriceListWrapper>
               {(product.price >= 1 && (
-                <PriceList>
+                <div className="w-full h-auto flex flex-row items-center gap-5">
                   {/* <OldPrice>
                     <i>AKZ</i>
                     <h5>12.982.344,98</h5>
                   </OldPrice> */}
-                  <Price>
-                    <h5>{formatAmount(product.price)}</h5>
-                  </Price>
-                </PriceList>
+                  <div className="block w-auto">
+                    <h5 className="text-5xl font-extrabold text-neutral-700 no-underline dark:text-zinc-200">
+                      {formatAmount(product.price)}
+                    </h5>
+                  </div>
+                </div>
               )) || <h5>Preço sob consulta</h5>}
             </PriceListWrapper>
             <CategoryBreadCrumbWrapper>
@@ -289,10 +290,12 @@ export const Content: ContentComponent = props => {
                 </ul>
               </ProductTagListWrapper>
             )}
-            <ShareOptionsContainer>
-              <strong>Partilhar este produto</strong>
-              <ul>
-                <li>
+            <div className="w-full flex flex-col">
+              <strong className="text-lg font-light text-gray-800 block w-full pb-2 dark:text-zinc-400">
+                Partilhar este produto
+              </strong>
+              <ul className="w-full flex flex-row flex-wrap items-center">
+                <li className="m-[7px] mr-[14px] inline-flex items-center">
                   <FacebookShareButton
                     url={`${app.origin}/products/${product.slag}`}
                     title="Partilhar no Facebook"
@@ -305,7 +308,7 @@ export const Content: ContentComponent = props => {
                     />
                   </FacebookShareButton>
                 </li>
-                <li>
+                <li className="m-[7px] mr-[14px] inline-flex items-center">
                   <TwitterShareButton
                     url={`${app.origin}/products/${product.slag}`}
                     title="Partilhar no Twitter"
@@ -318,7 +321,7 @@ export const Content: ContentComponent = props => {
                     />
                   </TwitterShareButton>
                 </li>
-                <li>
+                <li className="m-[7px] mr-[14px] inline-flex items-center">
                   <LinkedinShareButton
                     url={`${app.origin}/products/${product.slag}`}
                   >
@@ -330,7 +333,7 @@ export const Content: ContentComponent = props => {
                     />
                   </LinkedinShareButton>
                 </li>
-                <li>
+                <li className="m-[7px] mr-[14px] inline-flex items-center">
                   <WhatsappShareButton
                     url={`${app.origin}/products/${product.slag}`}
                   >
@@ -343,7 +346,7 @@ export const Content: ContentComponent = props => {
                   </WhatsappShareButton>
                 </li>
               </ul>
-            </ShareOptionsContainer>
+            </div>
           </ProductDataWrapper>
         </Column>
       </Row>

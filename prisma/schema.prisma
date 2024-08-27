@@ -246,6 +246,8 @@ model Post {
   userId        String
   subject       Subject?    @relation(fields: [subjectId], references: [id])
   subjectId     String?
+  category      Category?   @relation(fields: [categoryId], references: [id])
+  categoryId    String?
 
   @@map("post")
 }
@@ -267,6 +269,7 @@ model Category {
   icon        String?    @default("category-icon-placeholder.jpg")
   banner      String?    @default("category-banner-placeholder.jpg")
   products    Product[]
+  posts       Post[]
   parentId    String?
   parent      Category?  @relation("SubCategory", fields: [parentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   categories  Category[] @relation("SubCategory")

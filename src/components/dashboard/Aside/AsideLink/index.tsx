@@ -1,51 +1,63 @@
-import Link from "next/link";
-import React, { FunctionComponent, PropsWithChildren, useState } from "react";
-import * as Icons from "react-icons/fa6";
+import Link from 'next/link'
+import React, { FunctionComponent, PropsWithChildren, useState } from 'react'
+import * as Icons from 'react-icons/fa6'
 
-import { FontAwesome6IconName } from "Types/react-icons";
+import { FontAwesome6IconName } from 'Types/react-icons'
 
-import { Body, Container, IconWrapper, Label, List } from "./styles";
+import { Body, Container, IconWrapper, Label, List } from './styles'
 
 type AsideLinkProps = {
-  icon?: FontAwesome6IconName;
-  showSubList?: boolean;
-  href?: string;
-  label: string;
-};
+  icon?: FontAwesome6IconName
+  showSubList?: boolean
+  href?: string
+  label: string
+}
 
-type AsideLinkComponent = FunctionComponent<PropsWithChildren & AsideLinkProps>;
+type ButtonElementProps = React.PropsWithChildren<
+  React.HTMLAttributes<HTMLElement>
+>
 
-export const AsideLink: AsideLinkComponent = (props) => {
-  const [colapse, setColapse] = useState<boolean>(props.showSubList || true);
+type AsideLinkComponent = FunctionComponent<PropsWithChildren & AsideLinkProps>
+
+export const AsideLink: AsideLinkComponent = props => {
+  const [colapse, setColapse] = useState<boolean>(props.showSubList || true)
   const [icon, setIcon] = useState<FontAwesome6IconName>(
-    props.icon || "FaAngleRight",
-  );
+    props.icon || 'FaAngleRight'
+  )
 
-  const Icon = Icons[icon] || React.Fragment;
+  const Icon = Icons[icon] || React.Fragment
 
-  const LinkElement: FunctionComponent<PropsWithChildren> = ({ children }) => (
-    <Link href={props.href || "#"}>{children}</Link>
-  );
+  const LinkElement: FunctionComponent<ButtonElementProps> = ({
+    children,
+    ...rest
+  }) => (
+    <Link {...rest} href={props.href || '#'}>
+      {children}
+    </Link>
+  )
 
-  const ButtonElement: FunctionComponent<PropsWithChildren> = (props) => (
-    <button type="button" role="button" onClick={buttonClickHandler}>
-      {props.children}
-    </button>
-  );
+  const ButtonElement: FunctionComponent<ButtonElementProps> = props => (
+    <button
+      {...props}
+      type="button"
+      role="button"
+      onClick={buttonClickHandler}
+    />
+  )
 
   function buttonClickHandler() {
-    setColapse(!colapse);
+    setColapse(!colapse)
 
     if (!props.icon) {
-      setIcon(icon === "FaAngleRight" ? "FaAngleDown" : "FaAngleRight");
+      setIcon(icon === 'FaAngleRight' ? 'FaAngleDown' : 'FaAngleRight')
     }
   }
 
-  const LinkWrapper = Boolean(props.children) ? ButtonElement : LinkElement;
+  const LinkWrapper = props.children ? ButtonElement : LinkElement
 
   return (
     <Container>
-      <LinkWrapper>
+      <LinkWrapper className="hover:bg-zinc-200 active:bg-zinc-300 dark:active:bg-zinc-800 dark:hover:bg-zinc-900 text-zinc-900 dark:text-zinc-200">
         <IconWrapper>
           <div>
             <Icon />
@@ -57,5 +69,5 @@ export const AsideLink: AsideLinkComponent = (props) => {
       </LinkWrapper>
       {!colapse && <List>{props.children}</List>}
     </Container>
-  );
-};
+  )
+}

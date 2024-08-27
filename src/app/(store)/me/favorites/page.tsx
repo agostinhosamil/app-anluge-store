@@ -53,13 +53,17 @@ export default async function FavoritesCart() {
 
   return (
     <div className="w-full flex flex-col">
-      <div className="bg-zinc-100 w-full flex flex-col justify-end px-14 py-8 shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px]">
-        <h1>Lista de desejos</h1>
+      <div className="bg-zinc-100 dark:bg-zinc-950 w-full flex flex-col justify-end px-14 py-8 dark:pb-0 shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px]">
+        <h1 className="dark:text-zinc-50 dark:font-extrabold">
+          Lista de desejos
+        </h1>
       </div>
       <div className="w-full flex flex-col pt-8 px-14">
         {productGroups.map(({ category, products }) => (
           <Fragment key={category.id}>
-            <h2>{category.title}</h2>
+            <h2 className="dark:text-zinc-100 dark:font-extralight">
+              {category.title}
+            </h2>
             <div className="pt-3 flex flex-wrap flex-row">
               {products.map(product => (
                 <ProductCardWrapper product={product} key={product.id} />
@@ -84,12 +88,15 @@ export default async function FavoritesCart() {
         <AdvertiseGroup group="feed" />
       </div>
       <div className="w-full px-14 pt-2 pb-8">
-        <h1 className="font-extrabold uppercase text-center max-w-2xl w-full block m-auto">
+        <h1 className="font-extrabold uppercase text-center max-w-2xl w-full block m-auto dark:text-zinc-50 dark:font-bold">
           Mais produtos que te podem interessar
         </h1>
       </div>
       {favoritesProductsCategoriesSlags.map((slag, slagIndex) => (
-        <div key={slagIndex} className="w-full px-14 bg-white text-zinc-900">
+        <div
+          key={slagIndex}
+          className="w-full px-14 bg-zinc-50 dark:bg-black text-zinc-900"
+        >
           <Suspense fallback={<CategorySectionPlaceholder />}>
             <CategorySection categorySlag={slag} />
           </Suspense>
