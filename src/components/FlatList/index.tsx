@@ -1,6 +1,6 @@
 'use client'
 
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, isValidElement, useEffect, useState } from 'react'
 import Spinner from 'react-bootstrap/Spinner'
 import { FaSearch } from 'react-icons/fa'
 
@@ -239,6 +239,33 @@ export function FlatList<Data = any>(
     }
   }
 
+  const renderListItem = (
+    itemData: Data,
+    itemDataIndex: number
+  ): React.ReactNode => {
+    if (typeof props.renderItem === 'function') {
+      return (
+        <Fragment key={itemDataIndex}>{props.renderItem(itemData)}</Fragment>
+      )
+    }
+
+    const [child] =
+      props.children instanceof Array ? props.children : [props.children]
+
+    if (isValidElement(child)) {
+      return {
+        ...child,
+        props: {
+          ...(typeof child.props === 'object' && child.props
+            ? child.props
+            : {}),
+          ...itemData,
+          key: itemDataIndex
+        }
+      }
+    }
+  }
+
   const dataSliceLimit = noEmpty(query)
     ? data.length
     : itemsCountPerIteration + listCursor
@@ -249,7 +276,7 @@ export function FlatList<Data = any>(
     <Container>
       {typeof showSearchBox === 'boolean' && showSearchBox && (
         <Head>
-          <SearchInputContainer>
+          <SearchInputContainer className="bg-zing-50 border-zinc-400 dark:bg-zinc-900 dark:border-zinc-950">
             <div>
               <i>
                 <FaSearch />
@@ -260,6 +287,7 @@ export function FlatList<Data = any>(
                 spellCheck={false}
                 value={query}
                 onChange={searchInputChangeHandler}
+                className="dark:text-zinc-100"
               />
             </div>
           </SearchInputContainer>
@@ -268,13 +296,8 @@ export function FlatList<Data = any>(
       <Body>
         <List>
           {!isLoading &&
-            listData.map(
-              (listItemData, listItemDataIndex) =>
-                props.renderItem && (
-                  <Fragment key={listItemDataIndex}>
-                    {props.renderItem(listItemData)}
-                  </Fragment>
-                )
+            listData.map((listItemData, listItemDataIndex) =>
+              renderListItem(listItemData, listItemDataIndex)
             )}
 
           {!isLoading && listData.length < 1 && (
