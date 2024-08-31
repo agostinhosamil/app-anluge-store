@@ -1,14 +1,38 @@
-import { range } from '~/utils'
+import { prisma } from '~/services/prisma'
 import { PostList } from './PostList'
 
-export const BlogSection = () => {
-  const posts = range(12).map(post => ({
-    id: String(post),
-    title: String('Lorem ipsum dolor ').repeat(post),
-    summary: String(
-      'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus praesentium repellendus excepturi quibusdam, culpa cum corporis ad explicabo optio voluptatum ducimus, omnis exercitationem itaque libero ipsa adipisci consequatur, minus tenetur.'
-    )
-  }))
+export const BlogSection = async () => {
+  const posts = await prisma.post.findMany({
+    select: {
+      id: true,
+      title: true,
+      body: true,
+      slag: true,
+      createdAt: true,
+      medias: {
+        take: 1,
+
+        select: {
+          id: true,
+          fileName: true
+        }
+      }
+    },
+
+    take: 6
+  })
+
+  if (posts.length < 1) {
+    return null
+  }
+
+  // range(12).map(post => ({
+  //   id: String(post),
+  //   title: String('Lorem ipsum dolor ').repeat(post),
+  //   summary: String(
+  //     'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus praesentium repellendus excepturi quibusdam, culpa cum corporis ad explicabo optio voluptatum ducimus, omnis exercitationem itaque libero ipsa adipisci consequatur, minus tenetur.'
+  //   )
+  // }))
 
   return (
     <section className="blog-section">

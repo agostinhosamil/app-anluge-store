@@ -5,13 +5,10 @@ import { useEffect, useState } from 'react'
 import { arraySplit } from '~/utils'
 
 import { PostPreview } from './PostPreview'
+import { PostListItem } from './types'
 
 type PostListProps = {
-  posts: Array<{
-    id: string
-    title: string
-    summary: string
-  }>
+  posts: Array<PostListItem>
 }
 
 type PostListComponent = React.FunctionComponent<PostListProps>

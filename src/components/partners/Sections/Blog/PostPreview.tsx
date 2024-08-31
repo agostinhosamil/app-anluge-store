@@ -1,12 +1,11 @@
 import React, { Fragment, useEffect, useState } from 'react'
 
 import { Icon } from '@components/Icon'
+import Image from '~/components/Image'
+import { uploadedImageUrl } from '~/utils'
+import { PostListItem } from './types'
 
-type PostPreviewProps = {
-  id: string
-  title: string
-  summary: string
-}
+type PostPreviewProps = PostListItem
 
 type PostPreviewComponent = React.FunctionComponent<PostPreviewProps>
 
@@ -68,20 +67,24 @@ export const PostPreview: PostPreviewComponent = props => {
   const resolveClassName = (className: string) =>
     className.concat(expanded ? ' expanded' : '')
 
+  const [postMedia] = props.medias
+
+  const postImageFileName = postMedia.fileName
+
   return (
     <WrapperElement>
       <article className="blog-post">
         <div className={resolveClassName('blog-post-content-wrapper')}>
           <div className={resolveClassName('image-wrapper')}>
-            <img
-              src="/assets/partners/images/header-banner-000.jpg"
+            <Image
+              src={uploadedImageUrl(postImageFileName, 'large')}
               alt="Post title"
             />
           </div>
           <div className={resolveClassName('post-data')}>
             <i>Há dois dias</i>
             <h3>{props.title}</h3>
-            <p>{props.summary}</p>
+            <p>{props.body}</p>
             <div className="w-full flex flex-row gap-3">
               <a href="#">Ler mais</a>
               <button
