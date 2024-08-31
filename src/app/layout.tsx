@@ -125,25 +125,24 @@ export default async function RootLayout({ children }: RootLayoutProps) {
       </head>
       <body className={roboto.className}>
         <NextJsTopLoader showSpinner={false} />
-        <ErrorBoundary>
-          <StyledComponentsRegistry>
-            <AdvertiseContextWrapper>
-              <ApplicationContextProvider
-                headers={headers}
-                config={applicationContextProviderConfig}
-              >
-                <GlobalStyles />
-                <AuthenticationWrapper auth={authenticatedUser}>
-                  <StoreContextWrapper cart={cartData}>
-                    {children}
-                  </StoreContextWrapper>
-                </AuthenticationWrapper>
-              </ApplicationContextProvider>
-            </AdvertiseContextWrapper>
-            <Toaster />
-            <BotDataEngineSearchBox />
-          </StyledComponentsRegistry>
-        </ErrorBoundary>
+
+        <StyledComponentsRegistry>
+          <AdvertiseContextWrapper>
+            <ApplicationContextProvider
+              headers={headers}
+              config={applicationContextProviderConfig}
+            >
+              <GlobalStyles />
+              <AuthenticationWrapper auth={authenticatedUser}>
+                <StoreContextWrapper cart={cartData}>
+                  <ErrorBoundary>{children}</ErrorBoundary>
+                </StoreContextWrapper>
+              </AuthenticationWrapper>
+            </ApplicationContextProvider>
+          </AdvertiseContextWrapper>
+          <Toaster />
+          <BotDataEngineSearchBox />
+        </StyledComponentsRegistry>
       </body>
     </html>
   )
