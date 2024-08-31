@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+import { prisma } from '@services/prisma'
 import { generateSlagByTitleWithoutSignature } from '@utils/generateSlagByTitle'
 import { imageRef } from '@utils/images/isValidImageRef'
 
@@ -36,3 +37,55 @@ export const mediaList = () =>
 
       return filesNames.map(fileName => ({ fileName }))
     })
+
+export const categoryRef = () =>
+  z
+    .string()
+    .transform(async categoryRef => {
+      const storedCategory = await prisma.category.findFirst({
+        where: {
+          OR: [
+            {
+              id: categoryRef
+            },
+            {
+              slag: categoryRef.toLowerCase()
+            }
+          ]
+        },
+
+        select: {
+          id: true
+        }
+      })
+
+      return storedCategory?.id
+    })
+    .refine(productId => Boolean(productId))
+    .transform(productId => String(productId))
+
+export const productRef = () =>
+  z
+    .string()
+    .transform(async productRef => {
+      const storedProduct = await prisma.product.findFirst({
+        where: {
+          OR: [
+            {
+              id: productRef
+            },
+            {
+              slag: productRef.toLowerCase()
+            }
+          ]
+        },
+
+        select: {
+          id: true
+        }
+      })
+
+      return storedProduct?.id
+    })
+    .refine(productId => Boolean(productId))
+    .transform(productId => String(productId))
