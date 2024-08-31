@@ -248,6 +248,7 @@ model Post {
   subjectId     String?
   category      Category?   @relation(fields: [categoryId], references: [id])
   categoryId    String?
+  highlight     Highlight[]
 
   @@map("post")
 }
@@ -262,19 +263,21 @@ model Subject {
 }
 
 model Category {
-  id          String     @id @default(cuid())
+  id          String           @id @default(cuid())
   title       String
   description String
-  slag        String     @unique
-  icon        String?    @default("category-icon-placeholder.jpg")
-  banner      String?    @default("category-banner-placeholder.jpg")
+  slag        String           @unique
+  icon        String?          @default("category-icon-placeholder.jpg")
+  banner      String?          @default("category-banner-placeholder.jpg")
+  context     CategoryContext? @default(STORE)
   products    Product[]
   posts       Post[]
   parentId    String?
-  parent      Category?  @relation("SubCategory", fields: [parentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  categories  Category[] @relation("SubCategory")
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  parent      Category?        @relation("SubCategory", fields: [parentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  categories  Category[]       @relation("SubCategory")
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  highlight   Highlight[]
 
   @@map("category")
 }
@@ -342,6 +345,7 @@ model Product {
   orders            Order[]
   advertisings      Advertise[]
   properties        Property[]
+  highlight         Highlight[]
 
   @@map("product")
 }
@@ -372,6 +376,21 @@ model Cart {
   status    CartStatus @default(PENDING)
 
   @@map("cart")
+}
+
+model Highlight {
+  id         String          @id @default(cuid())
+  context    CategoryContext @default(STORE)
+  category   Category?       @relation(fields: [categoryId], references: [id])
+  product    Product?        @relation(fields: [productId], references: [id])
+  Post       Post?           @relation(fields: [postId], references: [id])
+  categoryId String?
+  productId  String?
+  postId     String?
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+
+  @@map("highlight")
 }
 
 model Order {
@@ -418,6 +437,19 @@ model Service {
   updatedAt   DateTime @updatedAt
 
   @@map("service")
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  title       String
+  segment     String
+  slag        String   @unique
+  image       String?  @default("image-placeholder.jpg")
+  description String?  @db.MediumText()
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("project")
 }
 
 enum SubscriptionContext {
@@ -474,6 +506,12 @@ enum PropertyType {
 }
 
 enum PostContext {
+  BLOG
+  HELP
+}
+
+enum CategoryContext {
+  STORE
   BLOG
   HELP
 }
