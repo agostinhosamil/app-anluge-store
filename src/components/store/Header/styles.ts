@@ -12,7 +12,7 @@ export const Container = styled.header`
 export const HeaderBodyContainer = styled.div`
   width: 100%;
   height: 630px;
-  background-color: ${({ theme }) => theme.colors.background.header};
+  /* background-color: ${({ theme }) => theme.colors.background.header}; */
   margin: 6px 0px 0px;
   background-image: linear-gradient(3deg, rgb(5 24 38 / 65%), transparent);
   background-image: -webkit-linear-gradient(
@@ -210,6 +210,10 @@ export const HeaderMenuFixedWrapper = styled.div.attrs({
 
   & > div {
     padding: 0px;
+  }
+
+  .data-expanded-search-box-container-wrapper {
+    margin-top: 10px;
   }
 `
 

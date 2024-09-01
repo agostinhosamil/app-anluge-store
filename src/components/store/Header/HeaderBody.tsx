@@ -11,7 +11,7 @@ import { HeaderSlider } from './HeaderSlider'
 
 export const HeaderBody = () => {
   return (
-    <HeaderBodyContainer>
+    <HeaderBodyContainer className="bg-[#0470bf] dark:bg-[#070d13]">
       <Container>
         <HeaderBodyRow>
           <HeaderBodyCol className="home-page-description">
