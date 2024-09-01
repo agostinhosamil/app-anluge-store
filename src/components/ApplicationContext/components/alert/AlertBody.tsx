@@ -26,11 +26,13 @@ export const AlertBody: AlertBodyComponent = ({ options, ...props }) => {
   return (
     <div className="w-full flex flex-col gap-3">
       {noEmpty(props.title) && (
-        <h5 className="text-base select-none pointer-events-none font-extrabold text-zinc-900">
+        <h5 className="text-base select-none pointer-events-none font-extrabold text-zinc-900 dark:text-zinc-50">
           {props.title}
         </h5>
       )}
-      <span className="select-none pointer-events-none">{props.message}</span>
+      <span className="select-none pointer-events-none dark:text-zinc-200">
+        {props.message}
+      </span>
       <div className="w-full flex flex-row gap-2 justify-end items-center">
         {alertButtonsList.map((buttonKey, buttonKeyIndex) => {
           const { label, style } = getButtonProps(
