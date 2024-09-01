@@ -42,22 +42,22 @@ export const TopHeader: TopHeaderComponent = props => {
         </TopHeaderMenu>
         <TopHeaderData>
           <ul>
-            <li className="text-zinc-400 dark:text-zinc-200">
+            <li className="text-zinc-600 dark:text-zinc-200">
               <span>Abertos de SEG-SEX</span>
             </li>
-            <li className="text-zinc-400 dark:text-zinc-200">
+            <li className="text-zinc-600 dark:text-zinc-200">
               <i>
                 <FaClock />
               </i>
               <span>8H-17H</span>
             </li>
-            <li className="text-zinc-400 dark:text-zinc-200">
+            <li className="text-zinc-600 dark:text-zinc-200">
               <i>
                 <FaPhone />
               </i>
               <span>+244 928 250 640</span>
             </li>
-            <li className="text-zinc-400 dark:text-zinc-200">
+            <li className="text-zinc-600 dark:text-zinc-200">
               <i>
                 <FaLocationArrow />
               </i>
