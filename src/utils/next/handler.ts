@@ -44,5 +44,20 @@ export const handler: NextApiHandlerFactory =
       }
     }
 
-    return await apiHandler(request, props)
+    try {
+      return await apiHandler(request, props)
+    } catch (err) {
+      return NextResponse.json(
+        {
+          error: true,
+          success: false,
+          message: 'Sorry, something went wrong processing request data.',
+          type: 'route:error',
+          route: request.nextUrl.pathname
+        },
+        {
+          status: 500
+        }
+      )
+    }
   }

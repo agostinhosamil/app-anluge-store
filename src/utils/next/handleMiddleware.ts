@@ -21,6 +21,23 @@ export const handleMiddleware = async (
   )
 
   if (apiMiddleware) {
-    return await apiMiddleware(middlewareHandlerProps)
+    try {
+      return await apiMiddleware(middlewareHandlerProps)
+    } catch (err) {
+      console.log(`Error: Running api middleware ${middlewareRef}`)
+
+      return NextResponse.json(
+        {
+          error: true,
+          success: false,
+          message: 'Sorry, something went wrong',
+          type: 'middleware:error',
+          middleware: middlewareRef
+        },
+        {
+          status: 500
+        }
+      )
+    }
   }
 }
