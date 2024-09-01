@@ -2,18 +2,20 @@
 
 import { CartProps } from 'Types/Cart'
 import Image from 'next/image'
+import { Fragment, useState } from 'react'
 import { Col, FloatingLabel, Form, Row } from 'react-bootstrap'
+import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { FormSubmit } from '@components/dashboard/FormSubmit'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { FormSubmit } from '~/components/dashboard/FormSubmit'
-import { ScrollArea } from '~/components/ui/scroll-area'
-import {
-  resolveProductImageUrl,
-  resolveUserAvatarUrl,
-  validCardNumber
-} from '~/utils'
+import { ScrollArea } from 'ui@components/scroll-area'
+import { cn } from '~/lib/utils'
+import { resolveProductImageUrl, validCardNumber } from '~/utils'
+
+import { UserAddresses } from './UserAddresses'
+import { UserCard } from './UserCard'
+import { paymentMethodList, PaymentMethodListItemKey } from './paymentMethods'
 
 type ContentProps = {
   cart: CartProps
@@ -22,20 +24,20 @@ type ContentProps = {
 type ContentComponent = React.FunctionComponent<ContentProps>
 
 const CheckoutFormDataObjectSchema = z.object({
-  card: z.object({
-    number: z
-      .string()
-      .transform(number => number.replace(/[ -]/g, ''))
-      .refine(number => {
-        return validCardNumber(number)
-      }),
-    cvc: z.string().length(3),
-    holder: z.string().min(4),
-    expirationDate: z
-      .string()
-      .length(4)
-      .transform(e => `-${e}`)
-  }),
+  card: z
+    .object({
+      number: z
+        .string()
+        .transform(number => number.replace(/[ -]/g, ''))
+        .refine(validCardNumber),
+      cvc: z.string().length(3),
+      holder: z.string().min(4),
+      expirationDate: z
+        .string()
+        .length(4)
+        .transform(e => `-${e}`)
+    })
+    .nullish(),
 
   user: z.object({
     city: z.string(),
@@ -46,38 +48,31 @@ const CheckoutFormDataObjectSchema = z.object({
 
 type CheckoutFormDataObject = z.infer<typeof CheckoutFormDataObjectSchema>
 
+const DEFAULT_PAYMENT_METHOD: PaymentMethodListItemKey = 'form:bank-transfer'
+
 export const Content: ContentComponent = ({ cart }) => {
-  const { register, handleSubmit } = useForm<CheckoutFormDataObject>({
+  const [userAddress, setUserAddress] = useState<string>(':none')
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethodListItemKey>(
+    DEFAULT_PAYMENT_METHOD
+  )
+
+  const paymentMethodData = paymentMethodList.find(
+    ({ key }) => paymentMethod === key
+  )
+
+  const form = useForm<CheckoutFormDataObject>({
     resolver: zodResolver(CheckoutFormDataObjectSchema)
   })
 
   const checkoutFormSubmitHandler = (checkoutData: CheckoutFormDataObject) => {
     console.log('>>> checkoutData => ', checkoutData)
+
+    alert('LAs')
   }
 
-  const cardExpirationDateInputFocusHandler: React.FocusEventHandler =
-    event => {
-      const inputElement = event.target as HTMLInputElement
-
-      inputElement.select()
-    }
-
-  const cardExpirationDateInputChangeHandler: React.ChangeEventHandler =
-    event => {
-      const inputElement = event.target as HTMLInputElement
-
-      const sanitizedInputValue = inputElement.value.replaceAll(/[^0-9]/g, '')
-      const inputValueChars = sanitizedInputValue.split('')
-
-      const newInputValue = [
-        inputValueChars.slice(0, 2).join(''),
-        inputValueChars.slice(2, 4).join('')
-      ]
-
-      inputElement.value = newInputValue.join(
-        inputValueChars.length >= 3 ? '/' : ''
-      )
-    }
+  const userAddressChangeHandler = (selectedUserAddress: string) => {
+    setUserAddress(selectedUserAddress)
+  }
 
   return (
     <div className="w-full max-w-[1320px] h-auto m-auto block relative">
@@ -128,166 +123,126 @@ export const Content: ContentComponent = ({ cart }) => {
             <h1 className="font-bold text-2xl text-zinc-700 pr-16 mb-3 dark:text-zinc-50 dark:font-extrabold">
               Checkout
             </h1>
-            <h2 className="block w-full text-xl h-auto py-3 font-normal text-zinc-800 dark:text-zinc-200 pr-16">
-              Dados do cartão
-            </h2>
-            <p className="block w-full h-auto p-0 m-0 text-[11px] text-zinc-500 pr-16 dark:text-zinc-300">
-              Complete seu pedido selecionando um método e fornecendo os seus
-              dados de pagamento.
-            </p>
 
-            <div className="w-full h-auto bg-gray-200 dark:bg-zinc-900 rounded-xl p-6 my-9">
-              <div className="w-full h-auto flex flex-row items-center">
-                <div className="size-16 mr-5">
-                  <Image
-                    width={60}
-                    height={60}
-                    alt={String(cart.user?.name)}
-                    src={resolveUserAvatarUrl(cart.user?.image)}
-                    className="border-0 outline-none rounded-full"
-                  />
-                </div>
-                <data className="w-full inline-flex flex-col [&_*]:pointer-events-none [&_*]:select-none">
-                  <strong className="text-2xl font-bold text-zinc-800 dark:text-zinc-50">
-                    {cart.user?.name}
-                  </strong>
-                  <span className="text-zinc-600 text-[14px] dark:text-zinc-300">
-                    {cart.user?.email}
-                  </span>
-                </data>
-              </div>
+            <UserCard cart={cart} />
+
+            <div className="w-full block mb-9">
+              <h3 className="mb-2 text-sm text-zinc-400 dark:text-zinc-300">
+                Selecionar método de pagamento:
+              </h3>
+              <ul className="flex w-full flex-row flex-wrap">
+                {paymentMethodList.map(({ key, icon: Icon, label }) => {
+                  const selected = paymentMethod === key
+
+                  return (
+                    <li
+                      className="inline-flex justify-center [&_button]:first:rounded-s-lg [&_button]:last:rounded-e-lg items-center"
+                      key={key}
+                    >
+                      <button
+                        type="button"
+                        className={cn(
+                          'flex gap-2 flex-row items-center bg-zinc-200 hover:bg-zinc-300 active:bg-zinc-400 active:[&:not(disabled)]:scale-105 transition-transform dark:bg-zinc-800 dark:hover:bg-zinc-700 dark:active:bg-zinc-600 dark:text-zinc-50 outline-none border-0 py-2 px-3',
+                          selected ? '!bg-blue-500 opacity-100' : ''
+                        )}
+                        onClick={() => {
+                          form.reset()
+                          setPaymentMethod(key)
+                        }}
+                        disabled={selected}
+                      >
+                        <i className="text-sm">
+                          <Icon size={24} />
+                        </i>
+                        {selected ? <span>{label}</span> : null}
+                      </button>
+                    </li>
+                  )
+                })}
+              </ul>
             </div>
-            <form
-              method="post"
-              action={`/api/me/cart/checkout/${cart.id}?ref=user.checkout.page`}
-              onSubmit={handleSubmit(checkoutFormSubmitHandler)}
-              className="w-ful block h-auto"
-            >
-              <Row>
-                <Col md={6}>
-                  <FloatingLabel
-                    controlId="card-number"
-                    label="Número do cartão"
-                    className="mb-3 bootstrap-floating-label"
-                  >
-                    <Form.Control
-                      type="text"
-                      placeholder="Número do cartão"
-                      autoComplete="off"
-                      {...register('card.number')}
-                    />
-                  </FloatingLabel>
-                </Col>
-                <Col md={3}>
-                  <FloatingLabel
-                    controlId="card-expiration-date"
-                    label="MM/AA"
-                    className="mb-3 bootstrap-floating-label"
-                  >
-                    <Form.Control
-                      type="text"
-                      placeholder="MM/AA"
-                      autoComplete="off"
-                      onFocus={cardExpirationDateInputFocusHandler}
-                      {...register('card.expirationDate', {
-                        onChange: cardExpirationDateInputChangeHandler
-                      })}
-                    />
-                  </FloatingLabel>
-                </Col>
-                <Col md={3}>
-                  <FloatingLabel
-                    controlId="card-cvc"
-                    label="CVC"
-                    className="mb-3 bootstrap-floating-label"
-                  >
-                    <Form.Control
-                      type="text"
-                      placeholder="CVC"
-                      autoComplete="off"
-                      {...register('card.cvc')}
-                    />
-                  </FloatingLabel>
-                </Col>
-              </Row>
-              <Row>
-                <Col md={12}>
-                  <FloatingLabel
-                    controlId="card-holder"
-                    label="Titular do cartão"
-                    className="mb-3 bootstrap-floating-label"
-                  >
-                    <Form.Control
-                      type="text"
-                      placeholder="Titular do cartão"
-                      autoComplete="off"
-                      {...register('card.holder')}
-                    />
-                  </FloatingLabel>
-                </Col>
-              </Row>
-              <h2 className="block text-xl w-full h-auto py-3 font-normal text-zinc-800 dark:text-zinc-200 pr-16">
-                Endereço de entrega
-              </h2>
-              <p className="block w-full h-auto p-0 m-0 text-[11px] text-zinc-500 pr-16 dark:text-zinc-300">
-                Complete seu pedido selecionando um método e fornecendo os seus
-                dados de pagamento.
-              </p>
-              <br />
-              <Row>
-                <Col md={12}>
-                  <FloatingLabel
-                    controlId="user-address"
-                    label="Endereço (Sector, Rua, Bairro)"
-                    className="mb-3 bootstrap-floating-label"
-                  >
-                    <Form.Control
-                      type="text"
-                      placeholder="Endereço (Sector, Rua, Bairro)"
-                      autoComplete="off"
-                      {...register('user.address')}
-                    />
-                  </FloatingLabel>
-                </Col>
-              </Row>
-              <Row>
-                <Col md={6}>
-                  <FloatingLabel
-                    controlId="user-city"
-                    label="Cidade (Província)"
-                    className="mb-3 bootstrap-floating-label"
-                  >
-                    <Form.Control
-                      type="text"
-                      placeholder="Cidade (Província)"
-                      autoComplete="off"
-                      {...register('user.city')}
-                    />
-                  </FloatingLabel>
-                </Col>
-                <Col md={6}>
-                  <FloatingLabel
-                    controlId="user-address"
-                    label="Código postal"
-                    className="mb-3 bootstrap-floating-label"
-                  >
-                    <Form.Control
-                      type="text"
-                      placeholder="Código postal"
-                      autoComplete="off"
-                      {...register('user.zip')}
-                    />
-                  </FloatingLabel>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <FormSubmit buttonStyle="success">
-                    Finalizar pedido
-                  </FormSubmit>
-                </Col>
-              </Row>
-            </form>
+
+            <FormProvider {...form}>
+              <form
+                method="post"
+                action={`/api/me/cart/checkout/${cart.id}?ref=user.checkout.page`}
+                onSubmit={form.handleSubmit(checkoutFormSubmitHandler)}
+                className="w-ful block h-auto"
+              >
+                {/* Form Here */}
+
+                {paymentMethodData && <paymentMethodData.form />}
+
+                <h2 className="block text-xl w-full h-auto py-3 font-normal text-zinc-800 dark:text-zinc-200 pr-16">
+                  Endereço de entrega
+                </h2>
+                <p className="block w-full h-auto p-0 m-0 text-[11px] text-zinc-500 pr-16 dark:text-zinc-300">
+                  Complete seu pedido selecionando um método e fornecendo os
+                  seus dados de pagamento.
+                </p>
+                <br />
+                <UserAddresses onChange={userAddressChangeHandler} />
+                <br />
+                {userAddress === ':none' && (
+                  <Fragment>
+                    <Row>
+                      <Col md={12}>
+                        <FloatingLabel
+                          controlId="user-address"
+                          label="Endereço (Sector, Rua, Bairro)"
+                          className="mb-3 bootstrap-floating-label"
+                        >
+                          <Form.Control
+                            type="text"
+                            placeholder="Endereço (Sector, Rua, Bairro)"
+                            autoComplete="off"
+                            {...form.register('user.address')}
+                          />
+                        </FloatingLabel>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col md={6}>
+                        <FloatingLabel
+                          controlId="user-city"
+                          label="Cidade (Província)"
+                          className="mb-3 bootstrap-floating-label"
+                        >
+                          <Form.Control
+                            type="text"
+                            placeholder="Cidade (Província)"
+                            autoComplete="off"
+                            {...form.register('user.city')}
+                          />
+                        </FloatingLabel>
+                      </Col>
+                      <Col md={6}>
+                        <FloatingLabel
+                          controlId="user-address"
+                          label="Código postal"
+                          className="mb-3 bootstrap-floating-label"
+                        >
+                          <Form.Control
+                            type="text"
+                            placeholder="Código postal"
+                            autoComplete="off"
+                            {...form.register('user.zip')}
+                          />
+                        </FloatingLabel>
+                      </Col>
+                    </Row>
+                  </Fragment>
+                )}
+
+                <Row>
+                  <Col>
+                    <FormSubmit buttonStyle="success">
+                      Finalizar pedido
+                    </FormSubmit>
+                  </Col>
+                </Row>
+              </form>
+            </FormProvider>
           </Col>
         </Row>
       </div>
