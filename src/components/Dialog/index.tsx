@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import {
   CloseButton,
@@ -28,9 +28,17 @@ export const Dialog: DialogComponent = props => {
   const [show, setShow] = useState<boolean>(props.show || false)
   const [centerDialogBox, setCenterDialogBox] = useState<boolean>(true)
 
+  const dialogBoxElementRefState = useRef<HTMLDivElement>()
+
   const dialogBoxElementRef = (dialogBoxElement: HTMLDivElement): void => {
     if (!dialogBoxElement) {
       return
+    }
+
+    dialogBoxElementRefState.current = dialogBoxElement
+
+    if (dialogBoxElement.parentNode instanceof HTMLElement) {
+      document.body.appendChild(dialogBoxElement.parentNode)
     }
 
     const dialogBoxElementHeight = dialogBoxElement.offsetHeight
@@ -54,6 +62,18 @@ export const Dialog: DialogComponent = props => {
 
   useEffect(() => {
     setShow(props.show || false)
+
+    return () => {
+      const dialogBoxElement = dialogBoxElementRefState.current
+
+      if (
+        dialogBoxElement &&
+        dialogBoxElement.parentNode instanceof HTMLDivElement
+      ) {
+        const dialogBoxElementParent = dialogBoxElement.parentNode
+        dialogBoxElementParent.parentNode?.removeChild(dialogBoxElementParent)
+      }
+    }
   }, [props.show])
 
   // useEffect(updateDialogBox, []);
@@ -84,32 +104,34 @@ export const Dialog: DialogComponent = props => {
     typeof props.showButton === 'boolean' && !props.showButton
 
   return (
-    <Container $centerContent={centerDialogBox}>
-      <DialogBox
-        $size={props.size}
-        ref={dialogBoxElementRef}
-        className="bg-zinc-50 dark:bg-zinc-900"
-      >
-        {titled && (
-          <TitleWrapper>
-            <Title className="text-zinc-950 dark:text-zinc-50">
-              {props.title}
-            </Title>
-          </TitleWrapper>
-        )}
-        <DialogBoxBody>{props.children}</DialogBoxBody>
-        {!doNotShowButton && (
-          <CloseButtonWrapper>
-            <CloseButton
-              onClick={closeButtonClickHandler}
-              type="button"
-              className="dark:text-zinc-400"
-            >
-              {(labeledCloseButton() && props.closeButtonLabel) || 'Cancelar'}
-            </CloseButton>
-          </CloseButtonWrapper>
-        )}
-      </DialogBox>
-    </Container>
+    <div>
+      <Container $centerContent={centerDialogBox}>
+        <DialogBox
+          $size={props.size}
+          ref={dialogBoxElementRef}
+          className="bg-zinc-50 dark:bg-zinc-900"
+        >
+          {titled && (
+            <TitleWrapper>
+              <Title className="text-zinc-950 dark:text-zinc-50">
+                {props.title}
+              </Title>
+            </TitleWrapper>
+          )}
+          <DialogBoxBody>{props.children}</DialogBoxBody>
+          {!doNotShowButton && (
+            <CloseButtonWrapper>
+              <CloseButton
+                onClick={closeButtonClickHandler}
+                type="button"
+                className="dark:text-zinc-400"
+              >
+                {(labeledCloseButton() && props.closeButtonLabel) || 'Cancelar'}
+              </CloseButton>
+            </CloseButtonWrapper>
+          )}
+        </DialogBox>
+      </Container>
+    </div>
   )
 }
