@@ -1,14 +1,15 @@
-import { Category } from '@prisma/client'
+// import { Category } from '@prisma/client'
 import { Fragment, Suspense } from 'react'
 
-import { prisma } from '~/services/prisma'
+// import { prisma } from '~/services/prisma'
 // import { categoryIncludeFactory } from '~/utils/category'
-import { CategoryListSlider } from 'store@components/NewsFeed/CategoryListSlider'
+// import { CategoryListSlider } from 'store@components/NewsFeed/CategoryListSlider'
 import { generateSlagByTitleWithoutSignature } from '~/utils/generateSlagByTitle'
 // import { getAllCategoriesChildren } from '~/utils/newsFeed'
 // import { productIncludeFactory } from '~/utils/product'
 import { CategorySectionPlaceholder } from '~/components/store/HomePagePlaceholder/CategorySectionPlaceholder'
 import { AdvertiseGroup } from '~/components/store/NewsFeed/AdvertiseGroup'
+import { CategoryMapSlider } from '~/components/store/NewsFeed/CategoryMapSlider'
 import { CategorySection } from './CategorySection'
 import { HomePage } from './HomePage'
 
@@ -24,9 +25,10 @@ export const maxDuration = 60
 
 export const Content: ContentComponent = async () => {
   const categoriesNames = [
+    'impressoras-laser',
+    // 'Impressão e Digitalização',
     'Servidores e Storage',
-    'Impressão e Digitalização',
-    'Equipamentos Energia',
+    // 'Equipamentos Energia',
     'Computadores, Monitor e POS'
   ]
 
@@ -34,17 +36,17 @@ export const Content: ContentComponent = async () => {
     generateSlagByTitleWithoutSignature(categoryName)
   )
 
-  const categories: Array<Category> = await prisma.category.findMany({
-    where: {
-      parentId: {
-        equals: null
-      }
-    },
+  // const categories: Array<Category> = await prisma.category.findMany({
+  //   where: {
+  //     parentId: {
+  //       equals: null
+  //     }
+  //   },
 
-    orderBy: {
-      id: 'desc'
-    }
-  })
+  //   orderBy: {
+  //     id: 'desc'
+  //   }
+  // })
 
   const randomCategorySlagIndex = Math.floor(
     categoriesSlagsPrefixes.length * Math.random()
@@ -52,7 +54,9 @@ export const Content: ContentComponent = async () => {
 
   return (
     <HomePage>
-      {categories.length >= 1 && <CategoryListSlider categories={categories} />}
+      <div className="w-full pt-[5.75rem]">
+        <CategoryMapSlider rows={3} />
+      </div>
       <div className="w-full pt-4 block h-auto m-auto relative max-w-[1320px]">
         {categoriesSlagsPrefixes.map((categorySlag, categorySlagIndex) => (
           <Fragment key={categorySlagIndex}>
