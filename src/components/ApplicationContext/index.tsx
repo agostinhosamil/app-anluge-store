@@ -271,7 +271,7 @@ export const ApplicationContextProvider: ApplicationContextProviderComponent =
           >
             <div className="w-full flex flex-row gap-3 items-center justify-center">
               <LoadingDialogIcon name={loadingDialogState.state} />
-              <span className="text-2xl font-extralight text-zinc-800">
+              <span className="text-2xl font-extralight text-zinc-800 dark:text-zinc-50">
                 {loadingDialogState.label}
               </span>
             </div>
