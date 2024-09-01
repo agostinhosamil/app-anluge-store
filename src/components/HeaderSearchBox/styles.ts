@@ -13,8 +13,8 @@ export const Container = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.background.v50};
-  border: 1px solid ${({ theme }) => theme.colors.background.v300};
+  /* background-color: ${({ theme }) => theme.colors.background.v50};
+  border: 1px solid ${({ theme }) => theme.colors.background.v300}; */
 
   * {
     color: #303030 !important;
@@ -70,7 +70,9 @@ export const ExpandedContainer = styled(Container)`
   }
 `
 
-export const ExpandedContainerWrapper = styled.div`
+export const ExpandedContainerWrapper = styled.div.attrs({
+  className: 'data-expanded-search-box-container-wrapper'
+})`
   top: 0px;
   left: 10%;
   width: 80%;

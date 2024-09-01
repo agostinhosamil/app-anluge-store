@@ -128,7 +128,7 @@ export const HeaderSearchBox: HeaderSearchBoxComponent = props => {
         onBlur={inputBlurHandler}
         onFocus={inputFocusHandler}
         onChange={inputFieldChangeHandler}
-        className='dark:text-zinc-50'
+        className="dark:text-zinc-50"
       />
     </Fragment>
   )
@@ -169,7 +169,7 @@ export const HeaderSearchBox: HeaderSearchBoxComponent = props => {
   }
 
   return (
-    <Container>
+    <Container className="bg-white dark:!bg-zinc-900 border-solid border-[1px] border-zinc-300 dark:border-zinc-800">
       <SearchBoxBody />
     </Container>
   )
