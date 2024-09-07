@@ -25,10 +25,10 @@ export default function CompanyServicesPage() {
   const { services, loading, ...context } = useService()
   const serviceDataState = useRef<CreateServiceFormDataObject>()
 
-  const { openFormDialog, alert, awaits } = useApp()
+  const { openMediumFormDialog, alert, awaits } = useApp()
 
   const createServiceButtonClickHandler = async () => {
-    const { data, error } = await openFormDialog(
+    const { data, error } = await openMediumFormDialog(
       CreateServiceFormDataObjectSchema,
       () => <CreateServiceForm data={serviceDataState.current} />
     )
@@ -67,7 +67,7 @@ export default function CompanyServicesPage() {
   const serviceEditHandler: EntityCardActionHandler<
     Service
   > = async service => {
-    const { data, error } = await openFormDialog(
+    const { data, error } = await openMediumFormDialog(
       CreateServiceFormDataObjectSchema,
       () => <CreateServiceForm data={{ service }} />
     )
