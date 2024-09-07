@@ -25,7 +25,7 @@ export default function CompanyServicesPage() {
   const { services, loading, ...context } = useService()
   const serviceDataState = useRef<CreateServiceFormDataObject>()
 
-  const { openMediumFormDialog, alert, awaits } = useApp()
+  const { openMediumFormDialog, alert, resolvePromise } = useApp()
 
   const createServiceButtonClickHandler = async () => {
     const { data, error } = await openMediumFormDialog(
@@ -37,7 +37,7 @@ export default function CompanyServicesPage() {
       return
     }
 
-    const createdService = await awaits(async () => {
+    const createdService = await resolvePromise(async () => {
       const service = await createService(data)
 
       if (service) {
@@ -76,7 +76,7 @@ export default function CompanyServicesPage() {
       return
     }
 
-    const updatedService = await awaits(async () => {
+    const updatedService = await resolvePromise(async () => {
       const serviceData = await updateService(service.id, data)
 
       if (serviceData) {
@@ -115,7 +115,7 @@ export default function CompanyServicesPage() {
     )
 
     if (alertResponse === 'AlertResponse.Yes') {
-      const deletedService = await awaits(async () => {
+      const deletedService = await resolvePromise(async () => {
         const deleteResponse = await deleteServiceById(service.id)
 
         if (deleteResponse) {

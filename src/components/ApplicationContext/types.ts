@@ -82,7 +82,7 @@ export type ApplicationContextProps = {
 
   alert: (...args: AlertUtilsArgs) => Promise<AlertResponse>
 
-  awaits: <HandlerType extends Handler>(
+  resolvePromise: <HandlerType extends Handler>(
     handler: HandlerType
   ) => Promise<ReturnType<HandlerType> | null>
 }

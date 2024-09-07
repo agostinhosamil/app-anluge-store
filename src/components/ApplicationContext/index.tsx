@@ -216,7 +216,7 @@ export const ApplicationContextProvider: ApplicationContextProviderComponent =
         setConfig(updatedConfig as ApplicationContextConfig)
       },
 
-      awaits(handler) {
+      resolvePromise(handler) {
         updateLoadingState({
           show: true
         })
