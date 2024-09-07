@@ -56,21 +56,29 @@ export type ApplicationContextConfig = {
   }
 }
 
+export type FormDialogOpenHandler = <FormDataObjectType extends z.ZodRawShape>(
+  ...[
+    formDataSchema,
+    formElement
+  ]: OpenFormDialogUtilArgsWithDataSchema<FormDataObjectType>
+) => Promise<
+  | OpenFormDialogUtilFailureResponse
+  | OpenFormDialogUtilSuccessResponse<z.infer<typeof formDataSchema>>
+>
+
 export type ApplicationContextProps = {
   origin: string
   config: ApplicationContextConfig
 
   setConfig: (config: DeepPartial<ApplicationContextConfig>) => void
 
-  openFormDialog: <FormDataObjectType extends z.ZodRawShape>(
-    ...[
-      formDataSchema,
-      formElement
-    ]: OpenFormDialogUtilArgsWithDataSchema<FormDataObjectType>
-  ) => Promise<
-    | OpenFormDialogUtilFailureResponse
-    | OpenFormDialogUtilSuccessResponse<z.infer<typeof formDataSchema>>
-  >
+  openFormDialog: FormDialogOpenHandler
+  openSmallFormDialog: FormDialogOpenHandler
+  openXSmallFormDialog: FormDialogOpenHandler
+  openMediumFormDialog: FormDialogOpenHandler
+  openLargeFormDialog: FormDialogOpenHandler
+  openXLargeFormDialog: FormDialogOpenHandler
+  openXXLargeFormDialog: FormDialogOpenHandler
 
   alert: (...args: AlertUtilsArgs) => Promise<AlertResponse>
 

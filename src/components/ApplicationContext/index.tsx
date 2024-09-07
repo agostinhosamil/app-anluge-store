@@ -2,13 +2,14 @@
 
 import deepmerge from 'deepmerge'
 import { useRef, useState } from 'react'
+import { ThemeProvider } from 'styled-components'
 
 import { Dialog } from '@components/Dialog'
+import { DialogBoxSize } from '@components/Dialog/styles'
 import { formDataToJson } from '@utils/formDataToJson'
 import { Theme } from '~/config/themes'
 import { noEmpty } from '~/utils'
 
-import { ThemeProvider } from 'styled-components'
 import { AlertDialogProps } from './components/alert'
 import { AlertBody } from './components/alert/AlertBody'
 import { FormWrapper } from './components/FormWrapper'
@@ -52,6 +53,7 @@ const DEFAULT_LOADING_DIALOG_STATE: LoadingDialogState = {
 }
 
 const LOADING_DIALOG_TIMEOUT_ON_RESOLVE = 2000 // 2s
+const FORM_DIALOG_BOX_DEFAULT_SIZE: DialogBoxSize = 'large'
 
 export const ApplicationContextProvider: ApplicationContextProviderComponent =
   props => {
@@ -69,6 +71,9 @@ export const ApplicationContextProvider: ApplicationContextProviderComponent =
     })
 
     const alertDialogPropsState = useRef<AlertDialogProps>()
+    const formDialogBoxSizeState = useRef<DialogBoxSize>(
+      FORM_DIALOG_BOX_DEFAULT_SIZE
+    )
     const formDialogCloseHandlerState = useRef<() => void>()
     const alertDialogCloseHandlerState = useRef<AlertDialogCloseHandler>()
     const formDialogSubmitHandlerState = useRef<FormDialogSubmitHandler>()
@@ -86,6 +91,8 @@ export const ApplicationContextProvider: ApplicationContextProviderComponent =
 
     const closeFormDialog = () => {
       setShowFormDialog(false)
+
+      formDialogBoxSizeState.current = FORM_DIALOG_BOX_DEFAULT_SIZE
     }
 
     const applicationContextData: ApplicationContextProps = {
@@ -154,7 +161,7 @@ export const ApplicationContextProvider: ApplicationContextProviderComponent =
               await formDataObjectSchema.safeParseAsync(jsonFormData)
 
             if (validatedFormData.success) {
-              setShowFormDialog(false)
+              closeFormDialog()
               // setFormDialogContent(undefined)
               resolve({
                 ...defaultResponseData,
@@ -165,6 +172,42 @@ export const ApplicationContextProvider: ApplicationContextProviderComponent =
             }
           }
         })
+      },
+
+      openSmallFormDialog: (...args) => {
+        formDialogBoxSizeState.current = 'small'
+
+        return applicationContextData.openFormDialog(...args)
+      },
+
+      openXSmallFormDialog: (...args) => {
+        formDialogBoxSizeState.current = 'x-small'
+
+        return applicationContextData.openFormDialog(...args)
+      },
+
+      openMediumFormDialog: (...args) => {
+        formDialogBoxSizeState.current = 'medium'
+
+        return applicationContextData.openFormDialog(...args)
+      },
+
+      openLargeFormDialog: (...args) => {
+        formDialogBoxSizeState.current = 'large'
+
+        return applicationContextData.openFormDialog(...args)
+      },
+
+      openXLargeFormDialog: (...args) => {
+        formDialogBoxSizeState.current = 'x-large'
+
+        return applicationContextData.openFormDialog(...args)
+      },
+
+      openXXLargeFormDialog: (...args) => {
+        formDialogBoxSizeState.current = 'xx-large'
+
+        return applicationContextData.openFormDialog(...args)
       },
 
       setConfig: value => {
@@ -243,9 +286,9 @@ export const ApplicationContextProvider: ApplicationContextProviderComponent =
         <ThemeProvider theme={config.theme.props}>
           {props.children}
           <Dialog
-            size="x-large"
             show={showFormDialog}
             onClose={formDialogCloseHandler}
+            size={formDialogBoxSizeState.current}
           >
             <FormWrapper onSubmit={formDialogSubmitHandler}>
               {FormDialogContent && <FormDialogContent />}
