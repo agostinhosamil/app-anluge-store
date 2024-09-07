@@ -3,7 +3,7 @@ import { $Enums } from '@prisma/client'
 import { ProductProps } from 'Types/Product'
 import { prisma } from '~/services/prisma'
 
-import { productPropertiesToMap } from '~/app/(store)/products/[slag]/utils'
+import { productPropertiesToMap } from '~/app/(store)/store/products/[slag]/utils'
 import { rewriteProductStateLabel } from '~/utils/models/product'
 import { Content } from './content'
 import { PropertyMap } from './types'
