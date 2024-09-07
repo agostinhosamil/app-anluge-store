@@ -24,10 +24,10 @@ type CreateServiceFormComponent =
 
 export const CreateServiceForm: CreateServiceFormComponent = ({ data }) => {
   return (
-    <form className="w-full px-5 pt-2 pb-0 flex flex-col">
+    <form className="w-full pt-2 pb-0 flex flex-col">
       <Row>
         <Col md={12}>
-          <strong className="mb-4 text-2xl font-semibold inline-block">
+          <strong className="mb-4 text-2xl font-semibold inline-block dark:text-zinc-50">
             Registrar serviço
           </strong>
         </Col>
@@ -37,7 +37,7 @@ export const CreateServiceForm: CreateServiceFormComponent = ({ data }) => {
           <FloatingLabel
             controlId="service-title"
             label="Título"
-            className="mb-3"
+            className="mb-3 bootstrap-floating-label"
           >
             <Form.Control
               type="text"
