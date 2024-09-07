@@ -14,3 +14,5 @@ certificates
 /prisma/generated/**/*
 /prisma/generated/*/**
 !/prisma/generated/.gitkeep
+
+/__src_app
