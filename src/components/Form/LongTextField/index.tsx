@@ -1,3 +1,5 @@
+'use client'
+
 import { useId, useState } from 'react'
 
 import { Body, Container, Content, Label, LabelWrapper } from './styles'
