@@ -4,6 +4,8 @@ import { prisma } from '@services/prisma'
 import { handler } from '@utils/next'
 import { getSearchParamsQueryArgument } from '~/utils'
 
+export const maxDuration = 60
+
 export const GET = handler(async request => {
   const queryString = request.nextUrl.searchParams
   const productsQueryArguments = getSearchParamsQueryArgument(queryString)
@@ -11,6 +13,21 @@ export const GET = handler(async request => {
     ...productsQueryArguments,
     orderBy: {
       index: 'asc'
+    },
+
+    include: {
+      category: {
+        select: {
+          slag: true,
+          id: true
+        }
+      },
+
+      product: {
+        select: {
+          id: true
+        }
+      }
     }
   })
 
