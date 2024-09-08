@@ -118,7 +118,13 @@ export const DropZone: DropZoneComponent = ({
               {couldShowFilePreview() && (
                 <DropZoneFilePreview $src={resolveFilePreviewUrl()} />
               )}
-              <input {...getInputProps()} name={name} />
+              <input
+                readOnly
+                name={name}
+                type="hidden"
+                defaultValue={(file && URL.createObjectURL(file)) || undefined}
+              />
+              <input {...getInputProps()} />
               <i>
                 <FaPlus />
               </i>
