@@ -1,8 +1,11 @@
 import { z } from 'zod'
 
 import { prisma } from '@services/prisma'
+import { AnlugeUploadClient, AnlugeUploadClientOptions } from '@services/upload'
 import { generateSlagByTitleWithoutSignature } from '@utils/generateSlagByTitle'
+import { convertImageFileToJpeg, isValidImageFile } from '@utils/images'
 import { imageRef } from '@utils/images/isValidImageRef'
+import { convertBlobToFile, generateRandomId } from '..'
 
 export const tagList = () =>
   z
@@ -89,3 +92,54 @@ export const productRef = () =>
     })
     .refine(productId => Boolean(productId))
     .transform(productId => String(productId))
+
+export const imageFileRef = (uploadClientOptions?: AnlugeUploadClientOptions) =>
+  z
+    .string()
+    // .refine(imageFileRef => {
+    //   const re = /^(blob:(.+))/i
+
+    //   return re.test(imageFileRef)
+    // })
+    .transform(async imageFileRef => {
+      try {
+        const response = await fetch(imageFileRef)
+        const data = await response.blob()
+
+        if (data instanceof Blob) {
+          const imageFileObject = convertBlobToFile(
+            data,
+            `${generateRandomId()}.jpg`
+          )
+
+          return imageFileObject
+        }
+      } catch (err) {
+        return null
+      }
+    })
+    .refine(imageFile => imageFile instanceof File)
+    .refine(async imageFile => {
+      const validImageFile = await isValidImageFile(imageFile)
+
+      return Boolean(validImageFile)
+    }, 'Image file must be a valid image')
+    .transform(
+      async imageFile => (await convertImageFileToJpeg(imageFile)) as File
+    )
+    // .refine(imageFile => imageFile instanceof File)
+    .transform(async imageFile => {
+      try {
+        const uploadClient = new AnlugeUploadClient(uploadClientOptions)
+
+        const uploadedFile = await uploadClient.uploadFile(imageFile)
+
+        return uploadedFile
+      } catch (err) {
+        return null
+      }
+    })
+    .refine(
+      uploadedImage => uploadedImage !== null,
+      'Could not upload image file'
+    )
