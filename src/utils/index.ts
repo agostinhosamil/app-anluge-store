@@ -154,9 +154,13 @@ export const resolvePartnerCompanyNameByLoadingStockMapFormat = (
 }
 
 export const uploadedImageUrl = (
-  imageName: string,
+  imageName: string | null | undefined,
   imageVariant?: UploadedImageVariantKey
 ): string => {
+  if (!imageName) {
+    return `${process.env.NEXT_PUBLIC_ANLUGE_CDN_API_URL}/static/images/image-placeholder.jpg`
+  }
+
   const imagePath = imageName.concat(
     noEmpty(imageVariant) ? `@${imageVariant}` : ''
   )
