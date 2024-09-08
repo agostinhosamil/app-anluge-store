@@ -38,7 +38,7 @@ export const FormContainer = () => (
         type="checkbox"
         value=""
         id="exampleCheck96"
-        checked
+        defaultChecked
       />
       <label
         className="inline-block pl-[0.15rem] select-none hover:cursor-pointer dark:text-zinc-300"
