@@ -26,6 +26,7 @@ export type DropZoneChangeHandler = (
 
 type DropZoneProps = {
   height?: number
+  name?: string
   defaultValue?: string
   onChange?: DropZoneChangeHandler
   onDelete?: () => void
@@ -35,7 +36,11 @@ type DropZoneComponent = React.FunctionComponent<
   ReactDropZoneProps & DropZoneProps
 >
 
-export const DropZone: DropZoneComponent = ({ defaultValue, ...props }) => {
+export const DropZone: DropZoneComponent = ({
+  defaultValue,
+  name,
+  ...props
+}) => {
   const [file, setFile] = useState<File | null>(null)
   // const [files, setFiles] = useState<Array<File>>([])
   const [dropError, setDropError] = useState<boolean>(false)
@@ -113,7 +118,7 @@ export const DropZone: DropZoneComponent = ({ defaultValue, ...props }) => {
               {couldShowFilePreview() && (
                 <DropZoneFilePreview $src={resolveFilePreviewUrl()} />
               )}
-              <input {...getInputProps()} />
+              <input {...getInputProps()} name={name} />
               <i>
                 <FaPlus />
               </i>
