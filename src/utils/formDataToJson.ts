@@ -1,4 +1,4 @@
-import deepmerge from 'deepmerge'
+import { objectFullMerge } from './objectFullMerge'
 
 const getFormDataKeyTreePath = (key: string): Array<string> => {
   const re = /(\]?\[|\]\[?)/
@@ -8,7 +8,7 @@ const getFormDataKeyTreePath = (key: string): Array<string> => {
   })
 }
 
-export const formDataToJson = <JsonDataObject = any>(
+export const formDataToJson = <JsonDataObject extends object = any>(
   formData: FormData
 ): JsonDataObject => {
   let jsonData = {} as JsonDataObject
@@ -28,7 +28,7 @@ export const formDataToJson = <JsonDataObject = any>(
       data = { [property]: data }
     })
 
-    jsonData = deepmerge<JsonDataObject>(jsonData, data)
+    jsonData = objectFullMerge(jsonData, data)
   })
 
   return jsonData
