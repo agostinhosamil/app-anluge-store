@@ -11,13 +11,12 @@ import {
 import Image from '@components/Image'
 import { PageSectionWrapper } from '@components/PageSectionWrapper'
 import companyData from '~/config/cache/company-data/index.json'
-import { range } from '~/utils'
 
 import softWareEngineerImage from './about/images/software-engineer.jpeg'
 import tiTechSupport from './about/images/ti-tech-support-4.jpg'
+import { CompanyServices } from './CompanyServices'
 import { ContactForm } from './ContactForm'
 import { ProductsListWrapper } from './ProductsListWrapper'
-import { ServiceListItem } from './ServiceListItem'
 
 export default function About2Page() {
   return (
@@ -160,10 +159,8 @@ export default function About2Page() {
             Pensando na melhoria e segurança da sua empresa, evitando ataques
             cibernéticos proveniente de qualquer lugar.
           </p>
-          <ul className="w-full pt-10 flex flex-row flex-wrap">
-            {range(15).map(i => (
-              <ServiceListItem key={i} />
-            ))}
+          <ul className="w-full pt-10 flex flex-row justify-center flex-wrap">
+            <CompanyServices />
           </ul>
         </div>
 
