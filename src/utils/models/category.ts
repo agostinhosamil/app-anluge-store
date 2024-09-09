@@ -192,6 +192,7 @@ export const categoryFactoryByTitle = (
   categoryTitle: string,
   props?: Partial<Category>
 ): Category => ({
+  context: 'STORE',
   description: categoryTitle,
   icon: null,
   id: generateRandomId(),
