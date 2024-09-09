@@ -20,6 +20,7 @@ export const categoryFactory = (
   data: Partial<Category> = {}
 ): Base<Category> => {
   const defaultProps: Base<Category> = {
+    context: 'STORE',
     title: '',
     banner: '',
     description: '',
