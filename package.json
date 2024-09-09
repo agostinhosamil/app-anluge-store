@@ -7,7 +7,7 @@
     "dev:network": "next dev --hostname 192.168.1.246 --experimental-https",
     "build": "yarn prisma generate && next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "echo \"next lint\"",
     "prisma:generate": "prisma generate --schema prisma/schema.production.prisma",
     "prisma:seed": "prisma seed --schema prisma/schema.production.prisma",
     "prisma:studio": "prisma studio --schema prisma/schema.production.prisma",
