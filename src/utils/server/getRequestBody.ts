@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server'
 
 import { formDataToJson } from '~/utils/formDataToJson'
 
-export const getRequestBody = async <RequestDataProps = any>(
+export const getRequestBody = async <RequestDataProps extends object = any>(
   request: NextRequest
 ): Promise<RequestDataProps> => {
   try {
