@@ -128,7 +128,7 @@ export const imageFileRef = (uploadClientOptions?: AnlugeUploadClientOptions) =>
     //   async imageFile => (await convertImageFileToJpeg(imageFile)) as File
     // )
     // .refine(imageFile => imageFile instanceof File)
-    .transform(async imageFile => {
+    .transform(async (imageFile: File) => {
       try {
         const uploadClient = new AnlugeUploadClient(uploadClientOptions)
 
