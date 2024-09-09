@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { prisma } from '@services/prisma'
 import { AnlugeUploadClient, AnlugeUploadClientOptions } from '@services/upload'
 import { generateSlagByTitleWithoutSignature } from '@utils/generateSlagByTitle'
-import { convertImageFileToJpeg, isValidImageFile } from '@utils/images'
+import { isValidImageFile } from '@utils/images'
 import { imageRef } from '@utils/images/isValidImageRef'
 import { convertBlobToFile, generateRandomId } from '..'
 
@@ -124,9 +124,9 @@ export const imageFileRef = (uploadClientOptions?: AnlugeUploadClientOptions) =>
 
       return Boolean(validImageFile)
     }, 'Image file must be a valid image')
-    .transform(
-      async imageFile => (await convertImageFileToJpeg(imageFile)) as File
-    )
+    // .transform(
+    //   async imageFile => (await convertImageFileToJpeg(imageFile)) as File
+    // )
     // .refine(imageFile => imageFile instanceof File)
     .transform(async imageFile => {
       try {
