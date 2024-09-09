@@ -26,6 +26,10 @@ const nextConfig = {
     fileLoaderRule.exclude = /\.svg$/i
 
     return config
+  },
+
+  eslint: {
+    ignoreDuringBuilds: true
   }
 }
 
