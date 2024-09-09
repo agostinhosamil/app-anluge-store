@@ -21,6 +21,7 @@ import { getServerHeaders } from '@utils/server'
 import { Toaster } from 'ui@components/toaster'
 
 import { BotDataEngineSearchBox } from '@components/BotDataEngineSearchBox'
+import { MemoryStoreContextWrapper } from '~/components/MemoryStoreContext'
 import companyData from '~/config/cache/company-data/index.json'
 import { defaultTheme, themes } from '~/config/themes'
 import { noEmpty } from '~/utils'
@@ -84,7 +85,9 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   })
 
   const documentElementProps: React.HtmlHTMLAttributes<HTMLElement> = {}
-  const applicationContextProviderConfig: Record<string, any> = {}
+  const applicationContextProviderConfig: Record<string, any> = {
+    apiAccessToken: authTokenCookie
+  }
 
   let currentTheme = getCookie('__APP-anluge-theme')
 
@@ -126,23 +129,26 @@ export default async function RootLayout({ children }: RootLayoutProps) {
       <body className={roboto.className}>
         <NextJsTopLoader showSpinner={false} />
 
-        <StyledComponentsRegistry>
-          <AdvertiseContextWrapper>
+        <MemoryStoreContextWrapper apiAccessToken={authTokenCookie}>
+          <StyledComponentsRegistry>
             <ApplicationContextProvider
               headers={headers}
               config={applicationContextProviderConfig}
             >
-              <GlobalStyles />
-              <AuthenticationWrapper auth={authenticatedUser}>
-                <StoreContextWrapper cart={cartData}>
-                  <ErrorBoundary>{children}</ErrorBoundary>
-                </StoreContextWrapper>
-              </AuthenticationWrapper>
+              <AdvertiseContextWrapper>
+                <GlobalStyles />
+                <AuthenticationWrapper auth={authenticatedUser}>
+                  <StoreContextWrapper cart={cartData}>
+                    <ErrorBoundary>{children}</ErrorBoundary>
+                  </StoreContextWrapper>
+                </AuthenticationWrapper>
+              </AdvertiseContextWrapper>
             </ApplicationContextProvider>
-          </AdvertiseContextWrapper>
-          <Toaster />
-          <BotDataEngineSearchBox />
-        </StyledComponentsRegistry>
+
+            <Toaster />
+            <BotDataEngineSearchBox />
+          </StyledComponentsRegistry>
+        </MemoryStoreContextWrapper>
       </body>
     </html>
   )
