@@ -19,7 +19,7 @@ export const CreatePartnerFormDataObjectSchema = z.object({
         'x-large': '350x350'
       }
     })
-      .transform(uploadedImage => uploadedImage.name)
+      .transform(uploadedImage => uploadedImage?.name ?? null)
       .nullable()
   })
 })
