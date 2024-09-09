@@ -1,8 +1,9 @@
 import { compareSync } from 'bcryptjs'
 import deepmerge from 'deepmerge'
-import { PathInternal } from '~/Types/eager'
 
-import { LoadingStockMap, ProductProps } from '~/Types/Product'
+import { PathInternal } from 'Types/eager'
+import { LoadingStockMap, ProductProps } from 'Types/Product'
+import { MemoryStore } from '~/helpers/MemoryStore'
 
 export { path } from './path'
 export { resolveCategoryImageUrl } from './resolveCategoryImageUrl'
@@ -16,7 +17,9 @@ export const getApiAccessToken = (): string => {
   //   return authenticationToken
   // }
 
-  return 'token'
+  const apiAccessToken = MemoryStore.get('apiAccessToken')
+
+  return String(apiAccessToken)
 }
 
 export type CompanyTaxData = Array<
