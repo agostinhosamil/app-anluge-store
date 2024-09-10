@@ -41,7 +41,7 @@ const PostRequestDataObjectSchema = z.object({
           })
 
           return !highlightProductById
-        })
+        }, 'Product is already highlighted')
         .optional(),
 
       category: categoryRef()
@@ -107,6 +107,28 @@ export const POST = handler('auth:jwt', async request => {
                 id: product
               }
             }
+      },
+
+      include: {
+        category: {
+          select: {
+            id: true,
+            title: true,
+            slag: true,
+            banner: true
+          }
+        },
+
+        product: {
+          select: {
+            id: true,
+            name: true,
+            slag: true,
+            medias: {
+              take: 1
+            }
+          }
+        }
       }
     })
 
