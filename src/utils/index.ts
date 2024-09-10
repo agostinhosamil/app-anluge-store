@@ -2,7 +2,7 @@ import { compareSync } from 'bcryptjs'
 import deepmerge from 'deepmerge'
 
 import { PathInternal } from 'Types/eager'
-import { LoadingStockMap, ProductProps } from 'Types/Product'
+import { LoadingStockMap } from 'Types/Product'
 import { MemoryStore } from '~/helpers/MemoryStore'
 
 export { path } from './path'
@@ -332,7 +332,7 @@ export const isMasterKey = (data: string): boolean => {
 type ProductImageVariant = 'large' | 'medium' | 'normal' | 'small'
 
 export const resolveProductImageUrl = (
-  product: Partial<ProductProps>,
+  product: any,
   variant?: ProductImageVariant
 ): string => {
   const productMedias = product.medias
