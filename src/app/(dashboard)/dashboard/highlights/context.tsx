@@ -91,8 +91,85 @@ export const HighlightsContextProvider: HighlightsContextProviderComponent =
         return true
       },
 
-      async removeHighlight() {
-        return false
+      async removeHighlight(highlight): Promise<boolean> {
+        const completed = await context.resolvePromise(async () => {
+          const response = await axios.delete<
+            HighlightCategory | HighlightProduct
+          >('/store/highlights', {
+            data: {
+              highlight: {
+                context: 'store',
+                ...highlight
+              }
+            }
+          })
+
+          if (response.data && response.status === 200) {
+            if (
+              ('product' in highlight && highlight.product) ||
+              ('products' in highlight && highlight.products)
+            ) {
+              const productsIds =
+                'products' in highlight && highlight.products
+                  ? highlight.products
+                  : []
+
+              if ('product' in highlight && highlight.product) {
+                productsIds.push(highlight.product)
+              }
+
+              setHighlights({
+                ...highlights,
+                products: highlights.products.filter(
+                  product => !productsIds.includes(product.id)
+                )
+              })
+            }
+
+            if (
+              ('category' in highlight && highlight.category) ||
+              ('categories' in highlight && highlight.categories)
+            ) {
+              const categoriesIds =
+                'categories' in highlight && highlight.categories
+                  ? highlight.categories
+                  : []
+
+              if ('category' in highlight && highlight.category) {
+                categoriesIds.push(highlight.category)
+              }
+
+              setHighlights({
+                ...highlights,
+                categories: highlights.categories.filter(
+                  category => !categoriesIds.includes(category.id)
+                )
+              })
+            }
+
+            return true
+          }
+
+          return false
+        })
+
+        if (!completed) {
+          const alertResponse = await context.alert(
+            'Erro',
+            'Não foi possível adicionar o item a lista de destaques.',
+            {
+              buttons: ['Buttons.Cancel', 'Buttons.Retry']
+            }
+          )
+
+          if (alertResponse === 'AlertResponse.Retry') {
+            return await this.addHighlight(highlight)
+          }
+
+          return false
+        }
+
+        return true
       }
     }
 
