@@ -6,9 +6,14 @@ import { Image } from '@components/Image'
 import { resolveProductImageUrl } from '~/utils'
 
 import { useHighlights } from '../hook'
+import { HighlightProductInput } from '../types'
 
 export const ProductsList: React.FunctionComponent = () => {
-  const { highlights } = useHighlights()
+  const { highlights, removeHighlight } = useHighlights()
+
+  const removeButtonClickHandler = async (highlight: HighlightProductInput) => {
+    await removeHighlight(highlight)
+  }
 
   return (
     <ul className="w-full flex flex-row flex-wrap">
@@ -33,7 +38,14 @@ export const ProductsList: React.FunctionComponent = () => {
                   </strong>
                 </div>
                 <div className="w-full flex justify-center flex-row gap-3">
-                  <button className="rounded-lg border-0 outline-none bg-red-400 hover:bg-red-500 active:bg-red-600 text-zinc-50 dark:bg-red-600 dark:hover:bg-red-700 dark:active:bg-red-800 py-2 px-3 flex flex-row gap-2 items-center">
+                  <button
+                    className="rounded-lg border-0 outline-none bg-red-400 hover:bg-red-500 active:bg-red-600 text-zinc-50 dark:bg-red-600 dark:hover:bg-red-700 dark:active:bg-red-800 py-2 px-3 flex flex-row gap-2 items-center"
+                    onClick={() =>
+                      removeButtonClickHandler({
+                        product: product.id
+                      })
+                    }
+                  >
                     <FaX />
                     <span className="text-sm">Remover dos destaques</span>
                   </button>
