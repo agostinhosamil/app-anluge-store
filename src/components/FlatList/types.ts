@@ -13,5 +13,6 @@ export type FlatListProps<Data = any> = React.PropsWithChildren & {
   renderItem?: (data: Data) => React.ReactNode
   renderItemPlaceholder?: () => React.ReactNode
   showSearchBox?: boolean
+  title?: string
   // listItemElement?: FlatListItemElement
 }

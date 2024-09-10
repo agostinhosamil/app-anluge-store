@@ -276,6 +276,13 @@ export function FlatList<Data = any>(
     <Container>
       {typeof showSearchBox === 'boolean' && showSearchBox && (
         <Head>
+          {noEmpty(props.title) && (
+            <div className="w-full flex flex-row justify-start items-center flex-grow">
+              <h3 className="font-bold text-lg lg:text-xl xl:text-2xl text-wrap break-words whitespace-break-spaces dark:text-zinc-300">
+                {props.title}
+              </h3>
+            </div>
+          )}
           <SearchInputContainer className="bg-zing-50 border-zinc-400 border-solid border-[1px] dark:bg-zinc-900 dark:border-zinc-800">
             <div>
               <i>
