@@ -29,6 +29,7 @@ export const DialogCategoriesList: DialogCategoriesListComponent = () => {
         loading={loading}
         paginationStyle="standard"
         data={noHighlightedCategories}
+        title="Selecionar categorias"
         renderItem={category => (
           <DialogCategoriesListItem category={category} />
         )}
