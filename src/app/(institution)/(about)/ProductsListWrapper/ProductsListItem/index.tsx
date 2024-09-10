@@ -6,23 +6,25 @@ import {
   FaStar
 } from 'react-icons/fa6'
 
-import { formatAmount } from '~/utils'
-import { QuickViewButton } from './buttons/QuickView'
+import Image from '@components/Image'
+import { formatAmount, resolveProductImageUrl } from '~/utils'
 
-export const ProductsListItem = ({ id }: { id: number }) => {
+import { QuickViewButton } from './buttons/QuickView'
+import { ProductProps } from './types'
+
+type ProductsListItemProps = {
+  product: ProductProps
+}
+
+export const ProductsListItem = ({ product }: ProductsListItemProps) => {
   return (
     <div className="rounded-lg border-solid border-[1px] border-gray-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:!bg-zinc-900 [&_*]:select-none">
       <div className="h-max w-full">
         <a href="#" className="flex flex-row [&>img]:w-full">
-          <img
-            className="mx-auto h-full dark:hidden"
-            src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg"
-            alt=""
-          />
-          <img
-            className="mx-auto hidden h-full dark:block"
-            src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg"
-            alt=""
+          <Image
+            className="mx-auto h-full rounded-lg"
+            src={resolveProductImageUrl(product, 'normal')}
+            alt={product.name}
           />
         </a>
       </div>
@@ -58,28 +60,30 @@ export const ProductsListItem = ({ id }: { id: number }) => {
         </div>
 
         <a
-          href="#"
-          className="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
+          href={`/products/${product.slag}`}
+          className="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white line-clamp-4 min-h-[90px]"
         >
-          ({id}) Apple iMac 27, 1TB HDD, Retina 5K Display, M3 Max
+          {product.name}
         </a>
 
-        <div className="mt-2 flex items-center gap-2">
-          <div className="flex items-center">
-            <FaStar className="text-yellow-400" />
-            <FaStar className="text-yellow-400" />
-            <FaStar className="text-yellow-400" />
-            <FaStar className="text-yellow-400" />
-            <FaStar className="text-yellow-400" />
-          </div>
+        {product.rates.length >= 1 && (
+          <div className="mt-2 flex items-center gap-2">
+            <div className="flex items-center">
+              <FaStar className="text-yellow-400" />
+              <FaStar className="text-yellow-400" />
+              <FaStar className="text-yellow-400" />
+              <FaStar className="text-yellow-400" />
+              <FaStar className="text-yellow-400" />
+            </div>
 
-          <p className="text-sm font-medium text-gray-900 dark:text-white">
-            5.0
-          </p>
-          <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-            (455)
-          </p>
-        </div>
+            <p className="text-sm font-medium text-gray-900 dark:text-white">
+              5.0
+            </p>
+            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+              (455)
+            </p>
+          </div>
+        )}
 
         {/* <ul className="my-3 flex items-center gap-4">
           <li className="flex items-center gap-2">
@@ -103,7 +107,7 @@ export const ProductsListItem = ({ id }: { id: number }) => {
 
         <div className="mt-4 flex items-center justify-center flex-wrap gap-4">
           <p className="text-2xl font-extrabold leading-tight text-gray-900 dark:text-white">
-            {formatAmount(125)}
+            {formatAmount(product.price)}
           </p>
 
           <button

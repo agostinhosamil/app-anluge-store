@@ -1,3 +1,4 @@
+import { prisma } from '~/services/prisma'
 import { ProductsListItem } from './ProductsListItem'
 
 // import {
@@ -9,8 +10,39 @@ import { ProductsListItem } from './ProductsListItem'
 // } from 'ui@components/carousel'
 
 import { Slide, TouchSlider } from '@components/TouchSlider'
+import { ProductProps } from '~/Types/Product'
 
-export const ProductsListWrapper = () => {
+export const ProductsListWrapper = async () => {
+  const highlights = await prisma.highlight.findMany({
+    take: 50,
+    where: {
+      productId: {
+        not: null
+      }
+    },
+    include: {
+      product: {
+        select: {
+          id: true,
+          name: true,
+          slag: true,
+          price: true,
+
+          rates: {
+            select: {
+              id: true,
+              value: true
+            }
+          },
+
+          medias: {
+            take: 1
+          }
+        }
+      }
+    }
+  })
+
   return (
     <section className="w-full py-8 antialiased md:py-1">
       <div className="mx-auto w-full px-4 2xl:px-0">
@@ -43,10 +75,12 @@ export const ProductsListWrapper = () => {
 
         <div className="w-[98%] p-2 m-auto px-6 md:px-10 lg:px-20 overflow-x-hidden block">
           <TouchSlider showButtons showIndicators>
-            {Array.from({ length: 300 }).map((_, i) => (
-              <Slide key={i}>
+            {highlights.map(highlight => (
+              <Slide key={highlight.id}>
                 <div className="w-[280px] block text-wrap whitespace-normal break-words">
-                  <ProductsListItem id={i} />
+                  <ProductsListItem
+                    product={highlight.product as ProductProps}
+                  />
                 </div>
               </Slide>
             ))}
