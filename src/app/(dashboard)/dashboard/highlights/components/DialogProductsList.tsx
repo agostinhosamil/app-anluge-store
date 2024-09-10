@@ -28,6 +28,7 @@ export const DialogProductsList: DialogProductsListComponent = () => {
         loading={loading}
         paginationStyle="standard"
         data={noHighlightedProducts}
+        title="Selecionar produtos"
         renderItem={product => <DialogProductsListItem product={product} />}
       />
     </div>
