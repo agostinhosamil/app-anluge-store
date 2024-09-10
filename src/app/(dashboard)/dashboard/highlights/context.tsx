@@ -52,17 +52,19 @@ export const HighlightsContextProvider: HighlightsContextProviderComponent =
           })
 
           if (response.data && response.data.id) {
-            setHighlights(
-              'product' in response.data
-                ? {
-                    ...highlights,
-                    products: [...highlights.products, response.data]
-                  }
-                : {
-                    ...highlights,
-                    categories: [...highlights.categories, response.data]
-                  }
-            )
+            if ('product' in response.data && response.data.product) {
+              setHighlights({
+                ...highlights,
+                products: [...highlights.products, response.data]
+              })
+            }
+
+            if ('category' in response.data && response.data.category) {
+              setHighlights({
+                ...highlights,
+                categories: [...highlights.categories, response.data]
+              })
+            }
 
             return true
           }
