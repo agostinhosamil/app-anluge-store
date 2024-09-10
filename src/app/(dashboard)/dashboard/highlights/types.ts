@@ -33,13 +33,29 @@ export type HighlightProduct = Prisma.HighlightGetPayload<{
   }
 }>
 
-export type HighlightCategoryInput = {
-  category: string | Array<string>
+export type SingleHighlightCategoryInput = {
+  category: string
 }
 
-export type HighlightProductInput = {
-  product: string | Array<string>
+export type MultipleHighlightCategoryInput = {
+  categories: Array<string>
 }
+
+export type HighlightCategoryInput =
+  | SingleHighlightCategoryInput
+  | MultipleHighlightCategoryInput
+
+export type SingleHighlightProductInput = {
+  product: string
+}
+
+export type MultipleHighlightProductInput = {
+  products: Array<string>
+}
+
+export type HighlightProductInput =
+  | SingleHighlightProductInput
+  | MultipleHighlightProductInput
 
 export type HighlightInput = HighlightCategoryInput | HighlightProductInput
 
@@ -47,5 +63,5 @@ export type HighlightsContextDataObject = {
   highlights: Highlights
 
   addHighlight: (highlight: HighlightInput) => Promise<boolean>
-  removeHighlight: (highlightId: HighlightInput) => Promise<boolean>
+  removeHighlight: (highlight: HighlightInput) => Promise<boolean>
 }
