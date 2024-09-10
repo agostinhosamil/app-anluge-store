@@ -276,7 +276,7 @@ export function FlatList<Data = any>(
     <Container>
       {typeof showSearchBox === 'boolean' && showSearchBox && (
         <Head>
-          <SearchInputContainer className="bg-zing-50 border-zinc-400 dark:bg-zinc-900 dark:border-zinc-950">
+          <SearchInputContainer className="bg-zing-50 border-zinc-400 border-solid border-[1px] dark:bg-zinc-900 dark:border-zinc-800">
             <div>
               <i>
                 <FaSearch />
