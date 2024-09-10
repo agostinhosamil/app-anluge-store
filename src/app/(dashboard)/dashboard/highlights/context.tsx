@@ -121,7 +121,7 @@ export const HighlightsContextProvider: HighlightsContextProviderComponent =
               setHighlights({
                 ...highlights,
                 products: highlights.products.filter(
-                  product => !productsIds.includes(product.id)
+                  ({ product }) => !productsIds.includes(String(product?.id))
                 )
               })
             }
@@ -142,7 +142,8 @@ export const HighlightsContextProvider: HighlightsContextProviderComponent =
               setHighlights({
                 ...highlights,
                 categories: highlights.categories.filter(
-                  category => !categoriesIds.includes(category.id)
+                  ({ category }) =>
+                    !categoriesIds.includes(String(category?.id))
                 )
               })
             }
