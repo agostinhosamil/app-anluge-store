@@ -90,7 +90,7 @@ export const productRef = () =>
 
       return storedProduct?.id
     })
-    .refine(productId => Boolean(productId))
+    .refine(productId => Boolean(productId), 'Product does not exist')
     .transform(productId => String(productId))
 
 export const imageFileRef = (uploadClientOptions?: AnlugeUploadClientOptions) =>
