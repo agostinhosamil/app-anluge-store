@@ -31,7 +31,6 @@ export const Container = styled.div<ContainerProps>`
   top: 0px;
   left: 0px;
   background-color: rgb(0 0 0 / 70%);
-  backdrop-filter: blur(8px);
   padding: ${props => (shouldCenterContent(props) ? 40 : 120)}px;
   overflow-y: ${props => (shouldCenterContent(props) ? 'unset' : 'auto')};
   display: flex;
@@ -39,6 +38,19 @@ export const Container = styled.div<ContainerProps>`
   align-items: ${props =>
     shouldCenterContent(props) ? 'center' : 'flex-start'};
   justify-content: center;
+
+  &:before {
+    content: '';
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    display: block;
+    z-index: -1;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
 `
 
 export const DialogBox = styled.div<DialogBoxProps>`
