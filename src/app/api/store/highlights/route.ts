@@ -1,4 +1,4 @@
-import { $Enums } from '@prisma/client'
+import { $Enums, Prisma } from '@prisma/client'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
@@ -7,6 +7,8 @@ import { handler } from '@utils/next'
 import { getSearchParamsQueryArgument } from '~/utils'
 import { getRequestBody } from '~/utils/server/getRequestBody'
 import { categoryRef, productRef } from '~/utils/zod'
+
+export const maxDuration = 60
 
 export const GET = handler(async request => {
   const queryString = request.nextUrl.searchParams
@@ -43,7 +45,30 @@ const PostRequestDataObjectSchema = z.object({
           return !highlightProductById
         }, 'Product is already highlighted')
         .optional(),
+      products: z
+        .array(productRef())
+        .transform(async productsIds => {
+          const alreadyHighlightedProducts = await prisma.highlight.findMany({
+            where: {
+              productId: {
+                in: productsIds
+              }
+            },
 
+            select: {
+              productId: true
+            }
+          })
+
+          const alreadyHighlightedProductsIds = alreadyHighlightedProducts.map(
+            ({ productId }) => productId
+          )
+
+          return productsIds.filter(
+            productId => !alreadyHighlightedProductsIds.includes(productId)
+          )
+        })
+        .optional(),
       category: categoryRef()
         .refine(async categoryId => {
           const highlightProductById = await prisma.highlight.findFirst({
@@ -58,10 +83,65 @@ const PostRequestDataObjectSchema = z.object({
 
           return !highlightProductById
         })
+        .optional(),
+
+      categories: z
+        .array(categoryRef())
+        .transform(async categoriesIds => {
+          const alreadyHighlightedProducts = await prisma.highlight.findMany({
+            where: {
+              categoryId: {
+                in: categoriesIds
+              }
+            },
+
+            select: {
+              categoryId: true
+            }
+          })
+
+          const alreadyHighlightedProductsIds = alreadyHighlightedProducts.map(
+            ({ categoryId }) => categoryId
+          )
+
+          return categoriesIds.filter(
+            categoryId => !alreadyHighlightedProductsIds.includes(categoryId)
+          )
+        })
         .optional()
     })
-    .refine(highlight => {
-      return highlight.category || highlight.product
+    // .refine(highlight => {
+    //   return highlight.category || highlight.product
+    // })
+    .transform(highligh => {
+      const products = highligh.products ?? []
+      const categories = highligh.categories ?? []
+
+      if (highligh.category) {
+        categories.push(highligh.category)
+      }
+
+      if (highligh.product) {
+        products.push(highligh.product)
+      }
+
+      const categoriesInputs = categories.map<Prisma.HighlightCreateManyInput>(
+        categoryId => ({
+          categoryId,
+          context: highligh.context
+        })
+      )
+
+      const productsInputs = products.map<Prisma.HighlightCreateManyInput>(
+        productId => ({
+          productId,
+          context: highligh.context
+        })
+      )
+
+      return {
+        highlights: [...categoriesInputs, ...productsInputs]
+      }
     })
 })
 
@@ -87,52 +167,40 @@ export const POST = handler('auth:jwt', async request => {
     )
   }
 
-  const { context, category, product } = validatedRequestBody.data.highlight
+  const { highlights } = validatedRequestBody.data.highlight
 
   try {
-    const highlightedProduct = await prisma.highlight.create({
-      data: {
-        context,
-        category: !category
-          ? undefined
-          : {
-              connect: {
-                id: category
+    const highlightedProducts = await prisma.$transaction(
+      highlights.map(highlight =>
+        prisma.highlight.create({
+          data: highlight,
+
+          include: {
+            category: {
+              select: {
+                id: true,
+                title: true,
+                slag: true,
+                banner: true
               }
             },
-        product: !product
-          ? undefined
-          : {
-              connect: {
-                id: product
+
+            product: {
+              select: {
+                id: true,
+                name: true,
+                slag: true,
+                medias: {
+                  take: 1
+                }
               }
             }
-      },
-
-      include: {
-        category: {
-          select: {
-            id: true,
-            title: true,
-            slag: true,
-            banner: true
           }
-        },
+        })
+      )
+    )
 
-        product: {
-          select: {
-            id: true,
-            name: true,
-            slag: true,
-            medias: {
-              take: 1
-            }
-          }
-        }
-      }
-    })
-
-    return NextResponse.json(highlightedProduct)
+    return NextResponse.json(highlightedProducts)
   } catch (err) {
     return NextResponse.json({
       status: 'error',
