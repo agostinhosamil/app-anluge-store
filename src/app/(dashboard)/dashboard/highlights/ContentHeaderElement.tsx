@@ -3,6 +3,7 @@
 import { Fragment, useState } from 'react'
 
 import { Dialog } from '@components/Dialog'
+import { SelectableElementsGroup } from '@components/SelectableElementsGroup'
 import { ActionButton, ContentHeader } from 'dashboard@components/ContentHeader'
 
 import { DialogCategoriesList } from './components/DialogCategoriesList'
@@ -59,7 +60,9 @@ export const ContentHeaderElement: ContentHeaderElementComponent = () => {
         show={showHighlightProductsDialog}
         onClose={highlightProductsDialogCloseHandler}
       >
-        <DialogProductsList highlightedProducts={highlights.products} />
+        <SelectableElementsGroup>
+          <DialogProductsList highlightedProducts={highlights.products} />
+        </SelectableElementsGroup>
       </Dialog>
 
       <Dialog
@@ -68,7 +71,9 @@ export const ContentHeaderElement: ContentHeaderElementComponent = () => {
         show={showHighlightCategoriesDialog}
         onClose={highlightCategoriesDialogCloseHandler}
       >
-        <DialogCategoriesList highlightedCategories={highlights.categories} />
+        <SelectableElementsGroup>
+          <DialogCategoriesList highlightedCategories={highlights.categories} />
+        </SelectableElementsGroup>
       </Dialog>
     </Fragment>
   )

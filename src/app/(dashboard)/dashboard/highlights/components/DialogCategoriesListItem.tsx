@@ -1,7 +1,9 @@
 import { FaPlus } from 'react-icons/fa6'
 
 import Image from '@components/Image'
+import { useSelectable } from '@components/SelectableElement/hook'
 import { CategoryProps } from 'Types/Category'
+import { cn } from '~/lib/utils'
 import { resolveCategoryImageUrl } from '~/utils'
 
 import { useHighlights } from '../hook'
@@ -18,6 +20,8 @@ export const DialogCategoriesListItem: DialogCategoriesListItemComponent = ({
 }) => {
   const { addHighlight } = useHighlights()
 
+  const { inputProps, selected } = useSelectable()
+
   const highlightCategoryHandler = async (category: CategoryProps) => {
     const highlighted = await addHighlight({
       category: category.id
@@ -28,9 +32,22 @@ export const DialogCategoriesListItem: DialogCategoriesListItemComponent = ({
     }
   }
 
+  const elementRefId = `dialog-products-list-checkbox-${category.id}`
+
   return (
     <div className="w-full p-2 md:w-1/3 lg:w-1/4 xl:w-1/5">
-      <div className="w-full rounded-lg flex flex-col gap-3">
+      <div className="w-full rounded-lg flex flex-col gap-3 relative">
+        <label
+          className={cn(
+            'absolute block left-0 top-0 p-2 w-full h-full cursor-pointer rounded-lg bg-opacity-45 transition-all',
+            selected ? 'z-[1] bg-blue-500' : undefined
+          )}
+          htmlFor={elementRefId}
+        >
+          <div>
+            <input {...inputProps} id={elementRefId} />
+          </div>
+        </label>
         <div className="w-full">
           <Image
             src={resolveCategoryImageUrl(category, 'icon@small')}

@@ -43,7 +43,7 @@ export const HighlightsContextProvider: HighlightsContextProviderComponent =
       async addHighlight(highlight): Promise<boolean> {
         const completed = await context.resolvePromise(async () => {
           const response = await axios.post<
-            HighlightCategory | HighlightProduct
+            Array<HighlightCategory | HighlightProduct>
           >('/store/highlights', {
             highlight: {
               context: 'store',
@@ -51,18 +51,24 @@ export const HighlightsContextProvider: HighlightsContextProviderComponent =
             }
           })
 
-          if (response.data && response.data.id) {
-            if ('product' in response.data && response.data.product) {
+          if (response.data && response.data instanceof Array) {
+            if ('product' in highlight || 'products' in highlight) {
               setHighlights({
                 ...highlights,
-                products: [...highlights.products, response.data]
+                products: [
+                  ...highlights.products,
+                  ...(response.data as Array<HighlightProduct>)
+                ]
               })
             }
 
-            if ('category' in response.data && response.data.category) {
+            if ('category' in highlight || 'categories' in highlight) {
               setHighlights({
                 ...highlights,
-                categories: [...highlights.categories, response.data]
+                categories: [
+                  ...highlights.categories,
+                  ...(response.data as Array<HighlightCategory>)
+                ]
               })
             }
 
