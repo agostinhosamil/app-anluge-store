@@ -9,3 +9,11 @@ export const axios = Axios.create({
     'X-Client-Device-Id': XClientDeviceId
   }
 })
+
+axios.interceptors.request.use(config => {
+  const XClientDeviceId = getCookie('X-Client-Device-Id')
+
+  config.headers['X-Client-Device-Id'] = String(XClientDeviceId)
+
+  return config
+})
