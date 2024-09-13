@@ -45,7 +45,7 @@ export const ProductsListWrapper = async () => {
 
   return (
     <section className="w-full py-8 antialiased md:py-1">
-      <div className="mx-auto w-full px-4 2xl:px-0">
+      <div className="mx-auto w-full xl:px-4 2xl:px-0">
         {/* <div className="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4">
           {Array.from({ length: 100 }).map((_, i) => (
             <ProductsListItem key={i} />

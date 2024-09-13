@@ -11,8 +11,8 @@ type ServiceListItemComponent = React.FunctionComponent<ServiceListItemProps>
 
 export const ServiceListItem: ServiceListItemComponent = ({ service }) => {
   return (
-    <li className="size-full flex-grow md:w-1/3 lg:w-1/3 xl:w-1/4 p-2 rounded-xl">
-      <div className="w-full h-[428px] flex flex-col justify-between gap-4 dark:text-zinc-50 bg-zinc-100 dark:bg-zinc-900 rounded-xl py-8 px-5">
+    <li className="w-full flex flex-grow md:w-1/3 lg:w-1/3 xl:w-1/4 p-2 rounded-xl">
+      <div className="w-full flex flex-col justify-between gap-4 dark:text-zinc-50 bg-zinc-100 dark:bg-zinc-900 rounded-xl py-8 px-5">
         <div className="w-full flex flex-col gap-4">
           <i>
             <FaDesktop size={60} />

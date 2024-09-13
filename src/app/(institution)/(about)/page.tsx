@@ -21,9 +21,9 @@ import { ProductsListWrapper } from './ProductsListWrapper'
 export default function About2Page() {
   return (
     <PageSectionWrapper>
-      <div className="w-full flex flex-col gap-12 md:gap-28 py-12 md:py-28 px-5 md:px-8 lg:px-12">
+      <div className="w-full flex flex-col gap-12 md:gap-28 py-3 md:py-12 lg:py-28 px-3 md:px-8 lg:px-12">
         <div className="w-full block">
-          <Row>
+          <Row className="flex md:flex flex-col-reverse md:flex-row gap-y-5">
             <Col md={7} lg={6}>
               <div className="flex w-full flex-col gap-4 md:pr-10">
                 <ul className="flex w-full flex-row gap-4 items-center [&_a]:text-zinc-800 dark:[&_a]:text-zinc-50 [&_a_svg]:transition-transform [&>svg]:hover:[&_a]:scale-125">
@@ -74,15 +74,23 @@ export default function About2Page() {
                   profissionais eficientes e dispostos a contribuir para o
                   desenvolvimento do país.
                 </p>
-                <ul className="flex w-full gap-3 items-center [&_a]:pt-3 [&_a]:pb-[14px] [&_a]:px-6 [&_a]:rounded-full [&_a]:bg-gradient-to-r [&_a]:from-indigo-400 [&_a]:to-cyan-400 [&_a]:text-zinc-50 [&_a]:flex [&_a]:flex-row [&_a]:gap-3 [&_a]:items-center [&_svg]:-mb-1.5">
+                <ul className="flex w-full gap-3 items-center [&_a]:py-2 [&_a]:px-3 md:[&_a]:py-3 md:[&_a]:px-6 [&_a]:rounded-full [&_a]:bg-gradient-to-r [&_a]:from-indigo-400 [&_a]:to-cyan-400 [&_a]:text-zinc-50 [&_a]:flex [&_a]:flex-row [&_a]:gap-3 [&_a]:items-center [&_svg]:-mb-1.5">
                   <li>
-                    <Link href="#">
-                      <FaArrowRight />
+                    <Link
+                      href="#"
+                      className="text-[11px] md:text-sm lg:text-lg xl:text-xl"
+                    >
+                      <i className="flex flex-row -mt-2">
+                        <FaArrowRight />
+                      </i>
                       <span>Saber Mais</span>
                     </Link>
                   </li>
                   <li>
-                    <Link href="#">
+                    <Link
+                      href="#"
+                      className="text-[11px] md:text-sm lg:text-lg xl:text-xl"
+                    >
                       <span>Contacto</span>
                     </Link>
                   </li>
@@ -102,7 +110,7 @@ export default function About2Page() {
         </div>
 
         <div className="w-full block">
-          <Row>
+          <Row className="flex md:flex flex-col md:flex-row gap-y-5">
             <Col md={5} lg={4}>
               <div className="w-full">
                 <Image
@@ -137,10 +145,15 @@ export default function About2Page() {
                   oportunidades se torna uma realidade tangível, levando seu
                   negócio a um nível superior de eficiência e competitividade.
                 </p>
-                <ul className="flex w-full gap-3 items-center [&_a]:pt-3 [&_a]:pb-[14px] [&_a]:px-6 [&_a]:rounded-full [&_a]:bg-gradient-to-r [&_a]:from-indigo-400 [&_a]:to-cyan-400 [&_a]:text-zinc-50 [&_a]:flex [&_a]:flex-row [&_a]:gap-3 [&_a]:items-center [&_svg]:-mb-1.5">
+                <ul className="flex w-full gap-3 items-center [&_a]:py-2 [&_a]:px-3 md:[&_a]:py-3 md:[&_a]:px-6 [&_a]:rounded-full [&_a]:bg-gradient-to-r [&_a]:from-indigo-400 [&_a]:to-cyan-400 [&_a]:text-zinc-50 [&_a]:flex [&_a]:flex-row [&_a]:gap-3 [&_a]:items-center [&_svg]:-mb-1.5">
                   <li>
-                    <Link href="#">
-                      <FaArrowRight />
+                    <Link
+                      href="#"
+                      className="text-[11px] md:text-sm lg:text-lg xl:text-xl"
+                    >
+                      <i className="flex flex-row -mt-2">
+                        <FaArrowRight />
+                      </i>
                       <span>Saber Mais</span>
                     </Link>
                   </li>
@@ -164,7 +177,7 @@ export default function About2Page() {
           </ul>
         </div>
 
-        <div className="w-full flex px-8 flex-col gap-5">
+        <div className="w-full flex xl:px-8 flex-col gap-5">
           <h2 className="text-center dark:font-extrabold uppercase dark:text-zinc-50 md:text-3xl lg:text-5xl">
             Produtos recomendados
           </h2>
